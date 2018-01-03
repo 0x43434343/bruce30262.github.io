@@ -1,0 +1,880 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="CTF,Python,PPC,XCTF,SCTF,Crypto,CPP," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Hacking Tube 2.0" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="Code400 gave us a python script">
+<meta name="keywords" content="CTF,Python,PPC,XCTF,SCTF,Crypto,CPP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SCTF 2014 -- Code400">
+<meta property="og:url" content="https://bruce30262.github.io/2014/12/08/2014-12-08-sctf-2014-code400/index.html">
+<meta property="og:site_name" content="Hacking Tube 2.0">
+<meta property="og:description" content="Code400 gave us a python script">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2018-01-03T15:08:05.591Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SCTF 2014 -- Code400">
+<meta name="twitter:description" content="Code400 gave us a python script">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://bruce30262.github.io/2014/12/08/2014-12-08-sctf-2014-code400/"/>
+
+
+
+
+
+  <title>SCTF 2014 -- Code400 | Hacking Tube 2.0</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-100090256-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hacking Tube 2.0</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Security and stuff.</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://bruce30262.github.io/2014/12/08/2014-12-08-sctf-2014-code400/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Bruce Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://s.gravatar.com/avatar/ff4140457527a5c7d307793a9ec905e0?s=80">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hacking Tube 2.0">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">SCTF 2014 -- Code400</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2014-12-08T16:28:00+08:00">
+                2014-12-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/write-ups/" itemprop="url" rel="index">
+                    <span itemprop="name">write-ups</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2014/12/08/2014-12-08-sctf-2014-code400/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2014/12/08/2014-12-08-sctf-2014-code400/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-eye"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>views
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Code400 gave us a python script<br><a id="more"></a></p>
+<figure class="highlight python"><figcaption><span>code400.py</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> json</span><br><span class="line"><span class="keyword">import</span> hashlib</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> base64</span><br><span class="line"><span class="keyword">from</span> Crypto.Cipher <span class="keyword">import</span> AES</span><br><span class="line"></span><br><span class="line">fp = open(<span class="string">"secret.json"</span>, <span class="string">"r"</span>)</span><br><span class="line">secret = json.load(fp)</span><br><span class="line">fp.close()</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> type(secret[<span class="string">"the answer to life the universe and everything"</span>]) != type(<span class="string">u"77"</span>):</span><br><span class="line">    destroy_the_universe()</span><br><span class="line"></span><br><span class="line">answer = hashlib.sha1(secret[<span class="string">"the answer to life the universe and everything"</span>]).hexdigest()[<span class="number">0</span>:<span class="number">16</span>]</span><br><span class="line">key = hashlib.sha1(secret[<span class="string">"Don't google what it is"</span>]).digest()[<span class="number">0</span>:<span class="number">6</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> ord(key[<span class="number">4</span>])*(ord(key[<span class="number">5</span>])<span class="number">-5</span>) != <span class="number">17557</span>:</span><br><span class="line">    destroy_the_universe()</span><br><span class="line"></span><br><span class="line">keys = [<span class="string">"hey"</span>+key[<span class="number">2</span>]+<span class="string">"check"</span>+key[<span class="number">3</span>]+<span class="string">"it"</span>+key[<span class="number">0</span>]+<span class="string">"out"</span>, </span><br><span class="line">        <span class="string">"come"</span>+key[<span class="number">1</span>]+<span class="string">"on"</span>+key[<span class="number">4</span>]+<span class="string">"baby"</span>+key[<span class="number">5</span>]+<span class="string">"~~!"</span>]</span><br><span class="line">answer = AES.new(keys[<span class="number">1</span>], AES.MODE_ECB).encrypt(AES.new(keys[<span class="number">0</span>], AES.MODE_ECB).encrypt(answer))</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> base64.b64encode(answer) == <span class="string">"fm2knkCBHPuhCQHYE3spag=="</span>:</span><br><span class="line">    fp = open(<span class="string">"%s.txt"</span> % hashlib.sha256(key).hexdigest(), <span class="string">"w"</span>)</span><br><span class="line">    fp.write(secret[<span class="string">"The entrance to the new world"</span>])</span><br><span class="line">    fp.close()</span><br></pre></td></tr></table></figure>
+<p>After we analyze the code, we found that the key point is the <code>key</code> variable.<br>The <code>key</code> variable is a 6 bytes data. Since <code>key[4]</code> * (<code>key[5]</code>-5) has to be 17557, we know that there’s only 2 conditions: </p>
+<ol>
+<li><code>key[4]</code> = 97 &amp; <code>key[5]</code> = 186</li>
+<li><code>key[4]</code> = 181 &amp; <code>key[5]</code> = 102</li>
+</ol>
+<p>But we still know nothing about <code>key[0]</code> ~ <code>key[4]</code>, so we’ll have to use brute-force attack to get the rest of these 4 bytes.</p>
+<p>The script told us the ciphertext:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">base64.decode(<span class="string">"fm2knkCBHPuhCQHYE3spag=="</span>)</span><br><span class="line">= <span class="string">"\x7e\x6d\xa4\x9e\x40\x81\x1c\xfb\xa1\x09\x01\xd8\x13\x7b\x29\x6a"</span></span><br></pre></td></tr></table></figure></p>
+<p>But it didn’t tell us what’s the plaintext, which is<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hashlib.sha1(secret[<span class="string">"the answer to life the universe and everything"</span>]).hexdigest()[<span class="number">0</span>:<span class="number">16</span>]</span><br></pre></td></tr></table></figure></p>
+<p>We kind of stuck in here for a while, before I google what the hell is <strong><em>“the answer to life the universe and everything”</em></strong></p>
+<p>And this is what google told me:</p>
+<h2 id="“42”"><a href="#“42”" class="headerlink" title="“42”"></a>“42”</h2><p>…………………….WHAT THE F*CK?<br>How the hell are we suppose to know that?!  (╯°д°)╯ ︵ ┻━┻<br>God damn it…..</p>
+<p>So apparently, the plaintext is:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hashlib.sha1(<span class="string">"42"</span>).hexdigest()[<span class="number">0</span>:<span class="number">16</span>]</span><br><span class="line">= <span class="string">"92cfceb39d57d914"</span></span><br></pre></td></tr></table></figure></p>
+<p>Now we got the ciphertext &amp; plaintext, we can use brute-force attack to crack the whole <code>key</code>. The time complexity’s about <strong>256*256*256*256*2</strong> ( <code>key[4]</code> &amp; <code>key[5]</code> has only 2 conditions ), which is about 8.5 billion calculations. For me, I wrote a C++ program, with the help of the <a href="https://www.openssl.org/" target="_blank" rel="noopener">OpenSSL</a> library, spent about 25 minutes to crack the <code>key</code> out. </p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;openssl/aes.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">//ciphertext</span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">unsigned</span> <span class="keyword">char</span> ori[] = &#123;</span><br><span class="line">    <span class="number">0x7e</span>, <span class="number">0x6d</span>, <span class="number">0xa4</span>, <span class="number">0x9e</span>, <span class="number">0x40</span>, <span class="number">0x81</span>, <span class="number">0x1c</span>, <span class="number">0xfb</span>,</span><br><span class="line">    <span class="number">0xa1</span>, <span class="number">0x09</span>, <span class="number">0x01</span>, <span class="number">0xd8</span>, <span class="number">0x13</span>, <span class="number">0x7b</span>, <span class="number">0x29</span>, <span class="number">0x6a</span>,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//2: index 3</span></span><br><span class="line"><span class="comment">//3: index 9</span></span><br><span class="line"><span class="comment">//0: index 12</span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">unsigned</span> <span class="keyword">char</span> key0[] = &#123;</span><br><span class="line">    <span class="number">0x68</span>, <span class="number">0x65</span>, <span class="number">0x79</span>, <span class="number">0x02</span>, <span class="number">0x63</span>, <span class="number">0x68</span>, <span class="number">0x65</span>, <span class="number">0x63</span>,</span><br><span class="line">    <span class="number">0x6b</span>, <span class="number">0x03</span>, <span class="number">0x69</span>, <span class="number">0x74</span>, <span class="number">0x00</span>, <span class="number">0x6f</span>, <span class="number">0x75</span>, <span class="number">0x74</span>,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//1: index 4</span></span><br><span class="line"><span class="comment">//4: index 7</span></span><br><span class="line"><span class="comment">//5: index 12</span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">unsigned</span> <span class="keyword">char</span> key1[] = &#123;</span><br><span class="line">    <span class="number">0x63</span>, <span class="number">0x6f</span>, <span class="number">0x6d</span>, <span class="number">0x65</span>, <span class="number">0x01</span>, <span class="number">0x6f</span>, <span class="number">0x6e</span>, <span class="number">0x04</span>,</span><br><span class="line">    <span class="number">0x62</span>, <span class="number">0x61</span>, <span class="number">0x62</span>, <span class="number">0x79</span>, <span class="number">0x05</span>, <span class="number">0x7e</span>, <span class="number">0x7e</span>, <span class="number">0x21</span>,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">bool</span> out = <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">char</span> text[] = <span class="string">"92cfceb39d57d914"</span>; <span class="comment">//plaintext</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">char</span> * enc_out = (<span class="keyword">unsigned</span> <span class="keyword">char</span>*)<span class="built_in">malloc</span>(<span class="number">16</span>*<span class="keyword">sizeof</span>(<span class="keyword">unsigned</span> <span class="keyword">char</span>)); </span><br><span class="line"></span><br><span class="line">    AES_KEY enc_key;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> i;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">char</span> i0,i1,i2,i3;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (i0 = <span class="number">0x00</span> ; i0 &lt;= <span class="number">0xff</span> ; i0+=<span class="number">0x1</span> )</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"i0: %X\n"</span>, i0); <span class="comment">//monitor the cracking process</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(out) <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (i1 = <span class="number">0x00</span> ; i1 &lt;= <span class="number">0xff</span> ; i1+=<span class="number">0x1</span> )</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(out) <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">for</span> (i2 = <span class="number">0x00</span> ; i2 &lt;= <span class="number">0xff</span> ; i2+=<span class="number">0x1</span> )</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span>(out) <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">                <span class="keyword">for</span> (i3 = <span class="number">0x00</span> ; i3 &lt;= <span class="number">0xff</span> ; i3+=<span class="number">0x1</span> )</span><br><span class="line">                &#123;</span><br><span class="line">                    key0[<span class="number">3</span>] = i2; <span class="comment">//key[2]</span></span><br><span class="line">                    key0[<span class="number">9</span>] = i3; <span class="comment">//key[3]</span></span><br><span class="line">                    key0[<span class="number">12</span>] = i0; <span class="comment">//key[0]</span></span><br><span class="line"></span><br><span class="line">                    key1[<span class="number">4</span>] = i1; <span class="comment">//key[1]</span></span><br><span class="line">                    key1[<span class="number">7</span>] = <span class="number">0x61</span>; <span class="comment">//key[4]</span></span><br><span class="line">                    key1[<span class="number">12</span>] = <span class="number">0xBA</span>; <span class="comment">//key[5]</span></span><br><span class="line"></span><br><span class="line">                    AES_set_encrypt_key(key0, <span class="number">128</span>, &amp;enc_key);</span><br><span class="line">                    AES_ecb_encrypt(text, enc_out, &amp;enc_key, AES_ENCRYPT);  </span><br><span class="line">                    AES_set_encrypt_key(key1,<span class="number">128</span>, &amp;enc_key);</span><br><span class="line">                    AES_ecb_encrypt(enc_out, enc_out, &amp;enc_key, AES_ENCRYPT);  </span><br><span class="line"></span><br><span class="line">                    <span class="keyword">int</span> cnt = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">                    <span class="keyword">for</span>(i=<span class="number">0</span>;*(enc_out+i)!=<span class="number">0x00</span>;i++)</span><br><span class="line">                    &#123;</span><br><span class="line">                        <span class="comment">//printf("%X ",*(enc_out+i));</span></span><br><span class="line">                        <span class="keyword">if</span> ( *(enc_out+i) == ori[i] ) cnt++;</span><br><span class="line">                        <span class="keyword">else</span> <span class="keyword">break</span>;</span><br><span class="line">                    &#125;</span><br><span class="line"></span><br><span class="line">                    <span class="keyword">if</span> (cnt == <span class="number">16</span>)</span><br><span class="line">                    &#123;</span><br><span class="line">                        <span class="built_in">puts</span>(<span class="string">"got!!"</span>);</span><br><span class="line">                        out = <span class="literal">true</span>;</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                    &#125;</span><br><span class="line"></span><br><span class="line">                    key1[<span class="number">7</span>] = <span class="number">0xB5</span>; <span class="comment">//key[4]</span></span><br><span class="line">                    key1[<span class="number">12</span>] = <span class="number">0x66</span>; <span class="comment">//key[5]</span></span><br><span class="line"></span><br><span class="line">                    AES_set_encrypt_key(key0, <span class="number">128</span>, &amp;enc_key);</span><br><span class="line">                    AES_ecb_encrypt(text, enc_out, &amp;enc_key, AES_ENCRYPT);  </span><br><span class="line">                    AES_set_encrypt_key(key1,<span class="number">128</span>, &amp;enc_key);</span><br><span class="line">                    AES_ecb_encrypt(enc_out, enc_out, &amp;enc_key, AES_ENCRYPT);  </span><br><span class="line"></span><br><span class="line">                    cnt = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">                    <span class="keyword">for</span>(i=<span class="number">0</span>;*(enc_out+i)!=<span class="number">0x00</span>;i++)</span><br><span class="line">                    &#123;</span><br><span class="line">                        <span class="comment">//printf("%X ",*(enc_out+i));</span></span><br><span class="line">                        <span class="keyword">if</span> ( *(enc_out+i) == ori[i] ) cnt++;</span><br><span class="line">                        <span class="keyword">else</span> <span class="keyword">break</span>;</span><br><span class="line">                    &#125;</span><br><span class="line"></span><br><span class="line">                    <span class="keyword">if</span> (cnt == <span class="number">16</span>)</span><br><span class="line">                    &#123;</span><br><span class="line">                        <span class="built_in">puts</span>(<span class="string">"got!!"</span>);</span><br><span class="line">                        out = <span class="literal">true</span>;</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">if</span>(i3 == <span class="number">0xff</span>) <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">if</span>(i2 == <span class="number">0xff</span>) <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(i1 == <span class="number">0xff</span>) <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(i0 == <span class="number">0xff</span>) <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"k0: %X\n"</span>, key0[<span class="number">12</span>]); <span class="comment">//key[0]</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"k1: %X\n"</span>, key1[<span class="number">4</span>]); <span class="comment">//key[1]</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"k2: %X\n"</span>, key0[<span class="number">3</span>]); <span class="comment">//key[2]</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"k3: %X\n"</span>, key0[<span class="number">9</span>]); <span class="comment">//key[3]</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"k4: %X\n"</span>, key1[<span class="number">7</span>]); <span class="comment">//key[4]</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"k5: %X\n"</span>, key1[<span class="number">12</span>]); <span class="comment">//key[5]</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">free</span>(enc_out);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>key</code> : <code>\x81\x69\x37\x88\x61\xBA</code> </p>
+<p>But we’re not done yet. After we got the right <code>key</code>, it will help us generate the right filename, which is:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">key = <span class="string">"\x81\x69\x37\x88\x61\xBA"</span></span><br><span class="line">filename = hashlib.sha256(key).hexdigest()+<span class="string">".txt"</span></span><br><span class="line">         = <span class="string">"5bd15779b922c19ef9a9ba2f112df1f2dbb0ad08bbf9edac27a28a0f3ba753f4.txt"</span></span><br></pre></td></tr></table></figure>
+<p>After we enter the filename in the url (under the Code400 domain of course), we found a message. It gave us a ciphertext and a plaintext which is partialy decrypted:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#base64.encode(ciphertext)</span></span><br><span class="line">ciphertext = <span class="string">"Or18/xSC2xW5pT7BLbIE7YPGLwWytbZsxupMp4w6iaa0QvtYZUMefkf43wmzR36MekHm23wgI4buIJLGk7m7gTq9fP8UgtsVuaU+wS2yBO2Dxi8FsrW2bMbqTKeMOommtEL7WGVDHn5H+N8Js0d+jHpB5tt8ICOG7iCSxpO5u4E6vXz/FILbFbmlPsEtsgTtg8YvBbK1tmzG6kynjDqJprRC+1hlQx5+R/jfCbNHfox6QebbfCAjhu4gksaTubuBOr18/xSC2xW5pT7BLbIE7YPGLwWytbZsxupMp4w6iaa0QvtYZUMefkf43wmzR36MekHm23wgI4buIJLGk7m7gTq9fP8UgtsVuaU+wS2yBO2Dxi8FsrW2bMbqTKeMOommtEL7WGVDHn5H+N8Js0d+jHpB5tt8ICOG7iCSxpO5u4E="</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#partialy decrypted plaintext</span></span><br><span class="line">plaintext = <span class="string">"*****n**M****H***j***Wx*******d************h*****3****=*******==******t**F**M**f***hM************3***H*w**J*********=**==*******U******E**95**V*c*N****5**t*M*****J*c*Q*****c*h5**0******==*==****NUR*******************X2*u*H**Y************G**P****=***********0*****************************f***5****OX*********=*******=****"</span></span><br></pre></td></tr></table></figure>
+<p>I decode the base64 ciphertext, and found that there’re 320 bytes data, which is same as the plaintext. And then I try to decrypt the whole plaintext, but unfortunately I failed -_- ( I suck at crypto ! ). So I send this message to one of my teammate, who is good at it. </p>
+<p>He found out that the actual ciphertext &amp; plaintext were both only 64 bytes, they just repeat themselves 5 times (64*5 = 320). So he splitted the plaintext into 5 groups, observed the known plaintext ,do the cross-comparison and complete the whole plaintext:</p>
+<p><code>U0NURntEMF95MHVfcjNhMWx5X2tuMHdfY3J5cHQwOXJhcGh5P30=============</code> </p>
+<p>It was another base64-encode string. So he base64-decode the whole string:</p>
+<p><code>SCTF{D0_y0u_r3a1ly_kn0w_crypt09raphy?}</code></p>
+<p>Thank goodness! Praise Jesus!<br>Finally, we get the flag!!!</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/CTF/" rel="tag"># CTF</a>
+          
+            <a href="/tags/Python/" rel="tag"># Python</a>
+          
+            <a href="/tags/PPC/" rel="tag"># PPC</a>
+          
+            <a href="/tags/XCTF/" rel="tag"># XCTF</a>
+          
+            <a href="/tags/SCTF/" rel="tag"># SCTF</a>
+          
+            <a href="/tags/Crypto/" rel="tag"># Crypto</a>
+          
+            <a href="/tags/CPP/" rel="tag"># CPP</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2014/12/08/2014-12-08-sctf-2014-pwn400/" rel="next" title="SCTF 2014 -- Pwn400">
+                <i class="fa fa-chevron-left"></i> SCTF 2014 -- Pwn400
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/05/05/2015-05-05-0ctf-2015-quals-geo-newbie/" rel="prev" title="0CTF 2015 Quals -- geo-newbie">
+                0CTF 2015 Quals -- geo-newbie <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- Go to www.addthis.com/dashboard to customize your tools -->
+<div class="addthis_inline_share_toolbox">
+  <script type = "text/javascript" src = "//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-592d8051fa91b8b6" async = "async" ></script>
+</div>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://s.gravatar.com/avatar/ff4140457527a5c7d307793a9ec905e0?s=80"
+               alt="Bruce Chen" />
+          <p class="site-author-name" itemprop="name">Bruce Chen</p>
+           
+              <p class="site-description motion-element" itemprop="description">Security researcher / CTFer / Pwner</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">50</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">61</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/bruce30262" target="_blank" title="Github">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  Github
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/bruce30262" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.facebook.com/bruce.chen.102" target="_blank" title="Facebook">
+                  
+                    <i class="fa fa-fw fa-facebook"></i>
+                  
+                  Facebook
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element" itemprop="license">
+            <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#“42”"><span class="nav-number">1.</span> <span class="nav-text">“42”</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2017 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Bruce Chen</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      Total visitors
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      Total views
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://bruce30262logdown.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://bruce30262.github.io/2014/12/08/2014-12-08-sctf-2014-code400/';
+          this.page.identifier = '2014/12/08/2014-12-08-sctf-2014-code400/';
+          this.page.title = 'SCTF 2014 -- Code400';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://bruce30262logdown.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,853 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="CTF,Python,Misc,XCTF,ruby,perl,C,Polyglot,Quine,0CTF," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Hacking Tube 2.0" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="Different people see different me.But I am always myself.   Make the output of your program exactly the same as your source code.All 5 correct required to get this flag (Only need 3 correct for BabyP">
+<meta name="keywords" content="CTF,Python,Misc,XCTF,ruby,perl,C,Polyglot,Quine,0CTF">
+<meta property="og:type" content="article">
+<meta property="og:title" content="0CTF 2015 Quals -- (Baby)PolyQuine">
+<meta property="og:url" content="https://bruce30262.github.io/2015/05/05/2015-05-05-0ctf-2015-quals-babypolyquine/index.html">
+<meta property="og:site_name" content="Hacking Tube 2.0">
+<meta property="og:description" content="Different people see different me.But I am always myself.   Make the output of your program exactly the same as your source code.All 5 correct required to get this flag (Only need 3 correct for BabyP">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2018-01-03T15:08:05.591Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="0CTF 2015 Quals -- (Baby)PolyQuine">
+<meta name="twitter:description" content="Different people see different me.But I am always myself.   Make the output of your program exactly the same as your source code.All 5 correct required to get this flag (Only need 3 correct for BabyP">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://bruce30262.github.io/2015/05/05/2015-05-05-0ctf-2015-quals-babypolyquine/"/>
+
+
+
+
+
+  <title>0CTF 2015 Quals -- (Baby)PolyQuine | Hacking Tube 2.0</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-100090256-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hacking Tube 2.0</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Security and stuff.</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://bruce30262.github.io/2015/05/05/2015-05-05-0ctf-2015-quals-babypolyquine/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Bruce Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://s.gravatar.com/avatar/ff4140457527a5c7d307793a9ec905e0?s=80">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hacking Tube 2.0">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">0CTF 2015 Quals -- (Baby)PolyQuine</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-05-05T15:23:00+08:00">
+                2015-05-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/write-ups/" itemprop="url" rel="index">
+                    <span itemprop="name">write-ups</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2015/05/05/2015-05-05-0ctf-2015-quals-babypolyquine/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2015/05/05/2015-05-05-0ctf-2015-quals-babypolyquine/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-eye"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>views
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>Different people see different me.<br>But I am always myself.</p>
+<202.112.26.114:12321>
+
+<p>Make the output of your program exactly the same as your source code.<br>All 5 correct required to get this flag <strong>(Only need 3 correct for BabyPolyQuine)</strong></p>
+<p>$python2 –version<br>Python 2.7.6</p>
+<p>$python3 –version<br>Python 3.4.0</p>
+<p>$gcc –version<br>gcc (Ubuntu 4.8.2-19ubuntu1) 4.8.2</p>
+<p>$ruby –version<br>ruby 1.9.3p484 (2013-11-22 revision 43786) [x86_64-linux]</p>
+<p>$perl –version<br>This is perl 5, version 18, subversion 2 (v5.18.2) built for x86_64-linux-gnu-thread-multi<br><a id="more"></a></p>
+</202.112.26.114:12321></blockquote>
+<p>The challenge reminds me of <a href="https://github.com/ctfs/write-ups-2014/tree/master/hitcon-ctf-2014/polyglot" target="_blank" rel="noopener">HITCON CTF 2014 – Polyglot</a>, except this time, it want us to write a program, which is not only a polyglot, but also a <a href="http://en.wikipedia.org/wiki/Quine_%28computing%29" target="_blank" rel="noopener">quine</a>.  </p>
+<p>Well, by searching the answer with the help of the almighty google, we can easily solve the <strong>BabyPolyQuine</strong> challenge by submitting this <a href="http://shinh.skr.jp/obf/poly_quine.txt" target="_blank" rel="noopener">program</a>, which pass almost all the languages check – except for <strong>Python3</strong>.</p>
+<p>It seems that Python3 has encounter some syntax error. After changing <code>def printf(a,*b):p a%b</code> to <code>def printf(a,*b):p (a%b)</code>, Python3 can run it without any error message now, <strong>but it print an extra newline, which doesn’t match the challenge’s requirement</strong>. So now we’re focusing on <strong>how to make both python2 &amp; python3 have the same printing behavior</strong>. After doing some trial &amp; error, I found that for C, Ruby &amp; Perl, they will ignore the line <code>def printf(a,*b):p (a%b)</code>, except Python. So we can add some code at that line. </p>
+<p>As for my opinion, I add the following code:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sys <span class="keyword">import</span>* ; p = <span class="keyword">lambda</span> x:stdout.write(x)</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">printf</span><span class="params">(a,*b)</span>:</span>p (a%b)</span><br></pre></td></tr></table></figure>
+<p>For Python, it will import the sys module, and set a lambda <code>p</code> as a <code>stdout.write()</code> function. The <code>stdout.write()</code> function won’t print newline, so python2 &amp; python3 will act like the same. </p>
+<p>The whole program:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">#include/*</span><br><span class="line">s=&apos;&apos;&apos;*/&lt;stdio.h&gt;</span><br><span class="line">main()&#123;char*_;/*==;sub _:lvalue&#123;$_&#125;&lt;&lt;s;#&apos;;&lt;&lt;s#&apos;&apos;&apos;</span><br><span class="line">from sys import* ; p = lambda x:stdout.write(x)</span><br><span class="line">def printf(a,*b):p (a%b)</span><br><span class="line">s</span><br><span class="line">#*/</span><br><span class="line">_=&quot; #include/*%cs=&apos;&apos;&apos;*/&lt;stdio.h&gt;%cmain()&#123;char*_;/*==;sub _:lvalue&#123;%c_&#125;&lt;&lt;s;#&apos;;&lt;&lt;s#&apos;&apos;&apos;%cfrom sys import* ; p = lambda x:stdout.write(x)%cdef printf(a,*b):p (a%%b)%cs%c#*/%c_=%c%s%c;printf(_,10,10,36,10,10,10,10,10,34,_,34,10,10,10,10);%c#/*%cs=&apos;&apos;&apos;*/%c&#125;//&apos;&apos;&apos;#==%c&quot;;printf(_,10,10,36,10,10,10,10,10,34,_,34,10,10,10,10);</span><br><span class="line">#/*</span><br><span class="line">s=&apos;&apos;&apos;*/</span><br><span class="line">&#125;//&apos;&apos;&apos;#==</span><br></pre></td></tr></table></figure></p>
+<p>After we submit the code, we get the flag as well: <code>0ctf{&quot;Yields falsehood when preceded by its quotation&quot; yields falsehood when preceded by its quotation}</code></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/CTF/" rel="tag"># CTF</a>
+          
+            <a href="/tags/Python/" rel="tag"># Python</a>
+          
+            <a href="/tags/Misc/" rel="tag"># Misc</a>
+          
+            <a href="/tags/XCTF/" rel="tag"># XCTF</a>
+          
+            <a href="/tags/ruby/" rel="tag"># ruby</a>
+          
+            <a href="/tags/perl/" rel="tag"># perl</a>
+          
+            <a href="/tags/C/" rel="tag"># C</a>
+          
+            <a href="/tags/Polyglot/" rel="tag"># Polyglot</a>
+          
+            <a href="/tags/Quine/" rel="tag"># Quine</a>
+          
+            <a href="/tags/0CTF/" rel="tag"># 0CTF</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/05/05/2015-05-05-0ctf-2015-quals-geo-newbie/" rel="next" title="0CTF 2015 Quals -- geo-newbie">
+                <i class="fa fa-chevron-left"></i> 0CTF 2015 Quals -- geo-newbie
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/05/07/2015-05-07-backdoorctf-2015-binary-misc/" rel="prev" title="BackdoorCTF 2015 -- Binary + Misc">
+                BackdoorCTF 2015 -- Binary + Misc <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- Go to www.addthis.com/dashboard to customize your tools -->
+<div class="addthis_inline_share_toolbox">
+  <script type = "text/javascript" src = "//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-592d8051fa91b8b6" async = "async" ></script>
+</div>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://s.gravatar.com/avatar/ff4140457527a5c7d307793a9ec905e0?s=80"
+               alt="Bruce Chen" />
+          <p class="site-author-name" itemprop="name">Bruce Chen</p>
+           
+              <p class="site-description motion-element" itemprop="description">Security researcher / CTFer / Pwner</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">50</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">61</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/bruce30262" target="_blank" title="Github">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  Github
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/bruce30262" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.facebook.com/bruce.chen.102" target="_blank" title="Facebook">
+                  
+                    <i class="fa fa-fw fa-facebook"></i>
+                  
+                  Facebook
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element" itemprop="license">
+            <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2017 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Bruce Chen</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      Total visitors
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      Total views
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://bruce30262logdown.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://bruce30262.github.io/2015/05/05/2015-05-05-0ctf-2015-quals-babypolyquine/';
+          this.page.identifier = '2015/05/05/2015-05-05-0ctf-2015-quals-babypolyquine/';
+          this.page.title = '0CTF 2015 Quals -- (Baby)PolyQuine';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://bruce30262logdown.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

