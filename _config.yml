@@ -1,0 +1,127 @@
+# Welcome to Jekyll!
+#
+# This config file is meant for settings that affect your whole blog, values
+# which you are expected to set up once and rarely edit after that. If you find
+# yourself editing this file very often, consider using Jekyll's data files
+# feature for the data you need to update frequently.
+#
+# For technical reasons, this file is *NOT* reloaded automatically when you use
+# 'bundle exec jekyll serve'. If you change this file, please restart the server process.
+
+# Site settings
+# These are used to personalize your new site. If you look in the HTML files,
+# you will see them accessed via {{ site.title }}, {{ site.email }}, and so on.
+# You can create any custom variable you would like, and they will be accessible
+# in the templates via {{ site.myvariable }}.
+title: "Hacking Tube 2.0"
+name: "Bruce Chen"
+description: >- # this means to ignore newlines until "baseurl:"
+    Security and stuff
+repository: "bruce30262/bruce30262.github.io"
+baseurl: "" # the subpath of your site, e.g. /blog
+url: "" # the base hostname & protocol for your site, e.g. http://example.com
+
+# Author
+author:
+  name     : "Bruce Chen"
+  avatar   : "/assets/images/other/gravatar.png"
+  bio      : "Vulnerability researcher / CTFer"
+  location : "Taiwan" 
+  links:
+    - label: "Twitter"
+      icon: "fab fa-fw fa-twitter-square"
+      url: "https://twitter.com/bruce30262"
+    - label: "GitHub"
+      icon: "fab fa-fw fa-github"
+      url: "https://github.com/bruce30262"
+
+timezone: Asia/Taipei
+
+# Build settings
+markdown: kramdown
+# Markdown Processing
+kramdown:
+  input: GFM
+  hard_wrap: false
+  auto_ids: true
+  footnote_nr: 1
+  entity_output: as_char
+  toc_levels: 1..6
+  smart_quotes: lsquo,rsquo,ldquo,rdquo
+  enable_coderay: false
+
+# theme settings
+theme: "minimal-mistakes-jekyll"
+minimal_mistakes_skin: "dark" # "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum" "sunrise"
+# Plugins
+plugins:
+  - jekyll-feed
+
+# set pages link
+include: ["_pages"]
+
+# category & tags
+category_archive:
+  type: liquid
+  path: /categories/
+tag_archive:
+  type: liquid
+  path: /tags/
+
+# paginate
+paginate: 5
+paginate_path: /page:num/
+
+# some default setting
+defaults:
+  # _posts
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: single
+      comments: true
+      share: true
+      related: true
+      author_profile: true
+      permalink: /:title/
+  # _pages
+  - scope:
+      path: ""
+      type: pages
+    values:
+      layout: single
+      author_profile: true
+
+# search
+search: true
+
+# google analytics
+analytics:
+  provider: "google"
+  google:
+    tracking_id: "UA-100090256-1"
+    anonymize_ip: false # default
+
+# Disqus
+comments:
+  provider: "disqus"
+  disqus:
+    shortname: "bruce30262logdown"
+
+
+# MISC
+encoding: "utf-8"
+
+# Exclude from processing.
+# The following items will not be processed, by default. Create a custom list
+# to override the default setting.
+exclude:
+    - patch_theme/
+#   - Gemfile
+#   - Gemfile.lock
+#   - node_modules
+#   - vendor/bundle/
+#   - vendor/cache/
+#   - vendor/gems/
+#   - vendor/ruby/

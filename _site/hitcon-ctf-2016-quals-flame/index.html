@@ -1,0 +1,702 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.13.0 by Michael Rose
+  Copyright 2013-2018 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE.txt
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>HITCON CTF 2016 Quals – flame - Hacking Tube 2.0</title>
+<meta name="description" content="Category: PPC ( more like Reverse )Points: 150">
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Hacking Tube 2.0">
+<meta property="og:title" content="HITCON CTF 2016 Quals – flame">
+<meta property="og:url" content="http://0.0.0.0:4000/hitcon-ctf-2016-quals-flame/">
+
+
+  <meta property="og:description" content="Category: PPC ( more like Reverse )Points: 150">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2016-10-11T00:06:00+08:00">
+
+
+
+
+
+
+<link rel="canonical" href="http://0.0.0.0:4000/hitcon-ctf-2016-quals-flame/">
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Hacking Tube 2.0 Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<!--[if lte IE 9]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    <div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        <a class="site-title" href="/">Hacking Tube 2.0</a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/about" >About</a>
+            </li><li class="masthead__menu-item">
+              <a href="/archives/" >Archive</a>
+            </li><li class="masthead__menu-item">
+              <a href="/categories/" >Categories</a>
+            </li><li class="masthead__menu-item">
+              <a href="/tags/" >Tags</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <svg class="icon" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.99 16">
+            <path d="M15.5,13.12L13.19,10.8a1.69,1.69,0,0,0-1.28-.55l-0.06-.06A6.5,6.5,0,0,0,5.77,0,6.5,6.5,0,0,0,2.46,11.59a6.47,6.47,0,0,0,7.74.26l0.05,0.05a1.65,1.65,0,0,0,.5,1.24l2.38,2.38A1.68,1.68,0,0,0,15.5,13.12ZM6.4,2A4.41,4.41,0,1,1,2,6.4,4.43,4.43,0,0,1,6.4,2Z" transform="translate(-.01)"></path>
+          </svg>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle Menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="http://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+
+      
+        <img src="/assets/images/other/gravatar.png" alt="Bruce Chen" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Bruce Chen</h3>
+    
+    
+      <p class="author__bio" itemprop="description">
+        Vulnerability researcher / CTFer
+      </p>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="http://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Taiwan</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://twitter.com/bruce30262"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+          
+        
+          
+            <li><a href="https://github.com/bruce30262"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
+    <meta itemprop="headline" content="HITCON CTF 2016 Quals – flame">
+    <meta itemprop="description" content="Category: PPC ( more like Reverse )Points: 150">
+    <meta itemprop="datePublished" content="October 11, 2016">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">HITCON CTF 2016 Quals – flame
+</h1>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p><strong>Category:</strong> PPC ( more like Reverse )
+<strong>Points:</strong> 150</p>
+
+<!-- more -->
+
+<p>We were given a 32 bit PowerPC ELF.<br />
+Fortunately I’ve got <strong>qemu-ppc-static</strong> installed on my <a href="https://github.com/bruce30262/ctf-box">ctf-box</a>, so we can actually run the program by the following command:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># root @ 9c51322c8256 in /mnt/files/hitcon-ctf-2016-qual/flame [7:51:02] 
+$ qemu-ppc-static ./flame
+*************************************
+*                                   *
+*   HITCON CTF 2016 Flag Verifier   *
+*                                   *
+*************************************
+Check your flag before submission: AAAA
+Your flag is incorrect :(
+</code></pre></div></div>
+
+<p>Kind of appreciate that this is a static linked binary, because if it’s a dynamic linked binary then I’ll have to spend more time to installed the PPC version of libc.</p>
+
+<p>Anyway we can see that the program will ask us to input the flag, and check if the flag is correct or not.</p>
+
+<p>To do the dynamic analysis, I first use <code class="highlighter-rouge">qemu-ppc-static -g 10001 ./flame</code> to launch the program and listen for a gdb connection at port 10001, then I use <strong>gdb-multiarch</strong> to debug the program with <code class="highlighter-rouge">target remote localhost:10001</code>. As for the static analysis, I launch the program with IDA Pro.</p>
+
+<p>After done some reversing, I summarize the program behavior with the following pseudo code:</p>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">scanf</span><span class="p">(</span><span class="s">"%s"</span><span class="p">,</span> <span class="n">flag</span><span class="p">);</span> <span class="c1">// let's just ignore the buffer overflow lol
+</span>    <span class="k">if</span><span class="p">(</span> <span class="n">strlen</span><span class="p">(</span><span class="n">flag</span><span class="p">)</span> <span class="o">==</span> <span class="mi">35</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">srandom</span><span class="p">(</span><span class="mh">0x1e61</span><span class="p">);</span>
+        <span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span> <span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">35</span> <span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">r</span> <span class="o">=</span> <span class="n">rand</span><span class="p">();</span>
+            <span class="n">check</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">flag</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">^</span> <span class="p">(</span><span class="n">r</span> <span class="o">&amp;</span> <span class="mh">0xfff</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span> <span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">35</span> <span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span> <span class="n">check</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="n">secret</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="p">)</span>
+            <span class="p">{</span>
+                <span class="n">fail</span><span class="p">();</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="n">success</span><span class="p">();</span>
+    <span class="p">}</span>
+    <span class="k">else</span>
+    <span class="p">{</span>
+        <span class="n">fail</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>The most challenging part is the line <code class="highlighter-rouge">check[i] = flag[i] ^ (r &amp; 0xfff);</code>, it actually look like this in the PowerPC assembly:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// r = rand();
+bl        rand
+mr        r9, r3
+// r = r &amp; 0xfff
+clrlwi    r10, r9, 20 &lt;-- clear the high-order 20 bits
+lwz       r9, 0x18(r31)
+slwi      r9, r9, 2
+addi      r8, r31, 0x1A0
+add       r9, r8, r9
+addi      r9, r9, -0x180
+stw       r10, 0(r9)
+lwz       r9, 0x18(r31)
+slwi      r9, r9, 2
+addi      r10, r31, 0x1A0
+add       r9, r10, r9
+addi      r9, r9, -0x180
+lwz       r9, 0(r9)
+mr        r8, r9
+// c = flag[i]
+addi      r10, r31, 0x138
+lwz       r9, 0x18(r31)
+add       r9, r10, r9
+lbz       r9, 0(r9)
+// check[i] = c ^ r
+xor       r9, r8, r9
+mr        r10, r9
+lwz       r9, 0x18(r31)
+slwi      r9, r9, 2
+addi      r8, r31, 0x1A0
+add       r9, r8, r9
+addi      r9, r9, -0x180
+stw       r10, 0(r9)
+// i++
+lwz       r9, 0x18(r31)
+addi      r9, r9, 1
+stw       r9, 0x18(r31)
+</code></pre></div></div>
+
+<p>Took me a while to figure out the whole operation.</p>
+
+<p>So now we know that the flag is a string with 35 characters. The program will do some operation on our input, then store the result into the <code class="highlighter-rouge">check</code> buffer. Then it will compare each byte between the <code class="highlighter-rouge">check</code> buffer and the <code class="highlighter-rouge">secret</code> buffer, and print out the success message if their content were the same.</p>
+
+<p>We can dump the content of the <code class="highlighter-rouge">secret</code> buffer by using the debbuger.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>0xf6fff86c:     0x00000cfe      0x00000859      0x0000095d      0x00000871
+0xf6fff87c:     0x0000040d      0x00000006      0x00000ade      0x00000fa8
+0xf6fff88c:     0x00000561      0x000009da      0x00000878      0x00000682
+0xf6fff89c:     0x00000fa9      0x00000f5f      0x0000025e      0x00000db0
+0xf6fff8ac:     0x00000fbf      0x00000bc6      0x00000d38      0x0000095d
+0xf6fff8bc:     0x00000d09      0x000007ed      0x00000307      0x000001c0
+0xf6fff8cc:     0x00000399      0x00000956      0x00000a45      0x00000292
+0xf6fff8dc:     0x00000c8a      0x0000092f      0x0000004a      0x00000964
+0xf6fff8ec:     0x00000194      0x000009da      0x0000011f      
+</code></pre></div></div>
+
+<p>After that, we can just recover the flag by writing some simple scripts.<br />
+```ruby sol.rb
+#!/usr/bin/env ruby</p>
+
+<p>resp = <code class="highlighter-rouge">./test</code>.split(“\n”)
+seed = []
+ans =[0x00000cfe, 0x00000859, 0x0000095d, 0x00000871, 0x0000040d,0x00000006,0x00000ade, 0x00000fa8, 0x00000561,  0x000009da , 0x00000878, 0x00000682, 0x00000fa9 , 0x00000f5f, 0x0000025e, 0x00000db0, 0x00000fbf, 0x00000bc6 , 0x00000d38 , 0x0000095d, 0x00000d09, 0x000007ed , 0x00000307, 0x000001c0, 0x00000399, 0x00000956 , 0x00000a45 , 0x00000292, 0x00000c8a,0x0000092f , 0x0000004a , 0x00000964, 0x00000194,  0x000009da, 0x0000011f]</p>
+
+<p>for s in resp
+    seed « (s.to_i(16) &amp; 0xfff)
+end</p>
+
+<p>flag = “”</p>
+
+<p>for a,b in seed.zip(ans)
+    flag += (a^b).chr
+end</p>
+
+<p>puts flag</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+`test` is a C program for generating the random seed  
+```c test.c
+#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+#include &lt;math.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;unistd.h&gt;
+
+int main(int argc, char *argv[])
+{
+    int i = 0;
+    srand(0x1e61);
+    for(i = 0 ; i &lt; 35 ; i++)
+    {
+        printf("0x%x\n", rand());
+    }
+    return 0;
+}
+</code></pre></div></div>
+
+<p>Result:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># root @ 9c51322c8256 in /mnt/files/hitcon-ctf-2016-qual/flame [8:42:43] C:126
+$ ruby ./sol.rb 
+hitcon{P0W3rPc_a223M8Ly_12_s0_345y}
+</code></pre></div></div>
+
+<p>flag: <code class="highlighter-rouge">hitcon{P0W3rPc_a223M8Ly_12_s0_345y}</code></p>
+
+<p>References of PowerPC:</p>
+<ul>
+  <li><a href="http://www.csd.uwo.ca/~mburrel/stuff/ppc-asm.html">PowerPC Assembly tutorial</a></li>
+  <li><a href="http://wiibrew.org/wiki/Assembler_Tutorial">Assembler Tutorial - WiiBrew</a></li>
+</ul>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#assembly" class="page__taxonomy-item" rel="tag">assembly</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#c" class="page__taxonomy-item" rel="tag">C</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#ctf" class="page__taxonomy-item" rel="tag">CTF</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#hitcon" class="page__taxonomy-item" rel="tag">HITCON</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#powerpc" class="page__taxonomy-item" rel="tag">PowerPC</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#ppc" class="page__taxonomy-item" rel="tag">PPC</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#qemu" class="page__taxonomy-item" rel="tag">qemu</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#reversing" class="page__taxonomy-item" rel="tag">Reversing</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#ruby" class="page__taxonomy-item" rel="tag">ruby</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#write-ups" class="page__taxonomy-item" rel="tag">write-ups</a>
+    
+    </span>
+  </p>
+
+
+        
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2016-10-11T00:06:00+08:00">October 11, 2016</time></p>
+        
+      </footer>
+
+      <!-- /usr/gem/gems/minimal-mistakes-jekyll-4.13.0/_includes/social-share.html -->
+<!-- Remove linkdin shared button -->
+<section class="page__share">
+  
+
+  <a href="https://twitter.com/intent/tweet?text=HITCON+CTF+2016+Quals+--+flame%20http%3A%2F%2F0.0.0.0%3A4000%2Fhitcon-ctf-2016-quals-flame%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2F0.0.0.0%3A4000%2Fhitcon-ctf-2016-quals-flame%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://plus.google.com/share?url=http%3A%2F%2F0.0.0.0%3A4000%2Fhitcon-ctf-2016-quals-flame%2F" class="btn btn--google-plus" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Google Plus"><i class="fab fa-fw fa-google-plus" aria-hidden="true"></i><span> Google+</span></a>
+
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/hitcon-ctf-2016-quals-secret-holder/" class="pagination--pager" title="HITCON CTF 2016 Quals – Secret Holder
+">Previous</a>
+    
+    
+      <a href="/hitcon-ctf-2016-quals-rop/" class="pagination--pager" title="HITCON CTF 2016 Quals – ROP
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/Chakrazy-exploiting-type-confusion-bug-in-ChakraCore/" rel="permalink">Chakrazy – exploiting type confusion bug in ChakraCore engine
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">Introduction
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/Learning-browser-exploitation-via-33C3-CTF-feuerfuchs-challenge/" rel="permalink">Learning browser exploitation via 33C3 CTF  feuerfuchs challenge
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">Introduction
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/hxp-CTF-2017-hardened-flag-store/" rel="permalink">hxp CTF 2017 – hardened_flag_store
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">Category: Pwnable
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/MeePwn-CTF-2017-Brainfuck-1-2/" rel="permalink">MeePwn CTF 2017 – Brainfuck 1 &amp; 2
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">Category: Pwnable
+
+</p>
+  </article>
+</div>
+        
+      </div>
+    </div>
+  
+</div>
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><input type="text" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+    <div id="results" class="results"></div></div>
+      </div>
+    
+
+    <div class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2018 Bruce Chen. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+  <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+    
+  <script>
+    var disqus_config = function () {
+      this.page.url = "http://0.0.0.0:4000/hitcon-ctf-2016-quals-flame/";  // Replace PAGE_URL with your page's canonical URL variable
+      this.page.identifier = "/hitcon-ctf-2016-quals-flame"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    (function() { // DON'T EDIT BELOW THIS LINE
+      var d = document, s = d.createElement('script');
+      s.src = 'https://bruce30262logdown.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+  
+
+
+
+  </body>
+</html>
