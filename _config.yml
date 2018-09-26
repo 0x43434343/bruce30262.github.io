@@ -34,6 +34,9 @@ author:
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
       url: "https://github.com/bruce30262"
+    - label: "RSS"
+      icon: "fas fa-fw fa-rss-square"
+      url: "/feed.xml"
 
 timezone: Asia/Taipei
 
@@ -92,6 +95,22 @@ defaults:
     values:
       layout: single
       author_profile: true
+
+# footer
+footer:
+  links:
+    - label: ""
+      icon: "fab fa-fw fa-creative-commons"
+      url: "https://creativecommons.org/licenses/by-nc-sa/3.0/"
+    - label: ""
+      icon: "fab fa-fw fa-creative-commons-by"
+      url: "https://creativecommons.org/licenses/by-nc-sa/3.0/"
+    - label: ""
+      icon: "fab fa-fw fa-creative-commons-nc"
+      url: "https://creativecommons.org/licenses/by-nc-sa/3.0/"
+    - label: ""
+      icon: "fab fa-fw fa-creative-commons-sa"
+      url: "https://creativecommons.org/licenses/by-nc-sa/3.0/"
 
 # search
 search: true
