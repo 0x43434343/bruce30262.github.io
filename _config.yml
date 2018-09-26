@@ -51,7 +51,7 @@ kramdown:
   enable_coderay: false
 
 # theme settings
-theme: "minimal-mistakes-jekyll"
+remote_theme: bruce30262/minimal-mistakes
 minimal_mistakes_skin: "dark" # "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum" "sunrise"
 # Plugins
 plugins:

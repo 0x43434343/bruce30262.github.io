@@ -280,6 +280,7 @@ DEPENDENCIES
   jekyll
   jekyll-admin
   jekyll-feed
+  jekyll-remote-theme
   minimal-mistakes-jekyll
 
 BUNDLED WITH
