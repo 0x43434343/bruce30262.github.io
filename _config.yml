@@ -18,8 +18,8 @@ name: "Bruce Chen"
 description: >- # this means to ignore newlines until "baseurl:"
     Security and stuff
 repository: "bruce30262/bruce30262.github.io"
+url: "https://bruce30262.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 baseurl: "" # the subpath of your site, e.g. /blog
-url: "" # the base hostname & protocol for your site, e.g. http://example.com
 
 # Author
 author:
