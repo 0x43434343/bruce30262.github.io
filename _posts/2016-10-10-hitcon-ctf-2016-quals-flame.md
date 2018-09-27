@@ -1,19 +1,26 @@
 ---
 title: HITCON CTF 2016 Quals -- flame
+layout: single
+comments: true
+share: true
+related: true
+author_profile: true
+permalink: "/:title/"
 tags:
-  - ruby
-  - CTF
-  - HITCON
-  - Reversing
-  - PPC
-  - PowerPC
-  - assembly
-  - qemu
-  - C
+- ruby
+- CTF
+- HITCON
+- Reversing
+- PPC
+- PowerPC
+- assembly
+- qemu
+- C
 categories:
-  - write-ups
-date: 2016-10-10 16:06:00
+- write-ups
+date: '2016-10-10 16:06:00 +0000'
 ---
+
 **Category:** PPC ( more like Reverse )
 **Points:** 150
 
@@ -130,7 +137,7 @@ We can dump the content of the `secret` buffer by using the debbuger.
 
 
 After that, we can just recover the flag by writing some simple scripts.  
-```ruby sol.rb
+```ruby
 #!/usr/bin/env ruby
 
 resp = `./test`.split("\n")
@@ -152,7 +159,7 @@ puts flag
 ```
 
 `test` is a C program for generating the random seed  
-```c test.c
+```c
 #include <stdio.h>
 #include <string.h>
 #include <math.h>

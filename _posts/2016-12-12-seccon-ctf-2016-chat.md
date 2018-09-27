@@ -1,17 +1,24 @@
 ---
 title: SECCON CTF 2016 -- chat
+layout: single
+comments: true
+share: true
+related: true
+author_profile: true
+permalink: "/:title/"
 tags:
-  - SECCON
-  - CTF
-  - Pwnable
-  - use_after_free
-  - heap
-  - heap_overflow
-  - Python
+- SECCON
+- CTF
+- Pwnable
+- use_after_free
+- heap
+- heap_overflow
+- Python
 categories:
-  - write-ups
-date: 2016-12-12 08:03:00
+- write-ups
+date: '2016-12-12 08:03:00 +0000'
 ---
+
 **Category:** Exploit
 **Points:** 500
 
@@ -222,7 +229,7 @@ gdb-peda$ tel 0x60302a
 That's right ! If we change the `userC->name` pointer into `0x60302a`, we can start overwriting the content from `0x60302a`. We first filled the GOT entry of `stack_chk_fail` with some printable characters ( now the first character of new user name is printable ! ), then we can start hijack some GOT ! 
 
 Here I decided to hijack `strchr`'s GOT so when the program call `strchr(buf, 10)` ( `buf` stores our input ) it will call `system(buf)` instead.  
-```python exp_chat.py
+```python
 #!/usr/bin/env python
 
 from pwn import *

@@ -1,17 +1,24 @@
 ---
 title: DEFCON CTF 2015 Quals -- wibbly-wobbly-timey-wimey
+layout: single
+comments: true
+share: true
+related: true
+author_profile: true
+permalink: "/:title/"
 tags:
-  - Python
-  - C
-  - DEFCON
-  - CTF
-  - Pwnable
-  - format_string
-  - PPC
+- Python
+- C
+- DEFCON
+- CTF
+- Pwnable
+- format_string
+- PPC
 categories:
-  - write-ups
-date: 2015-05-23 22:40:00
+- write-ups
+date: '2015-05-23 22:40:00 +0000'
 ---
+
 **Category:** Pwnable
 **Points:** 2
 > Wibbly Wobbly Timey Wimey
@@ -254,7 +261,7 @@ So to sum up:
 
 Here's the exploit. The part that beating the game was done by **yench**, while the rest was done by me.
 
-```python wwtw_exp.py
+```python
 from pwn import *
 import struct
 import time

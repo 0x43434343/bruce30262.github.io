@@ -1,14 +1,21 @@
 ---
 title: HITCON CTF 2016 Quals -- ROP
+layout: single
+comments: true
+share: true
+related: true
+author_profile: true
+permalink: "/:title/"
 tags:
-  - CTF
-  - HITCON
-  - ruby
-  - Reversing
+- CTF
+- HITCON
+- ruby
+- Reversing
 categories:
-  - write-ups
-date: 2016-10-10 16:07:00
+- write-ups
+date: '2016-10-10 16:07:00 +0000'
 ---
+
 **Category:** Reverse
 **Points:** 250
 
@@ -18,7 +25,7 @@ The challenge gave us a file call `rop.iseq`. By checking the file header, I fou
 
 By googling the InstructionSequence, I found that there are some new features were added into the ruby version 2.3, for example the [load_from_binary](http://ruby-doc.org/core-2.3.0/RubyVM/InstructionSequence.html#method-c-load_from_binary) method. We can actually use these methods to load the instruction sequence from a binary file, and disassemble the instruction to a human readable format.  
 
-```ruby de.rb
+```ruby
 #!/usr/bin/env ruby
 
 # read rop.iseq, dump InstructionSequence
@@ -41,7 +48,7 @@ Invalid Key @_@
 Looks like the program will read our input and do some checking, then output the checking result.   
 
 Anyway let's dump the disassemble result and start reversing. [Here](https://gist.github.com/bruce30262/1e8fd1439f13e75cf72e0c265dd612de)'s the whole disassemble result.  
-``` partial disassemble result
+```
 == disasm: #<ISeq:<compiled>@<compiled>>================================
 == catch table
 | catch type: break  st: 0096 ed: 0102 sp: 0000 cont: 0102
@@ -197,7 +204,7 @@ Back to our recovering procedure. The checking of the `key[2]` looks like this:
 It will first call a method `f`, with argument (`217`, `key[2].to_i(16)`, `314159`), then check if its return value = `94449` ( with 28 as base, `48D5` is actually `94449` in base 10 )
 
 method `f` was kind of complicated, so I will just post the pseudo code instead:
-```ruby f
+```ruby
 def f(two17, key2, pi)
     ret = 1
     v2 = two17
@@ -213,7 +220,7 @@ end
 ```
 
 Since we know that `key[2]`'s format is `0000` ~ `FFFF`, we can just crack `key[2]` by writing a simple crackme:
-```ruby crack_part3.rb
+```ruby
 def f(two17, key2, pi)
     ret = 1
     v2 = two17
@@ -261,7 +268,7 @@ b.sort == [53,97]
 So the value of `key[3]` is `53*97 == 5141` ( base 10 )
 
 At this point we know the valid key is `7A69-ECAF-1BD2-5141-XXXX`. The checking of the last part of the key was also kind of complicated and I was kind of lazy to reverse the whole thing. So far we have the first four part of the key, and there's only one left ...... so why don't we use the old typical brute force attack to recover the last one ? ;)
-```ruby crack_flag.rb
+```ruby
 #!/usr/bin/env ruby
 for i in (0..0xffff)
     key = "7A69-ECAF-1BD2-5141-%04X" % i

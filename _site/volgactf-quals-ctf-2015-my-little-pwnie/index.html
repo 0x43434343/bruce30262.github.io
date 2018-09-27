@@ -286,78 +286,82 @@ It’s a simple echo server. Whenever someone connect to it, it fork a process t
 
 <p>Launch it with IDA Pro and take a look at it:</p>
 
-<p>```c start_echo
-int __cdecl start_echo(int fd)
-{</p>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="kr">__cdecl</span> <span class="nf">start_echo</span><span class="p">(</span><span class="kt">int</span> <span class="n">fd</span><span class="p">)</span>
+<span class="p">{</span>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>int result; // eax@4
-int v2; // esi@4
-int i; // [sp+18h] [bp-A0h]@1
-int v4; // [sp+1Ch] [bp-9Ch]@1
-int v5; // [sp+20h] [bp-98h]@1
-char v6; // [sp+24h] [bp-94h]@1
-int v7; // [sp+9Ch] [bp-1Ch]@1
+    <span class="kt">int</span> <span class="n">result</span><span class="p">;</span> <span class="c1">// eax@4
+</span>    <span class="kt">int</span> <span class="n">v2</span><span class="p">;</span> <span class="c1">// esi@4
+</span>    <span class="kt">int</span> <span class="n">i</span><span class="p">;</span> <span class="c1">// [sp+18h] [bp-A0h]@1
+</span>    <span class="kt">int</span> <span class="n">v4</span><span class="p">;</span> <span class="c1">// [sp+1Ch] [bp-9Ch]@1
+</span>    <span class="kt">int</span> <span class="n">v5</span><span class="p">;</span> <span class="c1">// [sp+20h] [bp-98h]@1
+</span>    <span class="kt">char</span> <span class="n">v6</span><span class="p">;</span> <span class="c1">// [sp+24h] [bp-94h]@1
+</span>    <span class="kt">int</span> <span class="n">v7</span><span class="p">;</span> <span class="c1">// [sp+9Ch] [bp-1Ch]@1
+</span>
+    <span class="n">v7</span> <span class="o">=</span> <span class="o">*</span><span class="n">MK_FP</span><span class="p">(</span><span class="n">__GS__</span><span class="p">,</span> <span class="mi">20</span><span class="p">);</span>
+    <span class="n">send_to_user</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="s">"This is a simple echo server. Type exit to quit.</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+    <span class="n">v4</span> <span class="o">=</span> <span class="s">"ohcE"</span><span class="p">;</span>
+    <span class="n">v5</span> <span class="o">=</span> <span class="s">" :"</span><span class="p">;</span>
+    <span class="n">memset</span><span class="p">(</span><span class="o">&amp;</span><span class="n">v6</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">120u</span><span class="p">);</span>
 
-v7 = *MK_FP(__GS__, 20);
-send_to_user(fd, "This is a simple echo server. Type exit to quit.\n");
-v4 = "ohcE";
-v5 = " :";
-memset(&amp;v6, 0, 120u);
-
-for ( i = 1; i; i = echoing((char *)&amp;v4, fd) )
-;
-result = 0;
-v2 = *MK_FP(__GS__, 20) ^ v7;
-return result; } ```
+    <span class="k">for</span> <span class="p">(</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span><span class="p">;</span> <span class="n">i</span> <span class="o">=</span> <span class="n">echoing</span><span class="p">((</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">v4</span><span class="p">,</span> <span class="n">fd</span><span class="p">)</span> <span class="p">)</span>
+    <span class="p">;</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">v2</span> <span class="o">=</span> <span class="o">*</span><span class="n">MK_FP</span><span class="p">(</span><span class="n">__GS__</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span> <span class="o">^</span> <span class="n">v7</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">result</span><span class="p">;</span>
+<span class="p">}</span>
 </code></pre></div></div>
 
 <p>So, the <code class="highlighter-rouge">start_echo()</code> will call <code class="highlighter-rouge">echoing(v4, fd)</code> , which v4 is a pointer to char<br />
 Let’s take a look at the <code class="highlighter-rouge">echoing()</code> function:</p>
 
-<p>```c echoing
-int __cdecl echoing(char *a1, int fd)
-{
-    int result; // eax@2
-    int v3; // ecx@10
-    int v4; // [sp+20h] [bp-58h]@3
-    char *i; // [sp+24h] [bp-54h]@3
-    char user_input[64]; // [sp+2Ch] [bp-4Ch]@1
-    int v7; // [sp+6Ch] [bp-Ch]@1</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>v7 = *MK_FP(__GS__, 20);
-send_to_user(fd, "Type string to echo back: ");
-memset(user_input, 0, 64u);
-if ( recv(fd, user_input, 63u, 0) )
-{
-    v4 = strcmp(user_input, "exit\n");
-    for ( i = user_input; &amp;user_input[strlen(user_input)] &gt; i; ++i )
-    {
-        if ( *i == 'n' )
-        {
-            *(_DWORD *)a1 = "ts I";
-            *((_DWORD *)a1 + 1) = " pir";
-            *((_DWORD *)a1 + 2) = "siht";
-            *((_DWORD *)a1 + 3) = "fwa ";
-            *((_DWORD *)a1 + 4) = "s lu";
-            *((_DWORD *)a1 + 5) = "obmy";
-            *((_WORD *)a1 + 12) = "\nl";
-            a1[26] = 0;
-            v4 = 0;
-            goto LABEL_9;
-        }
-    }
-    sprintf(a1 + 6, user_input); LABEL_9:
-    send_to_user(fd, a1);
-    result = v4;
-}
-else
-{
-    fwrite("Failed to read socket\n", 1u, 0x16u, stderr);
-    result = -1;
-}
-v3 = *MK_FP(__GS__, 20) ^ v7;
-return result; } ``` So we found that there's a **format string** vulnerability at the line   `sprintf(a1 + 6, user_input);`   But notice that the program will filter out the character 'n', which means we can't use **%n** to write the memory. 
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="kr">__cdecl</span> <span class="nf">echoing</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">a1</span><span class="p">,</span> <span class="kt">int</span> <span class="n">fd</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">result</span><span class="p">;</span> <span class="c1">// eax@2
+</span>    <span class="kt">int</span> <span class="n">v3</span><span class="p">;</span> <span class="c1">// ecx@10
+</span>    <span class="kt">int</span> <span class="n">v4</span><span class="p">;</span> <span class="c1">// [sp+20h] [bp-58h]@3
+</span>    <span class="kt">char</span> <span class="o">*</span><span class="n">i</span><span class="p">;</span> <span class="c1">// [sp+24h] [bp-54h]@3
+</span>    <span class="kt">char</span> <span class="n">user_input</span><span class="p">[</span><span class="mi">64</span><span class="p">];</span> <span class="c1">// [sp+2Ch] [bp-4Ch]@1
+</span>    <span class="kt">int</span> <span class="n">v7</span><span class="p">;</span> <span class="c1">// [sp+6Ch] [bp-Ch]@1
+</span>
+    <span class="n">v7</span> <span class="o">=</span> <span class="o">*</span><span class="n">MK_FP</span><span class="p">(</span><span class="n">__GS__</span><span class="p">,</span> <span class="mi">20</span><span class="p">);</span>
+    <span class="n">send_to_user</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="s">"Type string to echo back: "</span><span class="p">);</span>
+    <span class="n">memset</span><span class="p">(</span><span class="n">user_input</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">64u</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span> <span class="n">recv</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="n">user_input</span><span class="p">,</span> <span class="mi">63u</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">v4</span> <span class="o">=</span> <span class="n">strcmp</span><span class="p">(</span><span class="n">user_input</span><span class="p">,</span> <span class="s">"exit</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+        <span class="k">for</span> <span class="p">(</span> <span class="n">i</span> <span class="o">=</span> <span class="n">user_input</span><span class="p">;</span> <span class="o">&amp;</span><span class="n">user_input</span><span class="p">[</span><span class="n">strlen</span><span class="p">(</span><span class="n">user_input</span><span class="p">)]</span> <span class="o">&gt;</span> <span class="n">i</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span> <span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span> <span class="o">*</span><span class="n">i</span> <span class="o">==</span> <span class="sc">'n'</span> <span class="p">)</span>
+            <span class="p">{</span>
+                <span class="o">*</span><span class="p">(</span><span class="n">_DWORD</span> <span class="o">*</span><span class="p">)</span><span class="n">a1</span> <span class="o">=</span> <span class="s">"ts I"</span><span class="p">;</span>
+                <span class="o">*</span><span class="p">((</span><span class="n">_DWORD</span> <span class="o">*</span><span class="p">)</span><span class="n">a1</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="s">" pir"</span><span class="p">;</span>
+                <span class="o">*</span><span class="p">((</span><span class="n">_DWORD</span> <span class="o">*</span><span class="p">)</span><span class="n">a1</span> <span class="o">+</span> <span class="mi">2</span><span class="p">)</span> <span class="o">=</span> <span class="s">"siht"</span><span class="p">;</span>
+                <span class="o">*</span><span class="p">((</span><span class="n">_DWORD</span> <span class="o">*</span><span class="p">)</span><span class="n">a1</span> <span class="o">+</span> <span class="mi">3</span><span class="p">)</span> <span class="o">=</span> <span class="s">"fwa "</span><span class="p">;</span>
+                <span class="o">*</span><span class="p">((</span><span class="n">_DWORD</span> <span class="o">*</span><span class="p">)</span><span class="n">a1</span> <span class="o">+</span> <span class="mi">4</span><span class="p">)</span> <span class="o">=</span> <span class="s">"s lu"</span><span class="p">;</span>
+                <span class="o">*</span><span class="p">((</span><span class="n">_DWORD</span> <span class="o">*</span><span class="p">)</span><span class="n">a1</span> <span class="o">+</span> <span class="mi">5</span><span class="p">)</span> <span class="o">=</span> <span class="s">"obmy"</span><span class="p">;</span>
+                <span class="o">*</span><span class="p">((</span><span class="n">_WORD</span> <span class="o">*</span><span class="p">)</span><span class="n">a1</span> <span class="o">+</span> <span class="mi">12</span><span class="p">)</span> <span class="o">=</span> <span class="s">"</span><span class="se">\n</span><span class="s">l"</span><span class="p">;</span>
+                <span class="n">a1</span><span class="p">[</span><span class="mi">26</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+                <span class="n">v4</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+                <span class="k">goto</span> <span class="n">LABEL_9</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="n">sprintf</span><span class="p">(</span><span class="n">a1</span> <span class="o">+</span> <span class="mi">6</span><span class="p">,</span> <span class="n">user_input</span><span class="p">);</span>
+<span class="nl">LABEL_9:</span>
+        <span class="n">send_to_user</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="n">a1</span><span class="p">);</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">v4</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">else</span>
+    <span class="p">{</span>
+        <span class="n">fwrite</span><span class="p">(</span><span class="s">"Failed to read socket</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="mi">1u</span><span class="p">,</span> <span class="mh">0x16u</span><span class="p">,</span> <span class="n">stderr</span><span class="p">);</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">v3</span> <span class="o">=</span> <span class="o">*</span><span class="n">MK_FP</span><span class="p">(</span><span class="n">__GS__</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span> <span class="o">^</span> <span class="n">v7</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">result</span><span class="p">;</span>
+<span class="p">}</span>
 </code></pre></div></div>
+<p>So we found that there’s a <strong>format string</strong> vulnerability at the line<br />
+<code class="highlighter-rouge">sprintf(a1 + 6, user_input);</code><br />
+But notice that the program will filter out the character ‘n’, which means we can’t use <strong>%n</strong> to write the memory.</p>
 
 <p>Fortunately, the vulnerability’s happened in <code class="highlighter-rouge">sprintf</code>, not <code class="highlighter-rouge">printf</code>. 
 <code class="highlighter-rouge">sprintf(a1 + 6, user_input)</code> means the <code class="highlighter-rouge">user_input</code> will be <strong>output</strong> to buffer <code class="highlighter-rouge">a1</code> (the one that <code class="highlighter-rouge">start_echo</code> pass into <code class="highlighter-rouge">echoing</code>).</p>

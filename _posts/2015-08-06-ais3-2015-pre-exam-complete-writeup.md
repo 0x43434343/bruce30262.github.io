@@ -1,21 +1,28 @@
 ---
 title: AIS3 2015 pre-exam -- complete writeup
+layout: single
+comments: true
+share: true
+related: true
+author_profile: true
+permalink: "/:title/"
 tags:
-  - AIS3
-  - CTF
-  - Pwnable
-  - Reversing
-  - Crypto
-  - Web
-  - Python
-  - C
-  - PPC
-  - format_string
-  - Misc
+- AIS3
+- CTF
+- Pwnable
+- Reversing
+- Crypto
+- Web
+- Python
+- C
+- PPC
+- format_string
+- Misc
 categories:
-  - write-ups
-date: 2015-08-06 12:15:00
+- write-ups
+date: '2015-08-06 12:15:00 +0000'
 ---
+
 考量到參與 AIS3 2015 pre-exam 的人幾乎都是台灣人
 這個 blog 的第一篇中文 writeup 就獻給這篇了 XD
 基本上就是全包這次 exam 的所有題目
@@ -150,7 +157,7 @@ SELECT * from [table_name] WHERE username = 'aaa\\' OR 1=1 #' AND password = ''
 之後腦洞打開想說會不會是 shellcode
 看了一下 hex value 又覺得應該不是 x86 的 machine code
 於是就直接寫了個 .c 檔編成 64 bit ELF 直接下去跑
-```c shell.c
+```c
 char code[] = "\x48\xb8\xb5\xa3\xb9\xb1\xc6\x41\x41\x41\x50\x48\xb8\xbc\xa0\xa9\x93\xaa\xa3\xbe\x93\x50\x48\xb8\xa9\x93\xa5\xbf\x93\xbf\xa5\xa1\x50\x48\xb8\xbf\xa4\xa9\xa0\xa0\xaf\xa3\xa8\x50\x48\xb8\x8d\x85\x9f\xff\xb7\xa3\xa7\x93\x50\x48\x89\xe6\x48\x31\xd2\x80\x34\x16\xcc\xfe\xc2\x80\xfa\x25\x75\xf5\x48\x31\xc0\x48\xff\xc0\x48\x89\xc7\x0f\x05\x6a\x3c\x58\x48\x31\xff\x0f\x05";
 
 int main(int argc, char **argv)
@@ -211,7 +218,7 @@ flag: `AIS3{dementia}`
 一開始直接用 `python -c` pipe 進 nc 的方式送
 不知道為什麼一直沒有噴 flag 回來
 最後只好乖乖寫 script 
-```python pwn1.py
+```python
 #!/usr/bin/env python
 
 from pwn import *
@@ -269,7 +276,7 @@ int echo()
 
 要注意的是 buffer 只給我們 20 byte, 而我的 shellcode 有 23 byte
 因此最後我是將 shellcode 塞在 return address 後面，並向後跳至 shellcode 位址執行
-```python pwn2.py
+```python
 #!/usr/bin/env python
 
 from pwn import *
@@ -347,7 +354,7 @@ exit 則是離開程式
 還有就是因為這題在蓋的時候是用 integer 在蓋
 因此 payload 都要轉成 integer 的形式 (注意要是 int32 )
 
-```python pwn3.py
+```python
 #!/usr/bin/env python
 
 from pwn import *
@@ -486,7 +493,7 @@ flag:`AIS3{rsaaaaaaaaA_orz}`
 耗費最多心力的一題，解完之後經驗值又增加了 XD
 
 給了一份 buy.py
-```python buy.py
+```python
 #!/usr/bin/python
 
 import os
@@ -672,7 +679,7 @@ if __name__ == '__main__':
 最後直接手動建了 key length = 1 ~ 16 的 payload 和 hash 值一個一個送
 才發現 key length = 12...
 
-```python crypto3.py
+```python
 #!/usr/bin/env python
 from pwn import *
 import itertools

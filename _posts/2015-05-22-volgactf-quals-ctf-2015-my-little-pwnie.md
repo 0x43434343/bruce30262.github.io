@@ -1,17 +1,24 @@
 ---
 title: VolgaCTF 2015 Quals -- my little pwnie
+layout: single
+comments: true
+share: true
+related: true
+author_profile: true
+permalink: "/:title/"
 tags:
-  - VolgaCTF
-  - CTF
-  - Python
-  - Pwnable
-  - assembly
-  - format_string
-  - BOF
+- VolgaCTF
+- CTF
+- Python
+- Pwnable
+- assembly
+- format_string
+- BOF
 categories:
-  - write-ups
-date: 2015-05-22 14:08:00
+- write-ups
+date: '2015-05-22 14:08:00 +0000'
 ---
+
 **Category:** Pwn
 **Points:** 250
 > Just another pwn task. Break in!
@@ -27,7 +34,7 @@ It's a simple echo server. Whenever someone connect to it, it fork a process to 
 
 Launch it with IDA Pro and take a look at it:  
 
-```c start_echo
+```c
 int __cdecl start_echo(int fd)
 {
 
@@ -56,7 +63,7 @@ int __cdecl start_echo(int fd)
 So, the `start_echo()` will call `echoing(v4, fd)` , which v4 is a pointer to char  
 Let's take a look at the `echoing()` function:
 
-```c echoing
+```c
 int __cdecl echoing(char *a1, int fd)
 {
     int result; // eax@2

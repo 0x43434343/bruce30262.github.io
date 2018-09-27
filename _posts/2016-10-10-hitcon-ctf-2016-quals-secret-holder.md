@@ -1,17 +1,24 @@
 ---
 title: HITCON CTF 2016 Quals -- Secret Holder
+layout: single
+comments: true
+share: true
+related: true
+author_profile: true
+permalink: "/:title/"
 tags:
-  - Python
-  - CTF
-  - Pwnable
-  - use_after_free
-  - heap
-  - HITCON
-  - heap_overflow
+- Python
+- CTF
+- Pwnable
+- use_after_free
+- heap
+- HITCON
+- heap_overflow
 categories:
-  - write-ups
-date: 2016-10-10 08:10:00
+- write-ups
+date: '2016-10-10 08:10:00 +0000'
 ---
+
 **Category:** pwn
 **Points:** 100
 
@@ -74,7 +81,7 @@ By overwriting `free`'s GOT into `puts@plt`, and `small`'s buffer into `__libc_s
 
 After that we're able to overwrite some GOT and hijack the control flow. Here I overwrite `puts`'s GOT into the address of the [one-gadget](http://j00ru.vexillium.org/blog/24_03_15/dragons_ctf.pdf), which will make the program spawn a shell whenever it tries to call `puts` to print out some message.  
 
-```python exp_secret.py
+```python
 #!/usr/bin/env python
 
 from pwn import *
@@ -188,4 +195,4 @@ if __name__ == "__main__":
 
 Such a shame that I didn't solve this challenge ...... I might be able to solve it if I did some more fuzzing.....
 
-flag: `hitcon{The73 1s a s3C7e+ In malloc.c, h4ve y0u f0Und It?:P}`   
+flag: `hitcon{The73 1s a s3C7e+ In malloc.c, h4ve y0u f0Und It?:P}`

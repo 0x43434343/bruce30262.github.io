@@ -1,16 +1,23 @@
 ---
 title: HITCON CTF 2016 Quals -- Shelling Folder
+layout: single
+comments: true
+share: true
+related: true
+author_profile: true
+permalink: "/:title/"
 tags:
-  - CTF
-  - HITCON
-  - BOF
-  - Pwnable
-  - heap
-  - Python
+- CTF
+- HITCON
+- BOF
+- Pwnable
+- heap
+- Python
 categories:
-  - write-ups
-date: 2016-10-10 16:11:00
+- write-ups
+date: '2016-10-10 16:11:00 +0000'
 ---
+
 **Category:** pwn
 **Points:** 200
 
@@ -84,7 +91,7 @@ But remember the program has all the protection enabled, including **PIE**, so f
 
 After we got the libc's address, we can use the same vulnerability to overwrite the `__free_hook` function pointer into the address of **one gadget**, and get the shell by deleting a file. Notice that `file_size` stores the value returned by `atoi`, a four-byte integer, so we'll have to overwrite `__free_hook` twice : first  overwrite `__free_hook`,  then overwrite `__free_hook+4`.
 
-```python exp_shell.py
+```python
 #!/usr/bin/env python
 
 from pwn import *

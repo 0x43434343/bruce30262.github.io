@@ -1,15 +1,22 @@
 ---
 title: MMA 2nd CTF 2016 -- greeting
+layout: single
+comments: true
+share: true
+related: true
+author_profile: true
+permalink: "/:title/"
 tags:
-  - MMA
-  - CTF
-  - format_string
-  - Python
-  - Pwnable
+- MMA
+- CTF
+- format_string
+- Python
+- Pwnable
 categories:
-  - write-ups
-date: 2016-09-12 15:49:00
+- write-ups
+date: '2016-09-12 15:49:00 +0000'
 ---
+
 **Category:** pwn
 **Points:** 150  
 
@@ -50,7 +57,7 @@ So, we can first overwrite the **first entry** of the `.fini_array` section and 
 * Overwrite both `.fini_array` section and `strlen`'s GOT entry. We replace the first entry of the `.fini_array` section into **main function's address**, while `strlen`'s GOT entry be changed into `system`'s PLT.  
 * The program will then return to the main function. Since `strlen`'s GOT has already been changed into `system`'s address, we can then input `sh` and execute `system("sh")` during the `getnline` function (the function will call `strlen` on our input).  
 
-```python exp_greeting.py
+```python
 #!/usr/bin/env python
 
 from pwn import *

@@ -1,17 +1,24 @@
 ---
 title: MeePwn CTF 2017 -- Brainfuck 1 & 2
+layout: single
+comments: true
+share: true
+related: true
+author_profile: true
+permalink: "/:title/"
 tags:
-  - CTF
-  - Python
-  - Pwnable
-  - heap
-  - MeePwn
-  - brainfuck
-  - shellcode
+- CTF
+- Python
+- Pwnable
+- heap
+- MeePwn
+- brainfuck
+- shellcode
 categories:
-  - write-ups
-date: 2017-07-16 15:28:00
+- write-ups
+date: '2017-07-16 15:28:00 +0000'
 ---
+
 **Category:** Pwnable
 
 Both binaries are 64 bit ELF, No RELRO, No canary, PIE & NX enabled.  
@@ -67,7 +74,7 @@ call rax
 ```
 
 
-```python exp_bf1.py
+```python
 #!/usr/bin/env python
 
 from pwn import *
@@ -189,7 +196,7 @@ Since now we can control the structure of `bf_data`, all we need to do is to ove
 3. To avoid the program changing our shellcode into the `ret` instruction, we'll have to overwrite the `bf_data->sc_pos` data as well ( because the program will place the `ret` machine code at `bf_data->sc_buf + bf_data->sc_pos` ). Overwrite this data to a large number, so the `ret` instruction won't effect our shellcode.
  
 Final exploit script:
-```python exp_bf2.py
+```python
 #!/usr/bin/env python
 
 from pwn import *
@@ -287,9 +294,3 @@ if __name__ == "__main__":
 flag: `MeePwnCTF{My_M33pwn_h34p_1s_fun?}`
 
 Got both first blood on these challenges ! WOOHOO ! 😎🤘
-
-
-
-
-
-

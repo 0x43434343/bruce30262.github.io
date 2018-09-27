@@ -1,15 +1,22 @@
 ---
 title: MeePwn CTF 2017 -- anotherarena
+layout: single
+comments: true
+share: true
+related: true
+author_profile: true
+permalink: "/:title/"
 tags:
-  - CTF
-  - Pwnable
-  - Python
-  - MeePwn
-  - heap
+- CTF
+- Pwnable
+- Python
+- MeePwn
+- heap
 categories:
-  - write-ups
-date: 2017-07-16 11:00:00
+- write-ups
+date: '2017-07-16 11:00:00 +0000'
 ---
+
 **Category:** Pwnable
 
 64 bit ELF, Partial RELRO, canary & NX enabled, No PIE.  
@@ -73,7 +80,7 @@ So to sum up:
 5. Pad the allocated buffer until it reach the `flag` buffer
 6. Print out the license and get the flag
 
-```python exp_arena.py
+```python
 #!/usr/bin/env python
 
 from pwn import *
@@ -126,4 +133,3 @@ if __name__ == "__main__":
 ```
 
 flag: `MeePwnCTF{oveRwrit3_another_(main)_arena}`
-

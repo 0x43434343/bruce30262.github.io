@@ -379,45 +379,44 @@ stw       r9, 0x18(r31)
 0xf6fff8ec:     0x00000194      0x000009da      0x0000011f      
 </code></pre></div></div>
 
-<p>After that, we can just recover the flag by writing some simple scripts.<br />
-```ruby sol.rb
-#!/usr/bin/env ruby</p>
+<p>After that, we can just recover the flag by writing some simple scripts.</p>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#!/usr/bin/env ruby</span>
 
-<p>resp = <code class="highlighter-rouge">./test</code>.split(“\n”)
-seed = []
-ans =[0x00000cfe, 0x00000859, 0x0000095d, 0x00000871, 0x0000040d,0x00000006,0x00000ade, 0x00000fa8, 0x00000561,  0x000009da , 0x00000878, 0x00000682, 0x00000fa9 , 0x00000f5f, 0x0000025e, 0x00000db0, 0x00000fbf, 0x00000bc6 , 0x00000d38 , 0x0000095d, 0x00000d09, 0x000007ed , 0x00000307, 0x000001c0, 0x00000399, 0x00000956 , 0x00000a45 , 0x00000292, 0x00000c8a,0x0000092f , 0x0000004a , 0x00000964, 0x00000194,  0x000009da, 0x0000011f]</p>
+<span class="n">resp</span> <span class="o">=</span> <span class="sb">`./test`</span><span class="p">.</span><span class="nf">split</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
+<span class="n">seed</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">ans</span> <span class="o">=</span><span class="p">[</span><span class="mh">0x00000cfe</span><span class="p">,</span> <span class="mh">0x00000859</span><span class="p">,</span> <span class="mh">0x0000095d</span><span class="p">,</span> <span class="mh">0x00000871</span><span class="p">,</span> <span class="mh">0x0000040d</span><span class="p">,</span><span class="mh">0x00000006</span><span class="p">,</span><span class="mh">0x00000ade</span><span class="p">,</span> <span class="mh">0x00000fa8</span><span class="p">,</span> <span class="mh">0x00000561</span><span class="p">,</span>  <span class="mh">0x000009da</span> <span class="p">,</span> <span class="mh">0x00000878</span><span class="p">,</span> <span class="mh">0x00000682</span><span class="p">,</span> <span class="mh">0x00000fa9</span> <span class="p">,</span> <span class="mh">0x00000f5f</span><span class="p">,</span> <span class="mh">0x0000025e</span><span class="p">,</span> <span class="mh">0x00000db0</span><span class="p">,</span> <span class="mh">0x00000fbf</span><span class="p">,</span> <span class="mh">0x00000bc6</span> <span class="p">,</span> <span class="mh">0x00000d38</span> <span class="p">,</span> <span class="mh">0x0000095d</span><span class="p">,</span> <span class="mh">0x00000d09</span><span class="p">,</span> <span class="mh">0x000007ed</span> <span class="p">,</span> <span class="mh">0x00000307</span><span class="p">,</span> <span class="mh">0x000001c0</span><span class="p">,</span> <span class="mh">0x00000399</span><span class="p">,</span> <span class="mh">0x00000956</span> <span class="p">,</span> <span class="mh">0x00000a45</span> <span class="p">,</span> <span class="mh">0x00000292</span><span class="p">,</span> <span class="mh">0x00000c8a</span><span class="p">,</span><span class="mh">0x0000092f</span> <span class="p">,</span> <span class="mh">0x0000004a</span> <span class="p">,</span> <span class="mh">0x00000964</span><span class="p">,</span> <span class="mh">0x00000194</span><span class="p">,</span>  <span class="mh">0x000009da</span><span class="p">,</span> <span class="mh">0x0000011f</span><span class="p">]</span>
+ 
+<span class="k">for</span> <span class="n">s</span> <span class="k">in</span> <span class="n">resp</span>
+    <span class="n">seed</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">s</span><span class="p">.</span><span class="nf">to_i</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xfff</span><span class="p">)</span>
+<span class="k">end</span>
 
-<p>for s in resp
-    seed « (s.to_i(16) &amp; 0xfff)
-end</p>
+<span class="n">flag</span> <span class="o">=</span> <span class="s2">""</span>
 
-<p>flag = “”</p>
+<span class="k">for</span> <span class="n">a</span><span class="p">,</span><span class="n">b</span> <span class="k">in</span> <span class="n">seed</span><span class="p">.</span><span class="nf">zip</span><span class="p">(</span><span class="n">ans</span><span class="p">)</span>
+    <span class="n">flag</span> <span class="o">+=</span> <span class="p">(</span><span class="n">a</span><span class="o">^</span><span class="n">b</span><span class="p">).</span><span class="nf">chr</span>
+<span class="k">end</span>
 
-<p>for a,b in seed.zip(ans)
-    flag += (a^b).chr
-end</p>
+<span class="nb">puts</span> <span class="n">flag</span>
 
-<p>puts flag</p>
+</code></pre></div></div>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-`test` is a C program for generating the random seed  
-```c test.c
-#include &lt;stdio.h&gt;
+<p><code class="highlighter-rouge">test</code> is a C program for generating the random seed</p>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include &lt;stdio.h&gt;
 #include &lt;string.h&gt;
 #include &lt;math.h&gt;
 #include &lt;stdlib.h&gt;
 #include &lt;unistd.h&gt;
-
-int main(int argc, char *argv[])
-{
-    int i = 0;
-    srand(0x1e61);
-    for(i = 0 ; i &lt; 35 ; i++)
-    {
-        printf("0x%x\n", rand());
-    }
-    return 0;
-}
+</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">argv</span><span class="p">[])</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">srand</span><span class="p">(</span><span class="mh">0x1e61</span><span class="p">);</span>
+    <span class="k">for</span><span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span> <span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">35</span> <span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">"0x%x</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">rand</span><span class="p">());</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
 </code></pre></div></div>
 
 <p>Result:</p>

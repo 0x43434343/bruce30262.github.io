@@ -1,16 +1,23 @@
 ---
-title: '33C3 CTF 2016 -- babyfengshui'
+title: 33C3 CTF 2016 -- babyfengshui
+layout: single
+comments: true
+share: true
+related: true
+author_profile: true
+permalink: "/:title/"
 date: 2016-12-30 00:27
 tags:
-  - 33C3
-  - CTF
-  - Pwnable
-  - heap_overflow
-  - heap
-  - Python
+- 33C3
+- CTF
+- Pwnable
+- heap_overflow
+- heap
+- Python
 categories:
-  - write-ups
+- write-ups
 ---
+
 **Category:** pwn
 **Points:** 150
 
@@ -98,7 +105,7 @@ According to the protection, `userD->desc + text_len` should less than `userD`, 
 
 It is possible to arrange the above heap memory layout if we're familiar with malloc's memory allocation. We can then exploit the heap overflow vulnerability and modify the `userB->desc` pointer, making us able to do the **read/write anywhere** attack. After that is pretty simple, we leak the libc's base address and hijack `free`'s GOT to get the shell.
 
-```python exp_baby.py
+```python
 #!/usr/bin/env python
 
 from pwn import *

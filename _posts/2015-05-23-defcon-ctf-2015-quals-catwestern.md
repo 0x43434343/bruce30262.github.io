@@ -1,16 +1,23 @@
 ---
 title: DEFCON CTF 2015 Quals -- catwestern
+layout: single
+comments: true
+share: true
+related: true
+author_profile: true
+permalink: "/:title/"
 tags:
-  - Python
-  - CTF
-  - DEFCON
-  - PPC
-  - C
-  - assembly
+- Python
+- CTF
+- DEFCON
+- PPC
+- C
+- assembly
 categories:
-  - write-ups
-date: 2015-05-23 22:39:00
+- write-ups
+date: '2015-05-23 22:39:00 +0000'
 ---
+
 **Category:** Coding Challenge
 **Points:** 1
 > meow
@@ -60,7 +67,7 @@ mov r15, XXX
 
 Now all we have to do is to execute the machine code and get all the registers' value. To achieve this requirement, I prepared a C code:
 
-```c shell.c
+```c
 char code[] = machine ;
 
 int main(int argc, char **argv)
@@ -78,7 +85,7 @@ int main(int argc, char **argv)
 Now we'll just need to excute the binary file we have compiled. I decide to execute it with gdb, since it'll make me more easier to get the register values. So now the problem is **how do we get the output from gdb by using python?** Fortunately, with the help of the internet, I found [this link](http://parsiya.net/blog/2014-05-25-pasting-shellcode-into-gdb-using-python/), which is pretty useful for me to solve the challenge. All I need to do is call gdb by using Popen, send 3 command to it (`b 8`, `r` & `i r`), then parse the result and send the answer to the server.
 
 Here's the final script:
-```python code.py
+```python
 from pwn import *
 from subprocess import Popen , PIPE
 from time import sleep

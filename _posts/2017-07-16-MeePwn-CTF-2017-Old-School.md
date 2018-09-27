@@ -1,15 +1,22 @@
 ---
 title: MeePwn CTF 2017 -- Old School
+layout: single
+comments: true
+share: true
+related: true
+author_profile: true
+permalink: "/:title/"
 tags:
-  - CTF
-  - Python
-  - Pwnable
-  - MeePwn
-  - BOF
+- CTF
+- Python
+- Pwnable
+- MeePwn
+- BOF
 categories:
-  - write-ups
-date: 2017-07-16 09:56:00
+- write-ups
+date: '2017-07-16 09:56:00 +0000'
 ---
+
 **Category:** Pwnable
 
 64 bit ELF, Partial RELRO, NX enabled, No PIE, has canary.  
@@ -64,7 +71,7 @@ So here's how I exploit the service:
 
 The exploit at the local side worked, but for some unknown reason, the service at the remote side has a different behavior: during the last step of the exploitation, it won't let us input the `author` data, thus failing our exploit. Although we can still pwn it by not entering the author's name, it still took me a while to debug the whole process.  
 
-```python exp_oldschool.py
+```python
 #!/usr/bin/env python
 
 from pwn import *
@@ -147,8 +154,3 @@ if __name__ == "__main__":
 ```
 
 flag: `MeePwnCTF{0ld_sch00ld_C4n4ry_1s_0n_th3_st4ck}`
-
-
-
-
-

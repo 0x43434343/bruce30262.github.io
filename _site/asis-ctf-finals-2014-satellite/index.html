@@ -328,123 +328,120 @@ For instance, as for the expression</p>
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(~0 &amp; 0x1 | ~0 &amp; 0x1) &amp; (~0 &amp; 0x1 | 0 &amp; 0x1) &amp; (0 &amp; 0x1 | ~0 &amp; 0x1) &amp; (0 &amp; 0x1 | ~0 &amp; 0x1) &amp; (0 &amp; 0x1 | ~0 &amp; 0x1)
 </code></pre></div></div>
 
-<p>```python sat.py
-from socket import *
-from struct import *</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">socket</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">struct</span> <span class="kn">import</span> <span class="o">*</span>
 
-<p>def string_to_expression(input_str):</p>
+<span class="k">def</span> <span class="nf">string_to_expression</span><span class="p">(</span><span class="n">input_str</span><span class="p">):</span>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># OR, AND &amp; NOT's ascii code might be weird and should be treated as special case
-# 226 136 168 -&gt; OR (ascii: 124)
-# 226 136 167 -&gt; AND (ascii: 38)
-# 194 172 -&gt; NOT (ascii: 126)	
-
-expression = [] # list for storing the expression's ascii code &amp; variable id
-cur_num = 0 # calculate single variable id
-max_num = 0 # total variable number
-inCal = False
+	<span class="c"># OR, AND &amp; NOT's ascii code might be weird and should be treated as special case</span>
+	<span class="c"># 226 136 168 -&gt; OR (ascii: 124)</span>
+	<span class="c"># 226 136 167 -&gt; AND (ascii: 38)</span>
+	<span class="c"># 194 172 -&gt; NOT (ascii: 126)	</span>
 	
-for c in input_str:
-	asc = ord(c)
+	<span class="n">expression</span> <span class="o">=</span> <span class="p">[]</span> <span class="c"># list for storing the expression's ascii code &amp; variable id</span>
+	<span class="n">cur_num</span> <span class="o">=</span> <span class="mi">0</span> <span class="c"># calculate single variable id</span>
+	<span class="n">max_num</span> <span class="o">=</span> <span class="mi">0</span> <span class="c"># total variable number</span>
+	<span class="n">inCal</span> <span class="o">=</span> <span class="bp">False</span>
+		
+	<span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">input_str</span><span class="p">:</span>
+		<span class="n">asc</span> <span class="o">=</span> <span class="nb">ord</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+		
+		<span class="k">if</span> <span class="n">c</span><span class="o">.</span><span class="n">isdigit</span><span class="p">()</span> <span class="o">==</span> <span class="bp">True</span><span class="p">:</span>
+			<span class="k">if</span> <span class="n">inCal</span> <span class="o">==</span> <span class="bp">False</span><span class="p">:</span>
+				<span class="n">inCal</span> <span class="o">=</span> <span class="bp">True</span>
+
+			<span class="n">cur_num</span> <span class="o">=</span> <span class="mi">10</span><span class="o">*</span><span class="n">cur_num</span> <span class="o">+</span> <span class="n">asc</span> <span class="o">-</span> <span class="mi">48</span>
+				
+		<span class="k">else</span><span class="p">:</span>
+			<span class="k">if</span> <span class="n">inCal</span> <span class="o">==</span> <span class="bp">True</span><span class="p">:</span>
+				<span class="n">inCal</span> <span class="o">=</span> <span class="bp">False</span>
+				<span class="n">expression</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cur_num</span><span class="p">)</span>
+				<span class="n">cur_num</span> <span class="o">=</span> <span class="mi">0</span>
+				
+			<span class="k">if</span> <span class="n">asc</span> <span class="o">==</span> <span class="mi">226</span> <span class="ow">or</span> <span class="n">asc</span> <span class="o">==</span> <span class="mi">136</span> <span class="ow">or</span> <span class="n">asc</span> <span class="o">==</span> <span class="mi">194</span> <span class="ow">or</span> <span class="n">asc</span> <span class="o">==</span> <span class="mi">120</span><span class="p">:</span> <span class="c">#ignore, continue</span>
+				<span class="k">continue</span>
+			<span class="k">elif</span> <span class="n">asc</span> <span class="o">==</span> <span class="mi">168</span><span class="p">:</span> <span class="c"># OR</span>
+				<span class="n">expression</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">124</span><span class="p">)</span>
+			<span class="k">elif</span> <span class="n">asc</span> <span class="o">==</span> <span class="mi">167</span><span class="p">:</span> <span class="c"># AND</span>
+				<span class="n">expression</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">38</span><span class="p">)</span>
+			<span class="k">elif</span> <span class="n">asc</span> <span class="o">==</span> <span class="mi">172</span><span class="p">:</span> <span class="c"># NOT</span>
+				<span class="n">expression</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">126</span><span class="p">)</span>
+			<span class="k">elif</span> <span class="n">asc</span> <span class="o">==</span> <span class="mi">10</span><span class="p">:</span> <span class="c"># end of expression, break</span>
+				<span class="k">break</span><span class="p">;</span>
+			<span class="k">elif</span> <span class="n">asc</span> <span class="o">==</span> <span class="mi">40</span><span class="p">:</span> <span class="c"># '(', count variable number</span>
+				<span class="n">max_num</span> <span class="o">+=</span> <span class="mi">1</span>
+				<span class="n">expression</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">asc</span><span class="p">)</span>
+			<span class="k">else</span><span class="p">:</span>
+				<span class="n">expression</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">asc</span><span class="p">)</span>
+
+	<span class="k">return</span> <span class="n">expression</span><span class="p">,</span> <span class="n">max_num</span>
+
+
+<span class="k">def</span> <span class="nf">carry</span><span class="p">(</span><span class="n">x_list</span><span class="p">,</span> <span class="n">size</span><span class="p">):</span>
+	<span class="c"># from 0000 to 0001, 0001 to 0010.....</span>
+	<span class="n">x_list</span><span class="p">[</span><span class="n">size</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+	<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">size</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+		<span class="n">x_list</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="n">x_list</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">/</span><span class="mi">2</span>
+		<span class="n">x_list</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">%=</span> <span class="mi">2</span>
+	<span class="k">return</span> <span class="n">x_list</span>
+
+<span class="k">def</span> <span class="nf">cal_ok</span><span class="p">(</span><span class="n">eval_list</span><span class="p">,</span> <span class="n">cur_max</span><span class="p">):</span>
+	<span class="n">index_list</span> <span class="o">=</span> <span class="p">[[]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">cur_max</span><span class="p">)]</span> <span class="c"># index list that record each variable's position</span>
+	<span class="n">x_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">cur_max</span>
+
+	<span class="k">for</span> <span class="n">index</span><span class="p">,</span><span class="n">item</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">eval_list</span><span class="p">):</span>
+		<span class="k">if</span> <span class="n">item</span> <span class="o">&lt;=</span> <span class="n">cur_max</span><span class="p">:</span>
+			<span class="n">index_list</span><span class="p">[</span><span class="n">item</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
 	
-	if c.isdigit() == True:
-		if inCal == False:
-			inCal = True
+	<span class="n">cnt</span> <span class="o">=</span> <span class="mi">2</span><span class="o">**</span><span class="n">cur_max</span>
 
-		cur_num = 10*cur_num + asc - 48
-			
-	else:
-		if inCal == True:
-			inCal = False
-			expression.append(cur_num)
-			cur_num = 0
-			
-		if asc == 226 or asc == 136 or asc == 194 or asc == 120: #ignore, continue
-			continue
-		elif asc == 168: # OR
-			expression.append(124)
-		elif asc == 167: # AND
-			expression.append(38)
-		elif asc == 172: # NOT
-			expression.append(126)
-		elif asc == 10: # end of expression, break
-			break;
-		elif asc == 40: # '(', count variable number
-			max_num += 1
-			expression.append(asc)
-		else:
-			expression.append(asc)
+	<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">cnt</span><span class="p">):</span>
+		<span class="k">for</span> <span class="n">number</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">cur_max</span><span class="p">):</span>
+			<span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="n">index_list</span><span class="p">[</span><span class="n">number</span><span class="p">]:</span>
+				<span class="n">eval_list</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="n">x_list</span><span class="p">[</span><span class="n">number</span><span class="p">]</span>
+		
+		<span class="n">eval_str</span> <span class="o">=</span> <span class="s">""</span>
+		<span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">eval_list</span><span class="p">:</span>
+			<span class="k">if</span> <span class="n">item</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">item</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+				<span class="n">eval_str</span> <span class="o">+=</span> <span class="nb">str</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+				<span class="n">eval_str</span> <span class="o">+=</span> <span class="nb">str</span><span class="p">(</span><span class="s">' &amp; 0x1 '</span><span class="p">)</span>
+			<span class="k">else</span><span class="p">:</span>
+				<span class="n">eval_str</span> <span class="o">+=</span> <span class="nb">chr</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+		
+<span class="c">#		print "calculating: " + eval_str</span>
+<span class="c">#		print "result: " + str(eval(eval_str))</span>
+		
+		<span class="k">if</span> <span class="nb">eval</span><span class="p">(</span><span class="n">eval_str</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span> <span class="c"># found the answer!</span>
+			<span class="k">return</span> <span class="s">""</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">x_list</span><span class="p">)</span>
+		<span class="k">else</span><span class="p">:</span> <span class="c"># add 1 bit and run the next string</span>
+			<span class="n">carry</span><span class="p">(</span><span class="n">x_list</span><span class="p">,</span> <span class="n">cur_max</span><span class="p">)</span>
 
-return expression, max_num
-</code></pre></div></div>
 
-<p>def carry(x_list, size):
-	# from 0000 to 0001, 0001 to 0010…..
-	x_list[size-1] += 1
-	for i in range(size-1, -1, -1):
-		x_list[i-1] += x_list[i]/2
-		x_list[i] %= 2
-	return x_list</p>
+<span class="n">sock</span> <span class="o">=</span> <span class="n">socket</span><span class="p">(</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">SOCK_STREAM</span><span class="p">)</span> <span class="c">#create socket (IP, TCP)</span>
+<span class="n">sock</span><span class="o">.</span><span class="n">connect</span><span class="p">((</span><span class="s">"asis-ctf.ir"</span> <span class="p">,</span> <span class="mi">12435</span><span class="p">))</span>
 
-<p>def cal_ok(eval_list, cur_max):
-	index_list = [[] for i in range(cur_max)] # index list that record each variable’s position
-	x_list = [0]*cur_max</p>
+<span class="k">print</span> <span class="n">sock</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span>
+<span class="n">sock</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s">"Sattelite</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>for index,item in enumerate(eval_list):
-	if item &lt;= cur_max:
-		index_list[item-1].append(index)
-
-cnt = 2**cur_max
-
-for i in range(cnt):
-	for number in range(cur_max):
-		for index in index_list[number]:
-			eval_list[index] = x_list[number]
+<span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+	<span class="n">res</span> <span class="o">=</span> <span class="n">sock</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span>
+	<span class="k">print</span> <span class="n">res</span>
 	
-	eval_str = ""
-	for item in eval_list:
-		if item == 0 or item == 1:
-			eval_str += str(item)
-			eval_str += str(' &amp; 0x1 ')
-		else:
-			eval_str += chr(item)
+	<span class="k">if</span> <span class="s">"ASIS"</span> <span class="ow">in</span> <span class="n">res</span><span class="p">:</span> <span class="c"># get the flag</span>
+		<span class="k">break</span>
+
+	<span class="n">eval_list</span><span class="p">,</span> <span class="n">cur_max</span> <span class="o">=</span> <span class="n">string_to_expression</span><span class="p">(</span><span class="n">res</span><span class="p">)</span> <span class="c"># convert input expression to list</span>
+	<span class="n">eval_str</span> <span class="o">=</span> <span class="n">cal_ok</span><span class="p">(</span><span class="n">eval_list</span><span class="p">,</span> <span class="n">cur_max</span><span class="p">)</span> <span class="c"># calculate the right answer</span>
+	<span class="k">print</span> <span class="s">"ans: "</span> <span class="o">+</span> <span class="n">eval_str</span>
+	<span class="n">sock</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">eval_str</span><span class="o">+</span><span class="s">'</span><span class="se">\n</span><span class="s">'</span><span class="p">)</span>
+	<span class="n">ok</span> <span class="o">=</span> <span class="n">sock</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span>
+	<span class="k">print</span> <span class="n">ok</span>
+
+	<span class="k">if</span> <span class="s">"OK"</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">ok</span><span class="p">:</span>
+		<span class="k">break</span>	
+
+<span class="n">sock</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 </code></pre></div></div>
-
-<h1 id="print-calculating---eval_str">print “calculating: “ + eval_str</h1>
-<h1 id="print-result---strevaleval_str">print “result: “ + str(eval(eval_str))</h1>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	if eval(eval_str) == 1: # found the answer!
-		return "".join(str(c) for c in x_list)
-	else: # add 1 bit and run the next string
-		carry(x_list, cur_max)
-</code></pre></div></div>
-
-<p>sock = socket(AF_INET, SOCK_STREAM) #create socket (IP, TCP)
-sock.connect((“asis-ctf.ir” , 12435))</p>
-
-<p>print sock.recv(1024)
-sock.send(“Sattelite\n”)</p>
-
-<p>while True:
-	res = sock.recv(1024)
-	print res</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>if "ASIS" in res: # get the flag
-	break
-
-eval_list, cur_max = string_to_expression(res) # convert input expression to list
-eval_str = cal_ok(eval_list, cur_max) # calculate the right answer
-print "ans: " + eval_str
-sock.send(eval_str+'\n')
-ok = sock.recv(1024)
-print ok
-
-if "OK" not in ok:
-	break	
-</code></pre></div></div>
-
-<p>sock.close()
-```</p>
 
 <p>Finally, we get the flag!</p>
 

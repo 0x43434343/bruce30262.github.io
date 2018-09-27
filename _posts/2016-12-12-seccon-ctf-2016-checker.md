@@ -1,15 +1,22 @@
 ---
 title: SECCON CTF 2016 -- checker
+layout: single
+comments: true
+share: true
+related: true
+author_profile: true
+permalink: "/:title/"
 tags:
-  - SECCON
-  - CTF
-  - BOF
-  - Pwnable
-  - Python
+- SECCON
+- CTF
+- BOF
+- Pwnable
+- Python
 categories:
-  - write-ups
-date: 2016-12-12 08:02:00
+- write-ups
+date: '2016-12-12 08:02:00 +0000'
 ---
+
 **Category:** Exploit
 **Points:** 300
 
@@ -36,7 +43,7 @@ You are a liar...
 ```
 
 By reversing the binary, we found that the program use a function named `getaline()` to read the user input. 
-```c getaline
+```c
 while ( buf && read(0, &buf, 1uLL) )
 {
     if ( buf == 10 )
@@ -68,7 +75,7 @@ Although we can easily overwrite the return address, however the program has the
 ```
 
 Notice that the original content of `argv[0]` stores a 6 bytes memory address, while the flag's buffer address is 3 bytes (`0x6010c0`). So we'll have to null out the `argv[0]` first before we change it into `0x6010c0`, or else it will crash the program before it was able to output the error message.  
-```python exp_checker.py
+```python
 #!/usr/bin/env python
 
 from pwn import *

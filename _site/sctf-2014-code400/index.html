@@ -272,46 +272,47 @@
         <p>Code400 gave us a python script
 <!-- more --></p>
 
-<p>``` python code400.py
-import json
-import hashlib
-import os
-import base64
-from Crypto.Cipher import AES</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">hashlib</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">base64</span>
+<span class="kn">from</span> <span class="nn">Crypto.Cipher</span> <span class="kn">import</span> <span class="n">AES</span>
 
-<p>fp = open(“secret.json”, “r”)
-secret = json.load(fp)
-fp.close()</p>
+<span class="n">fp</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">"secret.json"</span><span class="p">,</span> <span class="s">"r"</span><span class="p">)</span>
+<span class="n">secret</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">fp</span><span class="p">)</span>
+<span class="n">fp</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 
-<p>if type(secret[“the answer to life the universe and everything”]) != type(u”77”):
-    destroy_the_universe()</p>
+<span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">secret</span><span class="p">[</span><span class="s">"the answer to life the universe and everything"</span><span class="p">])</span> <span class="o">!=</span> <span class="nb">type</span><span class="p">(</span><span class="s">u"77"</span><span class="p">):</span>
+    <span class="n">destroy_the_universe</span><span class="p">()</span>
 
-<p>answer = hashlib.sha1(secret[“the answer to life the universe and everything”]).hexdigest()[0:16]
-key = hashlib.sha1(secret[“Don’t google what it is”]).digest()[0:6]</p>
+<span class="n">answer</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha1</span><span class="p">(</span><span class="n">secret</span><span class="p">[</span><span class="s">"the answer to life the universe and everything"</span><span class="p">])</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()[</span><span class="mi">0</span><span class="p">:</span><span class="mi">16</span><span class="p">]</span>
+<span class="n">key</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha1</span><span class="p">(</span><span class="n">secret</span><span class="p">[</span><span class="s">"Don't google what it is"</span><span class="p">])</span><span class="o">.</span><span class="n">digest</span><span class="p">()[</span><span class="mi">0</span><span class="p">:</span><span class="mi">6</span><span class="p">]</span>
 
-<p>if ord(key[4])*(ord(key[5])-5) != 17557:
-    destroy_the_universe()</p>
+<span class="k">if</span> <span class="nb">ord</span><span class="p">(</span><span class="n">key</span><span class="p">[</span><span class="mi">4</span><span class="p">])</span><span class="o">*</span><span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="n">key</span><span class="p">[</span><span class="mi">5</span><span class="p">])</span><span class="o">-</span><span class="mi">5</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">17557</span><span class="p">:</span>
+    <span class="n">destroy_the_universe</span><span class="p">()</span>
 
-<p>keys = [“hey”+key[2]+”check”+key[3]+”it”+key[0]+”out”, 
-        “come”+key[1]+”on”+key[4]+”baby”+key[5]+”~~!”]
-answer = AES.new(keys[1], AES.MODE_ECB).encrypt(AES.new(keys[0], AES.MODE_ECB).encrypt(answer))</p>
+<span class="n">keys</span> <span class="o">=</span> <span class="p">[</span><span class="s">"hey"</span><span class="o">+</span><span class="n">key</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">+</span><span class="s">"check"</span><span class="o">+</span><span class="n">key</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">+</span><span class="s">"it"</span><span class="o">+</span><span class="n">key</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="s">"out"</span><span class="p">,</span> 
+        <span class="s">"come"</span><span class="o">+</span><span class="n">key</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="s">"on"</span><span class="o">+</span><span class="n">key</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="o">+</span><span class="s">"baby"</span><span class="o">+</span><span class="n">key</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span><span class="o">+</span><span class="s">"~~!"</span><span class="p">]</span>
+<span class="n">answer</span> <span class="o">=</span> <span class="n">AES</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">keys</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">AES</span><span class="o">.</span><span class="n">MODE_ECB</span><span class="p">)</span><span class="o">.</span><span class="n">encrypt</span><span class="p">(</span><span class="n">AES</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">keys</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">AES</span><span class="o">.</span><span class="n">MODE_ECB</span><span class="p">)</span><span class="o">.</span><span class="n">encrypt</span><span class="p">(</span><span class="n">answer</span><span class="p">))</span>
 
-<p>if base64.b64encode(answer) == “fm2knkCBHPuhCQHYE3spag==”:
-    fp = open(“%s.txt” % hashlib.sha256(key).hexdigest(), “w”)
-    fp.write(secret[“The entrance to the new world”])
-    fp.close()</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-After we analyze the code, we found that the key point is the `key` variable. 
-The `key` variable is a 6 bytes data. Since `key[4]` * (`key[5]`-5) has to be 17557, we know that there's only 2 conditions: 
-1. `key[4]` = 97 &amp; `key[5]` = 186
-2. `key[4]` = 181 &amp; `key[5]` = 102
- 
-But we still know nothing about `key[0]` ~ `key[4]`, so we'll have to use brute-force attack to get the rest of these 4 bytes.
+<span class="k">if</span> <span class="n">base64</span><span class="o">.</span><span class="n">b64encode</span><span class="p">(</span><span class="n">answer</span><span class="p">)</span> <span class="o">==</span> <span class="s">"fm2knkCBHPuhCQHYE3spag=="</span><span class="p">:</span>
+    <span class="n">fp</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">"</span><span class="si">%</span><span class="s">s.txt"</span> <span class="o">%</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">(</span><span class="n">key</span><span class="p">)</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">(),</span> <span class="s">"w"</span><span class="p">)</span>
+    <span class="n">fp</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">secret</span><span class="p">[</span><span class="s">"The entrance to the new world"</span><span class="p">])</span>
+    <span class="n">fp</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</code></pre></div></div>
 
-The script told us the ciphertext: 
-``` python 
-base64.decode("fm2knkCBHPuhCQHYE3spag==")
-= "\x7e\x6d\xa4\x9e\x40\x81\x1c\xfb\xa1\x09\x01\xd8\x13\x7b\x29\x6a"
+<p>After we analyze the code, we found that the key point is the <code class="highlighter-rouge">key</code> variable. 
+The <code class="highlighter-rouge">key</code> variable is a 6 bytes data. Since <code class="highlighter-rouge">key[4]</code> * (<code class="highlighter-rouge">key[5]</code>-5) has to be 17557, we know that there’s only 2 conditions:</p>
+<ol>
+  <li><code class="highlighter-rouge">key[4]</code> = 97 &amp; <code class="highlighter-rouge">key[5]</code> = 186</li>
+  <li><code class="highlighter-rouge">key[4]</code> = 181 &amp; <code class="highlighter-rouge">key[5]</code> = 102</li>
+</ol>
+
+<p>But we still know nothing about <code class="highlighter-rouge">key[0]</code> ~ <code class="highlighter-rouge">key[4]</code>, so we’ll have to use brute-force attack to get the rest of these 4 bytes.</p>
+
+<p>The script told us the ciphertext:</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">base64</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s">"fm2knkCBHPuhCQHYE3spag=="</span><span class="p">)</span>
+<span class="o">=</span> <span class="s">"</span><span class="se">\x7e\x6d\xa4\x9e\x40\x81\x1c\xfb\xa1\x09\x01\xd8\x13\x7b\x29\x6a</span><span class="s">"</span>
 
 </code></pre></div></div>
 <p>But it didn’t tell us what’s the plaintext, which is</p>

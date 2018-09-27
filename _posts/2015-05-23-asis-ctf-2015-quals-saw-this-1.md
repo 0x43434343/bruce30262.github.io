@@ -1,16 +1,23 @@
 ---
 title: ASIS CTF 2015 Quals -- Saw this (1 & 2)
+layout: single
+comments: true
+share: true
+related: true
+author_profile: true
+permalink: "/:title/"
 tags:
-  - ASIS
-  - CTF
-  - Pwnable
-  - Python
-  - format_string
-  - C
+- ASIS
+- CTF
+- Pwnable
+- Python
+- format_string
+- C
 categories:
-  - write-ups
-date: 2015-05-23 22:37:00
+- write-ups
+date: '2015-05-23 22:37:00 +0000'
 ---
+
 **Category:** pwn
 **Points:** 100 (Saw this-1), 400 (Saw this-2)
 
@@ -181,7 +188,7 @@ To sum up, here's the exploitation of Saw this-2:
 6. Overwrite the stack canary & return address to launch the return-2-libc attack.  
 
 
-```python exp.py
+```python
 from pwn import *
 import time
 

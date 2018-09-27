@@ -1,14 +1,21 @@
 ---
 title: ASIS CTF Finals 2014 -- SATELLITE
+layout: single
+comments: true
+share: true
+related: true
+author_profile: true
+permalink: "/:title/"
 tags:
-  - CTF
-  - ASIS
-  - Python
-  - PPC
+- CTF
+- ASIS
+- Python
+- PPC
 categories:
-  - write-ups
-date: 2014-10-14 16:05:00
+- write-ups
+date: '2014-10-14 16:05:00 +0000'
 ---
+
 Description: Connect here and find the flag: `nc asis-ctf.ir 12435`
 
 After we connect to the server, it show us the following message:
@@ -74,7 +81,7 @@ and then run through `00...0` to `11...1`, substitute `1`,`2`...to `0` or `1`. T
 (~0 & 0x1 | ~0 & 0x1) & (~0 & 0x1 | 0 & 0x1) & (0 & 0x1 | ~0 & 0x1) & (0 & 0x1 | ~0 & 0x1) & (0 & 0x1 | ~0 & 0x1)
 ```
 
-```python sat.py
+```python
 from socket import *
 from struct import *
 

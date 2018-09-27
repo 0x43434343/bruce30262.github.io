@@ -35,7 +35,7 @@ var store = [{
         "url": "http://0.0.0.0:4000/sctf-2014-pwn400/",
         "teaser":null},{
         "title": "SCTF 2014 -- Code400",
-        "excerpt":"Code400 gave us a python script ``` python code400.pyimport jsonimport hashlibimport osimport base64from Crypto.Cipher import AES fp = open(“secret.json”, “r”)secret = json.load(fp)fp.close() if type(secret[“the answer to life the universe and everything”]) != type(u”77”): destroy_the_universe() answer = hashlib.sha1(secret[“the answer to life the universe and everything”]).hexdigest()[0:16]key = hashlib.sha1(secret[“Don’t google what it is”]).digest()[0:6]...","categories": ["write-ups"],
+        "excerpt":"Code400 gave us a python script import jsonimport hashlibimport osimport base64from Crypto.Cipher import AESfp = open(\"secret.json\", \"r\")secret = json.load(fp)fp.close()if type(secret[\"the answer to life the universe and everything\"]) != type(u\"77\"): destroy_the_universe()answer = hashlib.sha1(secret[\"the answer to life the universe and everything\"]).hexdigest()[0:16]key = hashlib.sha1(secret[\"Don't google what it is\"]).digest()[0:6]if ord(key[4])*(ord(key[5])-5) != 17557: destroy_the_universe()keys =...","categories": ["write-ups"],
         "tags": ["Python","CTF","PPC","XCTF","SCTF","Crypto","CPP"],
         "url": "http://0.0.0.0:4000/sctf-2014-code400/",
         "teaser":null},{

@@ -1,14 +1,21 @@
 ---
 title: MMA 2nd CTF 2016 -- Interpreter
+layout: single
+comments: true
+share: true
+related: true
+author_profile: true
+permalink: "/:title/"
 tags:
-  - Python
-  - MMA
-  - CTF
-  - Pwnable
+- Python
+- MMA
+- CTF
+- Pwnable
 categories:
-  - write-ups
-date: 2016-09-12 16:45:00
+- write-ups
+date: '2016-09-12 16:45:00 +0000'
 ---
+
 **Category:** pwn
 **Points:** 200  
 
@@ -91,7 +98,7 @@ By the time I was solving this challenge, the only way left I know is to leak th
 
 It took me a lot of time and work to do the whole thing, and the method's not elegant. Fortunately, it worked, and I was able to overwrite the return address with the typical x64 ROP chain: `pop_rdi --> bin_sh -->system`. At last, we are able to spawn a shell and get the flag.  
   
-```python exp_bef.py  
+```python
 #!/usr/bin/env python
 
 from pwn import *
@@ -275,7 +282,7 @@ if __name__ == "__main__":
     r.interactive()
 ```
 `bbb` is the Befunge-93 program I used to exploit the service : 
-```text bbb
+```text
 >                                    v
 v.g&&.g&&.g&&.g&&.g&&.g&&            <
 >&&g.&&g.&&g.&&g.&&g.&&g.            v

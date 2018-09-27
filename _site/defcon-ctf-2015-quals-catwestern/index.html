@@ -318,125 +318,124 @@ mov r15, XXX
 
 <p>Now all we have to do is to execute the machine code and get all the registers’ value. To achieve this requirement, I prepared a C code:</p>
 
-<p>```c shell.c
-char code[] = machine ;</p>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">char</span> <span class="n">code</span><span class="p">[]</span> <span class="o">=</span> <span class="n">machine</span> <span class="p">;</span>
 
-<p>int main(int argc, char <em>*argv)
-{
-    int (</em>func)();
-    func = (int (<em>)()) code;
-    (int)(</em>func)(); // execute the machine code
-    int a = 0; // line 8, our break point to check the register values
-    return 0;
-}</p>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-**"machine"** will be replace by the machine code I have (by using the `sed` command). After we finish building the C file, we can compile it by using the `gcc -g -z execstack -o real real.c` command.  
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">**</span><span class="n">argv</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">func</span><span class="p">)();</span>
+    <span class="n">func</span> <span class="o">=</span> <span class="p">(</span><span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="p">)())</span> <span class="n">code</span><span class="p">;</span>
+    <span class="p">(</span><span class="kt">int</span><span class="p">)(</span><span class="o">*</span><span class="n">func</span><span class="p">)();</span> <span class="c1">// execute the machine code
+</span>    <span class="kt">int</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="c1">// line 8, our break point to check the register values
+</span>    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
 
-Now we'll just need to excute the binary file we have compiled. I decide to execute it with gdb, since it'll make me more easier to get the register values. So now the problem is **how do we get the output from gdb by using python?** Fortunately, with the help of the internet, I found [this link](http://parsiya.net/blog/2014-05-25-pasting-shellcode-into-gdb-using-python/), which is pretty useful for me to solve the challenge. All I need to do is call gdb by using Popen, send 3 command to it (`b 8`, `r` &amp; `i r`), then parse the result and send the answer to the server.
+<p><strong>“machine”</strong> will be replace by the machine code I have (by using the <code class="highlighter-rouge">sed</code> command). After we finish building the C file, we can compile it by using the <code class="highlighter-rouge">gcc -g -z execstack -o real real.c</code> command.</p>
 
-Here's the final script:
-```python code.py
-from pwn import *
-from subprocess import Popen , PIPE
-from time import sleep
-import sys
-import os
+<p>Now we’ll just need to excute the binary file we have compiled. I decide to execute it with gdb, since it’ll make me more easier to get the register values. So now the problem is <strong>how do we get the output from gdb by using python?</strong> Fortunately, with the help of the internet, I found <a href="http://parsiya.net/blog/2014-05-25-pasting-shellcode-into-gdb-using-python/">this link</a>, which is pretty useful for me to solve the challenge. All I need to do is call gdb by using Popen, send 3 command to it (<code class="highlighter-rouge">b 8</code>, <code class="highlighter-rouge">r</code> &amp; <code class="highlighter-rouge">i r</code>), then parse the result and send the answer to the server.</p>
 
-HOST = "catwestern_631d7907670909fc4df2defc13f2057c.quals.shallweplayaga.me"
-PORT = 9999
+<p>Here’s the final script:</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">pwn</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">subprocess</span> <span class="kn">import</span> <span class="n">Popen</span> <span class="p">,</span> <span class="n">PIPE</span>
+<span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">sleep</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">os</span>
 
-context.arch = "x86_64"
-context.os = 'linux'
-context.endian = 'big'
+<span class="n">HOST</span> <span class="o">=</span> <span class="s">"catwestern_631d7907670909fc4df2defc13f2057c.quals.shallweplayaga.me"</span>
+<span class="n">PORT</span> <span class="o">=</span> <span class="mi">9999</span>
 
-r = remote(HOST, PORT)
+<span class="n">context</span><span class="o">.</span><span class="n">arch</span> <span class="o">=</span> <span class="s">"x86_64"</span>
+<span class="n">context</span><span class="o">.</span><span class="n">os</span> <span class="o">=</span> <span class="s">'linux'</span>
+<span class="n">context</span><span class="o">.</span><span class="n">endian</span> <span class="o">=</span> <span class="s">'big'</span>
 
-def getoutput(proc):
-    print "the output"
-    s = ""
-    while True:
-        out = proc.stdout.read(1)
-        if out == '' and proc.poll() != None:
-            break
-        else:
-            s += out
-            # recv until the end of the color code(generate by gdb-peda)
-            if '20011b5b306d02'.decode('hex') in s:
-                return s
+<span class="n">r</span> <span class="o">=</span> <span class="n">remote</span><span class="p">(</span><span class="n">HOST</span><span class="p">,</span> <span class="n">PORT</span><span class="p">)</span>
 
-def get_ans():
-    proc = Popen( ['gdb' , './real'] , bufsize=1 ,stdin=PIPE, stdout=PIPE )
-    s = getoutput(proc)
+<span class="k">def</span> <span class="nf">getoutput</span><span class="p">(</span><span class="n">proc</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s">"the output"</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="s">""</span>
+    <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="n">proc</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">out</span> <span class="o">==</span> <span class="s">''</span> <span class="ow">and</span> <span class="n">proc</span><span class="o">.</span><span class="n">poll</span><span class="p">()</span> <span class="o">!=</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">break</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">s</span> <span class="o">+=</span> <span class="n">out</span>
+            <span class="c"># recv until the end of the color code(generate by gdb-peda)</span>
+            <span class="k">if</span> <span class="s">'20011b5b306d02'</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s">'hex'</span><span class="p">)</span> <span class="ow">in</span> <span class="n">s</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">s</span>
 
-    print "sending b 8" # break at line 8
-    proc.stdin.write('b 8\n')
-    sleep(0.5)
-    s = getoutput(proc)
+<span class="k">def</span> <span class="nf">get_ans</span><span class="p">():</span>
+    <span class="n">proc</span> <span class="o">=</span> <span class="n">Popen</span><span class="p">(</span> <span class="p">[</span><span class="s">'gdb'</span> <span class="p">,</span> <span class="s">'./real'</span><span class="p">]</span> <span class="p">,</span> <span class="n">bufsize</span><span class="o">=</span><span class="mi">1</span> <span class="p">,</span><span class="n">stdin</span><span class="o">=</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">stdout</span><span class="o">=</span><span class="n">PIPE</span> <span class="p">)</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">getoutput</span><span class="p">(</span><span class="n">proc</span><span class="p">)</span>
 
-    print "sending r" # start running
-    proc.stdin.write('r\n')
-    sleep(0.5)
-    s = getoutput(proc)
+    <span class="k">print</span> <span class="s">"sending b 8"</span> <span class="c"># break at line 8</span>
+    <span class="n">proc</span><span class="o">.</span><span class="n">stdin</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">'b 8</span><span class="se">\n</span><span class="s">'</span><span class="p">)</span>
+    <span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">getoutput</span><span class="p">(</span><span class="n">proc</span><span class="p">)</span>
 
-    print "sending i r" # get the register values
-    proc.stdin.write('i r\n')
-    sleep(0.5)
-    s = getoutput(proc)
-    proc.stdin.close()
+    <span class="k">print</span> <span class="s">"sending r"</span> <span class="c"># start running</span>
+    <span class="n">proc</span><span class="o">.</span><span class="n">stdin</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">'r</span><span class="se">\n</span><span class="s">'</span><span class="p">)</span>
+    <span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">getoutput</span><span class="p">(</span><span class="n">proc</span><span class="p">)</span>
+
+    <span class="k">print</span> <span class="s">"sending i r"</span> <span class="c"># get the register values</span>
+    <span class="n">proc</span><span class="o">.</span><span class="n">stdin</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">'i r</span><span class="se">\n</span><span class="s">'</span><span class="p">)</span>
+    <span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">getoutput</span><span class="p">(</span><span class="n">proc</span><span class="p">)</span>
+    <span class="n">proc</span><span class="o">.</span><span class="n">stdin</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
     
-    # parse the result
-    ans = ""
-    all_register = s.split('\n')
-    for c in all_register:
-        temp = c.split(' ')
-        if temp[0] in register:
-            ans += temp[0].strip() + "=" + temp[len(temp)-1].split('\t')[0].strip()
-            ans += '\n'
+    <span class="c"># parse the result</span>
+    <span class="n">ans</span> <span class="o">=</span> <span class="s">""</span>
+    <span class="n">all_register</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">'</span><span class="se">\n</span><span class="s">'</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">all_register</span><span class="p">:</span>
+        <span class="n">temp</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">' '</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">temp</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="n">register</span><span class="p">:</span>
+            <span class="n">ans</span> <span class="o">+=</span> <span class="n">temp</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="o">+</span> <span class="s">"="</span> <span class="o">+</span> <span class="n">temp</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">temp</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">'</span><span class="se">\t</span><span class="s">'</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+            <span class="n">ans</span> <span class="o">+=</span> <span class="s">'</span><span class="se">\n</span><span class="s">'</span>
 
-    log.success("ans:")
-    print ans
-    r.send(ans)
-    print r.recv(1024)
+    <span class="n">log</span><span class="o">.</span><span class="n">success</span><span class="p">(</span><span class="s">"ans:"</span><span class="p">)</span>
+    <span class="k">print</span> <span class="n">ans</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">ans</span><span class="p">)</span>
+    <span class="k">print</span> <span class="n">r</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span>
 
-# recv registers' state
-r.recvuntil("****Initial Register State****")
-s = r.recvuntil("****Send Solution In The Same Format****")
-print s
-temp = s.split("\n")
-register = dict()
+<span class="c"># recv registers' state</span>
+<span class="n">r</span><span class="o">.</span><span class="n">recvuntil</span><span class="p">(</span><span class="s">"****Initial Register State****"</span><span class="p">)</span>
+<span class="n">s</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">recvuntil</span><span class="p">(</span><span class="s">"****Send Solution In The Same Format****"</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">s</span>
+<span class="n">temp</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
+<span class="n">register</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
 
-# setting registers' dict
-for index, c in enumerate(temp):
-    if "=" in c:
-        name = c.split("=")[0]
-        val = c.split("=")[1]
-        register[name] = int(val, 16)
+<span class="c"># setting registers' dict</span>
+<span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">temp</span><span class="p">):</span>
+    <span class="k">if</span> <span class="s">"="</span> <span class="ow">in</span> <span class="n">c</span><span class="p">:</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">"="</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">val</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">"="</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">register</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span>
 
-# adding mov [reg], [val]
-machine_code = ""
-for key, val in register.items():
-    s = "mov "+str(key)+", "+hex(val)
-    machine_code += asm(s).encode('hex')
+<span class="c"># adding mov [reg], [val]</span>
+<span class="n">machine_code</span> <span class="o">=</span> <span class="s">""</span>
+<span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">register</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="s">"mov "</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">key</span><span class="p">)</span><span class="o">+</span><span class="s">", "</span><span class="o">+</span><span class="nb">hex</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+    <span class="n">machine_code</span> <span class="o">+=</span> <span class="n">asm</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s">'hex'</span><span class="p">)</span>
 
-# receiving machine code
-print r.recvuntil("bytes: \n")
-s = r.recv(1024)
+<span class="c"># receiving machine code</span>
+<span class="k">print</span> <span class="n">r</span><span class="o">.</span><span class="n">recvuntil</span><span class="p">(</span><span class="s">"bytes: </span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
+<span class="n">s</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span>
 
-# appending machine code
-machine_code += s.encode('hex')
-machine = "\""
-for c in machine_code.decode('hex'):
-    machine += "\\\\x"+c.encode('hex')
-machine += "\""
+<span class="c"># appending machine code</span>
+<span class="n">machine_code</span> <span class="o">+=</span> <span class="n">s</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s">'hex'</span><span class="p">)</span>
+<span class="n">machine</span> <span class="o">=</span> <span class="s">"</span><span class="se">\"</span><span class="s">"</span>
+<span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">machine_code</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s">'hex'</span><span class="p">):</span>
+    <span class="n">machine</span> <span class="o">+=</span> <span class="s">"</span><span class="se">\\\\</span><span class="s">x"</span><span class="o">+</span><span class="n">c</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s">'hex'</span><span class="p">)</span>
+<span class="n">machine</span> <span class="o">+=</span> <span class="s">"</span><span class="se">\"</span><span class="s">"</span>
 
-# contructing real.c
-cmd = "sed \'s|machine|"+machine+"|g' &lt; shell.c &gt; real.c"
-os.system(cmd)
-print disasm(machine_code.decode('hex'))
-os.system('gcc -g -z execstack -o real real.c')
-get_ans()
+<span class="c"># contructing real.c</span>
+<span class="n">cmd</span> <span class="o">=</span> <span class="s">"sed </span><span class="se">\'</span><span class="s">s|machine|"</span><span class="o">+</span><span class="n">machine</span><span class="o">+</span><span class="s">"|g' &lt; shell.c &gt; real.c"</span>
+<span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">disasm</span><span class="p">(</span><span class="n">machine_code</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s">'hex'</span><span class="p">))</span>
+<span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s">'gcc -g -z execstack -o real real.c'</span><span class="p">)</span>
+<span class="n">get_ans</span><span class="p">()</span>
 
-r.interactive()
+<span class="n">r</span><span class="o">.</span><span class="n">interactive</span><span class="p">()</span>
 
 </code></pre></div></div>
 
