@@ -25,7 +25,7 @@ baseurl: "" # the subpath of your site, e.g. /blog
 author:
   name     : "Bruce Chen"
   avatar   : "/assets/images/other/gravatar.png"
-  bio      : "Vulnerability researcher / CTFer"
+  bio      : "Vulnerability Researcher / CTFer"
   location : "Taiwan" 
   links:
     - label: "Twitter"
@@ -59,6 +59,7 @@ minimal_mistakes_skin: "dark" # "air", "aqua", "contrast", "dark", "dirt", "neon
 # Plugins
 plugins:
   - jekyll-feed
+  - jekyll-sitemap
 
 # set pages link
 include: ["_pages"]
