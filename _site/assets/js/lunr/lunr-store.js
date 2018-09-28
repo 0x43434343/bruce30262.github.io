@@ -240,12 +240,17 @@ var store = [{
         "url": "http://0.0.0.0:4000/hxp-CTF-2017-hardened-flag-store/",
         "teaser":null},{
         "title": "Learning browser exploitation via 33C3 CTF  feuerfuchs challenge",
-        "excerpt":"Introduction So I’ve been playing with the browser exploitation recently, by studying some browser CTF challenges. So far I’ve tried qwn2own, SGX_Browser and feuerfuchs. qwn2own and SGX_Browser are both great for getting started with the brower exploitation. However, they are not “real world” enough, since both of them are small,...","categories": ["write-ups"],
+        "excerpt":"So I’ve been playing with the browser exploitation recently, by studying some browser CTF challenges. So far I’ve tried qwn2own, SGX_Browser and feuerfuchs. qwn2own and SGX_Browser are both great for getting started with the brower exploitation. However, they are not “real world” enough, since both of them are small, simple...","categories": ["write-ups"],
         "tags": ["33C3","Firefox","Browser","SpiderMonkey","Javascript","CTF","Pwnable"],
         "url": "http://0.0.0.0:4000/Learning-browser-exploitation-via-33C3-CTF-feuerfuchs-challenge/",
         "teaser":null},{
         "title": "Chakrazy -- exploiting type confusion bug in ChakraCore engine",
-        "excerpt":"Introduction Chakrazy is a browser CTF challenge created by team PPP for the 2017 PlaidCTF event. It’s a challenge based on Microsoft’s ChakraCore Javascript engine. You can download the challenge file here. Similar to my previous post, this post is more like a note about how I learn to exploit...","categories": ["write-ups"],
+        "excerpt":"Chakrazy is a browser CTF challenge created by team PPP for the 2017 PlaidCTF event. It’s a challenge based on Microsoft’s ChakraCore Javascript engine. You can download the challenge file here. Similar to my previous post, this post is more like a note about how I learn to exploit the...","categories": ["write-ups"],
         "tags": ["CTF","Pwnable","Javascript","Plaid","Edge","ChakraCore","Browser","type_confusion"],
         "url": "http://0.0.0.0:4000/Chakrazy-exploiting-type-confusion-bug-in-ChakraCore/",
+        "teaser":null},{
+        "title": "Some notes on migrating to Jekyll",
+        "excerpt":"Recently I’ve decided to migrate my blogging framework from Hexo to Jekyll. Here are some notes that I took for recording the migration process. Install Jekyll Here I created a Dockerfile for my blogging environment. From Hexo to Jekyll Since I’m migrating to Jekyll, I had to clean my bruce30262.github.io...","categories": ["note"],
+        "tags": ["Jekyll","Ruby","git","docker"],
+        "url": "http://0.0.0.0:4000/some-notes-on-migrating-to-jekyll/",
         "teaser":null}]

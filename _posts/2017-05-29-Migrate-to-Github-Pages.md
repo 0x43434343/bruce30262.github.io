@@ -1,21 +1,32 @@
 ---
 title: Migrate to Github Pages
+layout: single
+comments: true
+share: true
+related: true
+author_profile: true
+permalink: "/:title/"
 tags:
-  - Hexo
-  - node.js
-  - git
-  - docker
-  - NexT
+- Hexo
+- node.js
+- git
+- docker
+- NexT
 categories:
-  - note
-date: 2017-05-29 23:31:00
+- note
+date: '2017-05-29 23:31:00 +0000'
+toc: true
+toc_label: "Table of Contents"
+toc_sticky: true
 ---
+
 So I finally decided to migrate my blog from [Logdown](http://logdown.com/) to [Github Pages](https://pages.github.com/). Took me about three days to get it done. Here I write down some notes to record the whole migration process.  
 
 <!-- more -->  
 
 
-# Installing Hexo
+
+## Installing Hexo
 I chose [Hexo](https://hexo.io/zh-tw/) for my blog framework.
 
 ## Environment Setting
