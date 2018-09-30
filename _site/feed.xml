@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.7.4">Jekyll</generator><link href="http://0.0.0.0:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://0.0.0.0:4000/" rel="alternate" type="text/html" /><updated>2018-09-28T22:56:18+08:00</updated><id>http://0.0.0.0:4000/</id><title type="html">Hacking Tube 2.0</title><subtitle>Security and stuff</subtitle><author><name>Bruce Chen</name></author><entry><title type="html">Some notes on migrating to Jekyll</title><link href="http://0.0.0.0:4000/some-notes-on-migrating-to-jekyll/" rel="alternate" type="text/html" title="Some notes on migrating to Jekyll" /><published>2018-09-28T00:00:00+08:00</published><updated>2018-09-28T00:00:00+08:00</updated><id>http://0.0.0.0:4000/some-notes-on-migrating-to-jekyll</id><content type="html" xml:base="http://0.0.0.0:4000/some-notes-on-migrating-to-jekyll/">&lt;p&gt;Recently I’ve decided to migrate my blogging framework from &lt;a href=&quot;https://hexo.io/zh-tw/&quot;&gt;Hexo&lt;/a&gt; to &lt;a href=&quot;https://jekyllrb.com/&quot;&gt;Jekyll&lt;/a&gt;. Here are some notes that I took for recording the migration process.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.7.4">Jekyll</generator><link href="http://0.0.0.0:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://0.0.0.0:4000/" rel="alternate" type="text/html" /><updated>2018-10-01T00:54:06+08:00</updated><id>http://0.0.0.0:4000/</id><title type="html">Hacking Tube 2.0</title><subtitle>Security and stuff</subtitle><author><name>Bruce Chen</name></author><entry><title type="html">Some notes on migrating to Jekyll</title><link href="http://0.0.0.0:4000/some-notes-on-migrating-to-jekyll/" rel="alternate" type="text/html" title="Some notes on migrating to Jekyll" /><published>2018-09-28T00:00:00+08:00</published><updated>2018-09-28T00:00:00+08:00</updated><id>http://0.0.0.0:4000/some-notes-on-migrating-to-jekyll</id><content type="html" xml:base="http://0.0.0.0:4000/some-notes-on-migrating-to-jekyll/">&lt;p&gt;Recently I’ve decided to migrate my blogging framework from &lt;a href=&quot;https://hexo.io/zh-tw/&quot;&gt;Hexo&lt;/a&gt; to &lt;a href=&quot;https://jekyllrb.com/&quot;&gt;Jekyll&lt;/a&gt;. Here are some notes that I took for recording the migration process.&lt;/p&gt;
 
 &lt;!-- more --&gt;
 
@@ -19,7 +19,7 @@
 
 &lt;p&gt;After that we can launch the blog with &lt;code class=&quot;highlighter-rouge&quot;&gt;bundle exec jekyll serve --host=0.0.0.0&lt;/code&gt;, then go to &lt;code class=&quot;highlighter-rouge&quot;&gt;0.0.0.0:4000&lt;/code&gt; to see if it work. To manage the blog just go to &lt;code class=&quot;highlighter-rouge&quot;&gt;0.0.0.0:4000/admin&lt;/code&gt;.&lt;/p&gt;
 
-&lt;h3 id=&quot;working-inside-docker&quot;&gt;Working inside Docker&lt;/h3&gt;
+&lt;h3 id=&quot;working-inside-the-docker&quot;&gt;Working inside the Docker&lt;/h3&gt;
 &lt;p&gt;We can mount our working directory to the container and start working inside the docker with the following command:&lt;/p&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;IMG=&quot;some image name&quot;
@@ -33,18 +33,18 @@ docker run -e TERM --privileged --security-opt seccomp:unconfined -p 4000:4000 -
 &lt;h2 id=&quot;install-the-theme&quot;&gt;Install the theme&lt;/h2&gt;
 &lt;p&gt;I’m using &lt;a href=&quot;https://mmistakes.github.io/minimal-mistakes/&quot;&gt;Minimal Mistakes&lt;/a&gt; as my theme. I like its dark theme, also it’s well documented :).&lt;/p&gt;
 
-&lt;p&gt;To use the theme on github page you’ll have to use the &lt;code class=&quot;highlighter-rouge&quot;&gt;remote-theme&lt;/code&gt; in &lt;code class=&quot;highlighter-rouge&quot;&gt;_config.yml&lt;/code&gt;:&lt;/p&gt;
+&lt;p&gt;To use the theme on github page you’ll have to set the &lt;code class=&quot;highlighter-rouge&quot;&gt;remote-theme&lt;/code&gt; in &lt;code class=&quot;highlighter-rouge&quot;&gt;_config.yml&lt;/code&gt;:&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;remote_theme: bruce30262/minimal-mistakes
+&lt;div class=&quot;language-yml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;na&quot;&gt;remote_theme&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;bruce30262/minimal-mistakes&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;After that you can just follow the step in the &lt;a href=&quot;https://mmistakes.github.io/minimal-mistakes/docs/configuration/&quot;&gt;documentation&lt;/a&gt; to configure all the thing. The &lt;a href=&quot;https://github.com/mmistakes/minimal-mistakes/blob/master/docs/_config.yml&quot;&gt;offcial config setting&lt;/a&gt; is also worth reading.&lt;/p&gt;
+&lt;p&gt;After that you can just follow the steps in the &lt;a href=&quot;https://mmistakes.github.io/minimal-mistakes/docs/configuration/&quot;&gt;documentation&lt;/a&gt; to configure all the thing. The &lt;a href=&quot;https://github.com/mmistakes/minimal-mistakes/blob/master/docs/_config.yml&quot;&gt;offcial config setting&lt;/a&gt; is also worth reading.&lt;/p&gt;
 
 &lt;h3 id=&quot;customizing-the-theme&quot;&gt;Customizing the theme&lt;/h3&gt;
 
 &lt;p&gt;I’ve &lt;a href=&quot;https://github.com/bruce30262/minimal-mistakes&quot;&gt;forked the theme repo&lt;/a&gt; so I can apply my own customized theme to the blog.&lt;/p&gt;
 
-&lt;p&gt;For example I don’t like the syntax highlighting in the dark theme and preferred the default one, so I follow the steps mentioned in &lt;a href=&quot;https://github.com/mmistakes/minimal-mistakes/issues/1458&quot;&gt;this issue&lt;/a&gt; and modified the content of &lt;code class=&quot;highlighter-rouge&quot;&gt;assets/css/main.scss&lt;/code&gt;:&lt;/p&gt;
+&lt;p&gt;For example I didn’t like the syntax highlighting in the dark theme and preferred the default one, so I follow the steps mentioned in &lt;a href=&quot;https://github.com/mmistakes/minimal-mistakes/issues/1458&quot;&gt;this issue&lt;/a&gt; and modified the content of &lt;code class=&quot;highlighter-rouge&quot;&gt;assets/css/main.scss&lt;/code&gt;:&lt;/p&gt;
 &lt;div class=&quot;language-css highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;@import&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&quot;minimal-mistakes/skins/dark&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;//&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;skin&lt;/span&gt;
 
 &lt;span class=&quot;c&quot;&gt;/* default syntax highlighting (base16) */&lt;/span&gt;
@@ -76,10 +76,10 @@ docker run -e TERM --privileged --security-opt seccomp:unconfined -p 4000:4000 -
 
 &lt;p&gt;To enable the disqus feature use the &lt;code class=&quot;highlighter-rouge&quot;&gt;comments&lt;/code&gt; setting in &lt;code class=&quot;highlighter-rouge&quot;&gt;_config.yml&lt;/code&gt;&lt;/p&gt;
 
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;comments:
-  provider: &quot;disqus&quot;
-  disqus:
-    shortname: (disqus_shortname)
+&lt;div class=&quot;language-yml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;na&quot;&gt;comments&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;provider&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;disqus&quot;&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;disqus&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;na&quot;&gt;shortname&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;(disqus_shortname)&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Also make sure to set the &lt;code class=&quot;highlighter-rouge&quot;&gt;url&lt;/code&gt; key in &lt;code class=&quot;highlighter-rouge&quot;&gt;_config.yml&lt;/code&gt; if you’re using the github page, or else the &lt;a href=&quot;https://github.com/bruce30262/bruce30262.github.io/blob/master/_site/Learning-browser-exploitation-via-33C3-CTF-feuerfuchs-challenge/index.html#L863&quot;&gt;disqus_config function&lt;/a&gt; will not work.&lt;/p&gt;

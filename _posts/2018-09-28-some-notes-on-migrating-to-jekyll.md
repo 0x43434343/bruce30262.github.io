@@ -37,7 +37,7 @@ One of the problem I've encountered is that `jekyll-admin` was not installed eve
 
 After that we can launch the blog with `bundle exec jekyll serve --host=0.0.0.0`, then go to `0.0.0.0:4000` to see if it work. To manage the blog just go to `0.0.0.0:4000/admin`.
 
-### Working inside Docker
+### Working inside the Docker
 We can mount our working directory to the container and start working inside the docker with the following command:
 
 ```
@@ -52,19 +52,19 @@ The Jekyll docker container uses user `jekyll` ( uid = 1000 ) to configure the b
 ## Install the theme
 I'm using [Minimal Mistakes](https://mmistakes.github.io/minimal-mistakes/) as my theme. I like its dark theme, also it's well documented :).
 
-To use the theme on github page you'll have to use the `remote-theme` in `_config.yml`:
+To use the theme on github page you'll have to set the `remote-theme` in `_config.yml`:
 
-```
+```yml
 remote_theme: bruce30262/minimal-mistakes
 ```
 
-After that you can just follow the step in the [documentation](https://mmistakes.github.io/minimal-mistakes/docs/configuration/) to configure all the thing. The [offcial config setting](https://github.com/mmistakes/minimal-mistakes/blob/master/docs/_config.yml) is also worth reading. 
+After that you can just follow the steps in the [documentation](https://mmistakes.github.io/minimal-mistakes/docs/configuration/) to configure all the thing. The [offcial config setting](https://github.com/mmistakes/minimal-mistakes/blob/master/docs/_config.yml) is also worth reading. 
 
 ### Customizing the theme
 
 I've [forked the theme repo](https://github.com/bruce30262/minimal-mistakes) so I can apply my own customized theme to the blog.
 
-For example I don't like the syntax highlighting in the dark theme and preferred the default one, so I follow the steps mentioned in [this issue](https://github.com/mmistakes/minimal-mistakes/issues/1458) and modified the content of `assets/css/main.scss`:
+For example I didn't like the syntax highlighting in the dark theme and preferred the default one, so I follow the steps mentioned in [this issue](https://github.com/mmistakes/minimal-mistakes/issues/1458) and modified the content of `assets/css/main.scss`:
 ```css
 @import "minimal-mistakes/skins/{{ site.minimal_mistakes_skin | default: 'default' }}"; // skin
 
@@ -97,7 +97,7 @@ Migrating Disqus comment to a new blog is always a troublesome :/
 
 To enable the disqus feature use the `comments` setting in `_config.yml`
 
-```
+```yml
 comments:
   provider: "disqus"
   disqus:

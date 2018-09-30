@@ -276,7 +276,7 @@
   <li><a href="#install-jekyll">Install Jekyll</a>
     <ul>
       <li><a href="#from-hexo-to-jekyll">From Hexo to Jekyll</a></li>
-      <li><a href="#working-inside-docker">Working inside Docker</a></li>
+      <li><a href="#working-inside-the-docker">Working inside the Docker</a></li>
     </ul>
   </li>
   <li><a href="#install-the-theme">Install the theme</a>
@@ -312,7 +312,7 @@
 
 <p>After that we can launch the blog with <code class="highlighter-rouge">bundle exec jekyll serve --host=0.0.0.0</code>, then go to <code class="highlighter-rouge">0.0.0.0:4000</code> to see if it work. To manage the blog just go to <code class="highlighter-rouge">0.0.0.0:4000/admin</code>.</p>
 
-<h3 id="working-inside-docker">Working inside Docker</h3>
+<h3 id="working-inside-the-docker">Working inside the Docker</h3>
 <p>We can mount our working directory to the container and start working inside the docker with the following command:</p>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>IMG="some image name"
@@ -326,18 +326,18 @@ docker run -e TERM --privileged --security-opt seccomp:unconfined -p 4000:4000 -
 <h2 id="install-the-theme">Install the theme</h2>
 <p>I’m using <a href="https://mmistakes.github.io/minimal-mistakes/">Minimal Mistakes</a> as my theme. I like its dark theme, also it’s well documented :).</p>
 
-<p>To use the theme on github page you’ll have to use the <code class="highlighter-rouge">remote-theme</code> in <code class="highlighter-rouge">_config.yml</code>:</p>
+<p>To use the theme on github page you’ll have to set the <code class="highlighter-rouge">remote-theme</code> in <code class="highlighter-rouge">_config.yml</code>:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>remote_theme: bruce30262/minimal-mistakes
+<div class="language-yml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">remote_theme</span><span class="pi">:</span> <span class="s">bruce30262/minimal-mistakes</span>
 </code></pre></div></div>
 
-<p>After that you can just follow the step in the <a href="https://mmistakes.github.io/minimal-mistakes/docs/configuration/">documentation</a> to configure all the thing. The <a href="https://github.com/mmistakes/minimal-mistakes/blob/master/docs/_config.yml">offcial config setting</a> is also worth reading.</p>
+<p>After that you can just follow the steps in the <a href="https://mmistakes.github.io/minimal-mistakes/docs/configuration/">documentation</a> to configure all the thing. The <a href="https://github.com/mmistakes/minimal-mistakes/blob/master/docs/_config.yml">offcial config setting</a> is also worth reading.</p>
 
 <h3 id="customizing-the-theme">Customizing the theme</h3>
 
 <p>I’ve <a href="https://github.com/bruce30262/minimal-mistakes">forked the theme repo</a> so I can apply my own customized theme to the blog.</p>
 
-<p>For example I don’t like the syntax highlighting in the dark theme and preferred the default one, so I follow the steps mentioned in <a href="https://github.com/mmistakes/minimal-mistakes/issues/1458">this issue</a> and modified the content of <code class="highlighter-rouge">assets/css/main.scss</code>:</p>
+<p>For example I didn’t like the syntax highlighting in the dark theme and preferred the default one, so I follow the steps mentioned in <a href="https://github.com/mmistakes/minimal-mistakes/issues/1458">this issue</a> and modified the content of <code class="highlighter-rouge">assets/css/main.scss</code>:</p>
 <div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">@import</span> <span class="s1">"minimal-mistakes/skins/dark"</span><span class="p">;</span> <span class="o">//</span> <span class="nt">skin</span>
 
 <span class="c">/* default syntax highlighting (base16) */</span>
@@ -369,10 +369,10 @@ docker run -e TERM --privileged --security-opt seccomp:unconfined -p 4000:4000 -
 
 <p>To enable the disqus feature use the <code class="highlighter-rouge">comments</code> setting in <code class="highlighter-rouge">_config.yml</code></p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>comments:
-  provider: "disqus"
-  disqus:
-    shortname: (disqus_shortname)
+<div class="language-yml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">comments</span><span class="pi">:</span>
+  <span class="na">provider</span><span class="pi">:</span> <span class="s2">"</span><span class="s">disqus"</span>
+  <span class="na">disqus</span><span class="pi">:</span>
+    <span class="na">shortname</span><span class="pi">:</span> <span class="s">(disqus_shortname)</span>
 </code></pre></div></div>
 
 <p>Also make sure to set the <code class="highlighter-rouge">url</code> key in <code class="highlighter-rouge">_config.yml</code> if you’re using the github page, or else the <a href="https://github.com/bruce30262/bruce30262.github.io/blob/master/_site/Learning-browser-exploitation-via-33C3-CTF-feuerfuchs-challenge/index.html#L863">disqus_config function</a> will not work.</p>
