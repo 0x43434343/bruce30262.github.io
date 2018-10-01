@@ -17,7 +17,7 @@ Flare-on challenge is a Reverse-style CTF challenge created by the [FireEye FLAR
 
 ![](/assets/images/Flare-on-2018/score.png)
 
-Last year I got stuck at level 12 and failed to finish the challenge, so I'm very glad I made it this year 😄. Here in this post I'll share my solution of each challenge -- how I solve it, what tools did I use, ...etc.
+Last year I got stuck at level 12 and failed to finish the challenge, so I'm very glad that I complete the challenge this year 😄. Here in this post I'll share my solution of each challenge -- how I solve it, what tools did I use, ...etc.
 
 Enough for the talk, lets get started !
 
@@ -45,7 +45,7 @@ This time we're given a .NET binary program, which is a minesweeper game.
 
 ![](/assets/images/Flare-on-2018/level2_0.png)
 
-The board is 30x30, and there're 897 mines in the board. We'll have to mark all the mines to win the game.  
+The board is 30x30, and there're 897 mines in the board. We'll have to reveal all three None-Mine squares to win the game.  
 
 I decompile the binary with [dnSpy](https://github.com/0xd4d/dnSpy) and started inspecting the program logic. Later I've found an interesting function:
 
@@ -128,12 +128,14 @@ By using dnSpy, we can dump the board from the memory and write some python scri
 3. [7, 28]
 ```
 
-After that, we can use the "set next statement" feature in dnSpy to hijack the program flow. Here I let the program jump to the line 
+At first I tried to click those cells, only to find that the height of the board has exceeded my screen, making me unable to click cell [24, 28]... 🤨
+
+Anyway we can still use the "set next statement" feature in dnSpy to hijack the program flow. Here I let the program jump to the line 
 ```c#
 this.RevealedCells.Add(row * MainForm.VALLOC_NODE_LIMIT + column);
 ```
 
-directly and modify the `row` & `col` variable ( by pressing F2 in dnSpy ) to those cells position. Then I jump to the `GetKey` function to get the flag:
+directly and modify the `row` & `col` variable ( by pressing F2 in dnSpy ) to those None-Mine cells' position. Then I jump to the `GetKey` function to get the flag:
 
 ![](/assets/images/Flare-on-2018/level2_1.png)
 

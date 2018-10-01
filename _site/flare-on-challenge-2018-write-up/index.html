@@ -296,7 +296,7 @@
 
 <p><img src="/assets/images/Flare-on-2018/score.png" alt="" /></p>
 
-<p>Last year I got stuck at level 12 and failed to finish the challenge, so I’m very glad I made it this year 😄. Here in this post I’ll share my solution of each challenge – how I solve it, what tools did I use, …etc.</p>
+<p>Last year I got stuck at level 12 and failed to finish the challenge, so I’m very glad that I complete the challenge this year 😄. Here in this post I’ll share my solution of each challenge – how I solve it, what tools did I use, …etc.</p>
 
 <p>Enough for the talk, lets get started !</p>
 
@@ -327,7 +327,7 @@
 
 <p><img src="/assets/images/Flare-on-2018/level2_0.png" alt="" /></p>
 
-<p>The board is 30x30, and there’re 897 mines in the board. We’ll have to mark all the mines to win the game.</p>
+<p>The board is 30x30, and there’re 897 mines in the board. We’ll have to reveal all three None-Mine squares to win the game.</p>
 
 <p>I decompile the binary with <a href="https://github.com/0xd4d/dnSpy">dnSpy</a> and started inspecting the program logic. Later I’ve found an interesting function:</p>
 
@@ -407,11 +407,13 @@
 3. [7, 28]
 </code></pre></div></div>
 
-<p>After that, we can use the “set next statement” feature in dnSpy to hijack the program flow. Here I let the program jump to the line</p>
+<p>At first I tried to click those cells, only to find that the height of the board has exceeded my screen, making me unable to click cell [24, 28]… 🤨</p>
+
+<p>Anyway we can still use the “set next statement” feature in dnSpy to hijack the program flow. Here I let the program jump to the line</p>
 <div class="language-c# highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">this</span><span class="p">.</span><span class="n">RevealedCells</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="n">row</span> <span class="p">*</span> <span class="n">MainForm</span><span class="p">.</span><span class="n">VALLOC_NODE_LIMIT</span> <span class="p">+</span> <span class="n">column</span><span class="p">);</span>
 </code></pre></div></div>
 
-<p>directly and modify the <code class="highlighter-rouge">row</code> &amp; <code class="highlighter-rouge">col</code> variable ( by pressing F2 in dnSpy ) to those cells position. Then I jump to the <code class="highlighter-rouge">GetKey</code> function to get the flag:</p>
+<p>directly and modify the <code class="highlighter-rouge">row</code> &amp; <code class="highlighter-rouge">col</code> variable ( by pressing F2 in dnSpy ) to those None-Mine cells’ position. Then I jump to the <code class="highlighter-rouge">GetKey</code> function to get the flag:</p>
 
 <p><img src="/assets/images/Flare-on-2018/level2_1.png" alt="" /></p>
 

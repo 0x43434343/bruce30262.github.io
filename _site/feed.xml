@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.7.4">Jekyll</generator><link href="http://0.0.0.0:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://0.0.0.0:4000/" rel="alternate" type="text/html" /><updated>2018-10-02T02:25:51+08:00</updated><id>http://0.0.0.0:4000/</id><title type="html">Hacking Tube 2.0</title><subtitle>Security and stuff</subtitle><author><name>Bruce Chen</name></author><entry><title type="html">Flare-on Challenge 2018 Write-up</title><link href="http://0.0.0.0:4000/flare-on-challenge-2018-write-up/" rel="alternate" type="text/html" title="Flare-on Challenge 2018 Write-up" /><published>2018-10-01T00:00:00+08:00</published><updated>2018-10-01T00:00:00+08:00</updated><id>http://0.0.0.0:4000/flare-on-challenge-2018-write-up</id><content type="html" xml:base="http://0.0.0.0:4000/flare-on-challenge-2018-write-up/">&lt;p&gt;Flare-on challenge is a Reverse-style CTF challenge created by the &lt;a href=&quot;https://www.fireeye.com/blog/threat-research/2014/07/announcing-the-flare-team-and-the-flare-on-challenge.html&quot;&gt;FireEye FLARE team&lt;/a&gt;. The CTF contains lots of interesting, real-world style reversing challenges ( e.g. de-obfucating binary, malware analysis, …etc).  &lt;a href=&quot;https://www.fireeye.com/blog/threat-research/2018/08/announcing-the-fifth-annual-flare-on-challenge.html&quot;&gt;This year&lt;/a&gt; is the fifth annual of the CTF and has a total of 12 challenges, covering Windows PE (.NET, VC++, Delphi…), Linux ELF, Web Assembly, VM and other interesting stuffs.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.7.4">Jekyll</generator><link href="http://0.0.0.0:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://0.0.0.0:4000/" rel="alternate" type="text/html" /><updated>2018-10-02T03:17:22+08:00</updated><id>http://0.0.0.0:4000/</id><title type="html">Hacking Tube 2.0</title><subtitle>Security and stuff</subtitle><author><name>Bruce Chen</name></author><entry><title type="html">Flare-on Challenge 2018 Write-up</title><link href="http://0.0.0.0:4000/flare-on-challenge-2018-write-up/" rel="alternate" type="text/html" title="Flare-on Challenge 2018 Write-up" /><published>2018-10-01T00:00:00+08:00</published><updated>2018-10-01T00:00:00+08:00</updated><id>http://0.0.0.0:4000/flare-on-challenge-2018-write-up</id><content type="html" xml:base="http://0.0.0.0:4000/flare-on-challenge-2018-write-up/">&lt;p&gt;Flare-on challenge is a Reverse-style CTF challenge created by the &lt;a href=&quot;https://www.fireeye.com/blog/threat-research/2014/07/announcing-the-flare-team-and-the-flare-on-challenge.html&quot;&gt;FireEye FLARE team&lt;/a&gt;. The CTF contains lots of interesting, real-world style reversing challenges ( e.g. de-obfucating binary, malware analysis, …etc).  &lt;a href=&quot;https://www.fireeye.com/blog/threat-research/2018/08/announcing-the-fifth-annual-flare-on-challenge.html&quot;&gt;This year&lt;/a&gt; is the fifth annual of the CTF and has a total of 12 challenges, covering Windows PE (.NET, VC++, Delphi…), Linux ELF, Web Assembly, VM and other interesting stuffs.&lt;/p&gt;
 
 &lt;!-- more --&gt;
 
 &lt;p&gt;&lt;img src=&quot;/assets/images/Flare-on-2018/score.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;Last year I got stuck at level 12 and failed to finish the challenge, so I’m very glad I made it this year 😄. Here in this post I’ll share my solution of each challenge – how I solve it, what tools did I use, …etc.&lt;/p&gt;
+&lt;p&gt;Last year I got stuck at level 12 and failed to finish the challenge, so I’m very glad that I complete the challenge this year 😄. Here in this post I’ll share my solution of each challenge – how I solve it, what tools did I use, …etc.&lt;/p&gt;
 
 &lt;p&gt;Enough for the talk, lets get started !&lt;/p&gt;
 
@@ -35,7 +35,7 @@
 
 &lt;p&gt;&lt;img src=&quot;/assets/images/Flare-on-2018/level2_0.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;The board is 30x30, and there’re 897 mines in the board. We’ll have to mark all the mines to win the game.&lt;/p&gt;
+&lt;p&gt;The board is 30x30, and there’re 897 mines in the board. We’ll have to reveal all three None-Mine squares to win the game.&lt;/p&gt;
 
 &lt;p&gt;I decompile the binary with &lt;a href=&quot;https://github.com/0xd4d/dnSpy&quot;&gt;dnSpy&lt;/a&gt; and started inspecting the program logic. Later I’ve found an interesting function:&lt;/p&gt;
 
@@ -115,11 +115,13 @@
 3. [7, 28]
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;After that, we can use the “set next statement” feature in dnSpy to hijack the program flow. Here I let the program jump to the line&lt;/p&gt;
+&lt;p&gt;At first I tried to click those cells, only to find that the height of the board has exceeded my screen, making me unable to click cell [24, 28]… 🤨&lt;/p&gt;
+
+&lt;p&gt;Anyway we can still use the “set next statement” feature in dnSpy to hijack the program flow. Here I let the program jump to the line&lt;/p&gt;
 &lt;div class=&quot;language-c# highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;RevealedCells&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;Add&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;row&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;MainForm&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;VALLOC_NODE_LIMIT&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;column&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;directly and modify the &lt;code class=&quot;highlighter-rouge&quot;&gt;row&lt;/code&gt; &amp;amp; &lt;code class=&quot;highlighter-rouge&quot;&gt;col&lt;/code&gt; variable ( by pressing F2 in dnSpy ) to those cells position. Then I jump to the &lt;code class=&quot;highlighter-rouge&quot;&gt;GetKey&lt;/code&gt; function to get the flag:&lt;/p&gt;
+&lt;p&gt;directly and modify the &lt;code class=&quot;highlighter-rouge&quot;&gt;row&lt;/code&gt; &amp;amp; &lt;code class=&quot;highlighter-rouge&quot;&gt;col&lt;/code&gt; variable ( by pressing F2 in dnSpy ) to those None-Mine cells’ position. Then I jump to the &lt;code class=&quot;highlighter-rouge&quot;&gt;GetKey&lt;/code&gt; function to get the flag:&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;/assets/images/Flare-on-2018/level2_1.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
