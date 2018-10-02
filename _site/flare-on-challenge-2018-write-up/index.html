@@ -296,9 +296,9 @@
 
 <p><img src="/assets/images/Flare-on-2018/score.png" alt="" /></p>
 
-<p>Last year I got stuck at level 12 and failed to finish the challenge, so I’m very glad that I complete the challenge this year 😄. Here in this post I’ll share my solution of each challenge – how I solve it, what tools did I use, …etc.</p>
+<p>Last year I got stuck at level 12 and failed to finish the challenge, so I’m very glad that I complete it this year 😄. Here in this post I’ll share my solution of each challenge – how I solve it, what tools did I use, …etc.</p>
 
-<p>Enough for the talk, lets get started !</p>
+<p>Enough for the talk, let’s get started !</p>
 
 <h2 id="level-1">Level 1</h2>
 
@@ -329,7 +329,7 @@
 
 <p>The board is 30x30, and there’re 897 mines in the board. We’ll have to reveal all three None-Mine squares to win the game.</p>
 
-<p>I decompile the binary with <a href="https://github.com/0xd4d/dnSpy">dnSpy</a> and started inspecting the program logic. Later I’ve found an interesting function:</p>
+<p>I decompiled the binary with <a href="https://github.com/0xd4d/dnSpy">dnSpy</a> and started inspecting the program logic. Later I’ve found an interesting function:</p>
 
 <div class="language-c# highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">this</span><span class="p">.</span><span class="n">RevealedCells</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="n">row</span> <span class="p">*</span> <span class="n">MainForm</span><span class="p">.</span><span class="n">VALLOC_NODE_LIMIT</span> <span class="p">+</span> <span class="n">column</span><span class="p">);</span>
 <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="n">MineField</span><span class="p">.</span><span class="n">TotalUnrevealedEmptySquares</span> <span class="p">==</span> <span class="m">0</span><span class="p">)</span>
@@ -654,7 +654,7 @@ Go step on a brick!
     <span class="p">}(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">93</span><span class="p">)</span> <span class="o">+</span> <span class="mi">6</span><span class="p">.</span><span class="nx">toString</span><span class="p">(</span><span class="mi">36</span><span class="p">).</span><span class="nx">toLowerCase</span><span class="p">(),</span> <span class="mi">8</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">+</span> <span class="mi">12</span> <span class="o">&amp;&amp;</span> <span class="mi">3</span> <span class="o">+</span> <span class="p">(</span><span class="nx">p</span><span class="p">.</span><span class="nx">charCodeAt</span><span class="p">(</span><span class="mi">9</span><span class="p">)</span> <span class="o">+</span> <span class="mi">88</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">===</span> <span class="nx">p</span><span class="p">.</span><span class="nx">charCodeAt</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span> <span class="nx">model</span><span class="p">.</span><span class="nx">root</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
 </code></pre></div></div>
 
-<p>Here I modified the code into the following format so I can use the chrome debugger to figured out the password checking logic:</p>
+<p>Here I modified the code into the following format so I can use the Chrome debugger to figure out the password checking logic:</p>
 
 <div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">cp</span><span class="p">(</span><span class="nx">p</span><span class="p">)</span> <span class="p">{</span>
     <span class="c1">// store the value into a variable so we can check the value from debugger </span>
@@ -698,7 +698,7 @@ Go step on a brick!
   <span class="p">}</span>
 </code></pre></div></div>
 
-<p>After that we can figured out the root password is : <code class="highlighter-rouge">k9btBW7k2y</code>, and login as the root user.</p>
+<p>After that we can figure out the root password is : <code class="highlighter-rouge">k9btBW7k2y</code>, and login as the root user.</p>
 
 <p>At last, we’ll have to figure out the secret directory to get the flag ( see the comment below ):</p>
 
@@ -1897,7 +1897,7 @@ struct enc_data
 
 <p>🤔hmmm…that was strange…cause now the program did not print out the <code class="highlighter-rouge">Welcome to FLARE spy messenger...</code> message, also it looks like it did not check our password.</p>
 
-<p>So apparently there’s something inside the image file that does the password checking, and it’s not <code class="highlighter-rouge">infohelp.exe</code>.</p>
+<p>So apparently there’s something inside the image file that does the password checking, and it’s definitely not <code class="highlighter-rouge">infohelp.exe</code>.</p>
 
 <blockquote>
   <p>According to Lays, the program hook int 0x21 and jump to the code that does the password checking during the file operation of “key.dat”.</p>
@@ -2319,6 +2319,80 @@ else:
       <footer class="page__meta">
         
         
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#ctf" class="page__taxonomy-item" rel="tag">CTF</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#flare-on" class="page__taxonomy-item" rel="tag">flare-on</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#forensic" class="page__taxonomy-item" rel="tag">Forensic</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#java" class="page__taxonomy-item" rel="tag">Java</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#javascript" class="page__taxonomy-item" rel="tag">Javascript</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#python" class="page__taxonomy-item" rel="tag">Python</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#qemu" class="page__taxonomy-item" rel="tag">qemu</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#reversing" class="page__taxonomy-item" rel="tag">Reversing</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#web-assembly" class="page__taxonomy-item" rel="tag">web_assembly</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#windows" class="page__taxonomy-item" rel="tag">Windows</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#write-ups" class="page__taxonomy-item" rel="tag">write-ups</a>
+    
+    </span>
+  </p>
 
 
         

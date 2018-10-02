@@ -9,6 +9,19 @@ permalink: "/:title/"
 toc: true
 toc_label: Table of Contents
 toc_sticky: true
+tags:
+- CTF
+- flare-on
+- Reversing
+- Forensic
+- Windows
+- Javascript
+- web_assembly
+- Java
+- Python
+- qemu
+categories:
+- write-ups
 ---
 
 Flare-on challenge is a Reverse-style CTF challenge created by the [FireEye FLARE team](https://www.fireeye.com/blog/threat-research/2014/07/announcing-the-flare-team-and-the-flare-on-challenge.html). The CTF contains lots of interesting, real-world style reversing challenges ( e.g. de-obfucating binary, malware analysis, ...etc).  [This year](https://www.fireeye.com/blog/threat-research/2018/08/announcing-the-fifth-annual-flare-on-challenge.html) is the fifth annual of the CTF and has a total of 12 challenges, covering Windows PE (.NET, VC++, Delphi...), Linux ELF, Web Assembly, VM and other interesting stuffs.
@@ -17,9 +30,9 @@ Flare-on challenge is a Reverse-style CTF challenge created by the [FireEye FLAR
 
 ![](/assets/images/Flare-on-2018/score.png)
 
-Last year I got stuck at level 12 and failed to finish the challenge, so I'm very glad that I complete the challenge this year 😄. Here in this post I'll share my solution of each challenge -- how I solve it, what tools did I use, ...etc.
+Last year I got stuck at level 12 and failed to finish the challenge, so I'm very glad that I complete it this year 😄. Here in this post I'll share my solution of each challenge -- how I solve it, what tools did I use, ...etc.
 
-Enough for the talk, lets get started !
+Enough for the talk, let's get started !
 
 ## Level 1
 
@@ -47,7 +60,7 @@ This time we're given a .NET binary program, which is a minesweeper game.
 
 The board is 30x30, and there're 897 mines in the board. We'll have to reveal all three None-Mine squares to win the game.  
 
-I decompile the binary with [dnSpy](https://github.com/0xd4d/dnSpy) and started inspecting the program logic. Later I've found an interesting function:
+I decompiled the binary with [dnSpy](https://github.com/0xd4d/dnSpy) and started inspecting the program logic. Later I've found an interesting function:
 
 ```c#
 this.RevealedCells.Add(row * MainForm.VALLOC_NODE_LIMIT + column);
@@ -375,7 +388,7 @@ function cp(p) {
     }(14, 93) + 6.toString(36).toLowerCase(), 8) - 1 + 12 && 3 + (p.charCodeAt(9) + 88 - 1) / 2 === p.charCodeAt(0)) model.root = 1,
 ```
 
-Here I modified the code into the following format so I can use the chrome debugger to figured out the password checking logic:
+Here I modified the code into the following format so I can use the Chrome debugger to figure out the password checking logic:
 
 ```javascript
 function cp(p) {
@@ -420,7 +433,7 @@ function cp(p) {
   }
 ```
 
-After that we can figured out the root password is : `k9btBW7k2y`, and login as the root user.
+After that we can figure out the root password is : `k9btBW7k2y`, and login as the root user.
 
 At last, we'll have to figure out the secret directory to get the flag ( see the comment below ):
 
@@ -1592,7 +1605,7 @@ Since it's an image file, we can actually `mount` it as a directory and look aro
 
 🤔hmmm...that was strange...cause now the program did not print out the `Welcome to FLARE spy messenger...` message, also it looks like it did not check our password.
 
-So apparently there's something inside the image file that does the password checking, and it's not `infohelp.exe`. 
+So apparently there's something inside the image file that does the password checking, and it's definitely not `infohelp.exe`. 
 
 > According to Lays, the program hook int 0x21 and jump to the code that does the password checking during the file operation of "key.dat".
 
