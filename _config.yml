@@ -105,16 +105,16 @@ footer:
   links:
     - label: ""
       icon: "fab fa-fw fa-creative-commons"
-      url: "https://creativecommons.org/licenses/by-nc-sa/3.0/"
+      url: "https://creativecommons.org/licenses/by-nc-sa/4.0/"
     - label: ""
       icon: "fab fa-fw fa-creative-commons-by"
-      url: "https://creativecommons.org/licenses/by-nc-sa/3.0/"
+      url: "https://creativecommons.org/licenses/by-nc-sa/4.0/"
     - label: ""
       icon: "fab fa-fw fa-creative-commons-nc"
-      url: "https://creativecommons.org/licenses/by-nc-sa/3.0/"
+      url: "https://creativecommons.org/licenses/by-nc-sa/4.0/"
     - label: ""
       icon: "fab fa-fw fa-creative-commons-sa"
-      url: "https://creativecommons.org/licenses/by-nc-sa/3.0/"
+      url: "https://creativecommons.org/licenses/by-nc-sa/4.0/"
 
 # search
 search: true
