@@ -256,6 +256,6 @@ var store = [{
         "teaser":null},{
         "title": "Flare-on Challenge 2018 Write-up",
         "excerpt":"Flare-on challenge is a Reverse-style CTF challenge created by the FireEye FLARE team. The CTF contains lots of interesting, real-world style reversing challenges ( e.g. de-obfucating binary, malware analysis, …etc). This year is the fifth annual of the CTF and has a total of 12 challenges, covering Windows PE (.NET,...","categories": ["write-ups"],
-        "tags": ["CTF","flare-on","Reversing","Forensic","Windows","Javascript","web_assembly","Java","Python","qemu"],
+        "tags": ["CTF","flare-on","Reversing","Crypto","Forensic","Windows","Javascript","web_assembly","Java","Python","qemu"],
         "url": "http://0.0.0.0:4000/flare-on-challenge-2018-write-up/",
         "teaser":null}]

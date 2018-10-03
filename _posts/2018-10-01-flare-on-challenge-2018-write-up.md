@@ -13,6 +13,7 @@ tags:
 - CTF
 - flare-on
 - Reversing
+- Crypto
 - Forensic
 - Windows
 - Javascript
@@ -711,7 +712,7 @@ So apparently we'll have to input the correct key for 666 rounds to get the flag
 1. The program will decrypt a code buffer ( using `xor` ).
 2. Part of our key will be checked with the decrypted code.
 3. If it passes the check, the program will re-encrpyt the code buffer, or else it'll exit the program.
-4. Repeat the above step for 33 times.
+4. Repeat the above steps for 33 times.
 5. If we pass all 33 stages, enter the next round.
 
 Also start from address `0x605100` there's an array,  which its element has the following data structure:
@@ -1357,7 +1358,7 @@ We can then write a script to decrypt the flag. It appears to be an html:
 
 ![](/assets/images/Flare-on-2018/level9_2.png)
 
-LOL it did eat all of my brain 😇
+LOL it did eat up my brain 😇
 
 flag: `scr1pt1ng_sl4ck1ng_and_h4ck1ng@flare-on.com`
 
@@ -1368,12 +1369,12 @@ hahaha, very funny ☝🙄...
 
 **Tools : IDA Pro + Windbg, TWindbg**
 
-> Special thanks to [Lucas](https://twitter.com/_wmliang_) who help me on this one
+> Special thanks to [Lucas](https://twitter.com/_wmliang_) for helping me on this one
 
 We were given a 64 bit PE file. After some reversing, we know that:
 
 1. The program will write a file `fhv.sys` in `C:\`, which appears to be a Windows driver.
-2. Then it will load the driver and use the `vmcall` instruction to access the driver and check our input ( provided via `argv[1]` ). With this we know that this driver is actually a hypervisor.
+2. Then it will load the driver and use the `vmcall` instruction to access the driver and check our input ( provided via `argv[1]` ). With this we know that this driver is actually a **hypervisor**.
 3. The program will divide our input into four part and check it with four different code in hypervisor.
 4. The correct input is also the flag of this challenge. 
 
@@ -1552,7 +1553,7 @@ Based on the result of the decryption, we can sort out some stuff:
 
 * A file called `level9.crypt` has been uploaded to the C&C server.
 
-We can extract `level9.crypt` by dumping the data in pcap. But as you can see, it's encrypted. I got stuck here for a while, until I found that there's **another suspicious traffic between the victim and larry-johnson's PC**. Turn out to be that they were also communicating via the custom binary protocol, except this time there weren't using the TCP connection : the data was tranfered via the **SMB protocol**.
+We can extract `level9.crypt` by dumping the data in pcap. But as you can see, it's encrypted. I got stuck here for a while, until I found that there's **another suspicious traffic between the victim and larry-johnson's PC**. Turn out to be that they were also communicating via the custom binary protocol, except this time there weren't using the TCP connection : the data was transferred via the **SMB protocol**.
 
 So again, we'll have to extract the data from those SMB request, then decrpyt & decompress those datas to see what they were doing :
 
@@ -2009,7 +2010,7 @@ And now the moment of truth...
 Hurray ! We've conquered the final challenge of Flare-on 2018 !  🎉 🎉 🎉
 
 ## Epilogue
-The challenges are pretty good overall. I've gained a lot during the CTF, especially on reversing Windows PE and VM. Although level 8 is kind of guessy, and level 12 being inhumane (?), it's still a pretty nice reversing challenge.
+The challenges are pretty good overall. I've gained a lot during this CTF, especially on reversing Windows PE and VM. Although level 8 is kind of guessy, and level 12 being super inhumane (?), it's still a pretty nice reversing challenge.
 
 Big thanks to [FireEye](https://twitter.com/FireEye) for creating those amazing challenges. Also let's not forget those guys from [CTFd](https://twitter.com/ctfdio),  they did a pretty good job on hosting the CTF platform. Special thanks to Lays and Lucas for discussing and helping me on level 9, 10 & 12.
 

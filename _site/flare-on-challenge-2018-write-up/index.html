@@ -978,7 +978,7 @@ No soup for you!
   <li>The program will decrypt a code buffer ( using <code class="highlighter-rouge">xor</code> ).</li>
   <li>Part of our key will be checked with the decrypted code.</li>
   <li>If it passes the check, the program will re-encrpyt the code buffer, or else it’ll exit the program.</li>
-  <li>Repeat the above step for 33 times.</li>
+  <li>Repeat the above steps for 33 times.</li>
   <li>If we pass all 33 stages, enter the next round.</li>
 </ol>
 
@@ -1628,7 +1628,7 @@ struct enc_data
 
 <p><img src="/assets/images/Flare-on-2018/level9_2.png" alt="" /></p>
 
-<p>LOL it did eat all of my brain 😇</p>
+<p>LOL it did eat up my brain 😇</p>
 
 <p>flag: <code class="highlighter-rouge">scr1pt1ng_sl4ck1ng_and_h4ck1ng@flare-on.com</code></p>
 
@@ -1642,14 +1642,14 @@ struct enc_data
 <p><strong>Tools : IDA Pro + Windbg, TWindbg</strong></p>
 
 <blockquote>
-  <p>Special thanks to <a href="https://twitter.com/_wmliang_">Lucas</a> who help me on this one</p>
+  <p>Special thanks to <a href="https://twitter.com/_wmliang_">Lucas</a> for helping me on this one</p>
 </blockquote>
 
 <p>We were given a 64 bit PE file. After some reversing, we know that:</p>
 
 <ol>
   <li>The program will write a file <code class="highlighter-rouge">fhv.sys</code> in <code class="highlighter-rouge">C:\</code>, which appears to be a Windows driver.</li>
-  <li>Then it will load the driver and use the <code class="highlighter-rouge">vmcall</code> instruction to access the driver and check our input ( provided via <code class="highlighter-rouge">argv[1]</code> ). With this we know that this driver is actually a hypervisor.</li>
+  <li>Then it will load the driver and use the <code class="highlighter-rouge">vmcall</code> instruction to access the driver and check our input ( provided via <code class="highlighter-rouge">argv[1]</code> ). With this we know that this driver is actually a <strong>hypervisor</strong>.</li>
   <li>The program will divide our input into four part and check it with four different code in hypervisor.</li>
   <li>The correct input is also the flag of this challenge.</li>
 </ol>
@@ -1837,7 +1837,7 @@ struct enc_data
   <li>A file called <code class="highlighter-rouge">level9.crypt</code> has been uploaded to the C&amp;C server.</li>
 </ul>
 
-<p>We can extract <code class="highlighter-rouge">level9.crypt</code> by dumping the data in pcap. But as you can see, it’s encrypted. I got stuck here for a while, until I found that there’s <strong>another suspicious traffic between the victim and larry-johnson’s PC</strong>. Turn out to be that they were also communicating via the custom binary protocol, except this time there weren’t using the TCP connection : the data was tranfered via the <strong>SMB protocol</strong>.</p>
+<p>We can extract <code class="highlighter-rouge">level9.crypt</code> by dumping the data in pcap. But as you can see, it’s encrypted. I got stuck here for a while, until I found that there’s <strong>another suspicious traffic between the victim and larry-johnson’s PC</strong>. Turn out to be that they were also communicating via the custom binary protocol, except this time there weren’t using the TCP connection : the data was transferred via the <strong>SMB protocol</strong>.</p>
 
 <p>So again, we’ll have to extract the data from those SMB request, then decrpyt &amp; decompress those datas to see what they were doing :</p>
 
@@ -2305,7 +2305,7 @@ else:
 <p>Hurray ! We’ve conquered the final challenge of Flare-on 2018 !  🎉 🎉 🎉</p>
 
 <h2 id="epilogue">Epilogue</h2>
-<p>The challenges are pretty good overall. I’ve gained a lot during the CTF, especially on reversing Windows PE and VM. Although level 8 is kind of guessy, and level 12 being inhumane (?), it’s still a pretty nice reversing challenge.</p>
+<p>The challenges are pretty good overall. I’ve gained a lot during this CTF, especially on reversing Windows PE and VM. Although level 8 is kind of guessy, and level 12 being super inhumane (?), it’s still a pretty nice reversing challenge.</p>
 
 <p>Big thanks to <a href="https://twitter.com/FireEye">FireEye</a> for creating those amazing challenges. Also let’s not forget those guys from <a href="https://twitter.com/ctfdio">CTFd</a>,  they did a pretty good job on hosting the CTF platform. Special thanks to Lays and Lucas for discussing and helping me on level 9, 10 &amp; 12.</p>
 
@@ -2329,6 +2329,10 @@ else:
   <p class="page__taxonomy">
     <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
     <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#crypto" class="page__taxonomy-item" rel="tag">Crypto</a><span class="sep">, </span>
     
       
       
