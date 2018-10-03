@@ -55,7 +55,7 @@ kramdown:
 
 # theme settings
 remote_theme: bruce30262/minimal-mistakes
-minimal_mistakes_skin: "dark" # "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum" "sunrise"
+minimal_mistakes_skin: "air" # "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum" "sunrise"
 # Plugins
 plugins:
   - jekyll-feed
