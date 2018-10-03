@@ -50,7 +50,7 @@ docker run -e TERM --privileged --security-opt seccomp:unconfined -p 4000:4000 -
 The Jekyll docker container uses user `jekyll` ( uid = 1000 ) to configure the blog, so it'll be the best if your own uid on the linux host is also 1000, making you able to work both outside/inside the docker ( since you have the same uid, working as jekyll inside the docker = working as yourself on the linux host ) without having the permission problem.
 
 ## Install the theme
-I'm using [Minimal Mistakes](https://mmistakes.github.io/minimal-mistakes/) as my theme. I like its dark theme, also it's well documented :).
+I'm using [Minimal Mistakes](https://mmistakes.github.io/minimal-mistakes/) as my theme. I like its skins, and it's well documented :).
 
 To use the theme on github page you'll have to set the `remote-theme` in `_config.yml`:
 
@@ -64,7 +64,7 @@ After that you can just follow the steps in the [documentation](https://mmistake
 
 I've [forked the theme repo](https://github.com/bruce30262/minimal-mistakes) so I can apply my own customized theme to the blog.
 
-For example I didn't like the syntax highlighting in the dark theme and preferred the default one, so I follow the steps mentioned in [this issue](https://github.com/mmistakes/minimal-mistakes/issues/1458) and modified the content of `assets/css/main.scss`:
+For example I preferred the default syntax highlighting and want to use it to display code no matter which skin I choose. So I follow the steps mentioned in [this issue](https://github.com/mmistakes/minimal-mistakes/issues/1458) and modified the content of `assets/css/main.scss`:
 ```css
 @import "minimal-mistakes/skins/{{ site.minimal_mistakes_skin | default: 'default' }}"; // skin
 
