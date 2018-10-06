@@ -23,6 +23,7 @@ tags:
 - qemu
 categories:
 - write-ups
+date: '2018-10-06 15:29:15'
 ---
 
 Flare-on challenge is a Reverse-style CTF challenge created by the [FireEye FLARE team](https://www.fireeye.com/blog/threat-research/2014/07/announcing-the-flare-team-and-the-flare-on-challenge.html). The CTF contains lots of interesting, real-world style reversing challenges ( e.g. de-obfucating binary, malware analysis, ...etc).  [This year](https://www.fireeye.com/blog/threat-research/2018/08/announcing-the-fifth-annual-flare-on-challenge.html) is the fifth annual of the CTF and has a total of 12 challenges, covering Windows PE (.NET, VC++, Delphi...), Linux ELF, Web Assembly, VM and other interesting stuffs.
@@ -31,7 +32,7 @@ Flare-on challenge is a Reverse-style CTF challenge created by the [FireEye FLAR
 
 ![](/assets/images/Flare-on-2018/score.png)
 
-Last year I got stuck at level 12 and failed to finish the challenge, so I'm very glad that I complete it this year 😄. Here in this post I'll share my solution of each challenge -- how I solve it, what tools did I use, ...etc.
+According to the [official blog](https://www.fireeye.com/blog/threat-research/2018/10/2018-flare-on-challenge-solutions.html), 2.3% ( 114 / 4893 ) of players have completed the challenge this year. Last year I got stuck at level 12 and failed to finish the challenge, so I'm very glad that I was able to complete it this year 😄. Here in this post I'll share my solution of each challenge -- how I solve it, what tools did I use, ...etc.
 
 Enough for the talk, let's get started !
 
@@ -864,7 +865,7 @@ And after that I quickly figured out the rest of the functions:
 * func1 : CRC32
 * func2 : RC4 
 * func3 : Base64 encoding with customized table
-* func4 ~ fun6 : Simple `xor`/`sub`
+* func4 ~ fun6 : Simple `xor`/`sub` operation
 
 With these informations I quickly wrote a [python script](https://gist.github.com/bruce30262/bba06ca3e30ef320fab79678156a5841) with the corresponded decrypt functions and solve the challenge in just 5 minutes ... 
 
@@ -1608,7 +1609,7 @@ Since it's an image file, we can actually `mount` it as a directory and look aro
 
 So apparently there's something inside the image file that does the password checking, and it's definitely not `infohelp.exe`. 
 
-> According to Lays, the program hook int 0x21 and jump to the code that does the password checking during the file operation of "key.dat".
+> According to Lays, the program hook int 0x21 and jump to the code that does the password checking during the file operation of "message.dat".
 
 To locate the actual code, I decided to switch my analyzing tool to IDA and [Bochs emulator](https://sourceforge.net/projects/bochs/). By suspending the execution during the password checking stage, we can locate the code and re-implement it with the following pseudo code: 
 
