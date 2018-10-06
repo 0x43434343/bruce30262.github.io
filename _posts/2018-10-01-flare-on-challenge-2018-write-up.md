@@ -547,7 +547,7 @@ This time a wasm file and a simple webpage were given. By checking the main logi
     let pb = wasm_alloc(instance, 0x200);
     wasm_write(instance, pb, b);
 
-// flag checking login
+// flag checking logic
     if (instance.exports.Match(pa, a.byteLength, pb, b.byteLength) == 1) {
         // PARTY POPPER
         document.getElementById("container").innerText = "🎉";

@@ -812,7 +812,7 @@ Go step on a brick!
     <span class="kd">let</span> <span class="nx">pb</span> <span class="o">=</span> <span class="nx">wasm_alloc</span><span class="p">(</span><span class="nx">instance</span><span class="p">,</span> <span class="mh">0x200</span><span class="p">);</span>
     <span class="nx">wasm_write</span><span class="p">(</span><span class="nx">instance</span><span class="p">,</span> <span class="nx">pb</span><span class="p">,</span> <span class="nx">b</span><span class="p">);</span>
 
-<span class="c1">// flag checking login</span>
+<span class="c1">// flag checking logic</span>
     <span class="k">if</span> <span class="p">(</span><span class="nx">instance</span><span class="p">.</span><span class="nx">exports</span><span class="p">.</span><span class="nx">Match</span><span class="p">(</span><span class="nx">pa</span><span class="p">,</span> <span class="nx">a</span><span class="p">.</span><span class="nx">byteLength</span><span class="p">,</span> <span class="nx">pb</span><span class="p">,</span> <span class="nx">b</span><span class="p">.</span><span class="nx">byteLength</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
         <span class="c1">// PARTY POPPER</span>
         <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">"container"</span><span class="p">).</span><span class="nx">innerText</span> <span class="o">=</span> <span class="s2">"🎉"</span><span class="p">;</span>
