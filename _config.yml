@@ -119,6 +119,10 @@ footer:
 # search
 search: true
 
+# site script
+head_scripts:
+    - https://s7.addthis.com/js/300/addthis_widget.js#pubid=ra-592d8051fa91b8b6
+
 # google analytics
 analytics:
   provider: "google"
