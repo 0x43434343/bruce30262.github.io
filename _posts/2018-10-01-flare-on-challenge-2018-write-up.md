@@ -1853,7 +1853,9 @@ We can tell that `_120f` is the PC address, `_1201` is `a`, and `_1211` being th
 
 ![](/assets/images/Flare-on-2018/deeper.jpg)
 
-So once again, I had to write another disassebler for subleq2. Based on the first one and with some modification, I created another [tiny disassembler](https://gist.github.com/bruce30262/1f4ec443c82eb3587440877aa811c767). It can only identify instructions like `MOV`, `ADD`, `SUB`......, but again, we could simplify the code base on some special patterns. After identifying some function calls, I was able to recover the whole program logic, and this time the result is much more reasonable :
+> EDIT: Ah...so after I read the [official write-up](https://www.fireeye.com/content/dam/fireeye-www/blog/pdfs/FlareOn5_Challenge12_Solution.pdf), it's actually not subleq2 but a [RSSB](https://en.wikipedia.org/wiki/One_instruction_set_computer#Reverse_subtract_and_skip_if_borrow) (Reverse subtract and skip if borrow) VM. It looks kind of like subleq2, and I got confused 😛 
+
+So once again, I had to write another disassebler for ~~subleq2~~ RSSB. Based on the first one and with some modification, I created another [tiny disassembler](https://gist.github.com/bruce30262/1f4ec443c82eb3587440877aa811c767). It can only identify instructions like `MOV`, `ADD`, `SUB`......, but again, we could simplify the code base on some special patterns. After identifying some function calls, I was able to recover the whole program logic, and this time the result is much more reasonable :
 
 ```python
 #!/usr/bin/env python

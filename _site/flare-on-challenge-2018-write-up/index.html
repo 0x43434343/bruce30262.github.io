@@ -2148,7 +2148,11 @@ else:
 
 <p><img src="/assets/images/Flare-on-2018/deeper.jpg" alt="" /></p>
 
-<p>So once again, I had to write another disassebler for subleq2. Based on the first one and with some modification, I created another <a href="https://gist.github.com/bruce30262/1f4ec443c82eb3587440877aa811c767">tiny disassembler</a>. It can only identify instructions like <code class="highlighter-rouge">MOV</code>, <code class="highlighter-rouge">ADD</code>, <code class="highlighter-rouge">SUB</code>……, but again, we could simplify the code base on some special patterns. After identifying some function calls, I was able to recover the whole program logic, and this time the result is much more reasonable :</p>
+<blockquote>
+  <p>EDIT: Ah…so after I read the <a href="https://www.fireeye.com/content/dam/fireeye-www/blog/pdfs/FlareOn5_Challenge12_Solution.pdf">official write-up</a>, it’s actually not subleq2 but a <a href="https://en.wikipedia.org/wiki/One_instruction_set_computer#Reverse_subtract_and_skip_if_borrow">RSSB</a> (Reverse subtract and skip if borrow) VM. It looks kind of like subleq2, and I got confused 😛</p>
+</blockquote>
+
+<p>So once again, I had to write another disassebler for <del>subleq2</del> RSSB. Based on the first one and with some modification, I created another <a href="https://gist.github.com/bruce30262/1f4ec443c82eb3587440877aa811c767">tiny disassembler</a>. It can only identify instructions like <code class="highlighter-rouge">MOV</code>, <code class="highlighter-rouge">ADD</code>, <code class="highlighter-rouge">SUB</code>……, but again, we could simplify the code base on some special patterns. After identifying some function calls, I was able to recover the whole program logic, and this time the result is much more reasonable :</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/usr/bin/env python</span>
 <span class="c"># -*- coding: utf-8 -*-</span>
