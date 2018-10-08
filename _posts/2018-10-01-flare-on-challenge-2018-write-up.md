@@ -1842,14 +1842,14 @@ func1()
 
 ...... what the hell is this ? It shows no sign of printing string, let alone checking the password. After examine it carefully, I suddenly realized......
 
-**Holy shit it's a [subleq2](https://en.wikipedia.org/wiki/One_instruction_set_computer#Subtract_and_branch_if_less_than_or_equal_to_zero) VM...**
+~~**Holy shit it's a [subleq2](https://en.wikipedia.org/wiki/One_instruction_set_computer#Subtract_and_branch_if_less_than_or_equal_to_zero) VM...**~~
 
 ```
 subleq2 a, b     ; Mem[a] = Mem[a] - ACCUM
                  ; ACCUM = Mem[a]
                  ; if (Mem[a] ≤ 0) goto b
 ```
-We can tell that `_120f` is the PC address, `_1201` is `a`, and `_1211` being the accumulator(`ACCUM`) ... **it's a subleq2 inside a subleq !!**
+~~We can tell that `_120f` is the PC address, `_1201` is `a`, and `_1211` being the accumulator(`ACCUM`) ... **it's a subleq2 inside a subleq !!**~~
 
 ![](/assets/images/Flare-on-2018/deeper.jpg)
 
