@@ -1,10 +1,16 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.7.4">Jekyll</generator><link href="http://0.0.0.0:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://0.0.0.0:4000/" rel="alternate" type="text/html" /><updated>2018-10-09T00:01:40+08:00</updated><id>http://0.0.0.0:4000/</id><title type="html">Hacking Tube 2.0</title><subtitle>Security and stuff</subtitle><author><name>Bruce Chen</name></author><entry><title type="html">Flare-on Challenge 2018 Write-up</title><link href="http://0.0.0.0:4000/flare-on-challenge-2018-write-up/" rel="alternate" type="text/html" title="Flare-on Challenge 2018 Write-up" /><published>2018-10-06T15:29:15+08:00</published><updated>2018-10-06T15:29:15+08:00</updated><id>http://0.0.0.0:4000/flare-on-challenge-2018-write-up</id><content type="html" xml:base="http://0.0.0.0:4000/flare-on-challenge-2018-write-up/">&lt;p&gt;Flare-on challenge is a Reverse-style CTF challenge created by the &lt;a href=&quot;https://www.fireeye.com/blog/threat-research/2014/07/announcing-the-flare-team-and-the-flare-on-challenge.html&quot;&gt;FireEye FLARE team&lt;/a&gt;. The CTF contains lots of interesting, real-world style reversing challenges ( e.g. de-obfucating binary, malware analysis, …etc).  &lt;a href=&quot;https://www.fireeye.com/blog/threat-research/2018/08/announcing-the-fifth-annual-flare-on-challenge.html&quot;&gt;This year&lt;/a&gt; is the fifth annual of the CTF and has a total of 12 challenges, covering Windows PE (.NET, VC++, Delphi…), Linux ELF, Web Assembly, VM and other interesting stuffs.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.7.4">Jekyll</generator><link href="http://0.0.0.0:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://0.0.0.0:4000/" rel="alternate" type="text/html" /><updated>2018-10-11T11:37:59+08:00</updated><id>http://0.0.0.0:4000/</id><title type="html">Hacking Tube 2.0</title><subtitle>Security and stuff</subtitle><author><name>Bruce Chen</name></author><entry><title type="html">Flare-on Challenge 2018 Write-up</title><link href="http://0.0.0.0:4000/flare-on-challenge-2018-write-up/" rel="alternate" type="text/html" title="Flare-on Challenge 2018 Write-up" /><published>2018-10-06T15:29:15+08:00</published><updated>2018-10-06T15:29:15+08:00</updated><id>http://0.0.0.0:4000/flare-on-challenge-2018-write-up</id><content type="html" xml:base="http://0.0.0.0:4000/flare-on-challenge-2018-write-up/">&lt;p&gt;Flare-on challenge is a Reverse-style CTF challenge created by the &lt;a href=&quot;https://www.fireeye.com/blog/threat-research/2014/07/announcing-the-flare-team-and-the-flare-on-challenge.html&quot;&gt;FireEye FLARE team&lt;/a&gt;. The CTF contains lots of interesting, real-world style reversing challenges ( e.g. de-obfucating binary, malware analysis, …etc).  &lt;a href=&quot;https://www.fireeye.com/blog/threat-research/2018/08/announcing-the-fifth-annual-flare-on-challenge.html&quot;&gt;This year&lt;/a&gt; is the fifth annual of the CTF and has a total of 12 challenges, covering Windows PE (.NET, VC++, Delphi…), Linux ELF, Web Assembly, VM and other interesting stuffs.&lt;/p&gt;
 
 &lt;!-- more --&gt;
 
 &lt;p&gt;&lt;img src=&quot;/assets/images/Flare-on-2018/score.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;According to the &lt;a href=&quot;https://www.fireeye.com/blog/threat-research/2018/10/2018-flare-on-challenge-solutions.html&quot;&gt;official blog&lt;/a&gt;, 2.3% ( 114 / 4893 ) of players have completed the challenge this year. Last year I got stuck at level 12 and failed to finish the challenge, so I’m very glad that I was able to complete it this year 😄. Here in this post I’ll share my solution of each challenge – how I solve it, what tools did I use, …etc.&lt;/p&gt;
+&lt;p&gt;According to the &lt;a href=&quot;https://www.fireeye.com/blog/threat-research/2018/10/2018-flare-on-challenge-solutions.html&quot;&gt;official blog&lt;/a&gt;, 2.3% ( 114 / 4893 ) of players have completed the challenge this year.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;EDIT: According to the final result on &lt;a href=&quot;http://flare-on.com/&quot;&gt;flare-on.com&lt;/a&gt;,  129 out of 4925 players have finished the challenge this year&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Last year I got stuck at level 12 and failed to finish the challenge, so I’m very glad that I was able to complete it this year 😄. Here in this post I’ll share my solution of each challenge – how I solve it, what tools did I use, …etc.&lt;/p&gt;
 
 &lt;p&gt;Enough for the talk, let’s get started !&lt;/p&gt;
 
@@ -894,6 +900,10 @@ wait a second … It &lt;strong&gt;IS&lt;/strong&gt; fibonacci !! OMG I’m such
 
 &lt;p&gt;Here it will load the 64 bit dll ( 7.dll ) and wait for our input. We then can attach the debugger to this process and press any key to continue the debug process.&lt;/p&gt;
 
+&lt;blockquote&gt;
+  &lt;p&gt;EDIT: &lt;a href=&quot;https://twitter.com/hasherezade/status/1049800972913045504&quot;&gt;dll_to_exe finally support 64 bit dll&lt;/a&gt; ! However it won’t work on this one, you’ll have to use &lt;a href=&quot;https://github.com/hasherezade/releases/releases/tag/0.3.8&quot;&gt;PE-bear&lt;/a&gt; to convert the dll to exe ( check out this &lt;a href=&quot;https://hshrzd.wordpress.com/2016/07/21/how-to-turn-a-dll-into-a-standalone-exe/&quot;&gt;hasherezade’s blog post&lt;/a&gt; for more details )&lt;/p&gt;
+&lt;/blockquote&gt;
+
 &lt;p&gt;By reverse &amp;amp; debug the dll file with IDA Pro, we could sort out some stuff in this dll file :&lt;/p&gt;
 
 &lt;ol&gt;
@@ -1347,7 +1357,7 @@ struct enc_data
 
 &lt;p&gt;hahaha, very funny ☝🙄…&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;Tools : IDA Pro + Windbg, TWindbg&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Tools : IDA Pro + Windbg, TWindbg, Z3&lt;/strong&gt;&lt;/p&gt;
 
 &lt;blockquote&gt;
   &lt;p&gt;Special thanks to &lt;a href=&quot;https://twitter.com/_wmliang_&quot;&gt;Lucas&lt;/a&gt; for helping me on this one&lt;/p&gt;

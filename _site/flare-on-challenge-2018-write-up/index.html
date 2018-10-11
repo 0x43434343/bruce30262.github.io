@@ -303,7 +303,13 @@
 
 <p><img src="/assets/images/Flare-on-2018/score.png" alt="" /></p>
 
-<p>According to the <a href="https://www.fireeye.com/blog/threat-research/2018/10/2018-flare-on-challenge-solutions.html">official blog</a>, 2.3% ( 114 / 4893 ) of players have completed the challenge this year. Last year I got stuck at level 12 and failed to finish the challenge, so I’m very glad that I was able to complete it this year 😄. Here in this post I’ll share my solution of each challenge – how I solve it, what tools did I use, …etc.</p>
+<p>According to the <a href="https://www.fireeye.com/blog/threat-research/2018/10/2018-flare-on-challenge-solutions.html">official blog</a>, 2.3% ( 114 / 4893 ) of players have completed the challenge this year.</p>
+
+<blockquote>
+  <p>EDIT: According to the final result on <a href="http://flare-on.com/">flare-on.com</a>,  129 out of 4925 players have finished the challenge this year</p>
+</blockquote>
+
+<p>Last year I got stuck at level 12 and failed to finish the challenge, so I’m very glad that I was able to complete it this year 😄. Here in this post I’ll share my solution of each challenge – how I solve it, what tools did I use, …etc.</p>
 
 <p>Enough for the talk, let’s get started !</p>
 
@@ -1193,6 +1199,10 @@ wait a second … It <strong>IS</strong> fibonacci !! OMG I’m such an idiot �
 
 <p>Here it will load the 64 bit dll ( 7.dll ) and wait for our input. We then can attach the debugger to this process and press any key to continue the debug process.</p>
 
+<blockquote>
+  <p>EDIT: <a href="https://twitter.com/hasherezade/status/1049800972913045504">dll_to_exe finally support 64 bit dll</a> ! However it won’t work on this one, you’ll have to use <a href="https://github.com/hasherezade/releases/releases/tag/0.3.8">PE-bear</a> to convert the dll to exe ( check out this <a href="https://hshrzd.wordpress.com/2016/07/21/how-to-turn-a-dll-into-a-standalone-exe/">hasherezade’s blog post</a> for more details )</p>
+</blockquote>
+
 <p>By reverse &amp; debug the dll file with IDA Pro, we could sort out some stuff in this dll file :</p>
 
 <ol>
@@ -1646,7 +1656,7 @@ struct enc_data
 
 <p>hahaha, very funny ☝🙄…</p>
 
-<p><strong>Tools : IDA Pro + Windbg, TWindbg</strong></p>
+<p><strong>Tools : IDA Pro + Windbg, TWindbg, Z3</strong></p>
 
 <blockquote>
   <p>Special thanks to <a href="https://twitter.com/_wmliang_">Lucas</a> for helping me on this one</p>

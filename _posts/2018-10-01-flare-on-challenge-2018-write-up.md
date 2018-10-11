@@ -32,7 +32,11 @@ Flare-on challenge is a Reverse-style CTF challenge created by the [FireEye FLAR
 
 ![](/assets/images/Flare-on-2018/score.png)
 
-According to the [official blog](https://www.fireeye.com/blog/threat-research/2018/10/2018-flare-on-challenge-solutions.html), 2.3% ( 114 / 4893 ) of players have completed the challenge this year. Last year I got stuck at level 12 and failed to finish the challenge, so I'm very glad that I was able to complete it this year 😄. Here in this post I'll share my solution of each challenge -- how I solve it, what tools did I use, ...etc.
+According to the [official blog](https://www.fireeye.com/blog/threat-research/2018/10/2018-flare-on-challenge-solutions.html), 2.3% ( 114 / 4893 ) of players have completed the challenge this year.
+
+> EDIT: According to the final result on [flare-on.com](http://flare-on.com/),  129 out of 4925 players have finished the challenge this year
+
+Last year I got stuck at level 12 and failed to finish the challenge, so I'm very glad that I was able to complete it this year 😄. Here in this post I'll share my solution of each challenge -- how I solve it, what tools did I use, ...etc.
 
 Enough for the talk, let's get started !
 
@@ -914,6 +918,8 @@ int main()
 
 Here it will load the 64 bit dll ( 7.dll ) and wait for our input. We then can attach the debugger to this process and press any key to continue the debug process.
 
+>EDIT: [dll_to_exe finally support 64 bit dll](https://twitter.com/hasherezade/status/1049800972913045504) ! However it won't work on this one, you'll have to use [PE-bear](https://github.com/hasherezade/releases/releases/tag/0.3.8) to convert the dll to exe ( check out this [hasherezade's blog post](https://hshrzd.wordpress.com/2016/07/21/how-to-turn-a-dll-into-a-standalone-exe/) for more details )
+
 By reverse & debug the dll file with IDA Pro, we could sort out some stuff in this dll file :
 
 1. There's another 32 bit dll file in the binary.
@@ -1368,7 +1374,7 @@ flag: `scr1pt1ng_sl4ck1ng_and_h4ck1ng@flare-on.com`
 
 hahaha, very funny ☝🙄...
 
-**Tools : IDA Pro + Windbg, TWindbg**
+**Tools : IDA Pro + Windbg, TWindbg, Z3**
 
 > Special thanks to [Lucas](https://twitter.com/_wmliang_) for helping me on this one
 
