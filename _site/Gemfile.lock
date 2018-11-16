@@ -118,8 +118,6 @@ GEM
       commonmarker (~> 0.17.6)
       jekyll-commonmark (~> 1)
       rouge (~> 2)
-    jekyll-data (1.0.0)
-      jekyll (~> 3.3)
     jekyll-default-layout (0.1.4)
       jekyll (~> 3.0)
     jekyll-feed (0.10.0)
@@ -211,14 +209,6 @@ GEM
       jekyll (~> 3.5)
       jekyll-feed (~> 0.9)
       jekyll-seo-tag (~> 2.1)
-    minimal-mistakes-jekyll (4.13.0)
-      jekyll (~> 3.7)
-      jekyll-data (~> 1.0)
-      jekyll-feed (~> 0.10)
-      jekyll-gist (~> 1.5)
-      jekyll-paginate (~> 1.1)
-      jekyll-sitemap (~> 1.2)
-      jemoji (~> 0.10)
     minitest (5.11.3)
     multi_json (1.13.1)
     multipart-post (2.0.0)
@@ -229,7 +219,7 @@ GEM
     pathutil (0.16.1)
       forwardable-extended (~> 2.6)
     public_suffix (2.0.5)
-    rack (1.6.10)
+    rack (1.6.11)
     rack-protection (1.5.5)
       rack
     rack-test (1.1.0)
@@ -280,8 +270,6 @@ DEPENDENCIES
   jekyll
   jekyll-admin
   jekyll-feed
-  jekyll-remote-theme
-  minimal-mistakes-jekyll
 
 BUNDLED WITH
    1.16.5
