@@ -2026,3 +2026,5 @@ Big thanks to [FireEye](https://twitter.com/FireEye) for creating those amazing 
 Feels good to complete the challenge 😊 Hope I could do it again next year ! 
 
 Till next time ! 😁
+
+![](/assets/images/Flare-on-2018/badge.jpg)
