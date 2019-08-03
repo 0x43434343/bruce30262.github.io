@@ -1,9 +1,9 @@
 <!doctype html>
 <!--
-  Minimal Mistakes Jekyll Theme 4.13.0 by Michael Rose
-  Copyright 2013-2018 Michael Rose - mademistakes.com | @mmistakes
+  Minimal Mistakes Jekyll Theme 4.16.5 by Michael Rose
+  Copyright 2013-2019 Michael Rose - mademistakes.com | @mmistakes
   Free for personal and commercial use under the MIT license
-  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE.txt
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
 -->
 <html lang="en" class="no-js">
   <head>
@@ -51,7 +51,7 @@
 
 <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Hacking Tube 2.0 Feed">
 
-<!-- http://t.co/dKP3o1e -->
+<!-- https://t.co/dKP3o1e -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <script>
@@ -61,7 +61,7 @@
 <!-- For all browsers -->
 <link rel="stylesheet" href="/assets/css/main.css">
 
-<!--[if lte IE 9]>
+<!--[if IE ]>
   <style>
     /* old IE unsupported flexbox fixes */
     .greedy-nav .site-title {
@@ -92,16 +92,30 @@
   </head>
 
   <body class="layout--categories">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
 
     <!--[if lt IE 9]>
 <div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
 <![endif]-->
 
-    <div class="masthead">
+    
+
+<div class="masthead">
   <div class="masthead__inner-wrap">
     <div class="masthead__menu">
       <nav id="site-nav" class="greedy-nav">
-        <a class="site-title" href="/">Hacking Tube 2.0</a>
+        
+        <a class="site-title" href="/">
+          Hacking Tube 2.0
+          
+        </a>
         <ul class="visible-links"><li class="masthead__menu-item">
               <a href="/archives/" >Archives</a>
             </li><li class="masthead__menu-item">
@@ -111,13 +125,14 @@
             </li></ul>
         
         <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
           <svg class="icon" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.99 16">
             <path d="M15.5,13.12L13.19,10.8a1.69,1.69,0,0,0-1.28-.55l-0.06-.06A6.5,6.5,0,0,0,5.77,0,6.5,6.5,0,0,0,2.46,11.59a6.47,6.47,0,0,0,7.74.26l0.05,0.05a1.65,1.65,0,0,0,.5,1.24l2.38,2.38A1.68,1.68,0,0,0,15.5,13.12ZM6.4,2A4.41,4.41,0,1,1,2,6.4,4.43,4.43,0,0,1,6.4,2Z" transform="translate(-.01)"></path>
           </svg>
         </button>
         
         <button class="greedy-nav__toggle hidden" type="button">
-          <span class="visually-hidden">Toggle Menu</span>
+          <span class="visually-hidden">Toggle menu</span>
           <div class="navicon"></div>
         </button>
         <ul class="hidden-links hidden"></ul>
@@ -138,7 +153,7 @@
   
 
 
-<div itemscope itemtype="http://schema.org/Person">
+<div itemscope itemtype="https://schema.org/Person">
 
   
     <div class="author__avatar">
@@ -155,9 +170,10 @@
       <h3 class="author__name" itemprop="name">Bruce Chen</h3>
     
     
-      <p class="author__bio" itemprop="description">
-        Vulnerability Researcher / CTFer
-      </p>
+      <div class="author__bio" itemprop="description">
+        <p>Vulnerability Researcher / CTFer</p>
+
+      </div>
     
   </div>
 
@@ -165,7 +181,7 @@
     <button class="btn btn--inverse">Follow</button>
     <ul class="author__urls social-icons">
       
-        <li itemprop="homeLocation" itemscope itemtype="http://schema.org/Place">
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
           <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Taiwan</span>
         </li>
       
@@ -173,23 +189,21 @@
       
         
           
-            <li><a href="/about"><i class="fas fa-fw fa-user" aria-hidden="true"></i> About</a></li>
+            <li><a href="/about" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-user" aria-hidden="true"></i> About</a></li>
           
         
           
-            <li><a href="https://twitter.com/bruce30262"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+            <li><a href="https://twitter.com/bruce30262" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
           
         
           
-            <li><a href="https://github.com/bruce30262"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+            <li><a href="https://github.com/bruce30262" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
           
         
           
-            <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> RSS</a></li>
+            <li><a href="/feed.xml" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> RSS</a></li>
           
         
-      
-
       
 
       
@@ -242,7 +256,7 @@
 
       <!--
   <li>
-    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs">
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
       <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
     </a>
   </li>
@@ -593,7 +607,7 @@
 
 
 <div class="list__item">
-  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
     
     <h2 class="archive__item-title" itemprop="headline">
       
@@ -605,13 +619,14 @@
     <p class="archive__item-excerpt" itemprop="description">Flare-on challenge is a Reverse-style CTF challenge created by the FireEye FLARE team. The CTF contains lots of interesting, real-world style reversing chall...</p>
   </article>
 </div>
+
           
             
 
 
 
 <div class="list__item">
-  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
     
     <h2 class="archive__item-title" itemprop="headline">
       
@@ -623,13 +638,14 @@
     <p class="archive__item-excerpt" itemprop="description">Chakrazy is a browser CTF challenge created by team PPP for the 2017 PlaidCTF event. It’s a challenge based on Microsoft’s ChakraCore Javascript engine. You ...</p>
   </article>
 </div>
+
           
             
 
 
 
 <div class="list__item">
-  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
     
     <h2 class="archive__item-title" itemprop="headline">
       
@@ -643,13 +659,14 @@
 </p>
   </article>
 </div>
+
           
             
 
 
 
 <div class="list__item">
-  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
     
     <h2 class="archive__item-title" itemprop="headline">
       
@@ -663,13 +680,14 @@
 </p>
   </article>
 </div>
+
           
             
 
 
 
 <div class="list__item">
-  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
     
     <h2 class="archive__item-title" itemprop="headline">
       
@@ -683,13 +701,14 @@
 </p>
   </article>
 </div>
+
           
             
 
 
 
 <div class="list__item">
-  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
     
     <h2 class="archive__item-title" itemprop="headline">
       
@@ -703,13 +722,14 @@
 </p>
   </article>
 </div>
+
           
             
 
 
 
 <div class="list__item">
-  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
     
     <h2 class="archive__item-title" itemprop="headline">
       
@@ -723,13 +743,14 @@
 </p>
   </article>
 </div>
+
           
             
 
 
 
 <div class="list__item">
-  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
     
     <h2 class="archive__item-title" itemprop="headline">
       
@@ -743,13 +764,14 @@
 </p>
   </article>
 </div>
+
           
             
 
 
 
 <div class="list__item">
-  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
     
     <h2 class="archive__item-title" itemprop="headline">
       
@@ -763,13 +785,14 @@
 </p>
   </article>
 </div>
+
           
             
 
 
 
 <div class="list__item">
-  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
     
     <h2 class="archive__item-title" itemprop="headline">
       
@@ -784,13 +807,14 @@ Points: 200
 </p>
   </article>
 </div>
+
           
             
 
 
 
 <div class="list__item">
-  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
     
     <h2 class="archive__item-title" itemprop="headline">
       
@@ -805,13 +829,14 @@ Points: 150
 </p>
   </article>
 </div>
+
           
             
 
 
 
 <div class="list__item">
-  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
     
     <h2 class="archive__item-title" itemprop="headline">
       
@@ -826,13 +851,14 @@ Points: 150
 </p>
   </article>
 </div>
+
           
             
 
 
 
 <div class="list__item">
-  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
     
     <h2 class="archive__item-title" itemprop="headline">
       
@@ -847,13 +873,14 @@ Points: 150
 </p>
   </article>
 </div>
+
           
             
 
 
 
 <div class="list__item">
-  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
     
     <h2 class="archive__item-title" itemprop="headline">
       
@@ -868,13 +895,14 @@ Points: 75
 </p>
   </article>
 </div>
+
           
             
 
 
 
 <div class="list__item">
-  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
     
     <h2 class="archive__item-title" itemprop="headline">
       
@@ -889,13 +917,14 @@ Points: 500
 </p>
   </article>
 </div>
+
           
             
 
 
 
 <div class="list__item">
-  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
     
     <h2 class="archive__item-title" itemprop="headline">
       
@@ -910,13 +939,14 @@ Points: 300
 </p>
   </article>
 </div>
+
           
             
 
 
 
 <div class="list__item">
-  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
     
     <h2 class="archive__item-title" itemprop="headline">
       
@@ -931,13 +961,14 @@ Points: 200
 </p>
   </article>
 </div>
+
           
             
 
 
 
 <div class="list__item">
-  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
     
     <h2 class="archive__item-title" itemprop="headline">
       
@@ -952,13 +983,14 @@ Points: 150
 </p>
   </article>
 </div>
+
           
             
 
 
 
 <div class="list__item">
-  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
     
     <h2 class="archive__item-title" itemprop="headline">
       
@@ -973,13 +1005,14 @@ Points: 250
 </p>
   </article>
 </div>
+
           
             
 
 
 
 <div class="list__item">
-  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
     
     <h2 class="archive__item-title" itemprop="headline">
       
@@ -994,13 +1027,14 @@ Points: 150
 </p>
   </article>
 </div>
+
           
             
 
 
 
 <div class="list__item">
-  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
     
     <h2 class="archive__item-title" itemprop="headline">
       
@@ -1015,13 +1049,14 @@ Points: 100
 </p>
   </article>
 </div>
+
           
             
 
 
 
 <div class="list__item">
-  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
     
     <h2 class="archive__item-title" itemprop="headline">
       
@@ -1036,13 +1071,14 @@ Points: 99
 </p>
   </article>
 </div>
+
           
             
 
 
 
 <div class="list__item">
-  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
     
     <h2 class="archive__item-title" itemprop="headline">
       
@@ -1057,13 +1093,14 @@ Points: 177
 </p>
   </article>
 </div>
+
           
             
 
 
 
 <div class="list__item">
-  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
     
     <h2 class="archive__item-title" itemprop="headline">
       
@@ -1078,13 +1115,14 @@ Points: 200
 </p>
   </article>
 </div>
+
           
             
 
 
 
 <div class="list__item">
-  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
     
     <h2 class="archive__item-title" itemprop="headline">
       
@@ -1099,13 +1137,14 @@ Points: 150
 </p>
   </article>
 </div>
+
           
             
 
 
 
 <div class="list__item">
-  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
     
     <h2 class="archive__item-title" itemprop="headline">
       
@@ -1120,13 +1159,14 @@ Points: 200
 </p>
   </article>
 </div>
+
           
             
 
 
 
 <div class="list__item">
-  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
     
     <h2 class="archive__item-title" itemprop="headline">
       
@@ -1141,13 +1181,14 @@ Points: 350
 </p>
   </article>
 </div>
+
           
             
 
 
 
 <div class="list__item">
-  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
     
     <h2 class="archive__item-title" itemprop="headline">
       
@@ -1162,13 +1203,14 @@ Points: 500
 </p>
   </article>
 </div>
+
           
             
 
 
 
 <div class="list__item">
-  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
     
     <h2 class="archive__item-title" itemprop="headline">
       
@@ -1183,13 +1225,14 @@ Points: 300 (FTP) &amp; 300 (FTP2)
 </p>
   </article>
 </div>
+
           
             
 
 
 
 <div class="list__item">
-  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
     
     <h2 class="archive__item-title" itemprop="headline">
       
@@ -1204,13 +1247,14 @@ Points: 200
 </p>
   </article>
 </div>
+
           
             
 
 
 
 <div class="list__item">
-  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
     
     <h2 class="archive__item-title" itemprop="headline">
       
@@ -1227,13 +1271,14 @@ Points: 200
 </p>
   </article>
 </div>
+
           
             
 
 
 
 <div class="list__item">
-  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
     
     <h2 class="archive__item-title" itemprop="headline">
       
@@ -1253,13 +1298,14 @@ wwtw_c3722e23150e1d5abbc1c248d99d718d.quals.shallweplayaga.me:2606
 </p>
   </article>
 </div>
+
           
             
 
 
 
 <div class="list__item">
-  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
     
     <h2 class="archive__item-title" itemprop="headline">
       
@@ -1278,13 +1324,14 @@ catwestern_631d7907670909fc4df2defc13f2057c.quals.shallweplayaga.me 9999
 </p>
   </article>
 </div>
+
           
             
 
 
 
 <div class="list__item">
-  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
     
     <h2 class="archive__item-title" itemprop="headline">
       
@@ -1299,13 +1346,14 @@ Points: 100 (Saw this-1), 400 (Saw this-2)
 </p>
   </article>
 </div>
+
           
             
 
 
 
 <div class="list__item">
-  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
     
     <h2 class="archive__item-title" itemprop="headline">
       
@@ -1323,13 +1371,14 @@ Points: 1
 </p>
   </article>
 </div>
+
           
             
 
 
 
 <div class="list__item">
-  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
     
     <h2 class="archive__item-title" itemprop="headline">
       
@@ -1347,13 +1396,14 @@ Points: 1
 </p>
   </article>
 </div>
+
           
             
 
 
 
 <div class="list__item">
-  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
     
     <h2 class="archive__item-title" itemprop="headline">
       
@@ -1368,13 +1418,14 @@ Points: 300
 </p>
   </article>
 </div>
+
           
             
 
 
 
 <div class="list__item">
-  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
     
     <h2 class="archive__item-title" itemprop="headline">
       
@@ -1394,13 +1445,14 @@ my_little_pwnie
 </p>
   </article>
 </div>
+
           
             
 
 
 
 <div class="list__item">
-  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
     
     <h2 class="archive__item-title" itemprop="headline">
       
@@ -1418,13 +1470,14 @@ Points: 300
 </p>
   </article>
 </div>
+
           
             
 
 
 
 <div class="list__item">
-  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
     
     <h2 class="archive__item-title" itemprop="headline">
       
@@ -1439,13 +1492,14 @@ For me, this is a challenge for CTF beginners. Most of the challenges are easy t
 </p>
   </article>
 </div>
+
           
             
 
 
 
 <div class="list__item">
-  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
     
     <h2 class="archive__item-title" itemprop="headline">
       
@@ -1460,13 +1514,14 @@ For me, this is a challenge for CTF beginners. Most of the challenges are easy t
   nc 202.112.26.111  29995 /  nc 2...</p>
   </article>
 </div>
+
           
             
 
 
 
 <div class="list__item">
-  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
     
     <h2 class="archive__item-title" itemprop="headline">
       
@@ -1483,13 +1538,14 @@ But I am always myself.
   Make the output of your program exactly the same as your source...</p>
   </article>
 </div>
+
           
             
 
 
 
 <div class="list__item">
-  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
     
     <h2 class="archive__item-title" itemprop="headline">
       
@@ -1504,13 +1560,14 @@ But I am always myself.
 </p>
   </article>
 </div>
+
           
             
 
 
 
 <div class="list__item">
-  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
     
     <h2 class="archive__item-title" itemprop="headline">
       
@@ -1525,13 +1582,14 @@ But I am always myself.
 </p>
   </article>
 </div>
+
           
             
 
 
 
 <div class="list__item">
-  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
     
     <h2 class="archive__item-title" itemprop="headline">
       
@@ -1543,13 +1601,14 @@ But I am always myself.
     <p class="archive__item-excerpt" itemprop="description">SCTF is a CTF contest hold by XCTF ( seems like a Chinese version’s CTFtime.org ). Teaming up with my labmates, we have a lot of fun solving the challenges, ...</p>
   </article>
 </div>
+
           
             
 
 
 
 <div class="list__item">
-  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
     
     <h2 class="archive__item-title" itemprop="headline">
       
@@ -1564,13 +1623,14 @@ But I am always myself.
 </p>
   </article>
 </div>
+
           
             
 
 
 
 <div class="list__item">
-  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
     
     <h2 class="archive__item-title" itemprop="headline">
       
@@ -1584,13 +1644,14 @@ But I am always myself.
 </p>
   </article>
 </div>
+
           
             
 
 
 
 <div class="list__item">
-  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
     
     <h2 class="archive__item-title" itemprop="headline">
       
@@ -1605,13 +1666,14 @@ But I am always myself.
 </p>
   </article>
 </div>
+
           
             
 
 
 
 <div class="list__item">
-  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
     
     <h2 class="archive__item-title" itemprop="headline">
       
@@ -1623,13 +1685,14 @@ But I am always myself.
     <p class="archive__item-excerpt" itemprop="description">First the challenge gave us a binary file (ELF for Intel-386). But we can’t execute it, cause we don’t have the required shared library “libchallengeresponse...</p>
   </article>
 </div>
+
           
             
 
 
 
 <div class="list__item">
-  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
     
     <h2 class="archive__item-title" itemprop="headline">
       
@@ -1641,6 +1704,7 @@ But I am always myself.
     <p class="archive__item-excerpt" itemprop="description">CSAW CTF 2014 is the second CTF contest I’ve attended ( the first one was the HITCON CTF 2014 ) . Since this is the first time I’ve actually solved something...</p>
   </article>
 </div>
+
           
         </div>
         <a href="#page-title" class="back-to-top">Back to Top &uarr;</a>
@@ -1945,7 +2009,7 @@ But I am always myself.
 
 
 <div class="list__item">
-  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
     
     <h2 class="archive__item-title" itemprop="headline">
       
@@ -1959,13 +2023,14 @@ But I am always myself.
 </p>
   </article>
 </div>
+
           
             
 
 
 
 <div class="list__item">
-  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
     
     <h2 class="archive__item-title" itemprop="headline">
       
@@ -1977,6 +2042,7 @@ But I am always myself.
     <p class="archive__item-excerpt" itemprop="description">So I finally decided to migrate my blog from Logdown to Github Pages. Took me about three days to get it done. Here I write down some notes to record the who...</p>
   </article>
 </div>
+
           
         </div>
         <a href="#page-title" class="back-to-top">Back to Top &uarr;</a>
@@ -1997,12 +2063,18 @@ But I am always myself.
 
     
       <div class="search-content">
-        <div class="search-content__inner-wrap"><input type="text" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
-    <div id="results" class="results"></div></div>
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
       </div>
     
 
-    <div class="page__footer">
+    <div id="footer" class="page__footer">
       <footer>
         <!-- start custom footer snippets -->
 
@@ -2014,19 +2086,19 @@ But I am always myself.
     
       
         
-          <li><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/"><i class="fab fa-fw fa-creative-commons" aria-hidden="true"></i> </a></li>
+          <li><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-creative-commons" aria-hidden="true"></i> </a></li>
         
       
         
-          <li><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/"><i class="fab fa-fw fa-creative-commons-by" aria-hidden="true"></i> </a></li>
+          <li><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-creative-commons-by" aria-hidden="true"></i> </a></li>
         
       
         
-          <li><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/"><i class="fab fa-fw fa-creative-commons-nc" aria-hidden="true"></i> </a></li>
+          <li><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-creative-commons-nc" aria-hidden="true"></i> </a></li>
         
       
         
-          <li><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/"><i class="fab fa-fw fa-creative-commons-sa" aria-hidden="true"></i> </a></li>
+          <li><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-creative-commons-sa" aria-hidden="true"></i> </a></li>
         
       
     
@@ -2041,7 +2113,7 @@ But I am always myself.
 
     
   <script src="/assets/js/main.min.js"></script>
-  <script src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+  <script src="https://kit.fontawesome.com/4eee35f757.js"></script>
 
 
 
@@ -2049,6 +2121,8 @@ But I am always myself.
 <script src="/assets/js/lunr/lunr.min.js"></script>
 <script src="/assets/js/lunr/lunr-store.js"></script>
 <script src="/assets/js/lunr/lunr-en.js"></script>
+
+
 
 
 

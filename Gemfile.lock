@@ -127,6 +127,8 @@ GEM
     jekyll-github-metadata (2.9.4)
       jekyll (~> 3.1)
       octokit (~> 4.0, != 4.4.0)
+    jekyll-include-cache (0.2.0)
+      jekyll (>= 3.7, < 5.0)
     jekyll-mentions (1.4.1)
       html-pipeline (~> 2.3)
       jekyll (~> 3.0)
@@ -270,6 +272,7 @@ DEPENDENCIES
   jekyll
   jekyll-admin
   jekyll-feed
+  jekyll-include-cache
 
 BUNDLED WITH
    1.16.5

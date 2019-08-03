@@ -63,6 +63,8 @@ minimal_mistakes_skin: "air" # "air", "aqua", "contrast", "dark", "dirt", "neon"
 plugins:
   - jekyll-feed
   - jekyll-sitemap
+  - jemoji
+  - jekyll-include-cache
 
 # set pages link
 include: ["_pages"]

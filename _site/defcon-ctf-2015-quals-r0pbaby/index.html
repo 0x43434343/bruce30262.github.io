@@ -1,9 +1,9 @@
 <!doctype html>
 <!--
-  Minimal Mistakes Jekyll Theme 4.13.0 by Michael Rose
-  Copyright 2013-2018 Michael Rose - mademistakes.com | @mmistakes
+  Minimal Mistakes Jekyll Theme 4.16.5 by Michael Rose
+  Copyright 2013-2019 Michael Rose - mademistakes.com | @mmistakes
   Free for personal and commercial use under the MIT license
-  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE.txt
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
 -->
 <html lang="en" class="no-js">
   <head>
@@ -55,7 +55,7 @@
 
 <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Hacking Tube 2.0 Feed">
 
-<!-- http://t.co/dKP3o1e -->
+<!-- https://t.co/dKP3o1e -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <script>
@@ -65,7 +65,7 @@
 <!-- For all browsers -->
 <link rel="stylesheet" href="/assets/css/main.css">
 
-<!--[if lte IE 9]>
+<!--[if IE ]>
   <style>
     /* old IE unsupported flexbox fixes */
     .greedy-nav .site-title {
@@ -96,16 +96,30 @@
   </head>
 
   <body class="layout--single">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
 
     <!--[if lt IE 9]>
 <div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
 <![endif]-->
 
-    <div class="masthead">
+    
+
+<div class="masthead">
   <div class="masthead__inner-wrap">
     <div class="masthead__menu">
       <nav id="site-nav" class="greedy-nav">
-        <a class="site-title" href="/">Hacking Tube 2.0</a>
+        
+        <a class="site-title" href="/">
+          Hacking Tube 2.0
+          
+        </a>
         <ul class="visible-links"><li class="masthead__menu-item">
               <a href="/archives/" >Archives</a>
             </li><li class="masthead__menu-item">
@@ -115,13 +129,14 @@
             </li></ul>
         
         <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
           <svg class="icon" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.99 16">
             <path d="M15.5,13.12L13.19,10.8a1.69,1.69,0,0,0-1.28-.55l-0.06-.06A6.5,6.5,0,0,0,5.77,0,6.5,6.5,0,0,0,2.46,11.59a6.47,6.47,0,0,0,7.74.26l0.05,0.05a1.65,1.65,0,0,0,.5,1.24l2.38,2.38A1.68,1.68,0,0,0,15.5,13.12ZM6.4,2A4.41,4.41,0,1,1,2,6.4,4.43,4.43,0,0,1,6.4,2Z" transform="translate(-.01)"></path>
           </svg>
         </button>
         
         <button class="greedy-nav__toggle hidden" type="button">
-          <span class="visually-hidden">Toggle Menu</span>
+          <span class="visually-hidden">Toggle menu</span>
           <div class="navicon"></div>
         </button>
         <ul class="hidden-links hidden"></ul>
@@ -142,7 +157,7 @@
   
 
 
-<div itemscope itemtype="http://schema.org/Person">
+<div itemscope itemtype="https://schema.org/Person">
 
   
     <div class="author__avatar">
@@ -159,9 +174,10 @@
       <h3 class="author__name" itemprop="name">Bruce Chen</h3>
     
     
-      <p class="author__bio" itemprop="description">
-        Vulnerability Researcher / CTFer
-      </p>
+      <div class="author__bio" itemprop="description">
+        <p>Vulnerability Researcher / CTFer</p>
+
+      </div>
     
   </div>
 
@@ -169,7 +185,7 @@
     <button class="btn btn--inverse">Follow</button>
     <ul class="author__urls social-icons">
       
-        <li itemprop="homeLocation" itemscope itemtype="http://schema.org/Place">
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
           <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Taiwan</span>
         </li>
       
@@ -177,23 +193,21 @@
       
         
           
-            <li><a href="/about"><i class="fas fa-fw fa-user" aria-hidden="true"></i> About</a></li>
+            <li><a href="/about" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-user" aria-hidden="true"></i> About</a></li>
           
         
           
-            <li><a href="https://twitter.com/bruce30262"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+            <li><a href="https://twitter.com/bruce30262" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
           
         
           
-            <li><a href="https://github.com/bruce30262"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+            <li><a href="https://github.com/bruce30262" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
           
         
           
-            <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> RSS</a></li>
+            <li><a href="/feed.xml" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> RSS</a></li>
           
         
-      
-
       
 
       
@@ -246,7 +260,7 @@
 
       <!--
   <li>
-    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs">
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
       <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
     </a>
   </li>
@@ -259,7 +273,7 @@
   </div>
 
 
-  <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
     <meta itemprop="headline" content="DEFCON CTF 2015 Quals – r0pbaby">
     <meta itemprop="description" content="Category: Baby’s FirstPoints: 1  r0pbaby_542ee6516410709a1421141501f03760.quals.shallweplayaga.me:10436">
     <meta itemprop="datePublished" content="May 23, 2015">
@@ -461,7 +475,7 @@ So everytime we choose <code class="highlighter-rouge">3)</code> and input somet
 
   <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2F0.0.0.0%3A4000%2Fdefcon-ctf-2015-quals-r0pbaby%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
 
-  <a href="https://plus.google.com/share?url=http%3A%2F%2F0.0.0.0%3A4000%2Fdefcon-ctf-2015-quals-r0pbaby%2F" class="btn btn--google-plus" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Google Plus"><i class="fab fa-fw fa-google-plus" aria-hidden="true"></i><span> Google+</span></a>
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2F0.0.0.0%3A4000%2Fdefcon-ctf-2015-quals-r0pbaby%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
 
 </section>
 
@@ -490,11 +504,12 @@ So everytime we choose <code class="highlighter-rouge">3)</code> and input somet
       <div class="grid__wrapper">
         
           
+          
 
 
 
 <div class="grid__item">
-  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
     
     <h2 class="archive__item-title" itemprop="headline">
       
@@ -506,13 +521,15 @@ So everytime we choose <code class="highlighter-rouge">3)</code> and input somet
     <p class="archive__item-excerpt" itemprop="description">Flare-on challenge is a Reverse-style CTF challenge created by the FireEye FLARE team. The CTF contains lots of interesting, real-world style reversing chall...</p>
   </article>
 </div>
+
         
+          
           
 
 
 
 <div class="grid__item">
-  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
     
     <h2 class="archive__item-title" itemprop="headline">
       
@@ -526,13 +543,15 @@ So everytime we choose <code class="highlighter-rouge">3)</code> and input somet
 </p>
   </article>
 </div>
+
         
+          
           
 
 
 
 <div class="grid__item">
-  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
     
     <h2 class="archive__item-title" itemprop="headline">
       
@@ -544,13 +563,15 @@ So everytime we choose <code class="highlighter-rouge">3)</code> and input somet
     <p class="archive__item-excerpt" itemprop="description">Chakrazy is a browser CTF challenge created by team PPP for the 2017 PlaidCTF event. It’s a challenge based on Microsoft’s ChakraCore Javascript engine. You ...</p>
   </article>
 </div>
+
         
+          
           
 
 
 
 <div class="grid__item">
-  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
     
     <h2 class="archive__item-title" itemprop="headline">
       
@@ -564,21 +585,29 @@ So everytime we choose <code class="highlighter-rouge">3)</code> and input somet
 </p>
   </article>
 </div>
+
         
       </div>
     </div>
   
 </div>
+
     </div>
 
     
       <div class="search-content">
-        <div class="search-content__inner-wrap"><input type="text" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
-    <div id="results" class="results"></div></div>
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
       </div>
     
 
-    <div class="page__footer">
+    <div id="footer" class="page__footer">
       <footer>
         <!-- start custom footer snippets -->
 
@@ -590,19 +619,19 @@ So everytime we choose <code class="highlighter-rouge">3)</code> and input somet
     
       
         
-          <li><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/"><i class="fab fa-fw fa-creative-commons" aria-hidden="true"></i> </a></li>
+          <li><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-creative-commons" aria-hidden="true"></i> </a></li>
         
       
         
-          <li><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/"><i class="fab fa-fw fa-creative-commons-by" aria-hidden="true"></i> </a></li>
+          <li><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-creative-commons-by" aria-hidden="true"></i> </a></li>
         
       
         
-          <li><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/"><i class="fab fa-fw fa-creative-commons-nc" aria-hidden="true"></i> </a></li>
+          <li><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-creative-commons-nc" aria-hidden="true"></i> </a></li>
         
       
         
-          <li><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/"><i class="fab fa-fw fa-creative-commons-sa" aria-hidden="true"></i> </a></li>
+          <li><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-creative-commons-sa" aria-hidden="true"></i> </a></li>
         
       
     
@@ -617,7 +646,7 @@ So everytime we choose <code class="highlighter-rouge">3)</code> and input somet
 
     
   <script src="/assets/js/main.min.js"></script>
-  <script src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+  <script src="https://kit.fontawesome.com/4eee35f757.js"></script>
 
 
 
@@ -646,6 +675,8 @@ So everytime we choose <code class="highlighter-rouge">3)</code> and input somet
 
 
   
+
+
 
 
 
