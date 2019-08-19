@@ -150,10 +150,7 @@ a:focus, button:focus { /* Default*/ outline: thin dotted #0092ca; /* Webkit*/ o
 /* ========================================================================== STYLE RESETS ========================================================================== */
 * { box-sizing: border-box; }
 
-html { /* apply a natural box layout model to all elements */ box-sizing: border-box; background-color: #eeeeee; font-size: 16px; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
-@media (min-width: 48em) { html { font-size: 18px; } }
-@media (min-width: 64em) { html { font-size: 20px; } }
-@media (min-width: 80em) { html { font-size: 22px; } }
+html { /* apply a natural box layout model to all elements */ box-sizing: border-box; background-color: #eeeeee; font-size: 18px; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
 
 /* Remove margin */
 body { margin: 0; }
