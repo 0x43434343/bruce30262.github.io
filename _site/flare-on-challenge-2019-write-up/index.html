@@ -1,0 +1,1741 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.16.6 by Michael Rose
+  Copyright 2013-2019 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Flare-on Challenge 2019 Write-up - Hacking Tube 2.0</title>
+<meta name="description" content="Another year of Flare-on challenge ! As a guy who’s interetesed in reverse engineering, this is definitely a great chance for me to practice/sharpen my reversing skills ! This year it has 12 challenges covering Windows PE, Linux ELF, Android apk, NES ROM …… and over 5,700 participants !">
+
+
+  <meta name="author" content="Bruce Chen">
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Hacking Tube 2.0">
+<meta property="og:title" content="Flare-on Challenge 2019 Write-up">
+<meta property="og:url" content="http://0.0.0.0:4000/flare-on-challenge-2019-write-up/">
+
+
+  <meta property="og:description" content="Another year of Flare-on challenge ! As a guy who’s interetesed in reverse engineering, this is definitely a great chance for me to practice/sharpen my reversing skills ! This year it has 12 challenges covering Windows PE, Linux ELF, Android apk, NES ROM …… and over 5,700 participants !">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2019-09-28T13:30:00+08:00">
+
+
+
+
+
+
+<link rel="canonical" href="http://0.0.0.0:4000/flare-on-challenge-2019-write-up/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "Bruce Chen",
+      "url": "http://0.0.0.0:4000/"
+    
+  }
+</script>
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Hacking Tube 2.0 Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<!--[if IE ]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+  
+    
+    <script src="https://s7.addthis.com/js/300/addthis_widget.js#pubid=ra-592d8051fa91b8b6"></script>
+  
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Hacking Tube 2.0
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/archives/" >Archives</a>
+            </li><li class="masthead__menu-item">
+              <a href="/categories/" >Categories</a>
+            </li><li class="masthead__menu-item">
+              <a href="/tags/" >Tags</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <svg class="icon" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.99 16">
+            <path d="M15.5,13.12L13.19,10.8a1.69,1.69,0,0,0-1.28-.55l-0.06-.06A6.5,6.5,0,0,0,5.77,0,6.5,6.5,0,0,0,2.46,11.59a6.47,6.47,0,0,0,7.74.26l0.05,0.05a1.65,1.65,0,0,0,.5,1.24l2.38,2.38A1.68,1.68,0,0,0,15.5,13.12ZM6.4,2A4.41,4.41,0,1,1,2,6.4,4.43,4.43,0,0,1,6.4,2Z" transform="translate(-.01)"></path>
+          </svg>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+
+      
+        <img src="/assets/images/other/gravatar.png" alt="Bruce Chen" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Bruce Chen</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>Vulnerability Researcher / CTFer</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Taiwan</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="/about" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-user" aria-hidden="true"></i> About</a></li>
+          
+        
+          
+            <li><a href="https://twitter.com/bruce30262" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
+          
+        
+          
+            <li><a href="https://github.com/bruce30262" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+          
+        
+          
+            <li><a href="/feed.xml" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> RSS</a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Flare-on Challenge 2019 Write-up">
+    <meta itemprop="description" content="Another year of Flare-on challenge ! As a guy who’s interetesed in reverse engineering, this is definitely a great chance for me to practice/sharpen my reversing skills ! This year it has 12 challenges covering Windows PE, Linux ELF, Android apk, NES ROM …… and over 5,700 participants !">
+    <meta itemprop="datePublished" content="September 28, 2019">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">Flare-on Challenge 2019 Write-up
+</h1>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> Table of Contents</h4></header>
+              <ul class="toc__menu">
+  <li><a href="#level-1">Level 1</a></li>
+  <li><a href="#level-2">Level 2</a></li>
+  <li><a href="#level-3">Level 3</a></li>
+  <li><a href="#level-4">Level 4</a></li>
+  <li><a href="#level-5">Level 5</a></li>
+  <li><a href="#level-6">Level 6</a></li>
+  <li><a href="#level-7">Level 7</a></li>
+  <li><a href="#level-8">Level 8</a></li>
+  <li><a href="#level-9">Level 9</a></li>
+  <li><a href="#level-10">Level 10</a></li>
+  <li><a href="#level-11">Level 11</a></li>
+  <li><a href="#level-12">Level 12</a></li>
+  <li><a href="#epilogue">Epilogue</a></li>
+</ul>
+            </nav>
+          </aside>
+        
+        <p>Another year of <a href="https://www.fireeye.com/blog/threat-research/2019/07/announcing-the-sixth-annual-flare-on-challenge.html">Flare-on challenge</a> ! As a guy who’s interetesed in reverse engineering, this is definitely a great chance for me to practice/sharpen my reversing skills ! This year it has 12 challenges covering Windows PE, Linux ELF, Android apk, NES ROM …… and over 5,700 participants !</p>
+
+<!-- more -->
+
+<p><img src="/assets/images/Flare-on-2019/score.png" alt="" /></p>
+
+<p>Final rank : <code class="highlighter-rouge">197/5790</code>, not bad for an amateur reverse engineering lover 😄 In fact I’m just glad I was able to finish it this year, since I was kind of busy during the challenge and can only solve those during my free time. Like <a href="https://bruce30262.github.io/flare-on-challenge-2018-write-up/">the previous one</a>, I’ll share my solution of each challenge – how I solve it, what tools did I use, …etc. Feel free to discuss the challenge in the comment sections below 🙂</p>
+
+<blockquote>
+  <p>You can also check the official write-up <a href="https://www.fireeye.com/blog/threat-research/2019/09/2019-flare-on-challenge-solutions.html">here</a></p>
+</blockquote>
+
+<h2 id="level-1">Level 1</h2>
+
+<p><strong>Tool : dnSpy</strong></p>
+
+<p>We were given a .NET binary program, which is a simple cat shooting game – you enter the weapon code and press the fire button. If the weapon code is correct, the cat will fire the weapon. There are two stages, each stage has a different weapon code. All we need to do is enter two weapon code correctly and it’ll show us the flag.</p>
+
+<p>By using <a href="https://github.com/0xd4d/dnSpy">dnSpy</a>, we can quickly figure out that the first weapon code is “RAINBOW” ( plain text ) and the second one is “Bagel_Cannon” ( simple XOR decryption ). Enter those weapon code and we’ll get the flag:</p>
+
+<p><img src="/assets/images/Flare-on-2019/level1_0.png" alt="" /></p>
+
+<p>flag: <code class="highlighter-rouge">Kitteh_save_galixy@flare-on.com</code></p>
+
+<h2 id="level-2">Level 2</h2>
+
+<p><strong>Tool : IDA Pro, x64dbg</strong></p>
+
+<p>Given a PE32 executable, once we execute the program it will pop out a message box saying: “I never broke the encoding:”.</p>
+
+<p>After analyzed the binary with IDA, we can see that it took data from a global buffer and did some operation, then show the result in message box:</p>
+
+<p><img src="/assets/images/Flare-on-2019/level2_0.png" alt="" /></p>
+
+<p>The third parameter of <code class="highlighter-rouge">sub_401160</code> ( 28 / 0x1c ) indicates the length of the processing data. However, by checking the data of <code class="highlighter-rouge">unk_402008</code>, we’ll notice that it’s way more than 28 bytes.</p>
+
+<p>So here I just launch the program with <a href="https://x64dbg.com/#start">x64dbg</a> and patch the instruction ( <code class="highlighter-rouge">push 0x1c</code> –&gt; <code class="highlighter-rouge">push 0x7f </code>) so it will process more data bytes. After that we’ll see the flag in the data view:</p>
+
+<p><img src="/assets/images/Flare-on-2019/level2_1.png" alt="" /></p>
+
+<p>flag: <code class="highlighter-rouge">I_a_M_t_h_e_e_n_C_o_D_i_n_g@flare-on.com</code></p>
+
+<h2 id="level-3">Level 3</h2>
+
+<p><strong>Tool : AndroTamer VM, Frida</strong></p>
+
+<p>This time we were given an apk file. It’s a simple <a href="https://en.wikipedia.org/wiki/Tamagotchi">Tamagotchi pet game</a>, we can feed/play/clean a Flarebear.</p>
+
+<p>Here I’m using <a href="https://androidtamer.com/">AndroTamer</a> to analyze the apk. It’s basically a VM with lots of Android analyzing tools installed in it. For static analysis, I use <a href="https://github.com/pxb1988/dex2jar">dex2jar</a> and <a href="https://github.com/java-decompiler/jd-gui">jd-gui</a> to view the decompiled java code. As for dynamic analysis, I use <a href="https://developer.android.com/studio/intro">Android Studio</a> and <a href="https://www.frida.re/">Frida</a> to do the analyzing.</p>
+
+<p>First I analyzed the decompiled java code and figured out the main logic:</p>
+
+<ol>
+  <li>The app will record the amount of how many times does the user feed/play/clean the Flarebear.</li>
+  <li>It will use these numbers to check if the Flarebear is “happy” and “ecstatic”.</li>
+  <li>If so, use these numbers to calculate the password, then use the password to decrypt and show the flag.</li>
+</ol>
+
+<p>By analyzing the code in the <code class="highlighter-rouge">isHappy()</code> and <code class="highlighter-rouge">isEcstatic()</code> methods, we can sort out the checking logic:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// f = amount of feed
+// c = amount of clean
+// p = amount of play
+
+isHappy:
+f/p &gt;= 2 &amp;&amp; f/p &lt;= 2.5
+
+isEcstatic:
+-2p + 10f = 72
+4p - c + 2f = 30
+6c - f - p = 0
+</code></pre></div></div>
+
+<p>We can easily solve the equation by hand : f = 8, c = 2 and p = 4</p>
+
+<p>The next thing to do is getting the flag. Normally we could just play the game, feed/play/clean the Flarebear with the correct amount and show the flag. However since I’ve wanted to play with Frida for so long, I decided to use a different approach: hook the function with Frida, then get the flag with just one click.</p>
+
+<p>The first thing to do is to installed the app and frida-server into the emulated AVD:</p>
+
+<ol>
+  <li>Create and launch an AVD with Android Studio &amp; AVD manager.</li>
+  <li>For installing the app, drag the app into the virtual device.</li>
+  <li>Following the steps in <a href="https://mobile-security.gitbook.io/mobile-security-testing-guide/android-testing-guide/0x05b-basic-security_testing">this link</a>, I downloaded the frida server from the <a href="https://github.com/frida/frida/releases">release page</a>, push it to the virtual device and launch the server in background.</li>
+  <li>Launch the app with the following command:</li>
+</ol>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>adb shell am start -n com.fireeye.flarebear/com.fireeye.flarebear.MainActivity
+</code></pre></div></div>
+
+<p>Now we can use <code class="highlighter-rouge">frida-ps -U</code> to check if there’s a <code class="highlighter-rouge">com.fireeye.flarebear</code> process in the emulator. If so, we then can start writing some script and hook the function in the app.</p>
+
+<p>With these two useful link ( <a href="https://11x256.github.io/Frida-hooking-android-part-1/">link1</a>, <a href="https://11x256.github.io/Frida-hooking-android-part-2/">link2</a> ), I started learning how to use Frida with javascript and python. Basically, Frida use javscript to inject the code in app, and frida-python is used for automating the hooking process.</p>
+
+<p>So first I wrote the following python script to hook the app automatically:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">frida</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="n">device</span> <span class="o">=</span> <span class="n">frida</span><span class="o">.</span><span class="n">get_usb_device</span><span class="p">()</span>
+<span class="c"># start app</span>
+<span class="n">pid</span> <span class="o">=</span> <span class="n">device</span><span class="o">.</span><span class="n">spawn</span><span class="p">([</span><span class="s">"com.fireeye.flarebear"</span><span class="p">])</span>
+<span class="n">device</span><span class="o">.</span><span class="n">resume</span><span class="p">(</span><span class="n">pid</span><span class="p">)</span>
+<span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="c"># Without it Java.perform silently fails</span>
+<span class="c"># attach frida to app</span>
+<span class="n">session</span> <span class="o">=</span> <span class="n">device</span><span class="o">.</span><span class="n">attach</span><span class="p">(</span><span class="n">pid</span><span class="p">)</span>
+<span class="n">script</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">create_script</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s">"hook.js"</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+<span class="n">script</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+
+<span class="c">#prevent the python script from terminating</span>
+<span class="nb">raw_input</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>Now we can focus on <code class="highlighter-rouge">hook.js</code>. To show the flag, we’ll have to hook three functions:</p>
+
+<ol>
+  <li><code class="highlighter-rouge">isHappy()</code>: Always return true</li>
+  <li><code class="highlighter-rouge">isEcstatic()</code>: Always return true</li>
+  <li><code class="highlighter-rouge">getStat()</code>: For returning the correct amount of f/c/p</li>
+</ol>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"Script loaded successfully "</span><span class="p">);</span>
+<span class="nx">Java</span><span class="p">.</span><span class="nx">perform</span><span class="p">(</span><span class="kd">function</span> <span class="nx">x</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"Inside java perform function"</span><span class="p">);</span>
+    <span class="c1">//get a wrapper for our class</span>
+    <span class="kd">var</span> <span class="nx">my_class</span> <span class="o">=</span> <span class="nx">Java</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="s2">"com.fireeye.flarebear.FlareBearActivity"</span><span class="p">);</span>
+    
+    <span class="c1">// hook getStat to return correct amount of f/c/p</span>
+    <span class="nx">my_class</span><span class="p">.</span><span class="nx">getStat</span><span class="p">.</span><span class="nx">implementation</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">x</span><span class="p">){</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"getStat: "</span><span class="o">+</span><span class="nx">x</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">x</span> <span class="o">==</span> <span class="s1">'f'</span><span class="p">)</span> <span class="k">return</span> <span class="mi">8</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">x</span> <span class="o">==</span> <span class="s1">'c'</span><span class="p">)</span> <span class="k">return</span> <span class="mi">2</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">x</span> <span class="o">==</span> <span class="s1">'p'</span><span class="p">)</span> <span class="k">return</span> <span class="mi">4</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="c1">// hook isEcstatic, always return true</span>
+    <span class="nx">my_class</span><span class="p">.</span><span class="nx">isEcstatic</span><span class="p">.</span><span class="nx">implementation</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"Inside isEcstatic !"</span><span class="p">);</span>
+        <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="c1">// hook isHappy, always return true</span>
+    <span class="nx">my_class</span><span class="p">.</span><span class="nx">isHappy</span><span class="p">.</span><span class="nx">implementation</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"Inside isHappy !"</span><span class="p">);</span>
+        <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+
+</code></pre></div></div>
+
+<p>Now run the python script, it will start the app in virtual device. With just one click ( just press one of the feed/play/clean button ) the app will show us the flag:</p>
+
+<p><img src="/assets/images/Flare-on-2019/level3_0.png" alt="" /></p>
+
+<p>flag: <code class="highlighter-rouge">th4t_was_be4rly_a_chall3nge@flare-on.com</code></p>
+
+<p>Really fun challenge, learned tons of stuff about Android app analysis, especially Frida :)</p>
+
+<h2 id="level-4">Level 4</h2>
+
+<p><strong>Tool : IDA Pro, Wireshark, gdb</strong></p>
+
+<p>We were given two 64 ELF binaries: ChessUI and ChessAI.so. ChessUI is a GUI program ( a chess game ), it will dynamically load ChessAI.so and use the function inside the library to decide where to move the chess next round. Also we were given a pcap file, which contain some suspicious network traffic ( obviously has something to do with those two programs ).</p>
+
+<p>The code that generate the network traffic is in the <code class="highlighter-rouge">getNextMove()</code> function ( in ChessAI.so ). The function will send a DNS query base on the move of user’s chess. For example, if user move rook from c3 to c6, it will send a DNS query of “rook-c3-c6.game-of-thrones.flare-on.com”. Once the server has respond the request, it’ll take the IP address of the host name and do some checking and calculations. Here I only list the most important part of the code:</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// if ip = 127.0.0.1
+// ip[0] = 127, ip[1] = 0, ...etc
+// round = AI's round, start from 0
+</span>
+<span class="c1">// ........omitted........
+</span>
+<span class="k">if</span> <span class="p">(</span> <span class="n">ip</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">127</span> <span class="o">||</span> <span class="n">ip</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">&amp;</span> <span class="mi">1</span> <span class="o">||</span> <span class="n">round</span> <span class="o">!=</span> <span class="p">(</span><span class="n">ip</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">&amp;</span> <span class="mh">0xF</span><span class="p">)</span> <span class="p">)</span>
+    <span class="k">return</span> <span class="mi">2LL</span><span class="p">;</span>
+    
+<span class="n">sleep</span><span class="p">(</span><span class="mi">1u</span><span class="p">);</span>
+<span class="c1">// byte_4060 stores the encrypted flag
+</span><span class="n">byte_4060</span><span class="p">[</span><span class="mi">2</span> <span class="o">*</span> <span class="n">round</span><span class="p">]</span> <span class="o">=</span> <span class="n">ip</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">^</span> <span class="n">byte_2020</span><span class="p">[</span><span class="mi">2</span> <span class="o">*</span> <span class="n">round</span><span class="p">];</span>
+<span class="n">byte_4060</span><span class="p">[</span><span class="mi">2</span> <span class="o">*</span> <span class="n">round</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">ip</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">^</span> <span class="n">byte_2020</span><span class="p">[</span><span class="mi">2</span> <span class="o">*</span> <span class="n">round</span> <span class="o">+</span> <span class="mi">1</span><span class="p">];</span>
+<span class="c1">// ........omitted........
+</span></code></pre></div></div>
+
+<p>Basically it checks if the IP address matches a specific format. If it does, decrypt the data buffer with simple XOR operation.</p>
+
+<p>Since we already have the network traffic, all we need to do is extract all the IP addresses from pcap, then write a simple IDAPython script to decrypt the flag.</p>
+
+<p>At first I tried to decrypt the flag with the same order as the pcap file. However it failed, and that’s the moment I notice that the order of the IP address is kind of weird. For example, the first IP address in pcap is <code class="highlighter-rouge">127.150.96.223</code>. However, according to the check, <code class="highlighter-rouge">ip[3] ( in this case 223) &amp; 1</code> should be 0 instead of 1. Moreover I found that there were many IPs that didn’t pass the <code class="highlighter-rouge">round == (ip[2] &amp; 0xF)</code> check. Later I found that the last IP address – <code class="highlighter-rouge">127.53.176.56</code> is the only IP that will pass the check while round equals to 0. That’s the moment I realized that inside the pcap, <strong>the order of the DNS request ( = the responded IP ) is completely random</strong> – we’ll have to recover the order as well.</p>
+
+<p>However I was too lazy to do that. Instead I just wrote a loop and brute-force the order of the IP address:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># IDAPython script</span>
+<span class="n">ips</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3747649151</span><span class="p">,</span> <span class="mi">1523907711</span><span class="p">,</span> <span class="mi">649189247</span><span class="p">,</span> <span class="mi">3480647295</span><span class="p">,</span> <span class="mi">1411799423</span><span class="p">,</span> <span class="mi">1637576063</span><span class="p">,</span> <span class="mi">1713756543</span><span class="p">,</span> <span class="mi">238760319</span><span class="p">,</span> <span class="mi">412333695</span><span class="p">,</span> <span class="mi">193921151</span><span class="p">,</span> <span class="mi">2334843775</span><span class="p">,</span> <span class="mi">4081083775</span><span class="p">,</span> <span class="mi">1733675391</span><span class="p">,</span> <span class="mi">1816971391</span><span class="p">,</span> <span class="mi">390279807</span><span class="p">,</span> <span class="mi">2002820479</span><span class="p">,</span> <span class="mi">2063426431</span><span class="p">,</span> <span class="mi">1548360063</span><span class="p">,</span> <span class="mi">531343487</span><span class="p">,</span> <span class="mi">3743782015</span><span class="p">,</span> <span class="mi">169372799</span><span class="p">,</span> <span class="mi">234562943</span><span class="p">,</span> <span class="mi">1490625151</span><span class="p">,</span> <span class="mi">871250303</span><span class="p">,</span> <span class="mi">2473051263</span><span class="p">,</span> <span class="mi">2920189311</span><span class="p">,</span> <span class="mi">2735206015</span><span class="p">,</span> <span class="mi">1760028287</span><span class="p">,</span> <span class="mi">1339832191</span><span class="p">,</span> <span class="mi">766228607</span><span class="p">,</span> <span class="mi">3348284543</span><span class="p">,</span> <span class="mi">4216242047</span><span class="p">,</span> <span class="mi">715300735</span><span class="p">,</span> <span class="mi">1328593023</span><span class="p">,</span> <span class="mi">2065530751</span><span class="p">,</span> <span class="mi">589479807</span><span class="p">,</span> <span class="mi">3172337023</span><span class="p">,</span> <span class="mi">932047231</span><span class="p">,</span> <span class="mi">1375352703</span><span class="p">,</span> <span class="mi">951072127</span><span class="p">]</span>
+
+<span class="n">g4060</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="mi">40</span>
+<span class="n">g2020</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="mi">40</span>
+
+<span class="k">def</span> <span class="nf">read_gdata</span><span class="p">():</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">40</span><span class="p">):</span>
+        <span class="n">g4060</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">Byte</span><span class="p">(</span><span class="mh">0x4060</span><span class="o">+</span><span class="n">i</span><span class="p">)</span>
+        <span class="n">g2020</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">Byte</span><span class="p">(</span><span class="mh">0x2020</span><span class="o">+</span><span class="n">i</span><span class="p">)</span>
+
+<span class="n">read_gdata</span><span class="p">()</span>
+<span class="c"># Using brute-force to find the IP-round pair</span>
+<span class="k">for</span> <span class="n">cnt</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">15</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">ip</span> <span class="ow">in</span> <span class="n">ips</span><span class="p">:</span>
+        <span class="n">v10</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">v10</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ip</span><span class="o">&amp;</span><span class="mh">0xff</span><span class="p">)</span>
+        <span class="n">v10</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">ip</span><span class="o">&gt;&gt;</span><span class="mi">8</span><span class="p">)</span><span class="o">&amp;</span><span class="mh">0xff</span><span class="p">)</span>
+        <span class="n">v10</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">ip</span><span class="o">&gt;&gt;</span><span class="mi">16</span><span class="p">)</span><span class="o">&amp;</span><span class="mh">0xff</span><span class="p">)</span>
+        <span class="n">v10</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">ip</span><span class="o">&gt;&gt;</span><span class="mi">24</span><span class="p">)</span><span class="o">&amp;</span><span class="mh">0xff</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">v10</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="mh">0x7F</span> <span class="ow">or</span> <span class="p">(</span><span class="n">v10</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">&amp;</span> <span class="mi">1</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">cnt</span> <span class="o">!=</span> <span class="p">(</span><span class="n">v10</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">&amp;</span> <span class="mh">0xF</span><span class="p">):</span>
+            <span class="c"># Wrong IP for this round, try next one</span>
+            <span class="k">continue</span>
+        <span class="c"># Correct IP for this round, decrypt flag</span>
+        <span class="n">g4060</span><span class="p">[</span><span class="mi">2</span><span class="o">*</span><span class="n">cnt</span><span class="p">]</span> <span class="o">=</span> <span class="n">v10</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">^</span> <span class="n">g2020</span><span class="p">[</span><span class="mi">2</span><span class="o">*</span><span class="n">cnt</span><span class="p">]</span>
+        <span class="n">g4060</span><span class="p">[</span><span class="mi">2</span><span class="o">*</span><span class="n">cnt</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">v10</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">^</span> <span class="n">g2020</span><span class="p">[</span><span class="mi">2</span><span class="o">*</span><span class="n">cnt</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+        
+        <span class="k">if</span> <span class="p">(</span><span class="n">v10</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="mi">7</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">"Win!"</span>
+
+        <span class="k">break</span>
+    
+<span class="k">print</span> <span class="s">''</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">chr</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">g4060</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">"Done!"</span>
+</code></pre></div></div>
+
+<p>flag: <code class="highlighter-rouge">LooksLikeYouLockedUpTheLookupZ@flare-on.com</code></p>
+
+<h2 id="level-5">Level 5</h2>
+
+<p><strong>Tool : IDA Pro + Windbg, x64dbg</strong></p>
+
+<p>This time we were given a program which displays a window and shows a spinning FLARE logo:</p>
+
+<p><img src="/assets/images/Flare-on-2019/level5_0.png" alt="" /></p>
+
+<p>The program was packed twice. In order to analyze it,  we’ll have to unpack it first. Here I used x64dbg to launch the program and quickly locate the entry point. However I was not able to dump the binary with its Scylla plugin 😕 it kept dumping the wrong binary file, so in the end I have to analyze the code with the debugger attached to the binary.</p>
+
+<p>So I switched to IDA Pro + Windbg to do the analyzing. However unlike x64dbg, IDA sometimes failed to disassemble the unpacked code and cause some inconvenience during the debugging, I had to step through the code very carefully for not making IDA disassemble the wrong code. In the end I decided to switch between x64dbg and IDA to analyze the program – x64dbg for locating the code position &amp; dynamic analysis, and IDA for decompiling the unpacked code.</p>
+
+<p>After some static analysis, I kind of figured out the main logic of the program ( I’m not familiar with DirectX though, so some terms might be incorrect ):</p>
+
+<ol>
+  <li>Create a Direct3D object and device for showing the object.</li>
+  <li>Create two mesh objects.</li>
+  <li>Start showing ( spinning ) the 3D object and wait for exit ( the ESC key ).</li>
+</ol>
+
+<p>I noticed that even the program created two mesh objects with different sets of vertices/faces, it only shows one 3D object in the window. Guessing the flag might be one of the mesh object, I started testing my theory with x64dbg.</p>
+
+<p>The program store the mesh objects at <code class="highlighter-rouge">0x430050</code> and <code class="highlighter-rouge">0x430054</code>, so:</p>
+
+<ul>
+  <li>After the program created the first mesh object, skip the second one and store the first object to <code class="highlighter-rouge">0x430050</code> and <code class="highlighter-rouge">0x430054</code>.</li>
+  <li>However, the program still shows the FLARE logo.</li>
+  <li>So this time skip the first object and store the second mesh object to <code class="highlighter-rouge">0x430050</code> and <code class="highlighter-rouge">0x430054</code>.</li>
+  <li>This time, it shows us the flag :)</li>
+</ul>
+
+<p><img src="/assets/images/Flare-on-2019/level5_1.png" alt="" /></p>
+
+<p>flag: <code class="highlighter-rouge">moar_pouetry@flare-on.com</code></p>
+
+<h2 id="level-6">Level 6</h2>
+
+<p><strong>Tool : dnSpy, 010 editor</strong></p>
+
+<p>Level 6 is a .NET binary, which is a simple command line tool that can hide some information inside an image. We can use the following command to execute the program:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./bmphide.exe ./in.bmp ./secret ./out.bmp
+</code></pre></div></div>
+
+<p>It will hide the data bytes of <code class="highlighter-rouge">secret</code> into <code class="highlighter-rouge">in.bmp</code> and save it to <code class="highlighter-rouge">out.bmp</code>. In this challenge, we’ll have to recover the information from the image file <code class="highlighter-rouge">image.bmp</code>.</p>
+
+<p>Let’s open up dnSpy and start figuring the program logic. The main function is pretty simple:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="c1">// Initialize some data</span>
+    <span class="n">Program</span><span class="p">.</span><span class="nf">Init</span><span class="p">();</span>
+    <span class="n">Program</span><span class="p">.</span><span class="n">yy</span> <span class="p">+=</span> <span class="m">18</span><span class="p">;</span>
+    <span class="c1">// read arguments</span>
+    <span class="kt">string</span> <span class="n">filename</span> <span class="p">=</span> <span class="n">args</span><span class="p">[</span><span class="m">2</span><span class="p">];</span>
+    <span class="kt">string</span> <span class="n">fullPath</span> <span class="p">=</span> <span class="n">Path</span><span class="p">.</span><span class="nf">GetFullPath</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="m">0</span><span class="p">]);</span>
+    <span class="kt">string</span> <span class="n">fullPath2</span> <span class="p">=</span> <span class="n">Path</span><span class="p">.</span><span class="nf">GetFullPath</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="m">1</span><span class="p">]);</span>
+    <span class="kt">byte</span><span class="p">[]</span> <span class="n">data</span> <span class="p">=</span> <span class="n">File</span><span class="p">.</span><span class="nf">ReadAllBytes</span><span class="p">(</span><span class="n">fullPath2</span><span class="p">);</span>
+    <span class="n">Bitmap</span> <span class="n">bitmap</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">Bitmap</span><span class="p">(</span><span class="n">fullPath</span><span class="p">);</span>
+    <span class="c1">// process the secret data </span>
+    <span class="kt">byte</span><span class="p">[]</span> <span class="n">data2</span> <span class="p">=</span> <span class="n">Program</span><span class="p">.</span><span class="nf">h</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
+    <span class="c1">// Hide the information in the image and save the result</span>
+    <span class="n">Program</span><span class="p">.</span><span class="nf">i</span><span class="p">(</span><span class="n">bitmap</span><span class="p">,</span> <span class="n">data2</span><span class="p">);</span>
+    <span class="n">bitmap</span><span class="p">.</span><span class="nf">Save</span><span class="p">(</span><span class="n">filename</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Knowing the main logic is in <code class="highlighter-rouge">Program.h()</code> ( processing the secret data ) and <code class="highlighter-rouge">Program.i()</code> ( hiding the information ), I started implementing those functions with python. First is <code class="highlighter-rouge">Program.h()</code>:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">h</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+    <span class="n">array</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="n">num</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)):</span>
+        <span class="n">num2</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">num</span><span class="p">)</span> 
+        <span class="n">num</span><span class="o">+=</span><span class="mi">1</span>
+        <span class="n">num3</span> <span class="o">=</span> <span class="nb">ord</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span>
+        <span class="n">num3</span> <span class="o">=</span> <span class="n">e</span><span class="p">(</span><span class="n">num3</span><span class="p">,</span> <span class="n">num2</span><span class="p">)</span>
+        <span class="n">num3</span> <span class="o">=</span> <span class="n">a</span><span class="p">(</span><span class="n">num3</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span>
+        <span class="n">num4</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">num</span><span class="p">)</span>
+        <span class="n">num</span><span class="o">+=</span><span class="mi">1</span>
+        <span class="n">num3</span> <span class="o">=</span> <span class="n">e</span><span class="p">(</span><span class="n">num3</span><span class="p">,</span> <span class="n">num4</span><span class="p">)</span>
+        <span class="n">num3</span> <span class="o">=</span> <span class="n">c</span><span class="p">(</span><span class="n">num3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+        <span class="n">array</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">num3</span>
+    <span class="k">return</span> <span class="n">array</span>
+</code></pre></div></div>
+
+<p>It uses function like <code class="highlighter-rouge">f()</code>, <code class="highlighter-rouge">e()</code>, <code class="highlighter-rouge">a()</code>…etc, with dnSpy we can see it’s just some simple shift/xor/and/add/sub operation. <code class="highlighter-rouge">f()</code> is a RC4-like function though, but still it’s easy to implement. Next is the <code class="highlighter-rouge">Program.i()</code> function, here’s the C# code from dnSpy:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">public</span> <span class="k">static</span> <span class="k">void</span> <span class="nf">i</span><span class="p">(</span><span class="n">Bitmap</span> <span class="n">bm</span><span class="p">,</span> <span class="kt">byte</span><span class="p">[]</span> <span class="n">data</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">num</span> <span class="p">=</span> <span class="n">Program</span><span class="p">.</span><span class="nf">j</span><span class="p">(</span><span class="m">103</span><span class="p">);</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="n">Program</span><span class="p">.</span><span class="nf">j</span><span class="p">(</span><span class="m">103</span><span class="p">);</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="n">bm</span><span class="p">.</span><span class="n">Width</span><span class="p">;</span> <span class="n">i</span><span class="p">++)</span>
+    <span class="p">{</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="p">=</span> <span class="n">Program</span><span class="p">.</span><span class="nf">j</span><span class="p">(</span><span class="m">103</span><span class="p">);</span> <span class="n">j</span> <span class="p">&lt;</span> <span class="n">bm</span><span class="p">.</span><span class="n">Height</span><span class="p">;</span> <span class="n">j</span><span class="p">++)</span>
+        <span class="p">{</span>
+            <span class="kt">bool</span> <span class="n">flag</span> <span class="p">=</span> <span class="n">num</span> <span class="p">&gt;</span> <span class="n">data</span><span class="p">.</span><span class="n">Length</span> <span class="p">-</span> <span class="n">Program</span><span class="p">.</span><span class="nf">j</span><span class="p">(</span><span class="m">231</span><span class="p">);</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">flag</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="k">break</span><span class="p">;</span>
+            <span class="p">}</span>
+            <span class="n">Color</span> <span class="n">pixel</span> <span class="p">=</span> <span class="n">bm</span><span class="p">.</span><span class="nf">GetPixel</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">);</span>
+            <span class="kt">int</span> <span class="n">red</span> <span class="p">=</span> <span class="p">((</span><span class="kt">int</span><span class="p">)</span><span class="n">pixel</span><span class="p">.</span><span class="n">R</span> <span class="p">&amp;</span> <span class="n">Program</span><span class="p">.</span><span class="nf">j</span><span class="p">(</span><span class="m">27</span><span class="p">))</span> <span class="p">|</span> <span class="p">((</span><span class="kt">int</span><span class="p">)</span><span class="n">data</span><span class="p">[</span><span class="n">num</span><span class="p">]</span> <span class="p">&amp;</span> <span class="n">Program</span><span class="p">.</span><span class="nf">j</span><span class="p">(</span><span class="m">228</span><span class="p">));</span>
+            <span class="kt">int</span> <span class="n">green</span> <span class="p">=</span> <span class="p">((</span><span class="kt">int</span><span class="p">)</span><span class="n">pixel</span><span class="p">.</span><span class="n">G</span> <span class="p">&amp;</span> <span class="n">Program</span><span class="p">.</span><span class="nf">j</span><span class="p">(</span><span class="m">27</span><span class="p">))</span> <span class="p">|</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">num</span><span class="p">]</span> <span class="p">&gt;&gt;</span> <span class="n">Program</span><span class="p">.</span><span class="nf">j</span><span class="p">(</span><span class="m">230</span><span class="p">)</span> <span class="p">&amp;</span> <span class="n">Program</span><span class="p">.</span><span class="nf">j</span><span class="p">(</span><span class="m">228</span><span class="p">));</span>
+            <span class="kt">int</span> <span class="n">blue</span> <span class="p">=</span> <span class="p">((</span><span class="kt">int</span><span class="p">)</span><span class="n">pixel</span><span class="p">.</span><span class="n">B</span> <span class="p">&amp;</span> <span class="n">Program</span><span class="p">.</span><span class="nf">j</span><span class="p">(</span><span class="m">25</span><span class="p">))</span> <span class="p">|</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">num</span><span class="p">]</span> <span class="p">&gt;&gt;</span> <span class="n">Program</span><span class="p">.</span><span class="nf">j</span><span class="p">(</span><span class="m">100</span><span class="p">)</span> <span class="p">&amp;</span> <span class="n">Program</span><span class="p">.</span><span class="nf">j</span><span class="p">(</span><span class="m">230</span><span class="p">));</span>
+            <span class="n">Color</span> <span class="n">color</span> <span class="p">=</span> <span class="n">Color</span><span class="p">.</span><span class="nf">FromArgb</span><span class="p">(</span><span class="n">Program</span><span class="p">.</span><span class="nf">j</span><span class="p">(</span><span class="m">103</span><span class="p">),</span> <span class="n">red</span><span class="p">,</span> <span class="n">green</span><span class="p">,</span> <span class="n">blue</span><span class="p">);</span>
+            <span class="n">bm</span><span class="p">.</span><span class="nf">SetPixel</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">color</span><span class="p">);</span>
+            <span class="n">num</span> <span class="p">+=</span> <span class="n">Program</span><span class="p">.</span><span class="nf">j</span><span class="p">(</span><span class="m">231</span><span class="p">);</span>  
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>We can see that it uses the value from <code class="highlighter-rouge">Program.j(XXX)</code>. Since I was too lazy to implement <code class="highlighter-rouge">Program.j()</code>, I decided to launch the debugger in dnSpy and extract those values from memory. While doing this, I found that the program had trigger the “StackOverflow Exception” while doing <code class="highlighter-rouge">Program.Init()</code>. At first I thought it has something to do with the bug in dnSpy, so I just skip through the code in  <code class="highlighter-rouge">Program.Init()</code>. There were many code in <code class="highlighter-rouge">Program.Init()</code> that I can’t understand, must be some unimportant code ;) ( Boy I was so wrong… ). After that we can just replace those <code class="highlighter-rouge">Program.j()</code> with the value we extracted earlier in our python version of <code class="highlighter-rouge">Program.i()</code>. So far so good.</p>
+
+<blockquote>
+  <p>According to the <a href="https://www.fireeye.com/content/dam/fireeye-www/blog/pdfs/FlareOn6_Challenge6_Solution_BMPHIDE.pdf">offcial write-up of level6</a>, the StackOverflow Exception is actually an anit-debug trick. You can check the write-up for more details.</p>
+</blockquote>
+
+<p>However I soon found out that this isn’t the right approach – my python version of bmphide behaved differently from the .NET version. I’ve checked the logic in each function, and everything seems to be correct, so where’s the problem ? Oh I don’t know, <strong>maybe go check that <code class="highlighter-rouge">Program.Init()</code> function again -_- ?</strong></p>
+
+<p>In the end I found that it did has something to do with the <code class="highlighter-rouge">Program.Init()</code> function. It initialized the <code class="highlighter-rouge">Program.zz</code>, <code class="highlighter-rouge">Program.yy</code> and <code class="highlighter-rouge">Program.ww</code> data, and those values are used by <code class="highlighter-rouge">Program.j()</code> ( I did not implement it so I didn’t notice that ). Also it apparently modified some code in the binary, making its program behavior different from what we see in dnSpy.</p>
+
+<p>To figure out what’s actually happening I have to attach the debugger to <code class="highlighter-rouge">bmphide.exe</code> so it won’t terminate while doing <code class="highlighter-rouge">Program.Init()</code>.</p>
+
+<blockquote>
+  <p>By providing a large <code class="highlighter-rouge">secret</code> file in command line, we’ll be able to attach the dnSpy debugger to the process just in time.</p>
+</blockquote>
+
+<p>I first re-extract those values generated by <code class="highlighter-rouge">Program.j()</code>, then start analyzing the code in <code class="highlighter-rouge">Program.h()</code> – and that’s the moment I realized where the problem was : <strong>when I tried to step into <code class="highlighter-rouge">Program.f()</code>, it actually jumped to <code class="highlighter-rouge">Program.g()</code> !</strong> And not only <code class="highlighter-rouge">f()</code>, <code class="highlighter-rouge">a()</code> and <code class="highlighter-rouge">c()</code> also jumped to a different function, what the hell ?! Apparently, <code class="highlighter-rouge">Program.Init()</code> is doing something evil, which make me have to modified my python version of <code class="highlighter-rouge">Program.h()</code> into:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">h</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+    <span class="n">array</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="n">num</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)):</span>
+        <span class="n">num2</span> <span class="o">=</span> <span class="n">g</span><span class="p">(</span><span class="n">num</span><span class="p">)</span> <span class="c"># not f</span>
+        <span class="n">num</span><span class="o">+=</span><span class="mi">1</span>
+        <span class="n">num3</span> <span class="o">=</span> <span class="nb">ord</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span>
+        <span class="n">num3</span> <span class="o">=</span> <span class="n">e</span><span class="p">(</span><span class="n">num3</span><span class="p">,</span> <span class="n">num2</span><span class="p">)</span>
+        <span class="n">num3</span> <span class="o">=</span> <span class="n">b</span><span class="p">(</span><span class="n">num3</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span> <span class="c"># not a</span>
+        <span class="n">num4</span> <span class="o">=</span> <span class="n">g</span><span class="p">(</span><span class="n">num</span><span class="p">)</span> <span class="c"># not f</span>
+        <span class="n">num</span><span class="o">+=</span><span class="mi">1</span>
+        <span class="n">num3</span> <span class="o">=</span> <span class="n">e</span><span class="p">(</span><span class="n">num3</span><span class="p">,</span> <span class="n">num4</span><span class="p">)</span>
+        <span class="n">num3</span> <span class="o">=</span> <span class="n">d</span><span class="p">(</span><span class="n">num3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="c"># not c</span>
+        <span class="n">array</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">num3</span>
+    <span class="k">return</span> <span class="n">array</span>
+</code></pre></div></div>
+
+<p>Now we have a python version of bmphide right ? Nope, this python bmphide still behave differently from the original one. So again, I have to attach the debugger in dnSpy and see what’s going on, and this time, it has something to do with the dnSpy’s decompiled C# code:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">public</span> <span class="k">static</span> <span class="kt">byte</span> <span class="nf">g</span><span class="p">(</span><span class="kt">int</span> <span class="n">idx</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">byte</span> <span class="n">b</span> <span class="p">=</span> <span class="p">(</span><span class="kt">byte</span><span class="p">)((</span><span class="kt">long</span><span class="p">)(</span><span class="n">idx</span> <span class="p">+</span> <span class="m">1</span><span class="p">)</span> <span class="p">*</span> <span class="p">(</span><span class="kt">long</span><span class="p">)((</span><span class="kt">ulong</span><span class="p">)-</span><span class="m">306674912</span><span class="p">));</span>
+    <span class="kt">byte</span> <span class="n">k</span> <span class="p">=</span> <span class="p">(</span><span class="kt">byte</span><span class="p">)((</span><span class="n">idx</span> <span class="p">+</span> <span class="m">2</span><span class="p">)</span> <span class="p">*</span> <span class="m">1669101435</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">Program</span><span class="p">.</span><span class="nf">e</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">k</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>In dnSpy we see that <code class="highlighter-rouge">Program.g()</code> first generate <code class="highlighter-rouge">b</code> &amp; <code class="highlighter-rouge">k</code> with <code class="highlighter-rouge">(idx+1)*0xedb88320</code> and <code class="highlighter-rouge">(idx+2)*0x637c777b</code>. However, if we open the disassembly view, it shows something different:</p>
+
+<p><img src="/assets/images/Flare-on-2019/level6_0.png" alt="" /></p>
+
+<p><strong>It’s actually doing <code class="highlighter-rouge">((idx+1) * 0x126B6FC5)</code> and <code class="highlighter-rouge">((idx+2) * 0xC82C97D)</code></strong>. Again, what the f*ck ?</p>
+
+<blockquote>
+  <p>According to the official write-up, it’s because it uses several obfuscation techniques including JIT hook to overwrite the code during runtime 😮 That’s why the code behavior is different from the one that dnSpy shows us !</p>
+</blockquote>
+
+<p>So after I modified the <code class="highlighter-rouge">g()</code> function in my python bmphide, <a href="https://gist.github.com/bruce30262/ae755f4e52462f9aae90c1782c096090#file-bmphide-py">the code</a> finally behaves identical to the original version.</p>
+
+<p>Finally we can start recovering the hidden message. First we’ll have to recover <code class="highlighter-rouge">data2</code>, the encrypted data generated by <code class="highlighter-rouge">Program.h()</code>. This is easy since all we need to do is to extract the last 3 or 2 bit of the RGB pixel and we’re done:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">data2</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">num</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">width</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">height</span><span class="p">):</span>
+        <span class="n">R</span><span class="p">,</span> <span class="n">G</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">A</span> <span class="o">=</span> <span class="n">bitmap</span><span class="o">.</span><span class="n">getpixel</span><span class="p">((</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">))</span>
+        <span class="n">d1</span> <span class="o">=</span> <span class="n">R</span> <span class="o">&amp;</span> <span class="mi">7</span>
+        <span class="n">d2</span> <span class="o">=</span> <span class="n">G</span> <span class="o">&amp;</span> <span class="mi">7</span>
+        <span class="n">d3</span> <span class="o">=</span> <span class="n">B</span> <span class="o">&amp;</span> <span class="mi">3</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="p">(</span><span class="n">d3</span><span class="o">&lt;&lt;</span><span class="mi">6</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">d2</span><span class="o">&lt;&lt;</span><span class="mi">3</span><span class="p">)</span> <span class="o">|</span> <span class="n">d1</span>
+        <span class="n">data2</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="n">num</span> <span class="o">+=</span> <span class="mi">1</span>
+</code></pre></div></div>
+
+<p>Next is to recover the original message. To do this we’ll have to solve the numbers that were used by <code class="highlighter-rouge">e()</code>, <code class="highlighter-rouge">b()</code> and <code class="highlighter-rouge">d()</code>. Since it’s just 1 byte of data, this can be done by some brute-forcing. You can find the cracking script <a href="https://gist.github.com/bruce30262/ae755f4e52462f9aae90c1782c096090#file-crack-py">here</a>.</p>
+
+<p>Since I didn’t know the actual length of the hidden message, I first recovered the first couple of bytes and notice that it’s a BMP file as well. With the help of <a href="https://www.sweetscape.com/010editor/">010 editor</a> I was able to get the size of the image and recover the message with the correct length of data.</p>
+
+<p>Notice that the hidden message of <code class="highlighter-rouge">image.bmp</code> is another BMP file ( no flag in the image ), we’ll have to recover the message in that image in order to get the flag of the challenge.</p>
+
+<p><img src="/assets/images/Flare-on-2019/level6_1.bmp" alt="" /></p>
+
+<p>flag: <code class="highlighter-rouge">d0nT_tRu$t_vEr1fy@flare-on.com</code></p>
+
+<h2 id="level-7">Level 7</h2>
+
+<p><strong>Tool : Pyinstaller Extractor, uncompyle6, x64dbg, Z3</strong></p>
+
+<p>This time we were given a pyinstaller executable <code class="highlighter-rouge">wopr.exe</code> ( python version 3.7 ), which is apparently named after the computer from the movie <a href="https://en.wikipedia.org/wiki/WarGames">WarGames</a>. After we launch the program and enter the “play g” command ( <code class="highlighter-rouge">g</code> stands for “GLOBAL THERMONUCLEAR WAR” ), it will ask us to input the correct launch code.</p>
+
+<p>To find the correct launch code, first thing we need to do is extract the source files from the pyinstaller. With <a href="https://sourceforge.net/projects/pyinstallerextractor/">Pyinstaller Extractor</a>, we can extract those files and find that the source code is hidden in the <code class="highlighter-rouge">pyiboot02_cleanup</code> file. Next thing we need to do is decompile <code class="highlighter-rouge">pyiboot02_cleanup</code> with <a href="https://github.com/rocky/python-uncompyle6">uncompyle6</a> and get the python source code. However the file is missing the pyc header. In order to get uncompyle6 working, we’ll have to fix its header. This is easy though, just extract the header from an existing python3.7 pyc file and fix the header manually.</p>
+
+<p>After that we’ll get the following python source code:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s">"""
+...&lt;omitted doc string&gt;...
+"""</span>
+
+<span class="kn">import</span> <span class="nn">hashlib</span><span class="p">,</span> <span class="n">io</span><span class="p">,</span> <span class="n">lzma</span><span class="p">,</span> <span class="n">pkgutil</span><span class="p">,</span> <span class="n">random</span><span class="p">,</span> <span class="n">struct</span><span class="p">,</span> <span class="n">sys</span><span class="p">,</span> <span class="n">time</span>
+<span class="kn">from</span> <span class="nn">ctypes</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">'LOADING...'</span><span class="p">)</span>
+<span class="n">BOUNCE</span> <span class="o">=</span> <span class="n">pkgutil</span><span class="o">.</span><span class="n">get_data</span><span class="p">(</span><span class="s">'this'</span><span class="p">,</span> <span class="s">'key'</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">ho</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">g</span><span class="o">=</span><span class="p">{}):</span>
+    <span class="n">k</span> <span class="o">=</span> <span class="nb">bytes</span><span class="o">.</span><span class="n">fromhex</span><span class="p">(</span><span class="n">format</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="s">'x'</span><span class="p">))</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">g</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span>
+
+<span class="c"># print-&gt;exec, exec-&gt;print</span>
+<span class="n">a</span> <span class="o">=</span> <span class="mi">1702389091</span>
+<span class="n">b</span> <span class="o">=</span> <span class="mi">482955849332</span>
+<span class="n">g</span> <span class="o">=</span> <span class="n">ho</span><span class="p">(</span><span class="mi">29516388843672123817340395359</span><span class="p">,</span> <span class="nb">globals</span><span class="p">())</span>
+<span class="n">aa</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">ho</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>
+<span class="n">bb</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">ho</span><span class="p">(</span><span class="n">b</span><span class="p">))</span>
+<span class="n">a</span> <span class="o">^=</span> <span class="n">b</span>
+<span class="n">b</span> <span class="o">^=</span> <span class="n">a</span>
+<span class="n">a</span> <span class="o">^=</span> <span class="n">b</span>
+<span class="nb">setattr</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">ho</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="n">aa</span><span class="p">)</span>
+<span class="nb">setattr</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">ho</span><span class="p">(</span><span class="n">b</span><span class="p">),</span> <span class="n">bb</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">eye</span><span class="p">(</span><span class="n">face</span><span class="p">):</span>
+    <span class="n">leg</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">arm</span> <span class="ow">in</span> <span class="n">face</span><span class="o">.</span><span class="n">splitlines</span><span class="p">():</span>
+        <span class="n">arm</span> <span class="o">=</span> <span class="n">arm</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">arm</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s">' </span><span class="se">\t</span><span class="s">'</span><span class="p">)):]</span>
+        <span class="n">leg</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">arm</span><span class="p">)</span>
+
+    <span class="n">face</span> <span class="o">=</span> <span class="n">leg</span><span class="o">.</span><span class="n">getvalue</span><span class="p">()</span>
+    <span class="n">bell</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">()</span>
+    <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">chuck</span> <span class="ow">in</span> <span class="n">face</span><span class="p">:</span>
+        <span class="n">taxi</span> <span class="o">=</span> <span class="p">{</span><span class="mi">9</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> 
+         <span class="mi">32</span><span class="p">:</span><span class="mi">1</span><span class="p">}</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">chuck</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">taxi</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">x</span> <span class="o">|</span> <span class="n">taxi</span> <span class="o">&lt;&lt;</span> <span class="n">y</span><span class="p">,</span> <span class="n">y</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="n">y</span> <span class="o">&gt;</span> <span class="mi">7</span><span class="p">:</span>
+            <span class="n">bell</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">bytes</span><span class="p">([</span><span class="n">x</span><span class="p">]))</span>
+            <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">bell</span><span class="o">.</span><span class="n">getvalue</span><span class="p">()</span>
+
+
+<span class="k">def</span> <span class="nf">fire</span><span class="p">(</span><span class="n">wood</span><span class="p">,</span> <span class="n">bounce</span><span class="p">):</span>
+    <span class="n">meaning</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">(</span><span class="n">wood</span><span class="p">)</span>
+    <span class="n">bounce</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">(</span><span class="n">bounce</span><span class="p">)</span>
+    <span class="n">regard</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">bounce</span><span class="p">)</span>
+    <span class="n">manage</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">256</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">prospect</span><span class="p">(</span><span class="o">*</span><span class="n">financial</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">financial</span><span class="p">)</span> <span class="o">%</span> <span class="mi">256</span>
+
+    <span class="k">def</span> <span class="nf">blade</span><span class="p">(</span><span class="n">feel</span><span class="p">,</span> <span class="n">cassette</span><span class="p">):</span>
+        <span class="n">cassette</span> <span class="o">=</span> <span class="n">prospect</span><span class="p">(</span><span class="n">cassette</span><span class="p">,</span> <span class="n">manage</span><span class="p">[</span><span class="n">feel</span><span class="p">])</span>
+        <span class="n">manage</span><span class="p">[</span><span class="n">feel</span><span class="p">],</span> <span class="n">manage</span><span class="p">[</span><span class="n">cassette</span><span class="p">]</span> <span class="o">=</span> <span class="n">manage</span><span class="p">[</span><span class="n">cassette</span><span class="p">],</span> <span class="n">manage</span><span class="p">[</span><span class="n">feel</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">cassette</span>
+
+    <span class="n">cassette</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">feel</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">256</span><span class="p">):</span>
+        <span class="n">cassette</span> <span class="o">=</span> <span class="n">prospect</span><span class="p">(</span><span class="n">cassette</span><span class="p">,</span> <span class="n">bounce</span><span class="p">[(</span><span class="n">feel</span> <span class="o">%</span> <span class="n">regard</span><span class="p">)])</span>
+        <span class="n">cassette</span> <span class="o">=</span> <span class="n">blade</span><span class="p">(</span><span class="n">feel</span><span class="p">,</span> <span class="n">cassette</span><span class="p">)</span>
+
+    <span class="n">cassette</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">pigeon</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">meaning</span><span class="p">):</span>
+        <span class="n">feel</span> <span class="o">=</span> <span class="n">prospect</span><span class="p">(</span><span class="n">pigeon</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">cassette</span> <span class="o">=</span> <span class="n">blade</span><span class="p">(</span><span class="n">feel</span><span class="p">,</span> <span class="n">cassette</span><span class="p">)</span>
+        <span class="n">meaning</span><span class="p">[</span><span class="n">pigeon</span><span class="p">]</span> <span class="o">^=</span> <span class="n">manage</span><span class="p">[</span><span class="n">prospect</span><span class="p">(</span><span class="n">manage</span><span class="p">[</span><span class="n">feel</span><span class="p">],</span> <span class="n">manage</span><span class="p">[</span><span class="n">cassette</span><span class="p">])]</span>
+
+    <span class="k">return</span> <span class="nb">bytes</span><span class="p">(</span><span class="n">meaning</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">256</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">lzma</span><span class="o">.</span><span class="n">decompress</span><span class="p">(</span><span class="n">fire</span><span class="p">(</span><span class="n">eye</span><span class="p">(</span><span class="n">__doc__</span><span class="o">.</span><span class="n">encode</span><span class="p">()),</span> <span class="nb">bytes</span><span class="p">([</span><span class="n">i</span><span class="p">])</span> <span class="o">+</span> <span class="n">BOUNCE</span><span class="p">)))</span>
+    <span class="k">except</span> <span class="nb">Exception</span><span class="p">:</span>
+        <span class="k">pass</span>
+</code></pre></div></div>
+
+<p>Here are some basic logic of the program:</p>
+<ul>
+  <li>It first exchanges the function of <code class="highlighter-rouge">exec</code> and <code class="highlighter-rouge">print</code> ( meaning that if you call <code class="highlighter-rouge">print()</code>, you’re actually doing <code class="highlighter-rouge">exec()</code> )</li>
+  <li>The <code class="highlighter-rouge">eye</code> function take the file’s doc string as the argument and extract two characters: <code class="highlighter-rouge">\t</code> and the <code class="highlighter-rouge">space</code> character. Then it treat <code class="highlighter-rouge">\t</code> as 0, <code class="highlighter-rouge">space</code> as 1, and combine the result into a binary buffer ( ex. <code class="highlighter-rouge">\t&lt;space&gt;\t\t\t\t\t\t</code> -&gt; <code class="highlighter-rouge">01000000</code> (0x40) -&gt; write 0x40 to the buffer )</li>
+  <li><code class="highlighter-rouge">fire</code> is basically RC4 – <code class="highlighter-rouge">wood</code> is data and <code class="highlighter-rouge">bounce</code> is the key</li>
+  <li>The <code class="highlighter-rouge">for i in range(256)</code> loop is actually a brute-force loop – it takes <code class="highlighter-rouge">bytes([i])</code> + <code class="highlighter-rouge">BOUNCE</code> ( <code class="highlighter-rouge">BOUNCE</code> is taken from <code class="highlighter-rouge">this\key</code>, which can be extracted from the <code class="highlighter-rouge">wopr.exe</code> executable ) as the key and tried to decrypt <code class="highlighter-rouge">eye(doc_string)</code>. If the result can’t be decompressed by the <code class="highlighter-rouge">lzma</code> module, it will try the next <code class="highlighter-rouge">bytes([i])</code> and see if it works.</li>
+  <li>If it decompress the data successfully, it’ll treat those data as python code and execute it.</li>
+</ul>
+
+<p>Notice that uncompyle6 will replace <code class="highlighter-rouge">\t</code> with spaces, so in the end I have to extract the real doc string from <code class="highlighter-rouge">pyiboot02_cleanup</code> manually. After that we’ll found that the correct RC4 key is <code class="highlighter-rouge">bytes([74]) + BOUNCE</code>. Now we can dump the <strong>actual</strong> python code. You can check the source code <a href="https://gist.github.com/bruce30262/2bf0eba9fdc3cdfca5522c16f05418bf#file-wopr-py">here</a>.</p>
+
+<p>Our input <code class="highlighter-rouge">launch_code</code> will be converted into a list <code class="highlighter-rouge">x</code> and do some operations, generating list <code class="highlighter-rouge">b</code>. It’ll then check if <code class="highlighter-rouge">b == h</code>, while <code class="highlighter-rouge">h</code> is generated from the memory content of <code class="highlighter-rouge">wopr.exe</code> ( check the <code class="highlighter-rouge">wrong()</code> function ). In the end I decided to dump the memory content of <code class="highlighter-rouge">wopr.exe</code> with x64dbg, and modified the <code class="highlighter-rouge">wrong()</code> function into:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">wrong</span><span class="p">():</span>
+
+    <span class="c"># read memory dump from disk instead</span>
+    <span class="n">trust</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">"wopr_00B30000.bin"</span><span class="p">,</span> <span class="s">"rb"</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span> <span class="o">+</span> \
+		<span class="nb">open</span><span class="p">(</span><span class="s">"wopr_00B31000.bin"</span><span class="p">,</span> <span class="s">"rb"</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span> <span class="o">+</span> \
+		<span class="nb">open</span><span class="p">(</span><span class="s">"wopr_00B51000.bin"</span><span class="p">,</span> <span class="s">"rb"</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span> <span class="o">+</span> \
+		<span class="nb">open</span><span class="p">(</span><span class="s">"wopr_00B5D000.bin"</span><span class="p">,</span> <span class="s">"rb"</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span> <span class="o">+</span>  \
+		<span class="nb">open</span><span class="p">(</span><span class="s">"wopr_00B6C000.bin"</span><span class="p">,</span> <span class="s">"rb"</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span> <span class="o">+</span>  \
+		<span class="nb">open</span><span class="p">(</span><span class="s">"wopr_00B6D000.bin"</span><span class="p">,</span> <span class="s">"rb"</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span> <span class="o">+</span>  \
+		<span class="nb">open</span><span class="p">(</span><span class="s">"wopr_00B8C000.bin"</span><span class="p">,</span> <span class="s">"rb"</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+		
+    <span class="n">computer</span> <span class="o">=</span> <span class="n">trust</span><span class="p">[:</span><span class="mi">1024</span><span class="p">:]</span>
+    <span class="n">dirty</span><span class="p">,</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack_from</span><span class="p">(</span><span class="s">'=I'</span><span class="p">,</span> <span class="n">computer</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
+
+    <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">organize</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">variety</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span>  <span class="n">struct</span><span class="o">.</span><span class="n">unpack_from</span><span class="p">(</span><span class="s">'=IHHIIIHH'</span><span class="p">,</span> <span class="n">computer</span><span class="p">,</span> <span class="n">dirty</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">variety</span> <span class="o">&gt;=</span> <span class="mi">144</span>
+
+    <span class="n">participate</span><span class="p">,</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack_from</span><span class="p">(</span><span class="s">'=I'</span><span class="p">,</span> <span class="n">computer</span><span class="p">,</span> <span class="n">dirty</span> <span class="o">+</span> <span class="mi">40</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">insurance</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">organize</span><span class="p">):</span>
+        <span class="n">name</span><span class="p">,</span> <span class="n">tropical</span><span class="p">,</span> <span class="n">inhabitant</span><span class="p">,</span> <span class="n">reader</span><span class="p">,</span> <span class="n">chalk</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack_from</span><span class="p">(</span><span class="s">'=8sIIIIIIHHI'</span><span class="p">,</span> <span class="n">computer</span><span class="p">,</span> <span class="mi">40</span> <span class="o">*</span> <span class="n">insurance</span> <span class="o">+</span> <span class="n">dirty</span> <span class="o">+</span> <span class="n">variety</span> <span class="o">+</span> <span class="mi">24</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">inhabitant</span> <span class="o">&lt;=</span> <span class="n">participate</span> <span class="o">&lt;</span> <span class="n">inhabitant</span> <span class="o">+</span> <span class="n">tropical</span><span class="p">:</span>
+            <span class="k">break</span>
+
+    <span class="n">spare</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">(</span><span class="n">trust</span><span class="p">[</span><span class="n">inhabitant</span><span class="p">:</span><span class="n">inhabitant</span><span class="o">+</span><span class="n">tropical</span><span class="p">:])</span>
+    
+    <span class="n">issue</span><span class="p">,</span> <span class="n">digital</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack_from</span><span class="p">(</span><span class="s">'=II'</span><span class="p">,</span> <span class="n">computer</span><span class="p">,</span> <span class="n">dirty</span> <span class="o">+</span> <span class="mh">0xa0</span><span class="p">)</span>
+    <span class="n">truth</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">(</span><span class="n">trust</span><span class="p">[</span><span class="n">issue</span><span class="p">:</span><span class="n">issue</span><span class="o">+</span><span class="n">digital</span><span class="p">:])</span>
+
+    <span class="n">expertise</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">while</span> <span class="n">expertise</span> <span class="o">&lt;=</span> <span class="nb">len</span><span class="p">(</span><span class="n">truth</span><span class="p">)</span> <span class="o">-</span> <span class="mi">8</span><span class="p">:</span>
+        <span class="n">nuance</span><span class="p">,</span> <span class="n">seem</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack_from</span><span class="p">(</span><span class="s">'=II'</span><span class="p">,</span> <span class="n">truth</span><span class="p">,</span> <span class="n">expertise</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">nuance</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">seem</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">break</span>
+
+        <span class="n">slot</span> <span class="o">=</span> <span class="n">truth</span><span class="p">[</span><span class="n">expertise</span> <span class="o">+</span> <span class="mi">8</span><span class="p">:</span><span class="n">expertise</span> <span class="o">+</span> <span class="n">seem</span><span class="p">]</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">slot</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="n">diet</span><span class="p">,</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack_from</span><span class="p">(</span><span class="s">'=H'</span><span class="p">,</span> <span class="n">slot</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">i</span><span class="p">)</span>
+            <span class="n">fabricate</span> <span class="o">=</span> <span class="n">diet</span> <span class="o">&gt;&gt;</span> <span class="mi">12</span>
+            <span class="k">if</span> <span class="n">fabricate</span> <span class="o">!=</span> <span class="mi">3</span><span class="p">:</span> <span class="k">continue</span>
+            <span class="n">diet</span> <span class="o">=</span> <span class="n">diet</span> <span class="o">&amp;</span> <span class="mi">4095</span>
+            <span class="n">ready</span> <span class="o">=</span> <span class="n">nuance</span> <span class="o">+</span> <span class="n">diet</span> <span class="o">-</span> <span class="n">inhabitant</span>
+            <span class="k">if</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">ready</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">spare</span><span class="p">):</span> 
+                <span class="c"># minus 0xb30000 ( the base address displayed in x64dbg )</span>
+                <span class="n">struct</span><span class="o">.</span><span class="n">pack_into</span><span class="p">(</span><span class="s">'=I'</span><span class="p">,</span> <span class="n">spare</span><span class="p">,</span> <span class="n">ready</span><span class="p">,</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack_from</span><span class="p">(</span><span class="s">'=I'</span><span class="p">,</span> <span class="n">spare</span><span class="p">,</span> <span class="n">ready</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="mh">0xb30000</span><span class="p">)</span>
+
+        <span class="n">expertise</span> <span class="o">+=</span> <span class="n">seem</span>
+
+    <span class="k">return</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">md5</span><span class="p">(</span><span class="n">spare</span><span class="p">)</span><span class="o">.</span><span class="n">digest</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>Now we can print out <code class="highlighter-rouge">h</code> and obtain the answer of <code class="highlighter-rouge">b</code>. The rest is write a Z3 python script and solve the launch code:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/usr/bin/env python</span>
+
+<span class="kn">from</span> <span class="nn">z3</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">b</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">h</span> <span class="o">=</span> <span class="p">[</span><span class="mi">115</span><span class="p">,</span> <span class="mi">29</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">68</span><span class="p">,</span> <span class="mi">106</span><span class="p">,</span> <span class="mi">108</span><span class="p">,</span> <span class="mi">89</span><span class="p">,</span> <span class="mi">76</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">71</span><span class="p">,</span> <span class="mi">78</span><span class="p">,</span> <span class="mi">51</span><span class="p">,</span> <span class="mi">75</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">55</span><span class="p">,</span> <span class="mi">102</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">16</span><span class="p">):</span>
+    <span class="n">x</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">BitVec</span><span class="p">(</span><span class="s">'x{}'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">),</span> <span class="mi">8</span><span class="p">))</span>
+    <span class="n">b</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">BitVecVal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+
+<span class="c"># calculate missile trajectory</span>
+<span class="n">b</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">8</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">11</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">14</span><span class="p">]</span>
+<span class="n">b</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">8</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">11</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">13</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">14</span><span class="p">]</span>
+<span class="n">b</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">8</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">9</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">10</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">13</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">14</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">15</span><span class="p">]</span>
+<span class="n">b</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">6</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">8</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">9</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">10</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">12</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">15</span><span class="p">]</span>
+<span class="n">b</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">6</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">7</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">8</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">12</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">13</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">14</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">15</span><span class="p">]</span>
+<span class="n">b</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">7</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">8</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">9</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">10</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">12</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">13</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">14</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">15</span><span class="p">]</span>
+<span class="n">b</span><span class="p">[</span><span class="mi">6</span><span class="p">]</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">7</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">9</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">10</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">11</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">12</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">13</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">15</span><span class="p">]</span>
+<span class="n">b</span><span class="p">[</span><span class="mi">7</span><span class="p">]</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">8</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">10</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">11</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">14</span><span class="p">]</span>
+<span class="n">b</span><span class="p">[</span><span class="mi">8</span><span class="p">]</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">9</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">10</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">11</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">12</span><span class="p">]</span>
+<span class="n">b</span><span class="p">[</span><span class="mi">9</span><span class="p">]</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="mi">6</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">7</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">8</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">10</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">11</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">12</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">15</span><span class="p">]</span>
+<span class="n">b</span><span class="p">[</span><span class="mi">10</span><span class="p">]</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">7</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">8</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">10</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">11</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">12</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">13</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">14</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">15</span><span class="p">]</span>
+<span class="n">b</span><span class="p">[</span><span class="mi">11</span><span class="p">]</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">6</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">13</span><span class="p">]</span>
+<span class="n">b</span><span class="p">[</span><span class="mi">12</span><span class="p">]</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">6</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">7</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">10</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">12</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">15</span><span class="p">]</span>
+<span class="n">b</span><span class="p">[</span><span class="mi">13</span><span class="p">]</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">6</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">7</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">11</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">12</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">13</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">14</span><span class="p">]</span>
+<span class="n">b</span><span class="p">[</span><span class="mi">14</span><span class="p">]</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">7</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">11</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">13</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">14</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">15</span><span class="p">]</span>
+<span class="n">b</span><span class="p">[</span><span class="mi">15</span><span class="p">]</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">9</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">10</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">11</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">13</span><span class="p">]</span> <span class="o">^</span> <span class="n">x</span><span class="p">[</span><span class="mi">15</span><span class="p">]</span>
+
+<span class="n">s</span> <span class="o">=</span> <span class="n">Solver</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">16</span><span class="p">):</span>
+    <span class="n">s</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">b</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">BitVecVal</span><span class="p">(</span><span class="n">h</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="mi">8</span><span class="p">))</span>
+    <span class="n">s</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">ULT</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="mh">0x7f</span><span class="p">))</span>
+    <span class="n">s</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">ULT</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+
+<span class="k">if</span> <span class="n">s</span><span class="o">.</span><span class="n">check</span><span class="p">()</span> <span class="o">==</span> <span class="n">sat</span><span class="p">:</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">model</span><span class="p">()</span>
+    <span class="n">answer</span> <span class="o">=</span> <span class="s">""</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">x</span><span class="p">:</span>
+        <span class="n">answer</span> <span class="o">+=</span> <span class="nb">chr</span><span class="p">(</span><span class="n">m</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">as_long</span><span class="p">())</span>
+    <span class="c"># 5C0G7TY2LWI2YXMB</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"ANSWER: {}"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">answer</span><span class="p">))</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"unsat"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Enter the launch code <code class="highlighter-rouge">5C0G7TY2LWI2YXMB</code> and we’ll get the flag:</p>
+
+<p><img src="/assets/images/Flare-on-2019/level7_0.png" alt="" /></p>
+
+<p>Huh? What linear algebra 🙃?</p>
+
+<p>flag: <code class="highlighter-rouge">L1n34R_4L93bR4_i5_FuN@flare-on.com</code></p>
+
+<h2 id="level-8">Level 8</h2>
+
+<p><strong>Tool : FCEUX, Ghidra</strong></p>
+
+<p>Level 8 gave us a NES ROM file, which is a simple <a href="https://en.wikipedia.org/wiki/Snake_(video_game_genre)">snake game</a>. We use the arrow key to control the snake and eat the apple.</p>
+
+<p>For this challenge I use <a href="http://www.fceux.com/web/home.html">FCEUX</a> to debug the ROM. As for static analysis, since I’ve  always wanted to learn how to develop a <a href="https://ghidra-sre.org/">Ghidra</a> plugin, I decided to write a iNES loader for Ghidra and use it to do the static analysis.</p>
+
+<p>So I spent some time reading the NES file format (<a href="http://wiki.nesdev.com/w/index.php/INES">link1</a>, <a href="https://sadistech.com/nesromtool/romdoc.html">link2</a>). I also took reference from the <a href="https://github.com/radare/radare2">radare2</a> project (<a href="https://github.com/radare/radare2/blob/master/libr/bin/format/nes/nes_specs.h">link1</a>, <a href="https://github.com/radare/radare2/blob/master/libr/bin/p/bin_nes.c">link2</a>) in order to have a better knowledge of how a NES ROM is loaded into the memory. As for Ghidra plugin developing, I just follow the step in <a href="https://habr.com/en/post/443318/">this blog post</a>. I also learned how to write a Ghidra loader from VGKintsugi’s <a href="https://github.com/VGKintsugi/Ghidra-SegaMasterSystem-Loader">Ghidra SegaMasterSystem Loader</a>.</p>
+
+<p>In the end I managed to develop a Ghidra iNES ROM loader for this challenge ( it can only load the first PRG ROM though ), which is able to load the ROM into Ghidra and display the disassemble &amp; decompiled code. You can check out the repo <a href="https://github.com/bruce30262/flareon6_NES_ghidra_loader">here</a>.</p>
+
+<p><img src="/assets/images/Flare-on-2019/level8_0.png" alt="" /></p>
+
+<p>With these tools I was able to recover the game logic and identified some variable. For example, at memory address 0x4 and 0x5 it stores the snake’s direction, 0x7 and 0x8 are snake’s x-axis &amp; y-axis, 0x17 &amp; 0x18 are apples x-axis &amp; y-axis…etc. I then got stuck for a while, since I’ve no idea where the flag is. Until I saw the following code:</p>
+
+<p><img src="/assets/images/Flare-on-2019/level8_1.png" alt="" /></p>
+
+<p>Basically it’s saying that if the snake eat 200 apples, data at address 0x26 will become 0xf0 ( it shows -0x10 in the decompiled code, but it’s actually 0xf0 ). OK, so what’s gonna happen once it becomes 0xf0? To find out the answer, I used FCEUX’s hex editor and modified the value at 0x26 to 0xf0:</p>
+
+<p><img src="/assets/images/Flare-on-2019/level8_2.png" alt="" /></p>
+
+<p>WOW 😮 That’s it ? Apparently, all we need to do is to win the game 🤨</p>
+
+<p>flag:<code class="highlighter-rouge">NARPAS-SWORD@flare-on.com</code></p>
+
+<h2 id="level-9">Level 9</h2>
+
+<p><strong>Tool : IDA Pro + Windbg, x64dbg</strong></p>
+
+<p>This time is a PE32 executable ( VC++ binary ), which does simple thing: ask us to enter a key, and if the key is correct, print out the flag.</p>
+
+<p>Reversed the program with IDA we’ll find out that the key checking logic seems to be a system of constraints:</p>
+
+<p><img src="/assets/images/Flare-on-2019/level9_0.png" alt="" /></p>
+
+<p>However after I solve the constraints with Z3 and input the key, it kept saying that it’s the wrong key. So I started to analyze the program with debugger, and found that the program behavior is different from the one without using debugger – if I enter the key, it’ll passes the check, but print out a fake flag.</p>
+
+<p>So I started tracing the program step by step, and found that before it ran to the main function, it actually jumped to a function which uses the <code class="highlighter-rouge">rdtsc</code> instruction to detect if there’s a debugger while executing the program. If so, it’ll jump to the main function ( which in this case is the fake key checking function ), otherwise it’ll execute the code that does the real key checking. The code of this function can only be spotted during the program execution, at least for me I didn’t see the code while I was reversing the binary ( I’m guessing this has something to do with the duplicate  base relocation table in the <code class="highlighter-rouge">.reloc</code> section of this binary ? )</p>
+
+<p>Anyway thanks to IDA &amp; Windbg I was able to decompile the actual code of the key checking function. Apart from the code that does the anti-debug, the key checking part is actually quite simple:</p>
+
+<ol>
+  <li>It uses SSE2 instructions to initialize a data buffer.</li>
+  <li>Process the buffer’s data with XOR and loops.</li>
+  <li>Read our input key ( 13 bytes ) and XORed it with the data buffer. The result must ends with “@flare-on.com”</li>
+</ol>
+
+<p>Knowing the logic, all we need to do is write a simple script and solve the key &amp; flag :</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/usr/bin/env python</span>
+<span class="c"># -*- coding: utf-8 -*-</span>
+
+<span class="n">secret</span> <span class="o">=</span> <span class="s">"4429360a290f051b652610042b68302f00332f051a1f0f3802184202331a28042a473f042664664d10373e283e771c3f7e36342a00"</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s">'hex'</span><span class="p">)</span>
+<span class="n">secret</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">secret</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mh">0x539</span><span class="p">):</span>
+    <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">while</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="mh">0x34</span><span class="p">:</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">i</span><span class="o">%</span><span class="mi">3</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">i</span><span class="o">%</span><span class="mi">7</span><span class="o">==</span><span class="mi">0</span><span class="p">):</span>
+            <span class="n">tmp</span> <span class="o">=</span> <span class="nb">ord</span><span class="p">(</span><span class="n">secret</span><span class="p">[</span><span class="n">j</span><span class="p">])</span> <span class="o">^</span> <span class="n">i</span>
+            <span class="n">secret</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="nb">chr</span><span class="p">(</span><span class="n">tmp</span><span class="o">&amp;</span><span class="mh">0xff</span><span class="p">)</span>
+        <span class="n">j</span> <span class="o">+=</span> <span class="mi">1</span>
+
+<span class="n">secret</span> <span class="o">=</span> <span class="n">secret</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">:]</span>
+<span class="n">sz</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">secret</span><span class="p">)</span>
+<span class="n">check</span> <span class="o">=</span> <span class="s">"@flare-on.com"</span>
+<span class="n">sz2</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">check</span><span class="p">)</span>
+<span class="n">idx</span> <span class="o">=</span> <span class="n">sz</span><span class="o">-</span><span class="mi">1</span>
+<span class="n">key</span> <span class="o">=</span> <span class="s">""</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">sz2</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+    <span class="n">tmp</span> <span class="o">=</span> <span class="nb">ord</span><span class="p">(</span><span class="n">check</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">^</span> <span class="nb">ord</span><span class="p">(</span><span class="n">secret</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span>
+    <span class="n">key</span> <span class="o">=</span> <span class="nb">chr</span><span class="p">(</span><span class="n">tmp</span><span class="o">&amp;</span><span class="mh">0xff</span><span class="p">)</span> <span class="o">+</span> <span class="n">key</span>
+    <span class="n">idx</span> <span class="o">-=</span> <span class="mi">1</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">"key: {}"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">))</span>
+<span class="n">flag</span> <span class="o">=</span> <span class="s">""</span>
+<span class="n">secret</span><span class="o">+=</span><span class="s">"</span><span class="se">\x00</span><span class="s">"</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mh">0x34</span><span class="p">):</span>
+    <span class="n">flag</span> <span class="o">+=</span> <span class="nb">chr</span><span class="p">((</span><span class="nb">ord</span><span class="p">(</span><span class="n">key</span><span class="p">[</span><span class="n">i</span><span class="o">%</span><span class="mi">13</span><span class="p">])</span><span class="o">^</span><span class="nb">ord</span><span class="p">(</span><span class="n">secret</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span><span class="o">&amp;</span><span class="mh">0xff</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">"flag: {}"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">flag</span><span class="p">))</span>
+</code></pre></div></div>
+
+<p>Running the script will gave us the key “3HeadedMonkey” and the flag.</p>
+
+<p>flag:<code class="highlighter-rouge">I_mUsT_h4vE_leFt_it_iN_mY_OthEr_p4nTs?!@flare-on.com</code></p>
+
+<h2 id="level-10">Level 10</h2>
+
+<p><strong>Tool : IDA Pro + Windbg, x64dbg</strong></p>
+
+<p>We were given several files this time:</p>
+<ul>
+  <li>Mugatu.exe ( the challenge binary )</li>
+  <li>A ransom note.</li>
+  <li>Two <code class="highlighter-rouge">.gif.Mugatu</code> files, which were encrypted by the Mugatu malware.</li>
+</ul>
+
+<p>We were asked to recover the encrypted headshot GIF ( <code class="highlighter-rouge">best.gif.Mugatu</code> ). The other file, <code class="highlighter-rouge">the_key_to_success_0000.gif.Mugatu</code>, is supposed to “help in our decryption efforts”.</p>
+
+<p>After I reversed the Mugatu malware with IDA, I noticed that something isn’t right in this binary. For example, there were lots of external library call which doesn’t make any sense ( like it keep doing <code class="highlighter-rouge">EncodePointer()</code>/<code class="highlighter-rouge">DecodePointer()</code> on a NULL pointer ). Also it seems that the program is pushing incorrect amount of arguments on the stack. For example the <code class="highlighter-rouge">GetCurrentProcess()</code> function requires no argument, but the program still push a <code class="highlighter-rouge">0x1388</code> on the stack.</p>
+
+<p>Later when I started debugging the program with x64dbg, I found out why: it seems that the IAT was wrong in the first place. The program will call a function which fixes the IAT before entering the main function. After I dumped and fixed the binary with x64dbg and its Scylla plugin, everything went back to normal 🙂</p>
+
+<p>The Mugatu malware will create a thread and uses that thread to do the encryption. The code is in a DLL, which is created on the fly. At first I dumped the code with x64dbg and analyzed it with IDA, but again, I found that its external library calls were obfuscated. For instance when it wants to call a library function A, it’ll jump to the following entry:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>push    891EA61Dh
+not     [esp]
+ret
+</code></pre></div></div>
+
+<p><code class="highlighter-rouge">~0x891EA61D</code> will become function A’s address, so after the <code class="highlighter-rouge">ret</code> instruction the program will jump to function A and execute the code.</p>
+
+<p>To de-obfuscate the code I use IDA + Windbg to do the job. After the program jump to the DllEntry, I set the IP to those library call entries and step through the program, figured out which library function will it call and mark the symbols in the idb. After that, I use the “take memory snapshot” feature in IDA, which took the memory snapshot and allows me to analyze the binary without the use of the debugger. This cause IDA created a huge idb file ( about 200 MB ), but thanks to this I was able to sort out the logic of the encryption routine:</p>
+
+<ol>
+  <li>It will scan the drives on the computer and search if there’s a directory named “really, really, really, ridiculously good looking gifs”</li>
+  <li>Once it find the directory, it will search for GIF file in the directory and encrypt it.</li>
+</ol>
+
+<p>Here’s the pseudo code of the encryption:</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// buf = file content
+</span><span class="kt">char</span> <span class="o">*</span><span class="n">buf</span> <span class="o">=</span> <span class="n">read_file</span><span class="p">(</span><span class="n">file</span><span class="p">);</span>
+
+<span class="k">while</span> <span class="n">buf</span> <span class="o">!=</span> <span class="n">end_of_file</span> <span class="p">{</span>
+
+    <span class="n">first_4</span> <span class="o">=</span> <span class="o">*</span><span class="n">buf</span><span class="p">;</span> <span class="c1">// first 4 byte
+</span>    <span class="n">next_4</span> <span class="o">=</span> <span class="n">buf</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span> <span class="c1">// next 4 byte
+</span>
+    <span class="n">v5</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span> <span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">32</span> <span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">v6</span> <span class="o">=</span> <span class="n">v5</span> <span class="o">+</span> <span class="n">key</span><span class="p">[</span><span class="n">v5</span> <span class="o">&amp;</span> <span class="mi">3</span><span class="p">];</span> <span class="c1">// key[v5 &amp; 3] means the key is only 4 byte long
+</span>        <span class="n">v5</span> <span class="o">-=</span> <span class="mh">0x61C88647</span><span class="p">;</span>
+        <span class="n">first_4</span> <span class="o">+=</span> <span class="n">v6</span> <span class="o">^</span> <span class="p">(</span><span class="n">next_4</span> <span class="o">+</span> <span class="p">((</span><span class="n">next_4</span> <span class="o">&gt;&gt;</span> <span class="mi">5</span><span class="p">)</span> <span class="o">^</span> <span class="p">(</span><span class="mi">16</span> <span class="o">*</span> <span class="n">next_4</span><span class="p">)));</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">v5</span> <span class="o">+</span> <span class="n">key</span><span class="p">[(</span><span class="n">v5</span> <span class="o">&gt;&gt;</span> <span class="mi">11</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mi">3</span><span class="p">];</span>
+        <span class="n">next_4</span> <span class="o">+=</span> <span class="n">result</span> <span class="o">^</span> <span class="p">(</span><span class="n">first_4</span> <span class="o">+</span> <span class="p">((</span><span class="n">first_4</span> <span class="o">&gt;&gt;</span> <span class="mi">5</span><span class="p">)</span> <span class="o">^</span> <span class="p">(</span><span class="mi">16</span> <span class="o">*</span> <span class="n">first_4</span><span class="p">)));</span>
+    <span class="p">}</span>
+
+    <span class="o">*</span><span class="n">buf</span> <span class="o">=</span> <span class="n">first_4</span><span class="p">;</span> <span class="c1">// write back first 4 byte
+</span>    <span class="n">buf</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">next_4</span><span class="p">;</span> <span class="c1">// write back next 4 byte
+</span>    
+    <span class="n">buf</span> <span class="o">+=</span> <span class="mi">8</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Writing a decryptor is easy, however the value of <code class="highlighter-rouge">key</code> is unknown. By examining the code we’ll know that the key is only 4 bytes long, so all we need to do is crack the key with brute-forcing, then use the key to decrypt the file.</p>
+
+<p>Since our goal is to decrypt a GIF file, meaning that the first 4 bytes of the decrypted data will be “GIF8” ( the header of the GIF file ). We can use this to write our key-cracker. I first cracked the key of the <code class="highlighter-rouge">the_key_to_success_0000.gif.Mugatu</code> file ( which is 4 NULL byte ), after the decryption it gave us a GIF file:</p>
+
+<p><img src="/assets/images/Flare-on-2019/level10_0.gif" alt="" /></p>
+
+<p>If says the first byte of the key is <code class="highlighter-rouge">0x31</code>. We then can improve our key-cracker and speed up the cracking process. After that we’ll get the key of <code class="highlighter-rouge">best.gif.Mugatu</code>, which is <code class="highlighter-rouge">0xb1357331</code>. Decrypt the file and we’ll get the flag:</p>
+
+<p><img src="/assets/images/Flare-on-2019/level10_1.gif" alt="" /></p>
+
+<p>You can check the key-cracker and the decrpytor scripts <a href="https://gist.github.com/bruce30262/f0e4ef73fc7284c0479b9034ac376cb7">here</a></p>
+
+<p>flag: <code class="highlighter-rouge">FL4rE-oN_5o_Ho7_R1gHt_NoW@flare-on.com</code></p>
+
+<h2 id="level-11">Level 11</h2>
+
+<p><strong>Tool : IDA Pro + Windbg, x64dbg</strong></p>
+
+<blockquote>
+  <p>Hey, at least its not subleq.</p>
+</blockquote>
+
+<p>Oh wow, I wonder what it would be 🙄</p>
+
+<p>This time it gave us a simple binary program ( <code class="highlighter-rouge">vv_max.exe</code> ) – it takes two command line arguments, and does some checking. If we passes the check, it will print out the flag.</p>
+
+<p>After we reverse the binary with IDA, we can see that it’s a VM: it reads byte codes and arguments from a data buffer, then execute the corresponded functions. The VM uses lots of <a href="https://en.wikipedia.org/wiki/Advanced_Vector_Extensions">AVX2 instruction set</a>, which took me some time to figure out what they’re actually doing.</p>
+
+<p>After I figured out all of the functions, I wrote a <a href="https://gist.github.com/bruce30262/043ee199388fbc80d37d400de67291d5#file-disasm-py">disassembler</a> and started analyzing the <a href="https://gist.github.com/bruce30262/043ee199388fbc80d37d400de67291d5#file-level11-asm">code</a>. Basically it’ll take our <code class="highlighter-rouge">argv1</code> and does some operations, then store the result ( 32 bytes ) in a buffer (<code class="highlighter-rouge">buf20</code>). It does the same thing to <code class="highlighter-rouge">argv2</code> as well ( result will be in <code class="highlighter-rouge">buf2</code> ). After executing the VM the program will check if <code class="highlighter-rouge">buf2</code> and <code class="highlighter-rouge">buf20</code> has the same data, if so, print out the flag ( which is <code class="highlighter-rouge">argv2</code> ^ a fixed data ).</p>
+
+<p>I noticed that in the end the program will check if <code class="highlighter-rouge">argv1</code> == <code class="highlighter-rouge">FLARE2019</code>, so I just assumed that <code class="highlighter-rouge">argv1</code> must be <code class="highlighter-rouge">FLARE2019</code>. This means that <code class="highlighter-rouge">buf20</code> is a known value, we can extracted the data from x64dbg:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>"\x70\x70\xB2\xAC\x01\xD2\x5E\x61\x0A\xA7\x2A\xA8\x08\x1C\x86\x1A\xE8\x45\xC8\x29\xB2\xF3\xA1\x1E\x00\x00\x00\x00\x00\x00\x00\x00"
+</code></pre></div></div>
+
+<p>Now all we need to do is try recover <code class="highlighter-rouge">argv2</code> so later <code class="highlighter-rouge">buf2</code> will have the same data. Here’s the disassemble result related to <code class="highlighter-rouge">buf2</code>:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># buf[1] = argv2
+write_32byte_to_buf[1](data: 'aaaaaaaabbbbbbbbccccccccdddddddd')
+write_32byte_to_buf[5](data: '\x00\x10\x13\x04\xbf\xbf\xb9\xb9\x00\x00\x00\x00\x00\x00\x00\x00\x00\x10\x13\x04\xbf\xbf\xb9\xb9\x00\x00\x00\x00\x00\x00\x00\x00')
+write_32byte_to_buf[6](data: '////////////////////////////////')
+write_32byte_to_buf[10](data: '@\x01@\x01@\x01@\x01@\x01@\x01@\x01@\x01@\x01@\x01@\x01@\x01@\x01@\x01@\x01@\x01')
+write_32byte_to_buf[11](data: '\x00\x10\x01\x00\x00\x10\x01\x00\x00\x10\x01\x00\x00\x10\x01\x00\x00\x10\x01\x00\x00\x10\x01\x00\x00\x10\x01\x00\x00\x10\x01\x00')
+write_32byte_to_buf[12](data: '\x02\x01\x00\x06\x05\x04\n\t\x08\x0e\r\x0c\xff\xff\xff\xff\x02\x01\x00\x06\x05\x04\n\t\x08\x0e\r\x0c\xff\xff\xff\xff')
+write_32byte_to_buf[13](data: '\x00\x00\x00\x00\x01\x00\x00\x00\x02\x00\x00\x00\x04\x00\x00\x00\x05\x00\x00\x00\x06\x00\x00\x00\xff\xff\xff\xff\xff\xff\xff\xff')
+
+Part1:
+mov buf[7] &lt;- buf[1] srld 4
+mov buf[7] &lt;- buf[7] &amp; buf[6]
+mov buf[8] &lt;- buf[1] cmpeqb buf[6]
+mov buf[8] &lt;- buf[1] cmpeqb buf[6]
+mov buf[7] &lt;- buf[8] addb buf[7]
+mov buf[7] &lt;- buf[5] shufb buf[7]
+mov buf[2] &lt;- buf[1] addb buf[7]
+
+Part2:
+mov buf[7] &lt;- buf[2] addubsw buf[10]
+mov buf[2] &lt;- buf[7] addwd buf[11]
+mov buf[2] &lt;- buf[2] shufb buf[12]
+mov buf[2] &lt;- buf[13] permd buf[2]
+</code></pre></div></div>
+
+<p>Starting from the bottom, the <code class="highlighter-rouge">permd</code>, <code class="highlighter-rouge">shufb</code>, and <code class="highlighter-rouge">addwd</code> operation can all be inversed with the help of the debugger and the <a href="https://www.felixcloutier.com/x86/">reference on the internet</a>. <code class="highlighter-rouge">addubsw</code> requires some brute-forcing, and could have multiple solutions. Here I just pick the first fitted solution. After that we’ll get a fixed value: <code class="highlighter-rouge">0x1e043a3c3226023205212e0606320102282a32290a0426171207002b3202071c</code></p>
+
+<p>This means that after the operations in <code class="highlighter-rouge">Part1</code>, <code class="highlighter-rouge">buf2</code> will become <code class="highlighter-rouge">0x1e043a3....</code>. To inverse the operations in <code class="highlighter-rouge">Part1</code>, I decided to take a wild guess – I just assumed that <code class="highlighter-rouge">mov buf[8] &lt;- buf[1] cmpeqb buf[6]</code> will make <code class="highlighter-rouge">buf[8]</code> become zero, which means none of the byte in <code class="highlighter-rouge">argv2</code> is equals to <code class="highlighter-rouge">/</code>. This will simplify the operations to:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># buf[1] == argv2
+Part1:
+mov buf[7] &lt;- (buf[1] srld 4) &amp; buf[6]
+mov buf[7] &lt;- buf[5] shufb buf[7]
+mov buf[2] &lt;- buf[1] addb buf[7]
+</code></pre></div></div>
+
+<p>With this, we can actually crack the value of <code class="highlighter-rouge">argv2</code> with brute-forcing. With some optimizing, we’ll get the correct value in no time. You can check my solver <a href="https://gist.github.com/bruce30262/043ee199388fbc80d37d400de67291d5#file-sol-py">here</a>.</p>
+
+<p>The solver gave us two answer: <code class="highlighter-rouge">cHCyrAHSXmEKpyqoCByGGuhFyCmy86E_</code> and <code class="highlighter-rouge">cHCyrAHSXmEKpyqoCByGGuhFyCmy86Ee</code>. Both answer will let the program print out the flag:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ ./vv_max.exe FLARE2019 cHCyrAHSXmEKpyqoCByGGuhFyCmy86E_
+That is correct!
+Flag: AVX2_VM_M4K3S_BASE64_C0MPL1C4T3~@flare-on.com
+
+$ ./vv_max.exe FLARE2019 cHCyrAHSXmEKpyqoCByGGuhFyCmy86Ee
+That is correct!
+Flag: AVX2_VM_M4K3S_BASE64_C0MPL1C4T3D@flare-on.com
+</code></pre></div></div>
+
+<p>We can easily figure out the correct flag, which is <code class="highlighter-rouge">AVX2_VM_M4K3S_BASE64_C0MPL1C4T3D@flare-on.com</code>. BTW I was surprised that the code in VM was just doing base64 decoding 😲:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;&gt;&gt; "cHCyrAHSXmEKpyqoCByGGuhFyCmy86Ee".decode('base64').encode('hex')
+'7070b2ac01d25e610aa72aa8081c861ae845c829b2f3a11e'
+</code></pre></div></div>
+
+<p>flag: <code class="highlighter-rouge">AVX2_VM_M4K3S_BASE64_C0MPL1C4T3D@flare-on.com</code></p>
+
+<h2 id="level-12">Level 12</h2>
+
+<p><strong>Tool : IDA Pro, Windbg Preview, Volatility, binwalk, Wireshark, kpbrute</strong></p>
+
+<p>Final challenge ! This time they gave us a Windows memory crash dump and a pcap file, saying that there’s a backdoor in the system and asked us to analyze it. I’ve never analyze a Windows crash dump file before, this should be fun 😄</p>
+
+<p>To analyze a crash dump, I spent some time learning the basic usage of <a href="https://github.com/volatilityfoundation/volatility">Volatility</a>. I’ve also spent some time to learn how to analyze a crash dump with Windbg, although this time I’ll be using <a href="https://docs.microsoft.com/en-us/windows-hardware/drivers/debugger/debugging-using-windbg-preview">Windbg Preview</a>.</p>
+
+<p>Let’s start with the crash dump first. Open the crash dump with Windbg Preview and use <code class="highlighter-rouge">!analyze -v</code> to analyze the crash, it told me that it crashed while running the <code class="highlighter-rouge">man.sys</code> module. Also it’s running a 64 bit Win 7 OS. Using volatility to analyze the process list and network connections, we’ll notice that it has some suspicious network connections at port 4444, 6666, 7777 and 8888:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ ./volatility_2.6_win64_standalone.exe -f ./help.dmp --profile=Win7SP1x64 netscan
+
+0x7d7c91d0         TCPv4    0.0.0.0:4444                   0.0.0.0:0            LISTENING        876      svchost.exe    
+................
+0x7d445010         TCPv4    192.168.1.244:1588             192.168.1.243:7777   FIN_WAIT1        876      svchost.exe
+0x7d62acf0         TCPv4    192.168.1.244:1586             192.168.1.243:7777   FIN_WAIT1        876      svchost.exe
+0x7d6686c0         TCPv4    192.168.1.244:4444             192.168.1.243:1060   CLOSE_WAIT       876      svchost.exe
+0x7d70d010         TCPv4    192.168.1.244:1633             192.168.1.243:8888   FIN_WAIT2        876      svchost.exe
+............................
+0x7d8e3300         TCPv4    192.168.1.244:1636             192.168.1.243:8888   FIN_WAIT2        876      svchost.exe
+0x7d93b010         TCPv4    192.168.1.244:4444             192.168.1.243:1063   CLOSE_WAIT       876      svchost.exe
+0x7d961010         TCPv4    192.168.1.244:1635             192.168.1.243:7777   FIN_WAIT1        876      svchost.exe    
+0x7d96ecf0         TCPv4    192.168.1.244:1639             192.168.1.243:6666   FIN_WAIT2        876      svchost.exe
+
+</code></pre></div></div>
+
+<p>Apparently <code class="highlighter-rouge">man.sys</code> the driver is one of the challenge binaries, let’s analyze it with the <code class="highlighter-rouge">lmvm</code> command:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kd&gt; lmvm man
+Browse full module list
+start             end                 module name
+fffff880`033bc000 fffff880`033cb000   man      T (no symbols)           
+    Loaded symbol image file: man.sys
+    Image path: \??\C:\Users\FLARE ON 2019\Desktop\man.sys
+    Image name: man.sys
+    Browse all global symbols  functions  data
+    Timestamp:        unavailable (FFFFFFFE)
+    CheckSum:         missing
+    ImageSize:        0000F000
+    Translations:     0000.04b0 0000.04e4 0409.04b0 0409.04e4
+    Information from resource tables:
+
+</code></pre></div></div>
+
+<p>Once we get the address space of the module, we can use the <code class="highlighter-rouge">.writemem &lt;filename&gt; &lt;start_addr&gt; &lt;end_addr&gt;</code> command to dump the binary and analyze it. After dumping the binary, I use <a href="https://github.com/ReFirmLabs/binwalk">binwalk</a> to run a quick check on the binary file, and it said that at offset <code class="highlighter-rouge">0x7110</code> there’s a PE executable. After I extracted and analyzed it, I realized that this is the backdoor DLL file ( <code class="highlighter-rouge">m.dll</code> ) which is responsible for those packet data in the pcap file.</p>
+
+<p>As for <code class="highlighter-rouge">man.sys</code>, I decided to open the dumped binary with IDA and start analyzing. Here are some methods I used to help me analyze the driver:</p>
+
+<ul>
+  <li>In IDA we can load type libraries by opening the View-&gt;Type libraries window. Load some windows driver-related libraries will help us reverse the driver more conveniently.</li>
+  <li>At first I tried to write the entire <code class="highlighter-rouge">ntdll.dll</code> into idb and use the <a href="https://www.hex-rays.com/products/ida/lumina/index.shtml">Lumina server</a> to help me identify the NT library calls. However this isn’t very effective so in the end I just check those libraries’ address in Windbg – just use <code class="highlighter-rouge">u</code> to check which library function you’re about to call:</li>
+</ul>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kd&gt; u FFFFF80002D2B0C0
+nt!IoCreateDevice:
+fffff800`02d2b0c0 fff3            push    rbx
+fffff800`02d2b0c2 55              push    rbp
+fffff800`02d2b0c3 56              push    rsi
+fffff800`02d2b0c4 57              push    rdi
+</code></pre></div></div>
+
+<blockquote>
+  <p>Later did I know that you can just use Volatility’s <a href="https://github.com/volatilityfoundation/volatility/wiki/Command-Reference-Mal#impscan">impscan</a> command to identify calls to APIs. The command even has an option to generate an IDA .idc file that help us mark the function name in IDA !</p>
+</blockquote>
+
+<ul>
+  <li>In Windbg we can use <code class="highlighter-rouge">!drvobj \Driver\in 7</code> to analyze a driver object – it will list the location of <code class="highlighter-rouge">DriverEntry</code>, <code class="highlighter-rouge">DriverUnload</code> and the major dispatch function.</li>
+</ul>
+
+<p>After analyzing the driver and <code class="highlighter-rouge">m.dll</code>, we could sort out some logic of this backdoor:</p>
+
+<ul>
+  <li><code class="highlighter-rouge">m.dll</code> is responsible for handling the attacker’s request. It’ll wait for connection at port 4444 and receive the attacker’s request. The request will be sent to <code class="highlighter-rouge">man.sys</code> via <code class="highlighter-rouge">DeviceIoControl()</code>.</li>
+  <li><code class="highlighter-rouge">man.sys</code> will check the request and decide which DLL should it start. It then will use RC4 to decrypt the corresponded DLL file, and use <a href="https://wikileaks.org/ciav7p1/cms/page_7995519.html">APC injection</a> to start the routine. The DLL will be encrypted once the routine is done.</li>
+</ul>
+
+<p>The driver uses a data structure to store the DLL’s information:</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">struct</span> <span class="n">dllobj</span><span class="p">{</span>
+    <span class="n">QWORD</span> <span class="n">id</span><span class="p">;</span> <span class="c1">// for searching the corresponded dll
+</span>    <span class="n">dllobj</span> <span class="o">*</span><span class="n">next</span><span class="p">;</span> <span class="c1">// pointer to the next dllobj
+</span>    <span class="c1">//.... not important ......
+</span>    <span class="kt">char</span> <span class="o">*</span><span class="n">key_and_data_buf</span><span class="p">;</span>
+    <span class="n">QWORD</span> <span class="n">routine_offset</span><span class="p">;</span>
+    <span class="n">QWORD</span> <span class="n">data_length</span><span class="p">;</span>
+    <span class="c1">// ... other data member;
+</span>    <span class="n">DWORD</span> <span class="n">port_number</span><span class="p">;</span>
+    <span class="n">PEPROCESS</span> <span class="n">process_obj</span><span class="p">;</span> <span class="c1">// process being injected
+</span><span class="p">}</span>
+</code></pre></div></div>
+
+<p>The <code class="highlighter-rouge">key_and_data_buf</code> member is kind of special. It stores the address of the encrypted DLL file ( <code class="highlighter-rouge">dll_base_address</code> ), which is also the first 8 bytes of the RC4 key. The driver will treat <code class="highlighter-rouge">&amp;key_and_data_buf</code> as the key buffer ( 44 bytes long ) and use it to decrypt the DLL file. Once it’s decrypted, it’ll jump to <code class="highlighter-rouge">dll_base_address + routine_offset</code> to start the routine. The structure might store a DWORD as the port number at offset <code class="highlighter-rouge">0x6c</code>, which will be used for sending the data to the attacker.</p>
+
+<p>To decrypt those DLL, I decided to learn the <a href="https://docs.microsoft.com/en-us/windows-hardware/drivers/debugger/javascript-debugger-scripting">JavaScript Debugger Scripting</a> so I can use Javascript in Windbg to do the decryption. After reading some useful article/cheatsheet ( <a href="https://doar-e.github.io/blog/2017/12/01/debugger-data-model/">link1</a>, <a href="https://github.com/hugsy/defcon_27_windbg_workshop/blob/master/windbg_cheatsheet.md">link2</a> ), I came up with a <a href="https://gist.github.com/bruce30262/9f5cd8274666167436ef1b4b12e7f268#file-script-js">script</a> that allows me to decrypt those DLL files.</p>
+
+<blockquote>
+  <p>Gotta say… using Javascript in Windbg is not that intuitive. Like they don’t have API call <code class="highlighter-rouge">writeMemoryValues</code> to let us write value to memory, I have to implement a wrapper which execute the <code class="highlighter-rouge">eb</code> command to do the job. Also I don’t like the way it execute our custom command, we have to run the command like <code class="highlighter-rouge">!cmd ("&lt;hex value&gt;", "&lt;hex value&gt;"...)</code> instead of just <code class="highlighter-rouge">!cmd arg1 arg2</code>.</p>
+</blockquote>
+
+<p>Notice that since it uses APC injection to start the code, we’ll have to switch to the injected process context before we decrpyt those DLLs. So, execute the <code class="highlighter-rouge">.process &lt;address of process object&gt;</code> command first then run the <code class="highlighter-rouge">!dr4</code> command, we’ll then have our decrypted routine code in the process memory. Dump the code with the <code class="highlighter-rouge">.writemem</code> command, then we can start analyzing those DLL files.</p>
+
+<blockquote>
+  <p>One of the DLL (<code class="highlighter-rouge">k.dll</code>) does not need to be decrypted though, it’s actually un-encrypted in the process memory.</p>
+</blockquote>
+
+<p>After some reverse engineering we can classify those DLL with the following table:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>name</th>
+      <th>port number</th>
+      <th>routine</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>f.dll</td>
+      <td>6666</td>
+      <td>File processing ( read/find/delete files)</td>
+    </tr>
+    <tr>
+      <td>s.dll</td>
+      <td>7777</td>
+      <td>Taking screenshot ( BMP file )</td>
+    </tr>
+    <tr>
+      <td>k.dll</td>
+      <td>8888</td>
+      <td>Key logger</td>
+    </tr>
+    <tr>
+      <td>c.dll</td>
+      <td>N/A</td>
+      <td>Compress data with LZNT and encrypt it with RC4</td>
+    </tr>
+    <tr>
+      <td>n.dll</td>
+      <td>N/A</td>
+      <td>Send the data to attacker with the given port number</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Each time the attacker will choose one of the routine in <code class="highlighter-rouge">f.dll</code>/<code class="highlighter-rouge">s.dll</code>/<code class="highlighter-rouge">k.dll</code>, then the driver will pack the data with <code class="highlighter-rouge">c.dll</code> and send it to the attacker with <code class="highlighter-rouge">n.dll</code>. In <code class="highlighter-rouge">c.dll</code> it will call <a href="https://docs.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-getusernamea">GetUserNameA</a> and treat the result as the RC4 encryption key. We can retrieve the username with volatility :</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ ./volatility_2.6_win64_standalone.exe -f ./help.dmp --profile=Win7SP1x64 printkey -K "SAM\Domains\Account\Users\Names"
+Volatility Foundation Volatility Framework 2.6
+Legend: (S) = Stable   (V) = Volatile
+
+----------------------------
+Registry: \SystemRoot\System32\Config\SAM
+Key name: Names (S)
+Last updated: 2019-07-02 01:07:12 UTC+0000
+
+Subkeys:
+  (S) Administrator
+  (S) FLARE ON 2019 &lt;-- Here !
+  (S) Guest
+
+Values:
+REG_DWORD                     : (S) 0
+</code></pre></div></div>
+
+<p>Notice that <code class="highlighter-rouge">GetUserNameA</code> will append a null byte at the end of the string, so the key is actually <code class="highlighter-rouge">FLARE ON 2019\x00</code>.</p>
+
+<p>So a brief summary:</p>
+
+<ol>
+  <li>Each time the attacker will connect to victim’s 4444 port and send a request.</li>
+  <li><code class="highlighter-rouge">m.dll</code> will process and forward the request to the driver <code class="highlighter-rouge">man.sys</code>.</li>
+  <li><code class="highlighter-rouge">man.sys</code> will handle the request and start doing one of the DLL’s routine in <code class="highlighter-rouge">f.dll</code>/<code class="highlighter-rouge">s.dll</code>/<code class="highlighter-rouge">k.dll</code>.</li>
+  <li>Once the routine is done, pack the response data with <code class="highlighter-rouge">c.dll</code>.</li>
+  <li>Send the packed data to the attacker with <code class="highlighter-rouge">n.dll</code>. The connected port number depends on which DLL was executed.</li>
+</ol>
+
+<p>Phew ! Finally, we can start analyzing the pcap file. The plan is simple:</p>
+<ol>
+  <li>Extract the packet data from port 4444/6666/7777/8888</li>
+  <li>Decrypt and decompress those packets, and see what the attacker was doing.</li>
+</ol>
+
+<p>Simple huh ? Except it’s not …… for some unknown reason, those encrypted packets were <strong>encrypted again with another unknown encryption method</strong> 😕 This is the moment when the challenge starting to get “guessy” – no matter how I try, I just couldn’t find where the hell they got encrypted. In the end I have to guess how it got encrypted by analyzing those packet data.</p>
+
+<p>Some of them are pretty simple. For those in port 4444, you can easily infer that it’s just a simple XOR operation, with a 64 bit value key. XOR those data with the key then you’ll get the raw data of the attacker’s request. For those in port 6666 and 8888, you’ll notice that it somehow send the data twice in row: one with the data encrypted, another one without being encrypted. Just extract the latter and decrypt + decompress it, you’ll get the raw data ( filename, file content, key logger data…etc. )</p>
+
+<p>The packets in port 7777 are the most confusing. After hours of failing I decided to ask some help from the flare-on master <a href="https://twitter.com/alex_k_polyakov">@alex_k_polyakov</a>, who told me to focus on XOR and RC4 ( which is good to know because I was starting to think it might be some AES-192 shit or something like that……. ). After analyzing those packets, I noticed that at some point it started to repeat the same 8 bytes data over and over again. With common sense, I treated the 8 bytes data as the key and XORed it with those packets. <strong>Then it just gave me the raw BMP image file…without needing to decrypt &amp; decompress it…</strong></p>
+
+<blockquote>
+  <p>Still don’t know why it works. But it works anyway.</p>
+</blockquote>
+
+<p>Now we can start analyze those data and try figure out what the attacker was trying to do. By looking at the data in port 4444, we can figure out that the attacker would constantly took screenshots of victim’s desktop, then after few moment, retrieved the key logger data. It kept doing this until it got the following screenshots:</p>
+
+<p><img src="/assets/images/Flare-on-2019/level12_0.bmp" alt="" /></p>
+
+<p><img src="/assets/images/Flare-on-2019/level12_1.bmp" alt="" /></p>
+
+<p>We can see that the flag in is a <a href="https://keepass.info/">KeePass</a> database (<code class="highlighter-rouge">keys.kdb</code>). After that the attacker will use port 6666 to retrieve the database.</p>
+
+<p>So the direction is pretty clear: we’ll have to recover the master key of <code class="highlighter-rouge">keys.kdb</code>, load it with KeePass and get the flag. By looking at the screenshot, we’ll see that the master key is 18 bytes long. However if we look at the data from key logger, we’ll only find a 15 bytes long string, which seems to be the part of the master key:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>th1sisth33nd111
+</code></pre></div></div>
+
+<p>By looking at other screenshots and data from key logger, we’ll notice something weird – for example, in the following screenshot, it shows that the victim had enter the command <code class="highlighter-rouge">nslookup Fios_Quantum_Gateway.fios-router.home</code>:</p>
+
+<p><img src="/assets/images/Flare-on-2019/level12_2.bmp" alt="" /></p>
+
+<p>However the key logger only returned the following data:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>nslookup fiosquatumgatefiosrouterhome
+</code></pre></div></div>
+
+<p>This is because the key logger only log digits and lowercase letters – it won’t log special characters like <code class="highlighter-rouge">_</code>, <code class="highlighter-rouge">.</code>, <code class="highlighter-rouge">!</code>…etc, and it’ll always convert the uppercase letters to lowercase.</p>
+
+<p>So again, we’ll have to guess the pattern of the key and recover those missing/incorrect characters. By looking at the string <code class="highlighter-rouge">th1sisth33nd111</code>, we can first split the string into the following words:</p>
+<ul>
+  <li>th1s</li>
+  <li>is</li>
+  <li>th3</li>
+  <li>3nd111</li>
+</ul>
+
+<p>Here I was just taking wild guesses. I assumed that the missing characters are <code class="highlighter-rouge">_</code>, which means the key should be something like:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>th1s_is_th3_3nd111 &lt;-- now 18 characters
+</code></pre></div></div>
+
+<p>Also it doesn’t make sense to append a string <code class="highlighter-rouge">111</code> at the end of the key string. After looking at my keyboard, I realized it’s probably <code class="highlighter-rouge">!!!</code> instead of <code class="highlighter-rouge">111</code>, since the key logger will still return <code class="highlighter-rouge">1</code> even the shift key is pressed. Now we got:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>th1s_is_th3_3nd!!!
+</code></pre></div></div>
+
+<p>The key seems legit, but it’s still not the correct master key, since we’ll have to brute-force the letter case of each letter. Here I’m using <a href="https://github.com/Jimvin/kpbrute">kpbrute</a> to help me do the job – just generate a dictionary file with a <a href="https://gist.github.com/bruce30262/9f5cd8274666167436ef1b4b12e7f268#file-dict-py">simple script</a> and kpbrute will handle the rest. At first it failed to crack the correct master key. After I replaced <code class="highlighter-rouge">th1s</code> with <code class="highlighter-rouge">th!s</code>, it finally gave me the correct master key:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Th!s_iS_th3_3Nd!!!
+</code></pre></div></div>
+
+<p>Loaded the database with KeePass, we finally get the damn flag of the final challenge of FLARE-On 6:</p>
+
+<p><code class="highlighter-rouge">f0ll0w_th3_br34dcrumbs@flare-on.com</code></p>
+
+<p>HELL. THE F*CK. YEAH ! 🎉🎉🎉</p>
+
+<h2 id="epilogue">Epilogue</h2>
+<p>Great challenge as always. In fact I feel I had way more fun than the previous  challenge. I think it’s because I get to learn lot more stuff than last year – Android app analysis, Frida, Ghidra plugin developing, stuff about NES, anti-debug techniques, Windows crash dump analysis…… and lot, lot more ! Flarebear and snake were my favorites, bmphide, wopr and Mugatu were also pretty cool. It’s kind of suck that help ( level 12 ) requires some guessing while decrypting the pcap ( and cracking the master key ), otherwise it’s also a pretty nice challenge. It gave me a chance to learn how to analyze a Windows crash with Windbg, how to write Javascript in Windbg, and lots of IDA tricks/tips while doing reverse engineering 🙂</p>
+
+<p>Kudos to the FLARE team for creating those amazing challenges, and CTFd for hosting the CTF ( It’s nice that we’re able to check our rank during the CTF ! ). Also a big thank to @alex_k_polyakov for helping me out on level 12 ! Finally, congratz to all the participants who was able to finish the challenge this year, especially the other 7 Taiwanese !</p>
+
+<p>See you next year ! 😁</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#android" class="page__taxonomy-item" rel="tag">Android</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#crypto" class="page__taxonomy-item" rel="tag">Crypto</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#ctf" class="page__taxonomy-item" rel="tag">CTF</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#flare-on" class="page__taxonomy-item" rel="tag">flare-on</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#forensic" class="page__taxonomy-item" rel="tag">Forensic</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#javascript" class="page__taxonomy-item" rel="tag">Javascript</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#python" class="page__taxonomy-item" rel="tag">Python</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#reversing" class="page__taxonomy-item" rel="tag">Reversing</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#windows" class="page__taxonomy-item" rel="tag">Windows</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#write-ups" class="page__taxonomy-item" rel="tag">write-ups</a>
+    
+    </span>
+  </p>
+
+
+        
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2019-09-28T13:30:00+08:00">September 28, 2019</time></p>
+        
+      </footer>
+
+      <section class="page__share">
+  
+
+  <a href="https://twitter.com/intent/tweet?text=Flare-on+Challenge+2019+Write-up%20http%3A%2F%2F0.0.0.0%3A4000%2Fflare-on-challenge-2019-write-up%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2F0.0.0.0%3A4000%2Fflare-on-challenge-2019-write-up%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2F0.0.0.0%3A4000%2Fflare-on-challenge-2019-write-up%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/flare-on-challenge-2018-write-up/" class="pagination--pager" title="Flare-on Challenge 2018 Write-up
+">Previous</a>
+    
+    
+      <a href="#" class="pagination--pager disabled">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/flare-on-challenge-2018-write-up/" rel="permalink">Flare-on Challenge 2018 Write-up
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">Flare-on challenge is a Reverse-style CTF challenge created by the FireEye FLARE team. The CTF contains lots of interesting, real-world style reversing chall...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/some-notes-on-migrating-to-jekyll/" rel="permalink">Some notes on migrating to Jekyll
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">Recently I’ve decided to migrate my blogging framework from Hexo to Jekyll. Here are some notes that I took for recording the migration process.
+
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/Chakrazy-exploiting-type-confusion-bug-in-ChakraCore/" rel="permalink">Chakrazy – exploiting type confusion bug in ChakraCore engine
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">Chakrazy is a browser CTF challenge created by team PPP for the 2017 PlaidCTF event. It’s a challenge based on Microsoft’s ChakraCore Javascript engine. You ...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/Learning-browser-exploitation-via-33C3-CTF-feuerfuchs-challenge/" rel="permalink">Learning browser exploitation via 33C3 CTF  feuerfuchs challenge
+</a>
+      
+    </h2>
+    
+    <p class="archive__item-excerpt" itemprop="description">So I’ve been playing with the browser exploitation recently, by studying some browser CTF challenges. So far I’ve tried qwn2own, SGX_Browser and feuerfuchs.
+
+</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+      
+        
+          <li><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-creative-commons" aria-hidden="true"></i> </a></li>
+        
+      
+        
+          <li><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-creative-commons-by" aria-hidden="true"></i> </a></li>
+        
+      
+        
+          <li><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-creative-commons-nc" aria-hidden="true"></i> </a></li>
+        
+      
+        
+          <li><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-creative-commons-sa" aria-hidden="true"></i> </a></li>
+        
+      
+    
+
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2019 Bruce Chen. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+  <script src="https://kit.fontawesome.com/4eee35f757.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+    
+  <script>
+    var disqus_config = function () {
+      this.page.url = "http://0.0.0.0:4000/flare-on-challenge-2019-write-up/";  // Replace PAGE_URL with your page's canonical URL variable
+      this.page.identifier = "/flare-on-challenge-2019-write-up"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    (function() { // DON'T EDIT BELOW THIS LINE
+      var d = document, s = d.createElement('script');
+      s.src = 'https://bruce30262logdown.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+  
+
+
+
+
+
+  </body>
+</html>
