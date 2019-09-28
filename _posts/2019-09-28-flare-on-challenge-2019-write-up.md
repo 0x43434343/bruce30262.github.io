@@ -1041,15 +1041,15 @@ Phew ! Finally, we can start analyzing the pcap file. The plan is simple:
 1. Extract the packet data from port 4444/6666/7777/8888
 2. Decrypt and decompress those packets, and see what the attacker was doing.
 
-Simple huh ? Except it's not ...... for some unknown reason, those encrypted packets were **encrypted again with another unknown encryption method** 😕 This is the moment when the challenge starting to get guessy -- no matter how I try, I just couldn't find where the hell they got encrypted. In the end I have to guess how it got encrypted by analyzing those packet data.
+Simple huh ? Except it's not ...... for some unknown reason, those encrypted packets were **encrypted again with another unknown encryption method** 😕 ~~This is the moment when the challenge starting to get guessy --~~ no matter how I tried, I just couldn't find where the hell they got encrypted. In the end I have to guess how it got encrypted by analyzing those packet data.
 
-> EDIT: WOW, so after I read the [official write-up](https://www.fireeye.com/content/dam/fireeye-www/blog/pdfs/FlareOn6_Challenge12_Solution_help.pdf), you actually have to use `!poolfind FLAR` and `!object \Driver` to locate another driver which uses WFP ( Windows Filtering Platform ) APIs to  modify network traffic on the infected system 😲 
+> EDIT: WOW, so after I read the [official write-up](https://www.fireeye.com/content/dam/fireeye-www/blog/pdfs/FlareOn6_Challenge12_Solution_help.pdf), you actually have to use `!poolfind FLAR` and `!object \Driver` to locate another driver which uses WFP ( Windows Filtering Platform ) APIs to  modify network traffic on the infected system ! 😲 
 
 Some of them are pretty simple. For those in port 4444, you can easily infer that it's just a simple XOR operation, with a 64 bit value key. XOR those data with the key then you'll get the raw data of the attacker's request. For those in port 6666 and 8888, you'll notice that it somehow send the data twice in row: one with the data encrypted, another one without being encrypted. Just extract the latter and decrypt + decompress it, you'll get the raw data ( filename, file content, key logger data...etc. )
 
 The packets in port 7777 are the most confusing. After hours of failing I decided to ask some help from the flare-on master [@alex_k_polyakov](https://twitter.com/alex_k_polyakov), who told me to focus on XOR and RC4 ( which is good to know because I was starting to think it might be some AES-192 shit or something like that....... ). After analyzing those packets, I noticed that at some point it started to repeat the same 8 bytes data over and over again. With common sense, I treated the 8 bytes data as the key and XORed it with those packets. **Then it just gave me the raw BMP image file...without needing to decrypt & decompress it...**
 
-> Still don't know why it works. But it works anyway.
+> Still don't know how I got that. But as long as it works...meh `¯\_(ツ)_/¯`
 
 Now we can start analyze those data and try figure out what the attacker was trying to do. By looking at the data in port 4444, we can figure out that the attacker would constantly took screenshots of victim's desktop, then after few moment, retrieved the key logger data. It kept doing this until it got the following screenshots:
 
