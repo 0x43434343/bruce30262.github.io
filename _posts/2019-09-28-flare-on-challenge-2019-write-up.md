@@ -1041,7 +1041,9 @@ Phew ! Finally, we can start analyzing the pcap file. The plan is simple:
 1. Extract the packet data from port 4444/6666/7777/8888
 2. Decrypt and decompress those packets, and see what the attacker was doing.
 
-Simple huh ? Except it's not ...... for some unknown reason, those encrypted packets were **encrypted again with another unknown encryption method** 😕 This is the moment when the challenge starting to get "guessy" -- no matter how I try, I just couldn't find where the hell they got encrypted. In the end I have to guess how it got encrypted by analyzing those packet data.
+Simple huh ? Except it's not ...... for some unknown reason, those encrypted packets were **encrypted again with another unknown encryption method** 😕 This is the moment when the challenge starting to get guessy -- no matter how I try, I just couldn't find where the hell they got encrypted. In the end I have to guess how it got encrypted by analyzing those packet data.
+
+> EDIT: WOW, so after I read the [official write-up](https://www.fireeye.com/content/dam/fireeye-www/blog/pdfs/FlareOn6_Challenge12_Solution_help.pdf), you actually have to use `!poolfind FLAR` and `!object \Driver` to locate another driver which uses WFP ( Windows Filtering Platform ) APIs to  modify network traffic on the infected system 😲 
 
 Some of them are pretty simple. For those in port 4444, you can easily infer that it's just a simple XOR operation, with a 64 bit value key. XOR those data with the key then you'll get the raw data of the attacker's request. For those in port 6666 and 8888, you'll notice that it somehow send the data twice in row: one with the data encrypted, another one without being encrypted. Just extract the latter and decrypt + decompress it, you'll get the raw data ( filename, file content, key logger data...etc. )
 
@@ -1106,7 +1108,7 @@ Loaded the database with KeePass, we finally get the damn flag of the final chal
 HELL. THE F\*CK. YEAH ! 🎉🎉🎉
 
 ## Epilogue
-Great challenge as always. In fact I feel I had way more fun than the previous  challenge. I think it's because I get to learn lot more stuff than last year -- Android app analysis, Frida, Ghidra plugin developing, stuff about NES, anti-debug techniques, Windows crash dump analysis...... and lot, lot more ! Flarebear and snake were my favorites, bmphide, wopr and Mugatu were also pretty cool. It's kind of suck that help ( level 12 ) requires some guessing while decrypting the pcap ( and cracking the master key ), otherwise it's also a pretty nice challenge. It gave me a chance to learn how to analyze a Windows crash with Windbg, how to write Javascript in Windbg, and lots of IDA tricks/tips while doing reverse engineering 🙂
+Great challenge as always. In fact I feel I had way more fun than the previous  challenge. I think it's because I get to learn lot more stuff than last year -- Android app analysis, Frida, Ghidra plugin developing, stuff about NES, anti-debug techniques, Windows crash dump analysis...... and lot, lot more ! Flarebear and snake were my favorites, bmphide, wopr and Mugatu were also pretty cool. It's kind of suck that help ( level 12 ) requires some guessing while cracking the master key, otherwise it's also a pretty nice challenge. It gave me a chance to learn how to analyze a Windows crash with Windbg, how to write Javascript in Windbg, and lots of IDA tricks/tips while doing reverse engineering 🙂
 
 Kudos to the FLARE team for creating those amazing challenges, and CTFd for hosting the CTF ( It's nice that we're able to check our rank during the CTF ! ). Also a big thank to @alex_k_polyakov for helping me out on level 12 ! Finally, congratz to all the participants who was able to finish the challenge this year, especially the other 7 Taiwanese !
 
