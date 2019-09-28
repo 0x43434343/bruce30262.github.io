@@ -363,7 +363,7 @@ public static void i(Bitmap bm, byte[] data)
 
 We can see that it uses the value from `Program.j(XXX)`. Since I was too lazy to implement `Program.j()`, I decided to launch the debugger in dnSpy and extract those values from memory. While doing this, I found that the program had trigger the "StackOverflow Exception" while doing `Program.Init()`. At first I thought it has something to do with the bug in dnSpy, so I just skip through the code in  `Program.Init()`. There were many code in `Program.Init()` that I can't understand, must be some unimportant code ;) ( Boy I was so wrong... ). After that we can just replace those `Program.j()` with the value we extracted earlier in our python version of `Program.i()`. So far so good.
 
-> According to the [offcial write-up of level6](https://www.fireeye.com/content/dam/fireeye-www/blog/pdfs/FlareOn6_Challenge6_Solution_BMPHIDE.pdf), the StackOverflow Exception is actually an anit-debug trick. You can check the write-up for more details. 
+> According to the [offcial write-up of level6](https://www.fireeye.com/content/dam/fireeye-www/blog/pdfs/FlareOn6_Challenge6_Solution_BMPHIDE.pdf), the StackOverflow Exception is actually an anti-debug trick. You can check the write-up for more details. 
 
 However I soon found out that this isn't the right approach -- my python version of bmphide behaved differently from the .NET version. I've checked the logic in each function, and everything seems to be correct, so where's the problem ? Oh I don't know, **maybe go check that `Program.Init()` function again -_- ?**
 
