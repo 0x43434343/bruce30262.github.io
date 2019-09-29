@@ -261,6 +261,6 @@ var store = [{
         "teaser":null},{
         "title": "Flare-on Challenge 2019 Write-up",
         "excerpt":"Another year of Flare-on challenge ! As a guy who’s interetesed in reverse engineering, this is definitely a great chance for me to practice/sharpen my reversing skills ! This year it has 12 challenges covering Windows PE, Linux ELF, Android apk, NES ROM …… and over 5,700 participants ! Final...","categories": ["write-ups"],
-        "tags": ["CTF","flare-on","Reversing","Crypto","Forensic","Windows","Python","Android","Javascript"],
+        "tags": ["CTF","flare-on","Reversing","Crypto","Forensic","Windows","Python","Android","Javascript","NES"],
         "url": "http://0.0.0.0:4000/flare-on-challenge-2019-write-up/",
         "teaser":null}]

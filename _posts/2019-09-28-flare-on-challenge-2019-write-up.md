@@ -22,6 +22,7 @@ tags:
 - Python
 - Android
 - Javascript
+- NES
 ---
 
 Another year of [Flare-on challenge](https://www.fireeye.com/blog/threat-research/2019/07/announcing-the-sixth-annual-flare-on-challenge.html) ! As a guy who's interetesed in reverse engineering, this is definitely a great chance for me to practice/sharpen my reversing skills ! This year it has 12 challenges covering Windows PE, Linux ELF, Android apk, NES ROM ...... and over 5,700 participants !
