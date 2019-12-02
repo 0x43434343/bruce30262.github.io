@@ -809,7 +809,7 @@ If says the first byte of the key is `0x31`. We then can improve our key-cracker
 
 ![](/assets/images/Flare-on-2019/level10_1.gif)
 
-You can check the key-cracker and the decrpytor scripts [here](https://gist.github.com/bruce30262/f0e4ef73fc7284c0479b9034ac376cb7)
+You can check the key-cracker and the decryptor scripts [here](https://gist.github.com/bruce30262/f0e4ef73fc7284c0479b9034ac376cb7)
 
 flag: `FL4rE-oN_5o_Ho7_R1gHt_NoW@flare-on.com`
 
@@ -1113,4 +1113,9 @@ Great challenge as always. In fact I feel I had way more fun than the previous o
 
 Kudos to the FLARE team for creating those amazing challenges, and CTFd for hosting the CTF ( It's nice that we're able to check our rank during the CTF ! ). Also a big thank to @alex_k_polyakov for helping me out on level 12 ! Finally, congratz to all the participants who was able to finish the challenge this year, especially the other 7 Taiwanese !
 
-See you next year ! 😁
+See you next year ! 😁  
+
+![](/assets/images/Flare-on-2019/reward1.jpg)  
+
+
+![](/assets/images/Flare-on-2019/reward2.jpg)
